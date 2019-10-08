@@ -7,7 +7,7 @@
 ### Contains associative routes
 
 #### /api/register/admin
-#### /api/register/register
+#### /api/register/gateman
 #### /api/register/resident
 #### /api/login
 #### /api/verify
