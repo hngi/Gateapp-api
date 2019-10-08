@@ -19,6 +19,8 @@ use Illuminate\Http\Request;
 
 //Please indentify your trademark the way i have done around your api
 
+//*********************************Authentication Routes *******************************************************
+
 //JuniCodefire *******************************************************
 //registration 
 Route::post('/register/admin', 'Auth\RegisterController@admin');//has a role of 0
@@ -39,8 +41,9 @@ Route::post('/password/verify', 'Auth\ForgotPasswordController@verifyPassword');
 //Reset password for a new password 
 Route::put('/password/reset', 'Auth\ResetPasswordController@reset');
 
-
 //End JuniCodefire *******************************************************
+
+//-----------------------------------End Authentication Routes ----------------------------------------------------
 
 //Example how your route should be , please code along enjoy coding
 
