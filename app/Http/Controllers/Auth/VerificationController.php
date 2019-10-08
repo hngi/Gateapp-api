@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class VerificationController extends Controller
 {
+      //generate new password for the user
+    public function generatedPassword()
+    {
+        return substr(md5(time()), 0, 6);
+    }
 
     public function verify(Request $request, User $user) {
 
@@ -23,11 +28,13 @@ class VerificationController extends Controller
 
         if ($checkCode) {
 
-        $user = User::where('verifycode', $verifycode)->first();
+            $user = User::where('verifycode', $verifycode)->first();
 
-        $token = Auth::guard()->login($user);
+            $token = Auth::guard()->login($user);
         
             if ($user->email_verified_at == null){
+                //generate a new verify code 
+                $user->verifycode = $this->generatedPassword();
                 $user->email_verified_at = date("Y-m-d H:i:s");
                 $user->save();
                 
