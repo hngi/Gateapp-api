@@ -1,4 +1,4 @@
-# Budget Calculator App - API
+# Gate App - API
 
 ## This the Documentation for the backend api (juniCodefire)
 
