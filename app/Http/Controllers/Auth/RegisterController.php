@@ -50,7 +50,7 @@ class RegisterController extends Controller
                 'password' => Hash::make($request->input('password')),
                 'phone'    => $request->input('phone'),
                 'role'     => $role,
-                'verifycode' => $verifycode 
+                'verifycode' => $verifycode
             ]);
 
             $msg['message'] = 'Account created successfully';
@@ -79,7 +79,7 @@ class RegisterController extends Controller
             $rules = [
                 'email'    => 'required|email|unique:users',
                 'name'     => 'required|string',
-                'password' => 'required|min:8',
+                'password' => 'required|min:8|confirmed',
                 'phone'    => 'required'
             ];
             $messages = [
