@@ -41,6 +41,8 @@ Route::post('/password/verify', 'Auth\ForgotPasswordController@verifyPassword');
 //Reset password for a new password 
 Route::put('/password/reset', 'Auth\ResetPasswordController@reset');
 
+Route::get('/test', 'TestController@test');
+
 //End JuniCodefire *******************************************************
 
 //-----------------------------------End Authentication Routes ----------------------------------------------------
