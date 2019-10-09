@@ -41,7 +41,6 @@ Route::post('v1/password/verify', 'Auth\ForgotPasswordController@verifyPassword'
 //Reset password for a new password
 Route::put('v1/password/reset', 'Auth\ResetPasswordController@reset');
 
-Route::get('v1/test', 'TestController@test');
 
 //End JuniCodefire *******************************************************
 
@@ -72,7 +71,12 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     //Delete user account
     Route::get('v1/user/delete', 'UserProfileController@destroy');
+
+    // Kazeem Asifat QRCode generator *******************************************
 });
 
-// Kazeem Asifat QRCode generator *******************************************
-Route::get('/generate-code', 'QrCodeGenerator@generateCode');
+//This our testing api routes
+Route::get('v1/test', 'TestController@test');
+//The qr code has been mordify to be sent as jason
+Route::get('v1/generate-code', 'TestController@qrCode');
+
