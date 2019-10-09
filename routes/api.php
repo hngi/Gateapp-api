@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 
 //JuniCodefire *******************************************************
 //registration
-Route::post('/register/admin', 'Auth\RegisterController@admin');//has a role of 0
+Route::post('/register/admin', 'Auth\RegisterController@admin')->middleware('admin');//has a role of 0
 
 Route::post('/register/resident', 'Auth\RegisterController@resident');//has a role of 1
 
