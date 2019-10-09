@@ -59,3 +59,12 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
 // Kazeem Asifat QRCode generator *******************************************
 Route::get('generate-code', 'QrCodeGenerator@generateCode');
+
+
+//Visitor Routes *******************
+
+	//This is the route group every authenticated route with jwt token should go in here
+    //Edit Visitor account
+    Route::put('visitor/{id}', 'VisitorController@update');
+    //Delete Visitor account
+    Route::delete('visitor/{id}', 'VisitorController@destroy');
