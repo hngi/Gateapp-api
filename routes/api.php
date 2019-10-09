@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,25 +23,25 @@ use Illuminate\Support\Facades\Route;
 
 //JuniCodefire *******************************************************
 //registration
-Route::post('/register/admin', 'Auth\RegisterController@admin');//has a role of 0
+Route::post('v1/register/admin', 'Auth\RegisterController@admin');//has a role of 0
 
-Route::post('/register/resident', 'Auth\RegisterController@resident');//has a role of 1
+Route::post('v1/register/resident', 'Auth\RegisterController@resident');//has a role of 1
 
-Route::post('/register/gateman', 'Auth\RegisterController@gateman');//has a role 2
+Route::post('v1/register/gateman', 'Auth\RegisterController@gateman');//has a role 2
 
 //Login
-Route::post('/login', 'Auth\LoginController@authenticate');
+Route::post('v1/login', 'Auth\LoginController@authenticate');
 
 //Verify account
-Route::post('/verify', 'Auth\VerificationController@verify');
+Route::post('v1/verify', 'Auth\VerificationController@verify');
 
 //forgot Password
-Route::post('/password/verify', 'Auth\ForgotPasswordController@verifyPassword');
+Route::post('v1/password/verify', 'Auth\ForgotPasswordController@verifyPassword');
 
 //Reset password for a new password
-Route::put('/password/reset', 'Auth\ResetPasswordController@reset');
+Route::put('v1/password/reset', 'Auth\ResetPasswordController@reset');
 
-Route::get('/test', 'TestController@test');
+Route::get('v1/test', 'TestController@test');
 
 //End JuniCodefire *******************************************************
 
@@ -55,10 +54,10 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 	//This is the route group every authenticated route with jwt token should go in here
 
 	//Show all user(this route is for only admin)(admin)
-    Route::get('/user/all', 'UserProfileController@all');
+    Route::get('v1/user/all', 'UserProfileController@all');
 
 	//Show all user for a particular role(this route is for only admin)(admin)
-    Route::get('/user/all/{role_id}', 'UserProfileController@role');
+    Route::get('v1/user/all/{role_id}', 'UserProfileController@role');
 });
 
 //Users Routes *******************************************************
@@ -66,11 +65,11 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 	//This is the route group every authenticated route with jwt token should go in here
 
     //Show one user
-    Route::get('/user', 'UserProfileController@index');
+    Route::get('v1/user', 'UserProfileController@index');
 
     //Edit user account
-    Route::put('/user/edit', 'UserProfileController@update');
+    Route::put('v1/user/edit', 'UserProfileController@update');
 
     //Delete user account
-    Route::get('/user/delete', 'UserProfileController@destroy');
+    Route::get('v1/user/delete', 'UserProfileController@destroy');
 });

@@ -32,3 +32,8 @@
 * outline the steps to be taken in order to test the feature you added
 * attach a screenshot or gif of what you did, if possible
 * do not send PR to the master branch
+
+## Note 
+* if you want to manually delete form the database this is the link
+* https://remotemysql.com/phpmyadmin/
+* use the info database username and password from .env file to login
