@@ -31,9 +31,35 @@ class UserProfileController extends Controller
 
     }
 
-    public function update() {
-
+    public function update(Request $request) { 
+        $this->validate($request, [
+        'firstname' => 'required|min:2|unique:users',
+        'lastname' => 'required|unique:users',
+        'email' => 'required',
+        'phone_no' => 'required',
+    ]);
+    
+    if(!empty(request()->input('firstname')) && !empty(request()->input('lastname')) && !empty(request()->input('email')) && !empty(request()->input('phone_no')))
+    {
+    $user = User::findOrFail(Auth::user()->id);
+    $user->firstname = request()->input('firstname');
+    $user->email = request()->input('email');
+    $user->lastname = request()->input('lastname');
+    $user->phone_no = request()->input('phone_no');
+    $user->save();
+    
+    
+    $res['status'] = true;
+    $res['message'] = 'Your Account Was Successfully Updated.';
+    return response()->json($res, 200);
     }
+     else
+    {
+    $res['status'] = false;
+    $res['message'] = 'An Error Occured While Trying To Update Your Account Information.';
+    return response()->json($res, 500);
+    }
+   }
     
     public function destroy() {
 
