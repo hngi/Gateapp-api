@@ -73,3 +73,6 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //Delete user account
     Route::get('v1/user/delete', 'UserProfileController@destroy');
 });
+
+// Kazeem Asifat QRCode generator *******************************************
+Route::get('/generate-code', 'QrCodeGenerator@generateCode');
