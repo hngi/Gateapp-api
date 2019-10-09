@@ -54,10 +54,10 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 	//This is the route group every authenticated route with jwt token should go in here
 
 	//Show all user(this route is for only admin)(admin)
-    Route::get('v1/user/all', 'UserProfileController@all');
+    Route::get('v1/user/all', 'UserProfileController@all')->middleware('admin');
 
 	//Show all user for a particular role(this route is for only admin)(admin)
-    Route::get('v1/user/all/{role_id}', 'UserProfileController@role');
+    Route::get('v1/user/all/{role_id}', 'UserProfileController@role')->middleware('admin');
 });
 
 //Users Routes *******************************************************

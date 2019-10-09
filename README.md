@@ -2,7 +2,7 @@
 
 # Gate App - API
 
-## This the Documentation for the backend api (juniCodefire)
+## This the Documentation for the backend api (Please Read Me)
 
 #### https://documenter.getpostman.com/view/6843654/SVtSXAQP?version=latest
 
@@ -37,3 +37,7 @@
 * if you want to manually delete form the database this is the link
 * https://remotemysql.com/phpmyadmin/
 * use the info database username and password from .env file to login
+
+* the .env has been included in this commit so discard you own this time we all going to use one database which is online an a mailing of my own sendgrid 
+
+* make sure you have internet to work 
