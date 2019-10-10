@@ -72,3 +72,10 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //Delete user account
     Route::get('/user/delete', 'UserProfileController@destroy');
 });
+
+
+//payment routes
+// Save payment 
+Route::post('/payment', 'GetPayment@postPayment');
+// show payment
+Route::get('/payment/{id}', 'GetPayment@getPayment');
