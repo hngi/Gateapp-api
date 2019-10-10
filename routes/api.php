@@ -76,5 +76,5 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::put('/user/edit', 'UserProfileController@update');
 
     //Delete user account
-    Route::get('/user/delete', 'UserProfileController@destroy');
+    Route::post('/user/delete', 'UserProfileController@destroy');
 });

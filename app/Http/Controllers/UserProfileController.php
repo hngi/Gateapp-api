@@ -102,6 +102,6 @@ class UserProfileController extends Controller
         $user->delete();
 
         $reponse = array('response' => 'Item deleted', 'success' => true);
-        return $response;
+        return json($response);
     }
 }
