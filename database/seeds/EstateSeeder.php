@@ -2,11 +2,10 @@
 
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+class EstateSeeder extends Seeder
 {
-
     public function run()
     {
-        $this->call(EstateSeeder::class);
+        factory(Estate::class, 10)->create();
     }
 }

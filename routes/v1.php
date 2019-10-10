@@ -55,6 +55,20 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('user/delete', 'UserProfileController@destroy');
 });
 
+//Estate Routes******************************************************************************
+
+//Show one estate
+Route::get('estate', 'EstateController@all');
+
+//Edit esatate account
+Route::get('estate/{estate}', 'EstateController@show');
+
+//Delete Estate
+Route::put('estate/delete', 'EstateController@destroy');
+
+//Estate Routes End******************************************************************************
+
+
 //This our testing api routes
 Route::get('test', 'TestController@test');
 // Kazeem Asifat QRCode generator *******************************************
