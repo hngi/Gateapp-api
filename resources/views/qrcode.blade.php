@@ -1,0 +1,1 @@
+{!! QrCode::size(380)->generate('Gate App Visior ID: H641289391<br> Resident to visit: Mr. Danielson.<br>House Number 41D<br>Time in: 13:00 Hrs<br>Estimated Time Out: 22:00 Hrs.'); !!}

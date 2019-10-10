@@ -2,6 +2,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+
 class AddVerifycodeColumnToUsersTable extends Migration
 {
     /**
@@ -15,6 +16,7 @@ class AddVerifycodeColumnToUsersTable extends Migration
             $table->string('verifycode')->after('email')->nullable();
         });
     }
+
     /**
      * Reverse the migrations.
      *

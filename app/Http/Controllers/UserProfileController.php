@@ -13,60 +13,13 @@ use Illuminate\Validation\ValidationException;
 
 class UserProfileController extends Controller
 {
-    //
-
     public function index() {
     	$user = Auth::user(); //this is you active user logged in
         // dd($user); use this to break and check your code
         return response()->json($user);
     }
-
-    //This is temporary to allow me test since the register was working on my system
-    public function create(Request $request) {
-        $verifycode = Str::random(6);
-
-        DB::beginTransaction();
-
-        try{
-           $user = User::create([
-                'name'     => $request->input('name'),
-                'email'    => $request->input('email'),
-                'image'    => 'no_image.jpg',
-                'password' => Hash::make($request->input('password')),
-                'phone'    => $request->input('phone'),
-                'role'     => 1,
-                'verifycode' => $verifycode
-            ]);
-
-            $msg['message'] = 'Account created successfully';
-            $msg['message-2'] = 'A verification code has been sent to your email, please use to veriify your account, also check your spam folder for email';
-            $msg['user']    = $user;
-
-            //Send a mail form account verification
-            // Mail::to($user->email)->send(new WelcomeMail($user));
-            //if operation was successful save commit save to database
-            DB::commit();
-            $msg['status'] = 201;
-            // return $msg;
-            return response()->json($msg);
-
-
-        }catch(\Exception $e) {
-            //if any operation fails, Thanos snaps finger - user was not created rollback what is saved
-            DB::rollBack();
-
-            $msg['error'] = "Error: Account not created, please try again!";
-            $msg['hint'] = $e->getMessage();
-            $msg['status'] = 501;
-            // return $msg;
-            return response()->json($msg);
-        }
-
-    }
-
     public function all() {
         $users = User::all();
-
         return response()->json($users);
     }
 
@@ -76,26 +29,58 @@ class UserProfileController extends Controller
     }
 
     public function role($role) {
-
-        // $users = User::where('role', $role);
         $users = DB::table('users')->select('*')->where('user.role', parseInt($role))->get();
         return response()->json($users);
 
     }
 
-    public function update(Request $request) {
+    public function password(Request $request) {
         $user = Auth::user();
-
-        $user->name     = $request->input('name');
-        $user->email    = $request->input('email');
-        $user->image    = $request->input('image');
+      
         $user->password = Hash::make($request->input('password'));
-        $user->phone    = $request->input('phone');
-
         $user->save();
         return response()->json($user);
 
     }
+  
+    public function update(Request $request) { 
+        $user = Auth::user();
+        $this->validate($request, [
+            'first_name' => 'required|min:2',
+            'last_name' => 'required|min:2',
+            'email' => 'required|min:2|unique:users,email,'.$user->id,
+            'phone' => 'required',
+        ]);
+
+        //start temporay transaction
+        DB::beginTransaction();
+        try{
+            $user->first_name = $request->input('first_name');
+            $user->last_name  = $request->input('last_name');
+            $user->email     = $request->input('email');
+            $user->phone     = $request->input('phone');
+            $user->save();
+            
+            //if operation was successful save commit save to database
+            DB::commit();
+            $res['status']  = true;
+            $res['user']    = $user;
+            $res['message'] = 'Your Account Was Successfully Updated.';
+
+            return response()->json($res, 200);
+
+        }catch(\Exception $e) {
+            //rollback what is saved
+            DB::rollBack();
+
+            $res['status'] = false;
+            $res['message'] = 'An Error Occured While Trying To Update Your Account Information.';
+            $res['hint'] = $e->getMessage();
+
+            return response()->json($res, 501);
+
+        }
+   }
 
     public function destroy() {
         $user = Auth::user();
