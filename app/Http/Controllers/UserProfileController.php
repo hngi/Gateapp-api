@@ -13,24 +13,36 @@ use Illuminate\Validation\ValidationException;
 
 class UserProfileController extends Controller
 {
-    //
-
     public function index() {
     	$user = Auth::user(); //this is you active user logged in
-    	// dd($user); use this to break and check your code
-
-        $res['user'] = $user;
-        return response()->json($res, 200);
+        // dd($user); use this to break and check your code
+        return response()->json($user);
     }
-
     public function all() {
+        $users = User::all();
+        return response()->json($users);
+    }
+
+    public function show($id) {
+        $user = User::find($id);
+        return response()->json($user);
+    }
+
+    public function role($role) {
+        $users = DB::table('users')->select('*')->where('user.role', parseInt($role))->get();
+        return response()->json($users);
 
     }
 
-    public function role($id) {
-        //fetch all user base on role
-    }
+    public function password(Request $request) {
+        $user = Auth::user();
+      
+        $user->password = Hash::make($request->input('password'));
+        $user->save();
+        return response()->json($user);
 
+    }
+  
     public function update(Request $request) { 
         $user = Auth::user();
         $this->validate($request, [
@@ -69,8 +81,12 @@ class UserProfileController extends Controller
 
         }
    }
-    
-    public function destroy() {
 
+    public function destroy() {
+        $user = Auth::user();
+        $user->delete();
+
+        $reponse = array('response' => 'Item deleted', 'success' => true);
+        return $response;
     }
 }
