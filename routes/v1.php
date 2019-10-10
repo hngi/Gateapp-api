@@ -66,7 +66,7 @@ Route::get('generate-code', 'TestController@qrCode');
 // Ayeni Kehinde Oluwatosin *******************************
 
 // Show all visitor
-Route::get('visitor/all/{page?}', 'VisitorController@index');
+Route::get('visitor', 'VisitorController@index');
 
 // Show single visitor
 Route::get('visitor/{id}', 'VisitorController@show');
