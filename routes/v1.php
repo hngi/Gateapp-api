@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 
 
@@ -63,11 +64,17 @@ Route::get('generate-code', 'QrCodeGenerator@generateCode');
 //Visitor Routes *******************************************************
 
 /* Ayeni kehinde Oluwatosin */
-
 //Show all visitor
 Route::get('visitor', 'VisitorController@visitor');
 
 //Show single visitor
 Route::get('visitor/{id}', 'VisitorController@visitorById');
-
 /*End Ayeni kehinde Oluwatosin */
+
+/** @iOreoluwa ******************************/
+//Edit Visitor account
+Route::put('visitor/{id}', 'VisitorController@update');
+
+//Delete Visitor account
+Route::delete('visitor/{id}', 'VisitorController@destroy');
+/** end @iOreoluwa ******************************/
