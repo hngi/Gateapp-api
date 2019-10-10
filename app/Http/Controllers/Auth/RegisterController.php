@@ -64,6 +64,7 @@ class RegisterController extends Controller
             $msg['status'] = 201;
             return $msg;
 
+
         }catch(\Exception $e) {
             //if any operation fails, Thanos snaps finger - user was not created rollback what is saved
             DB::rollBack();
