@@ -20,6 +20,18 @@ class VisitorController extends Controller
         ], 200);
     }
 
+    public function store(Request $request)
+    {
+    	$visitor = Visitor::create($request->all());
+    	
+    	// validate request
+        return response()->json([
+            'error'   => false,
+            'visitor' => $visitor,
+            'status'  => true,
+            'message' => 'Visitor successfully added',
+        ], 200);	
+    }
 
     //Get single visitor
     public function show($id)
