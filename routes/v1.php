@@ -66,7 +66,7 @@ Route::get('generate-code', 'TestController@qrCode');
 // Ayeni Kehinde Oluwatosin *******************************
 
 // Show all visitor
-Route::get('visitor', 'VisitorController@visitor');
+Route::get('visitor/all/{page?}', 'VisitorController@visitor');
 
 // Show single visitor
 Route::get('visitor/{id}', 'VisitorController@visitorById');
@@ -82,6 +82,12 @@ Route::put('visitor/{id}', 'VisitorController@update');
 Route::delete('visitor/{id}', 'VisitorController@destroy');
 
 /** end @iOreoluwa ******************************/
+
+// @andy *******************************
+Route::post('visitor', [
+    'uses' => 'VisitorController@store',
+    'as'   => 'new.visitor',
+]);
 
 //------------------------------End Visitor Routes --------------------
 
