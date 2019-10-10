@@ -9,7 +9,14 @@ class Visitor extends Model
      * @var array
      */
     protected $fillable = [
-        'visitor_name', 'arrival_date', 'car_plate_no', 'purpose', 'image', 'status',
+        'visitor_name',
+        'arrival_date', 
+        'car_plate_no', 
+        'purpose', 
+        'image', 
+        'status',
+        'user_id',
+        'home_id',
     ];
 
 
@@ -28,7 +35,7 @@ class Visitor extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'visitor_id';
+    protected $primaryKey = 'id';
 
 
     public $timestamps = false;
