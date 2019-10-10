@@ -15,6 +15,8 @@ class Visitor extends Model
         'purpose', 
         'image', 
         'status',
+        'time_out',
+        'time_in',
         'user_id',
         'home_id',
     ];
@@ -38,5 +40,36 @@ class Visitor extends Model
     protected $primaryKey = 'id';
 
 
+    /**
+     * Disable Laravel created_at and updated_at tables
+     */
     public $timestamps = false;
+
+    /**
+     * Get the user that the visitor visited.
+     * This expects that visitor table has a col named user_id
+     */
+    public function user()
+    {
+        // return $this->belongsTo(User::class);
+        return $this->belongsTo('App\User');
+    }
+
+    /**
+     * Get the home that the visitor visited.
+     * This expects that visitor table has a col named home_id
+     */
+    public function home()
+    {
+        // return $this->belongsTo(Home::class);
+        return $this->belongsTo('App\Home');
+    }
+
+    /**
+     * Logic method for pulling in default values for empty values
+     */
+    protected static function useit($major, $fallback)
+    {
+        return $major ? $major : $fallback;
+    }
 }
