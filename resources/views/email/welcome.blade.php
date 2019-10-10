@@ -44,7 +44,7 @@
     		</div>
     		<h2 class="welcome">Welcome To Gate Pass</h2>
     		<div>
-    			 <h4>Hello {{$user->name}}</h4>
+    			 <h4>Hello {{$user->first_name}} {{$user->last_name}}</h4>
     		</div>
     		<div>
     			 <p class="note">Use this verification token to confirm account</p>
