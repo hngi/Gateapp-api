@@ -66,10 +66,10 @@ Route::get('generate-code', 'TestController@qrCode');
 // Ayeni Kehinde Oluwatosin *******************************
 
 // Show all visitor
-Route::get('visitor/all/{page?}', 'VisitorController@visitor');
+Route::get('visitor/all/{page?}', 'VisitorController@index');
 
 // Show single visitor
-Route::get('visitor/{id}', 'VisitorController@visitorById');
+Route::get('visitor/{id}', 'VisitorController@show');
 
 /** end Ayeni kehinde Oluwatosin ******************************/
 

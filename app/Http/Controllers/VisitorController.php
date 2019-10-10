@@ -3,25 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Visitor;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class VisitorController extends Controller
 {
     //Get all visitor
-    public function visitor()
+    public function index($page = null)
     {
         $res = Visitor::get();
-        return response()->json($res, 200);
+
+        return response()->json([
+        	'error' => false,
+        	'data' => $res,
+        	'status' => true,
+        ], 200);
     }
 
 
     //Get single visitor
-    public function visitorById($id)
+    public function show($id)
     {
 
         $res = Visitor::find($id);
         if (is_null($res)) {
-            return response()->json('Record not found!', 404);
+            return response()->json(['message' => 'Record not found!'], 404);
         }
         return response()->json($res, 200);
     }
