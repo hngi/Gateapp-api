@@ -1,12 +1,11 @@
-<<<<<<< HEAD
 <?php
 
 
 //Please indentify your trademark the way i have done around your api
 
-//*********************************Authentication Routes *******************************************************
+//*********************************Authentication Routes ******************
 
-//JuniCodefire *******************************************************
+//JuniCodefire *******************************
 //registration
 Route::post('register/admin', 'Auth\RegisterController@admin');//has a role of 0
 
@@ -25,8 +24,6 @@ Route::post('password/verify', 'Auth\ForgotPasswordController@verifyPassword');
 
 //Reset password for a new password
 Route::put('password/reset', 'Auth\ResetPasswordController@reset');
-
-Route::get('test', 'TestController@test');
 
 //End JuniCodefire *******************************************************
 //-----------------------------------End Authentication Routes ----------------------------------------------------
@@ -58,23 +55,34 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('user/delete', 'UserProfileController@destroy');
 });
 
+//This our testing api routes
+Route::get('test', 'TestController@test');
 // Kazeem Asifat QRCode generator *******************************************
-Route::get('generate-code', 'QrCodeGenerator@generateCode');
+//The qr code has been mordify to be sent as jason
+Route::get('generate-code', 'TestController@qrCode');
 
-//Visitor Routes *******************************************************
+//*********************************Visitor Routes ******************
 
-/* Ayeni kehinde Oluwatosin */
-//Show all visitor
+// Ayeni Kehinde Oluwatosin *******************************
+
+// Show all visitor
 Route::get('visitor', 'VisitorController@visitor');
 
-//Show single visitor
+// Show single visitor
 Route::get('visitor/{id}', 'VisitorController@visitorById');
-/*End Ayeni kehinde Oluwatosin */
 
-/** @iOreoluwa ******************************/
-//Edit Visitor account
+/** end Ayeni kehinde Oluwatosin ******************************/
+
+// @iOreoluwa *******************************
+
+// Edit Visitor account
 Route::put('visitor/{id}', 'VisitorController@update');
 
-//Delete Visitor account
+// Delete Visitor account
 Route::delete('visitor/{id}', 'VisitorController@destroy');
+
 /** end @iOreoluwa ******************************/
+
+//------------------------------End Visitor Routes --------------------
+
+
