@@ -39,20 +39,31 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
 	//Show all user for a particular role(this route is for only admin)(admin)
     Route::get('user/all/{role_id}', 'UserProfileController@role')->middleware('admin');
+
+    //show one admin
+    Route::get('admin/{id}', 'UserProfileController@showOneAdmin');
+
 });
 
 //Users Routes *******************************************************
 Route::group(['middleware' => ['jwt.verify']], function() {
 	//This is the route group every authenticated route with jwt token should go in here
 
-    //Show one user
-    Route::get('user', 'UserProfileController@index');
+    //Show active user i.e. current logged in user
+    Route::get('/user', 'UserProfileController@index');
 
-    //Edit user account
-    Route::put('user/edit', 'UserProfileController@update');
+    //show one user
+    Route::get('/user/{id}', 'UserProfileController@show');
+
+    //Edit user ac count
+    Route::put('/user/edit', 'UserProfileController@update');
+
+    //Change Password
+    Route::put('/user/password', 'UserProfileController@password');
 
     //Delete user account
-    Route::get('user/delete', 'UserProfileController@destroy');
+    Route::delete('/user/delete', 'UserProfileController@destroy');
+
 });
 
 //This our testing api routes
