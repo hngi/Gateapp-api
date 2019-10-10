@@ -28,6 +28,6 @@ class TestController extends Controller
         $qr = $qrCodeGenerator->generateCode('gateapp'.$randomToken);
         $res['message'] = 'Copy the qr and insert into an image tag and scan the barcode with a barcode scanner app';
         $res['qr'] = $qr;
-        return response($res, 200);
+        return response()->json($res, 200);
     }
 }
