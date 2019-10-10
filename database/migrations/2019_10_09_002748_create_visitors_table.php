@@ -27,13 +27,24 @@ class CreateVisitorsTable extends Migration
             // table indexes
             $table->unique('car_plate_no');
 
-           
+            if (Schema::hasTable('users')) {
+                $table->unsignedBigInteger('user_id');
+
+                $table->foreign('user_id')->references('id')->on('users')
+                        ->onDelete('cascade');
+            }
+
+            if (Schema::hasTable('homes')) {
+                $table->unsignedBigInteger('home_id');
+
+                $table->foreign('home_id')->references('home_id')->on('homes')
+                        ->onDelete('cascade');
+            }
 
             // table meta
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
-            $table->timestamps();
         });
     }
 
