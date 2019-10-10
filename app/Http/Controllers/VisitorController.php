@@ -14,8 +14,8 @@ class VisitorController extends Controller
         $res = Visitor::get();
 
         return response()->json([
-        	'error' => false,
-        	'data' => $res,
+        	'error'  => false,
+        	'data'   => $res,
         	'status' => true,
         ], 200);
     }
@@ -61,7 +61,7 @@ class VisitorController extends Controller
 	            'message' => 'Visitor information updated successfully'
 	        ], 200);	
 		} else {
-			$resp['error']   = true;
+			$resp['error']    = true;
 			$resp['message']  = 'We could not update the information now, please try again';
 
 			return response()->json($resp);
@@ -69,24 +69,22 @@ class VisitorController extends Controller
 	}
 
 	public function destroy($id) {
-		// response array to be sent back to user
-		$resp = array(
-			'error'    =>  false, // false = Error occured true = successful
-			'msg'       =>  '',
-		);
-		
-		// delete the visitor record
-		$visitor = Visitor::findorfail($id);
+		$visitor = Visitor::find($id);
+
+        if (is_null($visitor)) {
+            return response()->json(['message' => 'Record not found!'], 404);
+        }
 		
 		$success = $visitor->delete();
-		
-		// if the data is updated successfully then send back feedback
+
 		if($success) {
-			$resp['error']   = true;
-			$resp['msg']  = "Visitor information deleted successfully";
+			$resp['error']    = false;
+			$resp['status']   = true;
+			$resp['message']  = "Visitor information has been deleted successfully";
 		} else {
-			$resp['error']   = false;
-			$resp['msg']  = "We could not delete this visitor";
+			$resp['error']    = true;
+			$resp['status']   = false;
+			$resp['message']  = "We could not delete this visitor";
 		}
 		
 		return response()->json($resp);
