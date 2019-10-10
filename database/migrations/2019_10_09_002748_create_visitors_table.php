@@ -29,7 +29,7 @@ class CreateVisitorsTable extends Migration
 
             if (Schema::hasTable('users')) {
                 $table->unsignedBigInteger('user_id');
-                
+
                 $table->foreign('user_id')->references('id')->on('users')
                         ->onDelete('cascade');
             }
@@ -45,6 +45,7 @@ class CreateVisitorsTable extends Migration
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
+            $table->timestamps();
         });
     }
 
