@@ -23,7 +23,9 @@
 ## Installation
 
 * clone this repo
-* cd into the project folder and run `php -S localhost:8000`
+* cd into the project folder
+* Run composer install to instll depedencies
+* Run `php artisan serve`
 * visit localhost:8000 in your web browser
 
 ## Rules for sending PR
