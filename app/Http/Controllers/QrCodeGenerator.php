@@ -22,6 +22,6 @@ class QrCodeGenerator extends Controller
     	$qr = $this->generateCode('gateapp');
     	$res['message'] = 'Copy the qr and insert into an image tag in html or xml to test!';
         $res['qr'] = $qr;
-    	return response($res, 200);
+    	return response()->json($res, 200);
     }
 }

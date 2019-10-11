@@ -1,9 +1,10 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddVerifycodeColumnToUsersTable extends Migration
+class CreateEstatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +13,12 @@ class AddVerifycodeColumnToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('verifycode')->after('email')->nullable();
+        Schema::create('estates', function (Blueprint $table) {
+            $table->bigIncrements('estate_id');
+            $table->string('estate_name');
+            $table->string('city');
+            $table->string('country');
+            $table->timestamps();
         });
     }
 
@@ -24,8 +29,6 @@ class AddVerifycodeColumnToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('verifycode');
-        });
+        Schema::dropIfExists('estates');
     }
 }

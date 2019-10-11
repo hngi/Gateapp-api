@@ -79,18 +79,7 @@ class ServiceProviderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $service = Service_Provider::find($id);
 
-        $service->name = request()->input("name");
-        $service->phone = request()->input("phone");
-        $service->description = request()->input("description");
-        $service->image = request()->input("image");
-        $service->estate_id = request()->input("estate_id");
-        $service->save();
-
-        $res["Status"] = true;
-        $res["Message"] = "Service Provider Updated Successfully!";
-        return response()->json($res, 200);
     }
 
     /**
