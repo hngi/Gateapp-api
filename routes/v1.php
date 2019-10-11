@@ -60,3 +60,10 @@ Route::get('test', 'TestController@test');
 // Kazeem Asifat QRCode generator *******************************************
 //The qr code has been mordify to be sent as jason
 Route::get('generate-code', 'TestController@qrCode');
+
+// Tobbhie Notification API***********************************************************
+Route::get('init', function () {
+    event(new App\Events\notify('Someone'));
+    return "Notification sent";
+});
+//end
