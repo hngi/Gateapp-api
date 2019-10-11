@@ -154,6 +154,14 @@ Route::get('generate-code', 'TestController@qrCode');
 //-------------------------------------------------------------------------------------
 //---------------- Api Route for Service Provider -----------------------------------
 
+
+// Tobbhie Notification API***********************************************************
+Route::get('init', function () {
+    event(new App\Events\notify('Someone'));
+    return "Notification sent";
+});
+//end
+
 //******************* To Create a service provider ************************
 Route::post('/estate/service-provider/', 'ServiceProviderController@create');
 
