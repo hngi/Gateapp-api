@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Service_Provider;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ServiceProviderController extends Controller
 {
@@ -25,7 +26,21 @@ class ServiceProviderController extends Controller
      */
     public function create(Request $request)
     {
-      
+         $validator = Validator::make($request->all(), [
+           
+           'name' => 'required',
+           'phone' => 'required',
+           'description' => 'required',
+           'image' => 'required',
+           'estate_id' => 'required|int'
+       ]);
+
+         if ($validator->fails()) {
+            return [
+                  
+                  'message' => 'Please Fill all Fields'      ]; 
+       }
+        
         return Service_Provider::create($request->all());
 
     }
