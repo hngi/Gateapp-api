@@ -7,7 +7,7 @@ use App\User;
 use Notification;
 use App\Notifications\PaymentNotification;
   
-class HomeController extends Controller
+class PaymentController extends Controller
 {
     /**
      * Create a new controller instance.
