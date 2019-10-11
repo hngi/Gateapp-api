@@ -1,6 +1,10 @@
 <?php
+
 namespace App;
+
 use Illuminate\Database\Eloquent\Model;
+
+
 class Visitor extends Model
 {
     /**
@@ -9,7 +13,7 @@ class Visitor extends Model
      * @var array
      */
     protected $fillable = [
-        'visitor_name',
+        'name',
         'arrival_date', 
         'car_plate_no', 
         'purpose', 
@@ -17,7 +21,6 @@ class Visitor extends Model
         'status',
         'time_out',
         'time_in',
-        'user_id',
         'home_id',
     ];
 
