@@ -23,9 +23,11 @@ class ServiceProviderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+      
+        return Service_Provider::create($request->all());
+
     }
 
     /**

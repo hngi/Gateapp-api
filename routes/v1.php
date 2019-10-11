@@ -97,6 +97,14 @@ Route::get('generate-code', 'TestController@qrCode');
 //-------------------------------------------------------------------------------------
 //---------------- Api Route for Service Provider -----------------------------------
 
+
+
+//******************* To Create a service provider ************************
+Route::post('/estate/service-provider/', 'ServiceProviderController@create');
+
+
+//-------------------------------------------------------------------------------------
+
 //******************* To view a specific service provider ************************
 Route::get('/estate/service-provider/{id}', 'ServiceProviderController@show');
 
