@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Estate;
+
 use Illuminate\Http\Request;
+use App\Estate;
 use App\Http\Resources\Estate as EstateResource;
 
 class EstateController extends Controller
