@@ -80,6 +80,38 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //show payment
     Route::get('/payment/{id}', 'GetPayment@getPayment');
 
+    //*********************************Visitor Routes ******************
+
+    // Ayeni Kehinde Oluwatosin *******************************
+
+    // Show all visitor
+    Route::get('visitor', 'VisitorController@index');
+
+    // Show single visitor
+    Route::get('visitor/{id}', 'VisitorController@show');
+
+    /** end Ayeni kehinde Oluwatosin ******************************/
+
+    // @iOreoluwa *******************************
+
+    // Edit Visitor account
+    Route::put('visitor/{id}', 'VisitorController@update');
+
+    // Delete Visitor account
+    Route::delete('visitor/{id}', 'VisitorController@destroy');
+
+    /** end @iOreoluwa ******************************/
+
+    // @andy *******************************
+    Route::post('visitor', [
+        'uses' => 'VisitorController@store',
+        'as'   => 'new.visitor',
+    ]);
+
+    //------------------------------End Visitor Routes --------------------
+
+
+
 });
 
 //This our testing api routes
@@ -87,34 +119,3 @@ Route::get('test', 'TestController@test');
 // Kazeem Asifat QRCode generator *******************************************
 //The qr code has been mordify to be sent as jason
 Route::get('generate-code', 'TestController@qrCode');
-
-//*********************************Visitor Routes ******************
-
-// Ayeni Kehinde Oluwatosin *******************************
-
-// Show all visitor
-Route::get('visitor', 'VisitorController@index');
-
-// Show single visitor
-Route::get('visitor/{id}', 'VisitorController@show');
-
-/** end Ayeni kehinde Oluwatosin ******************************/
-
-// @iOreoluwa *******************************
-
-// Edit Visitor account
-Route::put('visitor/{id}', 'VisitorController@update');
-
-// Delete Visitor account
-Route::delete('visitor/{id}', 'VisitorController@destroy');
-
-/** end @iOreoluwa ******************************/
-
-// @andy *******************************
-Route::post('visitor', [
-    'uses' => 'VisitorController@store',
-    'as'   => 'new.visitor',
-]);
-
-//------------------------------End Visitor Routes --------------------
-
