@@ -97,5 +97,5 @@ public function deleteEstate($id)
     $res['message']    = "Estate deleted";
     return response()->json($res, 200);  
 }
-
+    
 }
