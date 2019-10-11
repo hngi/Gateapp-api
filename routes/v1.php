@@ -73,8 +73,10 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //View Estates by country
     Route::get('/estate/bycountry/{country}', 'EstateController@showCountry');
 
+
     //Delete Estates by estate_id
     Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate');
+
 
     //**********John's Api***************//
     //Create Estate
