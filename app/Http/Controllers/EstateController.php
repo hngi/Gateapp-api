@@ -61,7 +61,7 @@ class EstateController extends Controller
         $estates = Estate::where('estate_id', $id)->get();
         $resident->delete();
         // Success message
-        $res['Message']    = "Estate deleted";
+        $res['message']    = "Estate deleted";
         return response()->json($res, 200);  
     }
 }
