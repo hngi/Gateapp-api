@@ -15,10 +15,23 @@
 #### /api/verify
 #### /password/verify
 #### /password/reset
+#### /api/v1/user
+#### /api/v1/user/{id}
+#### /api/v1//user/edit
+#### /api/v1//user/password
+#### /api/v1//user/delete
 
 ## Features
 
 * to be added
+
+## Installation
+
+* clone this repo
+* cd into the project folder
+* Run composer install to install depedencies
+* Run `php artisan serve`
+* visit localhost:8000 in your web browser
 
 ## Rules for sending PR
 
