@@ -26,6 +26,12 @@
 * cd into the project folder and run `php -S localhost:8000`
 * visit localhost:8000 in your web browser
 
+## If laravel is installed 
+
+* clone this repo
+* cd into the project folder and run `php artisan serve`
+* visit localhost:8000 in your web browser
+
 ## Rules for sending PR
 
 * attach a brief and concise description of what you have done
