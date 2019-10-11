@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Estate;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-
 use App\Http\Resources\Estate as EstateResource;
 
 class EstateController extends Controller
