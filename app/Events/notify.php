@@ -37,6 +37,6 @@ class notify extends shouldBroadcast
     public function broadcastOn()
     {
         ///return new PrivateChannel('channel-name');
-        return ['status-liked'];
+        return ['notified'];
     }
 }

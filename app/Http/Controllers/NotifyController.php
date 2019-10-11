@@ -12,6 +12,6 @@ class NotifyController extends Controller
         //  });
     
           // Subscribe to the channel we specified in our Laravel Event
-      ///    var channel = pusher.subscribe('status-liked');
+      ///    
     }
 }
