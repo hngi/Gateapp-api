@@ -5,6 +5,7 @@
 /vendor
 /.idea
 .env
+.gitignore
 .env.backup
 .phpunit.result.cache
 Homestead.json
