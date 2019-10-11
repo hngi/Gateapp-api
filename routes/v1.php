@@ -41,7 +41,14 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('user/all/{role_id}', 'UserProfileController@role')->middleware('admin');
 
     //show one admin
-    Route::get('admin/{id}', 'UserProfileController@showOneAdmin');
+    Route::get('admin/{id}', 'UserProfileController@showOneAdmin')->middleware('admin');
+
+     //**********John's Api***************//
+    //Edit Estate
+    Route::patch('/estate', 'EstateController@update')->middleware('admin');
+
+    //Delete Estates by estate_id
+    Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate')->middleware('admin');
 
 });
 
@@ -73,15 +80,9 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //View Estates by country
     Route::get('/estate/bycountry/{country}', 'EstateController@showCountry');
 
-
-    //Delete Estates by estate_id
-    Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate');
-
-
     //**********John's Api***************//
     //Create Estate
     Route::post('/estate', 'EstateController@store');
-    Route::patch('/estate', 'EstateController@update');
 
     //payment 
 
