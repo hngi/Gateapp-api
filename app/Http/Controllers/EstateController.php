@@ -53,19 +53,9 @@ class EstateController extends Controller
             $allestates = EstateResource::collection($estates); //Use Resource to format Output 
             return response()->json($allestates);  
     }
+
+
     
-    // Delete Estates by id 
-    public function deleteEstate($id)
-    {   
-        $estates = Estate::where('estate_id', $id)->get();
-        $estates->delete();
-        
-        // Success message
-        $res['message']    = "Estate deleted";
-        return response()->json($res, 200);  
-    }
-
-
 public function store(Estate $request)
 {
     $data =$request->all();
@@ -95,5 +85,16 @@ public function update(Estate $estate)
     return response()->json($data, 'User updated successfully');
 
 }
+
+ // Delete Estates by id 
+ public function deleteEstate($id)
+ {   
+     $estates = Estate::where('estate_id', $id)->get();
+     $estates->delete();
+     
+     // Success message
+     $res['message']    = "Estate deleted";
+     return response()->json($res, 200);  
+ }
 
 }

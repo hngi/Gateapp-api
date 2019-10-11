@@ -75,6 +75,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     //Delete Estates by estate_id
     Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate');
+
     //**********John's Api***************//
     //Create Estate
     Route::post('/estate', 'EstateController@store');
@@ -88,7 +89,6 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('/payment/{id}', 'GetPayment@getPayment');
 
 });
-
 
 //This our testing api routes
 Route::get('test', 'TestController@test');
