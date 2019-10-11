@@ -1,11 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Estate;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
+use App\Estate;
 use App\Http\Resources\Estate as EstateResource;
 
 class EstateController extends Controller
@@ -66,4 +64,36 @@ class EstateController extends Controller
         $res['message']    = "Estate deleted";
         return response()->json($res, 200);  
     }
+
+
+public function store(Estate $request)
+{
+    $data =$request->all();
+    if($request->create($data)){
+        return response()->json($data);
+    }
+
+    $res['Error']    = "Something went wrong please";
+    return response()->json($res, 400);
+
+
+}
+
+public function update(Estate $estate)
+{
+    $data =request()->all();
+    if(empty($data['estate_name'])){
+        $estate->estate_name = $data['estate_name'];
+    }
+    else if(empty($data['city'])){
+        $estate->city = $data['city'];
+    }
+    else if (empty($data['country'])){
+        $estate->country = $data['country'];
+    }
+    $data= $estate->update();
+    return response()->json($data, 'User updated successfully');
+
+}
+
 }

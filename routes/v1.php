@@ -63,7 +63,6 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     //Delete user account
     Route::delete('/user/delete', 'UserProfileController@destroy');
-    
     //*******Users interactions with Estates ****************************/
     //View Estates
     Route::get('/estates', 'EstateController@index');
@@ -76,6 +75,11 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     //Delete Estates by estate_id
     Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate');
+    //**********John's Api***************//
+    //Create Estate
+    Route::post('/estate', 'EstateController@store');
+    Route::patch('/estate', 'EstateController@update');
+
     //payment 
 
     //save payment
