@@ -96,7 +96,7 @@ class UserProfileController extends Controller
             DB::commit();
             $res['status']  = true;
             $res['user']    = $user;
-            $res['message'] = 'Your Account Was Successfully Updated.';
+            $res['message'] = 'Your Account Was Successfully Updated';
 
             return response()->json($res, 200);
 
@@ -105,7 +105,7 @@ class UserProfileController extends Controller
             DB::rollBack();
 
             $res['status'] = false;
-            $res['message'] = 'An Error Occured While Trying To Update Your Account Information.';
+            $res['message'] = 'An Error Occured While Trying To Update Your Account Information';
             $res['hint'] = $e->getMessage();
 
             return response()->json($res, 501);
