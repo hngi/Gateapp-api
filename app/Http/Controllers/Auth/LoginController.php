@@ -30,10 +30,12 @@ class LoginController extends Controller
         // Do a validation for the input
         $this->validateRequest($request);
 
+        $myTTL = 60*24; //minutes
+        $this->jwt->factory()->setTTL($myTTL);
         $credentials = $request->only('email', 'password');
 
         try {
-            if (!$token = $this->jwt->attempt($credentials, ['exp' => Carbon::now()->addDay(2)->timestamp])) {
+            if (!$token = $this->jwt->attempt($credentials)) {
                 return response()->json(['message' => 'invalid_credentials'], 404);
             }
         } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
