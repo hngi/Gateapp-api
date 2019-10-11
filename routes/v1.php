@@ -73,6 +73,13 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //View Estates by country
     Route::get('/estate/bycountry/{country}', 'EstateController@showCountry');
 
+    //payment 
+
+    //save payment
+    Route::post('/payment', 'GetPayment@postPayment');
+    //show payment
+    Route::get('/payment/{id}', 'GetPayment@getPayment');
+
 });
 
 //This our testing api routes
@@ -80,4 +87,8 @@ Route::get('test', 'TestController@test');
 // Kazeem Asifat QRCode generator *******************************************
 //The qr code has been mordify to be sent as jason
 Route::get('generate-code', 'TestController@qrCode');
+
+
+
+
 
