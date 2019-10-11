@@ -86,4 +86,18 @@ public function update(Estate $estate)
 
 }
 
+
+// Delete Estates by id 
+    
+public function deleteEstate($id)
+{   
+    $estates = Estate::where('estate_id', $id)->get();
+    $estates->delete();
+    
+    // Success message
+    $res['message']    = "Estate deleted";
+    return response()->json($res, 200);  
 }
+    
+
+
