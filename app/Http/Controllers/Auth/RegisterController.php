@@ -38,7 +38,6 @@ class RegisterController extends Controller
     {
         $this->validateRequest($request);
         $verifycode = Str::random(6);
-
         //start temporay transaction
         DB::beginTransaction();
 
