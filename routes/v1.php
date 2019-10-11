@@ -73,6 +73,13 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //View Estates by country
     Route::get('/estate/bycountry/{country}', 'EstateController@showCountry');
 
+    //payment 
+
+    //save payment
+    Route::post('/payment', 'GetPayment@postPayment');
+    //show payment
+    Route::get('/payment/{id}', 'GetPayment@getPayment');
+
 });
 
 //This our testing api routes
@@ -110,3 +117,4 @@ Route::post('visitor', [
 ]);
 
 //------------------------------End Visitor Routes --------------------
+
