@@ -15,6 +15,11 @@
 #### /api/verify
 #### /password/verify
 #### /password/reset
+#### /api/v1/user
+#### /api/v1/user/{id}
+#### /api/v1//user/edit
+#### /api/v1//user/password
+#### /api/v1//user/delete
 
 ## Features
 
