@@ -15,7 +15,7 @@ class CreateVisitorsTable extends Migration
     {
         Schema::create('visitors', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('visitor_name', 50);
+            $table->string('name', 50);
             $table->date('arrival_date');
             $table->string('car_plate_no', 20)->nullable();
             $table->string('purpose', 40);
