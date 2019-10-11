@@ -67,9 +67,7 @@ Route::get('generate-code', 'TestController@qrCode');
 //******************* To view a specific service provider ************************
 Route::get('/estate/service-provider/{id}', 'ServiceProviderController@show');
 
-
 //******************* To Delete a specific service provider ************************
 Route::delete('/estate/service-provider/delete/{id}', 'ServiceProviderController@destroy');
-
 
 //-------------------------------------------------------------------------------------
