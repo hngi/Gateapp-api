@@ -22,6 +22,7 @@ class EstateController extends Controller
         return response()->json($res, 200);
     }
    
+    
 
     // Display Estates by City 
 
@@ -56,48 +57,47 @@ class EstateController extends Controller
     
 
 
-public function store(Estate $request)
-{
-    $data =$request->all();
-    if($request->create($data)){
-        return response()->json($data);
+    public function store(Estate $request)
+        {
+            $data =$request->all();
+            if($request->create($data)){
+                return response()->json($data);
+            }
+
+            $res['Error']    = "Something went wrong please";
+            return response()->json($res, 400);
+
+
+        }
+
+    public function update(Estate $estate)
+    {
+        $data =request()->all();
+        if(empty($data['estate_name'])){
+            $estate->estate_name = $data['estate_name'];
+        }
+        else if(empty($data['city'])){
+            $estate->city = $data['city'];
+        }
+        else if (empty($data['country'])){
+            $estate->country = $data['country'];
+        }
+        $data= $estate->update();
+        return response()->json($data, 'User updated successfully');
+
     }
 
-    $res['Error']    = "Something went wrong please";
-    return response()->json($res, 400);
 
+    // Delete Estates by id 
+        
+    public function deleteEstate($id)
+    {   
+        $estates = Estate::where('estate_id', $id)->get();
+        $estates->delete();
+        
+        // Success message
+        $res['message']    = "Estate deleted";
+        return response()->json($res, 200);  
+    }
 
 }
-
-public function update(Estate $estate)
-{
-    $data =request()->all();
-    if(empty($data['estate_name'])){
-        $estate->estate_name = $data['estate_name'];
-    }
-    else if(empty($data['city'])){
-        $estate->city = $data['city'];
-    }
-    else if (empty($data['country'])){
-        $estate->country = $data['country'];
-    }
-    $data= $estate->update();
-    return response()->json($data, 'User updated successfully');
-
-}
-
-
-// Delete Estates by id 
-    
-public function deleteEstate($id)
-{   
-    $estates = Estate::where('estate_id', $id)->get();
-    $estates->delete();
-    
-    // Success message
-    $res['message']    = "Estate deleted";
-    return response()->json($res, 200);  
-}
-    
-
-
