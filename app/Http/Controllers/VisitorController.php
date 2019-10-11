@@ -6,10 +6,25 @@ use App\Visitor;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use JWTAuth;
 
 class VisitorController extends Controller
 {
+
+    /**
+     * @var string $user
+     * @access protected
+     */
+    protected $user;
+
+    public function __construct()
+    {
+        $this->user = auth()->user();
+        // $this->user = JWTAuth::parseToken()->authenticate();
+    }
+
 	/**
 	 * Get all visitor
 	 *
@@ -22,13 +37,9 @@ class VisitorController extends Controller
     	$per_page = $request->query('per_page');
 
     	// return the requested number of visitors.
-    	// if there was no requested number of visitors,
-    	// the default, 15 visitors data, are sent
+    	// if there was no pagination set by the query,
+    	// limit the response to 15 data set
     	$visitors = Visitor::paginate($per_page);
-
-        if ($visitors['total'] == 0) {
-            return response()->json(['message' => 'Record not found!'], 404);
-        }
 
         // send response with the visitors' details
         return response()->json([
@@ -47,10 +58,10 @@ class VisitorController extends Controller
     public function show($id)
     {
     	// retrieve the visitor's detials with the id
-        $res = Visitor::find($id);
+        $res = $this->user->visitors()->find($id);
 
         // output an error if the id is not found
-        if (is_null($res)) {
+        if (!$res) {
             return response()->json(['message' => 'Record not found!'], 404);
         }
 
@@ -70,45 +81,44 @@ class VisitorController extends Controller
 	 */
     public function store(Request $request)
     {
-    	// get the posted data
-    	$data = [
-            'visitor_name' => $request->visitor_name,
-            'arrival_date' => $request->arrival_date,
-            'car_plate_no' => $request->car_plate_no,
-            'purpose' 	   => $request->purpose,
-            'image' 	   => $request->image,
-            'status' 	   => $request->status,
-            'user_id' 	   => $request->user_id,
-            'home_id' 	   => $request->home_id,
-    	];
-
     	// validate the posted data
-    	$validator = \Validator::make($data, [
-            'visitor_name' => 'required|string',
+    	$this->validate($request, [
+            'name' => ['required', 'regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
             'arrival_date' => 'required|date_format:Y-m-d',
             'car_plate_no' => 'string|nullable',
             'purpose' => 'required|string',
             'image' => 'string|nullable',
             'status' => 'required|string',
-            'user_id' => 'required|integer',
             'home_id' => 'required|integer',    		
     	]);
 
-		// checkes if the data is valid
-		if($validator->fails()) {
-			return response()->json($validator->errors());
-		}
+        $visitor = new Visitor();
 
-    	// create new visitor with validated data
-    	$visitor = Visitor::create($data);
-    	
-    	// send response
-        return response()->json([
-            'error'   => false,
-            'visitor' => $visitor,
-            'status'  => true,
-            'message' => 'Visitor successfully added',
-        ], 200);	
+        $visitor->name = $request->name;
+        $visitor->arrival_date = $request->arrival_date;
+        $visitor->car_plate_no = $request->car_plate_no;
+        $visitor->purpose = $request->purpose;
+        $visitor->image = $request->image ? $request->image : 'no_image.jpg';
+        $visitor->status = $request->status;
+        $visitor->user_id = $this->user->id;
+        $visitor->home_id = $request->home_id;
+
+		// add new visitor
+        if ($this->user->visitors()->save($visitor)) {
+        	// send response
+            return response()->json([
+                'error'   => false,
+                'visitor' => $visitor,
+                'status'  => true,
+                'message' => 'Visitor successfully added',
+            ], 200);
+        } else {
+            return response()->json([
+                'error' => true,
+                'status' => false,
+                'message' => 'Sorry, visitor could not be added'
+            ], 500);
+        }    	
     }
 
 	/**
@@ -120,35 +130,37 @@ class VisitorController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
-    	// gets the visitor's record from the database
-		$visitor = Visitor::find($id);
-
+        // gets the visitor's record from the database
+        $visitor = $this->user->visitors()->find($id);
+   
         // output an error if the id is not found
-        if (is_null($visitor)) {
+        if (!$visitor) {
             return response()->json(['message' => 'Record not found!'], 404);
         }
 
-    	// bootstrap the carbon support package
-    	$time = Carbon::now();
-    	$time_in = $time->format('Y-m-d H:i:s');
+        $updated = $visitor->fill($request->except(['token']));
 
-		// fetch the necesssary data need to be updated for the visitor
-    	$data = [
-            'visitor_name' => Visitor::useit($request->visitor_name, $visitor->visitor_name),
+        // bootstrap the carbon support package
+        $time = Carbon::now();
+        $time_in = $time->format('Y-m-d H:i:s');
+
+        // fetch the necesssary data needed to be updated for the visitor
+        $data = [
+            'name' => Visitor::useit($request->name, $visitor->name),
             'arrival_date' => Visitor::useit($request->arrival_date, $visitor->arrival_date),
             'car_plate_no' => Visitor::useit($request->car_plate_no, $visitor->car_plate_no),
-            'purpose' 	   => Visitor::useit($request->purpose, $visitor->purpose),
-            'image' 	   => Visitor::useit($request->image, $visitor->image),
-            'status' 	   => Visitor::useit($request->status, $visitor->status),
-            'time_in' 	   => Visitor::useit($request->time_in, $visitor->time_in),
-            'time_out' 	   => Visitor::useit($request->time_out, $visitor->time_out),
-            'user_id' 	   => Visitor::useit($request->user_id, $visitor->user_id),
-            'home_id' 	   => Visitor::useit($request->home_id, $visitor->home_id),
-    	];
+            'purpose' => Visitor::useit($request->purpose, $visitor->purpose),
+            'image' => Visitor::useit($request->image, $visitor->image),
+            'status' => Visitor::useit($request->status, $visitor->status),
+            'time_in' => Visitor::useit($request->time_in, $visitor->time_in),
+            'time_out' => Visitor::useit($request->time_out, $visitor->time_out),
+            'user_id' => Visitor::useit($request->user_id, $visitor->user_id),
+            'home_id' => Visitor::useit($request->home_id, $visitor->home_id),
+        ];
 
-    	// validate the posted data
-    	$validator = \Validator::make($data, [
-            'visitor_name' => 'string',
+        // validate the posted data
+        $validator = Validator::make($data, [
+            'name' => ['required', 'regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
             'arrival_date' => 'date_format:Y-m-d',
             'car_plate_no' => 'string|nullable',
             'purpose' => 'string',
@@ -157,32 +169,32 @@ class VisitorController extends Controller
             'time_in' => 'date_format:"Y-m-d H:i:s"',
             'time_out' => 'date_format:Y-m-d H:i:s|nullable',
             'user_id' => 'integer',
-            'home_id' => 'integer',  		
-    	]);
+            'home_id' => 'integer',         
+        ]);
 
-		// checkes if the data is valid
-		if($validator->fails()) {
-			return response()->json($validator->errors());
-		}
+        // check if the data is valid
+        if($validator->fails()) {
+            return response()->json($validator->errors());
+        }
 
         // update the visitor's requested data
-		$success = $visitor->update($data);
+        $success = $visitor->update($data);
 
-		// send out response
-		if ($success) {
-	        return response()->json([
-	            'error'   => false,
-	            'visitor' => $visitor,
-	            'status'  => true,
-	            'message' => "Visitor's information updated successfully"
-	        ], 200);	
-		} else {
-			$resp['error']   = true;
-			$resp['status']  = false;
-			$resp['message'] = 'We could not update the information now, please try again';
-
-			return response()->json($resp);
-		}
+        // send out response
+        if ($success) {
+            return response()->json([
+                'error'   => false,
+                'visitor' => $visitor,
+                'status'  => true,
+                'message' => "Visitor's information updated successfully"
+            ], 200);  
+        } else {
+            return response()->json([
+                'error'   => true,
+                'status'  => false,
+                'message' => 'Sorry, visitor\'s could not be updated'
+            ], 200);
+        }  
 	}
 
 	/**
@@ -194,28 +206,28 @@ class VisitorController extends Controller
 	public function destroy($id)
 	{
     	// retrieve the visitor's detials with the id
-		$visitor = Visitor::find($id);
+		$visitor = $this->user->visitors()->find($id);
 
         // output an error if the id is not found
-        if (is_null($visitor)) {
-            return response()->json(['message' => 'Record not found!'], 404);
+        if (!$visitor) {
+            return response()->json(['message' => 'Record not found!'], 400);
         }
 		
-		// delete the requested visitor
-		$success = $visitor->delete();
-
-		// send a response
-		if($success) {
-			$resp['error']    = false;
-			$resp['status']   = true;
-			$resp['message']  = "Visitor information has been deleted successfully";
+		// delete the requested visitor and send a response
+		if($visitor->delete()) {
+            return response()->json([
+                'error' => false,
+                'status' => true,
+                'message' => 'Visitor information has been deleted successfully',
+            ], 200);
 		} else {
-			$resp['error']    = true;
-			$resp['status']   = false;
-			$resp['message']  = "We could not delete this visitor";
+            return response()->json([
+                'error' => true,
+                'status' => false,
+                'message' => 'Visitor could not be deleted',
+            ], 500);
 		}
-		
-		return response()->json($resp);
 	}
-
 }
+
+
