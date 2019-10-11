@@ -56,12 +56,14 @@ class EstateController extends Controller
             return response()->json($allestates);  
     }
     
+    // Delete Estates by id 
     public function deleteEstate($id)
     {   
         $estates = Estate::where('estate_id', $id)->get();
-        $resident->delete();
+        $estates->delete();
+        
         // Success message
-        $res['Message']    = "Estate deleted";
+        $res['message']    = "Estate deleted";
         return response()->json($res, 200);  
     }
 }

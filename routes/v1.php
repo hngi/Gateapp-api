@@ -75,7 +75,13 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('/estate/bycountry/{country}', 'EstateController@showCountry');
 
     //Delete Estates by estate_id
-    Route::get('/estate/delete/{estate}', 'EstateController@deleteEstate');
+    Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate');
+    //payment 
+
+    //save payment
+    Route::post('/payment', 'GetPayment@postPayment');
+    //show payment
+    Route::get('/payment/{id}', 'GetPayment@getPayment');
 
 });
 
@@ -85,4 +91,8 @@ Route::get('test', 'TestController@test');
 // Kazeem Asifat QRCode generator *******************************************
 //The qr code has been mordify to be sent as jason
 Route::get('generate-code', 'TestController@qrCode');
+
+
+
+
 
