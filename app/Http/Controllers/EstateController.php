@@ -54,4 +54,36 @@ class EstateController extends Controller
             return response()->json($allestates);  
     }
     
+
+
+public function store(Estate $request)
+{
+    $data =$request->all();
+    if($request->create($data)){
+        return response()->json($data);
+    }
+
+    $res['Error']    = "Something went wrong please";
+    return response()->json($res, 400);
+
+
+}
+
+public function update(Estate $estate)
+{
+    $data =request()->all();
+    if(empty($data['estate_name'])){
+        $estate->estate_name = $data['estate_name'];
+    }
+    else if(empty($data['city'])){
+        $estate->city = $data['city'];
+    }
+    else if (empty($data['country'])){
+        $estate->country = $data['country'];
+    }
+    $data= $estate->update();
+    return response()->json($data, 'User updated successfully');
+
+}
+
 }

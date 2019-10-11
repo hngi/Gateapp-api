@@ -73,6 +73,11 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //View Estates by country
     Route::get('/estate/bycountry/{country}', 'EstateController@showCountry');
 
+    //**********John's Api***************//
+    //Create Estate
+    Route::post('/estate', 'EstateController@store');
+    Route::patch('/estate', 'EstateController@update');
+
     //payment 
 
     //save payment
