@@ -22,7 +22,22 @@ class EstateController extends Controller
         return response()->json($res, 200);
     }
    
-     // Display Estates by Id 
+     // Display Estates by name 
+
+     public function search($name)
+     {
+         
+         $estates = Estate::where('estate_name', 'LIKE', "%{$name}%")->get();
+         if ($estates ->isEmpty()){
+            //Error Handling
+             $res['Error']    = "No Estates found";
+             return response()->json($res, 404);  
+             
+         }else
+             $allestates = EstateResource::collection($estates); //Use Resource to format Output 
+             return response()->json($allestates);  
+     }
+    // Display Estates by Id 
 
      public function show($id)
      {
