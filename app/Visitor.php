@@ -1,6 +1,10 @@
 <?php
+
 namespace App;
+
 use Illuminate\Database\Eloquent\Model;
+
+
 class Visitor extends Model
 {
     /**
@@ -9,7 +13,15 @@ class Visitor extends Model
      * @var array
      */
     protected $fillable = [
-        'visitor_name', 'arrival_date', 'car_plate_no', 'purpose', 'image', 'status',
+        'name',
+        'arrival_date', 
+        'car_plate_no', 
+        'purpose', 
+        'image', 
+        'status',
+        'time_out',
+        'time_in',
+        'home_id',
     ];
 
 
@@ -28,8 +40,39 @@ class Visitor extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'visitor_id';
+    protected $primaryKey = 'id';
 
 
+    /**
+     * Disable Laravel created_at and updated_at tables
+     */
     public $timestamps = false;
+
+    /**
+     * Get the user that the visitor visited.
+     * This expects that visitor table has a col named user_id
+     */
+    public function user()
+    {
+        // return $this->belongsTo(User::class);
+        return $this->belongsTo('App\User');
+    }
+
+    /**
+     * Get the home that the visitor visited.
+     * This expects that visitor table has a col named home_id
+     */
+    public function home()
+    {
+        // return $this->belongsTo(Home::class);
+        return $this->belongsTo('App\Home');
+    }
+
+    /**
+     * Logic method for pulling in default values for empty values
+     */
+    protected static function useit($major, $fallback)
+    {
+        return $major ? $major : $fallback;
+    }
 }
