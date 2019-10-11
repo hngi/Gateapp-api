@@ -22,7 +22,21 @@ class EstateController extends Controller
         return response()->json($res, 200);
     }
    
-    
+     // Display Estates by Id 
+
+     public function show($id)
+     {
+         
+         $estates = Estate::where('estate_id', $id)->get();
+         if ($estates ->isEmpty()){
+            //Error Handling
+             $res['Error']    = "No Estates found";
+             return response()->json($res, 404);  
+             
+         }else
+             $allestates = EstateResource::collection($estates); //Use Resource to format Output 
+             return response()->json($allestates);  
+     }
 
     // Display Estates by City 
 
@@ -57,15 +71,19 @@ class EstateController extends Controller
     
 
 
-    public function store(Estate $request)
+    public function store(Request $request)
         {
-            $data =$request->all();
-            if($request->create($data)){
+            $data= Estate::firstOrCreate(
+                ['estate_name' => $request-> input('estate_name'),
+                'city' => $request-> input('city'),'country' => $request-> input('country')]);
+            //$data =$request->all();
+                if($data->save()){
                 return response()->json($data);
-            }
+            }else{
+                $res['Error']    = "Something went wrong please try again";
+                return response()->json($res, 400);
 
-            $res['Error']    = "Something went wrong please";
-            return response()->json($res, 400);
+            }
 
 
         }
@@ -83,7 +101,7 @@ class EstateController extends Controller
             $estate->country = $data['country'];
         }
         $data= $estate->update();
-        return response()->json($data, 'User updated successfully');
+        return response()->json($data, 'Estate updated successfully');
 
     }
 
@@ -92,7 +110,7 @@ class EstateController extends Controller
         
     public function deleteEstate($id)
     {   
-        $estates = Estate::where('estate_id', $id)->get();
+        $estates = Estate::where('estate_id', $id);
         $estates->delete();
         
         // Success message
