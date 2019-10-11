@@ -38,23 +38,22 @@ class RegisterController extends Controller
     {
         $this->validateRequest($request);
         $verifycode = Str::random(6);
-
         //start temporay transaction
         DB::beginTransaction();
 
         try{
            $user = User::create([
-                'name'     => $request->input('name'),
+                'first_name'     => $request->input('first_name'),
+                'last_name'     => $request->input('last_name'),
                 'email'    => $request->input('email'),
                 'image'    => 'no_image.jpg',
                 'password' => Hash::make($request->input('password')),
                 'phone'    => $request->input('phone'),
                 'role'     => $role,
-                'verifycode' => $verifycode 
+                'verifycode' => $verifycode
             ]);
 
-            $msg['message'] = 'Account created successfully';
-            $msg['message-2'] = 'A verification code has been sent to your email, please use to veriify your account, also check your spam folder for email';
+            $msg['message'] = 'A verification code has been sent to your email, please use to veriify your account, also check your spam folder for email';
             $msg['user']    = $user;
 
             //Send a mail form account verification
@@ -64,11 +63,13 @@ class RegisterController extends Controller
             $msg['status'] = 201;
             return $msg;
 
+
         }catch(\Exception $e) {
             //if any operation fails, Thanos snaps finger - user was not created rollback what is saved
             DB::rollBack();
 
-            $msg['error'] = "Error: Account not created, please try again!";
+            $msg['message'] = "Error: Account not created, please try again!";
+            $msg['user'] = null;
             $msg['hint'] = $e->getMessage();
             $msg['status'] = 501;
             return $msg;
@@ -78,8 +79,9 @@ class RegisterController extends Controller
     public function validateRequest(Request $request){
             $rules = [
                 'email'    => 'required|email|unique:users',
-                'name'     => 'required|string',
-                'password' => 'required|min:8',
+                'first_name'     => 'required|string',
+                'last_name'     => 'required|string',
+                'password' => 'required|min:8|confirmed',
                 'phone'    => 'required'
             ];
             $messages = [

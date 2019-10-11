@@ -31,7 +31,7 @@ class ResetPasswordController extends Controller
     // Do a validation for the input
         $this->validate($request, [
             'verifycode' => 'required|max:6|min:5',
-            'password'   => 'required|min:8',
+            'password'   => 'required|min:8|confirmed',
         ]);
 
         $verifycode = $request->input('verifycode');
@@ -44,7 +44,7 @@ class ResetPasswordController extends Controller
           $res['success'] = false;
           $res['message'] = 'Verification code does not exist, please try again!';
           return response()->json($res, 401);
-       }else{  
+       }else{
          //start temporay transaction
          DB::beginTransaction();
         try{
