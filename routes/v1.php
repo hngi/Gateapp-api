@@ -41,7 +41,14 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('user/all/{role_id}', 'UserProfileController@role')->middleware('admin');
 
     //show one admin
-    Route::get('admin/{id}', 'UserProfileController@showOneAdmin');
+    Route::get('admin/{id}', 'UserProfileController@showOneAdmin')->middleware('admin');
+
+     //**********John's Api***************//
+    //Edit Estate
+    Route::patch('/estate', 'EstateController@update')->middleware('admin');
+
+    //Delete Estates by estate_id
+    Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate')->middleware('admin');
 
     //Admin only Delete Estates by estate_id
     Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate')->middleware('admin');
@@ -82,14 +89,9 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //View Estates by country
     Route::get('/estate/country/{country}', 'EstateController@showCountry');
 
-
-    
-
-
     //**********John's Api***************//
     //Create Estate
     Route::post('/estate', 'EstateController@store');
-    
 
     //payment 
 
@@ -98,6 +100,38 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //show payment
     Route::get('/payment/{id}', 'GetPayment@getPayment');
 
+    //*********************************Visitor Routes ******************
+
+    // Ayeni Kehinde Oluwatosin *******************************
+
+    // Show all visitor
+    Route::get('visitor', 'VisitorController@index');
+
+    // Show single visitor
+    Route::get('visitor/{id}', 'VisitorController@show');
+
+    /** end Ayeni kehinde Oluwatosin ******************************/
+
+    // @iOreoluwa *******************************
+
+    // Edit Visitor account
+    Route::put('visitor/{id}', 'VisitorController@update');
+
+    // Delete Visitor account
+    Route::delete('visitor/{id}', 'VisitorController@destroy');
+
+    /** end @iOreoluwa ******************************/
+
+    // @andy *******************************
+    Route::post('visitor', [
+        'uses' => 'VisitorController@store',
+        'as'   => 'new.visitor',
+    ]);
+
+    //------------------------------End Visitor Routes --------------------
+
+
+
 });
 
 //This our testing api routes
@@ -105,8 +139,3 @@ Route::get('test', 'TestController@test');
 // Kazeem Asifat QRCode generator *******************************************
 //The qr code has been mordify to be sent as jason
 Route::get('generate-code', 'TestController@qrCode');
-
-
-
-
-
