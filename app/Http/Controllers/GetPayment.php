@@ -19,13 +19,26 @@ class GetPayment extends Controller
             
     
 
-	    $payment_details = Payment::whereId($id)->first();
+	    $payment_details = Payment::wherepayment_d($id)->first();
 
 	   if ($payment_details) {
 
-		   	$payment['msg'] = "Payment was found";
-		   	$payment['payment_details'] = $payment_details;
-		   	$status = 200;
+		   $home = Home::wherehome_id($payment_details->home_id)->first();
+			if ($home) {
+				if ($user->id == $home->user_id) {
+					$payment['msg'] = "Payment was found";
+				   	$payment['payment_details'] = $payment_details;
+				   	$status = 200;
+				}else{
+					$payment['msg'] = "Payment not traceble to you";
+				   	$payment['payment_details'] = null;
+				   	$status = 404;
+				}
+			}else{
+				$payment['msg'] = "Payment not traceble to your home";
+			   	$payment['payment_details'] = null;
+			   	$status = 200;
+			}
 	   	}else{
 
 		   	$payment['msg'] = "Could not find payment";
