@@ -15,6 +15,11 @@
 #### /api/verify
 #### /password/verify
 #### /password/reset
+#### /api/v1/user
+#### /api/v1/user/{id}
+#### /api/v1//user/edit
+#### /api/v1//user/password
+#### /api/v1//user/delete
 
 ## Features
 
@@ -23,7 +28,9 @@
 ## Installation
 
 * clone this repo
-* cd into the project folder and run `php -S localhost:8000`
+* cd into the project folder
+* Run composer install to install depedencies
+* Run `php artisan serve`
 * visit localhost:8000 in your web browser
 
 ## Rules for sending PR
@@ -32,6 +39,8 @@
 * outline the steps to be taken in order to test the feature you added
 * attach a screenshot or gif of what you did, if possible
 * do not send PR to the master branch
+
+
 
 ## Note 
 * if you want to manually delete form the database this is the link
