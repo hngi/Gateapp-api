@@ -11,13 +11,13 @@ use Illuminate\Validation\ValidationException;
 
 class GetPayment extends Controller
 {
-	public function getPayment(Request $request,$id)
+	public function getPayment($id)
 	{
 		$user = Auth::user();
 
-		$this->validate($request, [
-            'id' => 'required|min:1',
-        ]);
+		
+            
+    
 
 	    $payment_details = Payment::whereId($id)->first();
 
