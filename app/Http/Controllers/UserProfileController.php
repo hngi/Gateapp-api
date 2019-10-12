@@ -18,6 +18,7 @@ class UserProfileController extends Controller
         $admins = [];
         $residents = [];
         $gatemans = [];
+
         $users = User::all();
         foreach ($users as $user) {
             if($user->role == 0) {
@@ -34,6 +35,7 @@ class UserProfileController extends Controller
         $res['gatemans']  = $gatemans;
         return response()->json($res, 200);
     }
+
     public function showOneAdmin($id) {
         $user = User::find($id);
         if($user->role == 0) {
@@ -47,9 +49,10 @@ class UserProfileController extends Controller
             return response()->json($res, 404);
         }
     }
+
     public function show($id) {
         $user = User::find($id);
-        if($user->role == 1 || $user->role == 2) {
+        if($user->role == 1 || $user->role == 2) { // condition statements shows specific resident or gate man users except admin by id
             $res['status'] = true;
             $res['message'] = 'User found';
             $res['user'] = $user;
@@ -60,11 +63,15 @@ class UserProfileController extends Controller
             return response()->json($res, 404);
         }
     }
+
+
     public function role($role_id) {
         $users = User::where('role', $role_id)->get();
         return response()->json($users);
+
     }
-    public function update(Request $request) {
+
+    public function update(Request $request) {  // update user information
         $user = Auth::user();
         $this->validate($request, [
             'first_name' => 'required|min:2',
@@ -72,6 +79,7 @@ class UserProfileController extends Controller
             'email' => 'required|min:2|unique:users,email,'.$user->id,
             'phone' => 'required',
         ]);
+
         //start temporay transaction
         DB::beginTransaction();
         try{
@@ -85,22 +93,30 @@ class UserProfileController extends Controller
             DB::commit();
             $res['status']  = true;
             $res['user']    = $user;
-            $res['message'] = 'Your Account Was Successfully Updated.';
+            $res['message'] = 'Your Account Was Successfully Updated';
+
             return response()->json($res, 200);
+
         }catch(\Exception $e) {
             //rollback what is saved
             DB::rollBack();
+
             $res['status'] = false;
-            $res['message'] = 'An Error Occured While Trying To Update Your Account Information.';
+            $res['message'] = 'An Error Occured While Trying To Update Your Account Information';
             $res['hint'] = $e->getMessage();
+
             return response()->json($res, 501);
+
         }
    }
+
     public function password(Request $request) {
         $user = Auth::user();
         $this->validate($request, [
-            'old_password'=> 'required|string',
-            'password' => 'required|min:8|different:old_password|confirmed'
+            'first_name' => 'required|min:2',
+            'last_name' => 'required|min:2',
+            'email' => 'required|min:2|unique:users,email,'.$user->id,
+            'phone' => 'required',
         ]);
          //start temporay transaction
         DB::beginTransaction();
@@ -119,10 +135,12 @@ class UserProfileController extends Controller
                 $res['message'] = 'Password Update unsuccessful: An error occured, please try again!';
                 return response()->json($res, 501);
         }
+
     }
+
     public function destroy() {
         $user = Auth::user();
-        if($user) {
+        if($user) {         // removes user account
             $user->delete();
             $res['message'] = 'User deleted successfully';
             return response()->json($res, 200);

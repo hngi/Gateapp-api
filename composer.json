@@ -15,6 +15,8 @@
         "jrm2k6/cloudder": "^0.6.0",
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",
+        "pusher/pusher-php-server": "^4.0",
+        "simplesoftwareio/simple-qrcode": "^2.0",
         "tymon/jwt-auth": "^1.0@dev",
         "vlucas/phpdotenv": "^3.3"
     },
