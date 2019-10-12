@@ -37,7 +37,7 @@ class GetPayment extends Controller
 			}else{
 				$payment['msg'] = "Payment not traceble to your home";
 			   	$payment['payment_details'] = null;
-			   	$status = 200;
+			   	$status = 404;
 			}
 	   	}else{
 
