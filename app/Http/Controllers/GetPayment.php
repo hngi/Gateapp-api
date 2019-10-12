@@ -19,7 +19,7 @@ class GetPayment extends Controller
             
     
 
-	    $payment_details = Payment::wherepayment_d($id)->first();
+	    $payment_details = Payment::wherepayment_id($id)->first();
 
 	   if ($payment_details) {
 
