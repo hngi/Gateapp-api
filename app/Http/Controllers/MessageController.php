@@ -11,7 +11,7 @@ class MessageController extends Controller
 {
     public function conversation($other_user_id) {
         // Conversations for the current user
-        if (true) {
+        if (Auth::check()) {
             $user_id = Auth::id();
             
             $_sent = ['sender_id' => $user_id, 'receiver_id' => $other_user_id];
@@ -39,26 +39,32 @@ class MessageController extends Controller
     }
 
     public function saveMessage(Request $request) {
-        $res = "";
-        try{
-            Message::create([
-                'sender_id'     => $request->input('sender_id'),
-                'receiver_id'     => $request->input('receiver_id'),
-                'message'    => $request->input('message'),
-                'read' => 0
-            ]);
- 
-            DB::commit();
-            $res['message'] = 'Message sent';
-            
-            $res['status'] = 201;
-        } catch(\Exception $e) {
-            DB::rollBack();
+        if (Auth::check()) {
+            $res = array();
+            try{
+                Message::create([
+                    'sender_id'     => Auth::id(),
+                    'receiver_id'     => $request->input('receiver_id'),
+                    'message'    => $request->input('message'),
+                    'read' => 0
+                ]);
+    
+                DB::commit();
+                $res['message'] = 'Message sent';
+                
+                $res['status'] = 201;
+            } catch(\Exception $e) {
+                DB::rollBack();
 
-            $res['message'] = "Error sending message! $e";
-            $res['status'] = 501;
+                $res['message'] = "Error sending message! $e";
+                $res['status'] = 501;
+            }
+        }  else {
+            $res['message'] = "User not logged in";
+            $res['status'] = 401;
         }
-        return $res;
+        
+        return response()->json($res, $res['status']);
     }
 
     public function validateRequest(Request $request){
