@@ -148,4 +148,29 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 Route::get('test', 'TestController@test');
 // Kazeem Asifat QRCode generator *******************************************
 //The qr code has been mordify to be sent as jason
+
 Route::get('generate-code', 'TestController@qrCode');                          
+Route::get('generate-code', 'TestController@qrCode');
+//-------------------------------------------------------------------------------------
+//---------------- Api Route for Service Provider -----------------------------------
+
+
+// Tobbhie Notification API***********************************************************
+Route::get('init', function () {
+    event(new App\Events\notify('Someone'));
+    return "Notification sent";
+});
+//end
+
+//******************* To Create a service provider ************************
+Route::post('/estate/service-provider/', 'ServiceProviderController@create');
+
+//-------------------------------------------------------------------------------------
+
+//******************* To view a specific service provider ************************
+Route::get('/estate/service-provider/{id}', 'ServiceProviderController@show');
+
+//******************* To Delete a specific service provider ************************
+Route::delete('/estate/service-provider/delete/{id}', 'ServiceProviderController@destroy');
+
+//-------------------------------------------------------------------------------------
