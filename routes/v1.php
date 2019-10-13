@@ -136,10 +136,10 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     /*******************Dirkmal Message Routes */
     // Get conversations between the current user and another user specified by their id (other_user_id)
-    Route::get('messages/{other_user_id}', 'MessageController@conversation');
-
+    
     // Save a message to the Database with the sender's id and the receiver's id
     //  as well as the message itself
+    Route::get('messages/{other_user_id}', 'MessageController@conversation');
     Route::post('/messages', 'MessageController@saveMessage');  
     /*******************************End Message Routes */
 });
