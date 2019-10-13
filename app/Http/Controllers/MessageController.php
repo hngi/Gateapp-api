@@ -10,28 +10,38 @@ use Illuminate\Support\Facades\DB;
 class MessageController extends Controller
 {
     public function conversation($other_user_id) {
-        // To get the currently connected user's id
-        $user = Auth::user();
-        $user_id = $user->id;
-        
-    	$_sent = ['sender_id' => $user_id, 'receiver_id' => $other_user_id];
-        $_received= ['sender_id' => $other_user_id, 'receiver_id' => $user_id];
-        
-        $sent_msgs = $received_msgs = "";
-        $sent_msgs = Message::where($_sent)->get();
-        $received_msgs = Message::where($_received)->get();
-
-        if($sent_msgs || $received_msgs) {
-            $res['sent'] = $sent_msgs;
-            $res['received'] = $received_msgs;
-            return response()->json($res, 200);
+        // Conversations for the current user
+        if (true) {
+            $user_id = Auth::id();
+            
+            $_sent = ['sender_id' => $user_id, 'receiver_id' => $other_user_id];
+            $_received= ['sender_id' => $other_user_id, 'receiver_id' => $user_id];
+            
+            $sent_msgs = $received_msgs = "";
+            $sent_msgs = Message::where($_sent)->get();
+            $received_msgs = Message::where($_received)->get();
+    
+            $res = array();
+            if(!$sent_msgs->isEmpty() || !$received_msgs->isEmpty()) {
+                $res['sent'] = $sent_msgs;
+                $res['received'] = $received_msgs;
+                $res['message'] = "Retrieved conversation(s)";
+                $res['status'] = 200;
+            } else {
+                $res['message'] = "No conversation found between users";
+                $res['status'] = 200;
+            }
+        } else {
+            $res['message'] = "User not logged in";
+            $res['status'] = 401;
         }
-        
+        return response()->json($res, $res['status']);        
     }
 
     public function saveMessage(Request $request) {
+        $res = "";
         try{
-            $msg = Message::create([
+            Message::create([
                 'sender_id'     => $request->input('sender_id'),
                 'receiver_id'     => $request->input('receiver_id'),
                 'message'    => $request->input('message'),
@@ -42,14 +52,13 @@ class MessageController extends Controller
             $res['message'] = 'Message sent';
             
             $res['status'] = 201;
-            return $res; 
         } catch(\Exception $e) {
             DB::rollBack();
 
             $res['message'] = "Error sending message! $e";
             $res['status'] = 501;
-            return $res;
         }
+        return $res;
     }
 
     public function validateRequest(Request $request){
