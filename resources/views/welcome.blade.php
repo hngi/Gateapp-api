@@ -14,7 +14,7 @@
     <h2>Welcome</h2>
     <h3>
       Read the 
-      <a href="https://documenter.getpostman.com/view/6843654/SVtSXAQP?version=latest">API Docs</a>
+      <a href="https://documenter.getpostman.com/view/9048286/SVtWw7SL">API Docs</a>
     </h3>
   </body>
 </html>
