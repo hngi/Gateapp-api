@@ -78,7 +78,7 @@ class RegisterController extends Controller
     public function validateRequest(Request $request){
             $rules = [
                 'email'    => 'required|email|unique:users',
-                'name'     => 'required|string',
+                'name'     => 'required|string|min:4|max:20',
                 'password' => 'required|min:8',
                 'phone'    => 'required'
             ];

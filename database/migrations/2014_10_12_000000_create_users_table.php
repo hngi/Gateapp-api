@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('phone');
             $table->string('image')->default('no_image.jpg');
-            $table->enum('role', array(0,1,2))//0=>admin user 1=>resisdent user 2=>gateman user
+            $table->enum('role', array(0,1,2));//0=>admin user 1=>resisdent user 2=>gateman user
             $table->rememberToken();
             $table->timestamps();
         });
