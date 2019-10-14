@@ -14,7 +14,7 @@ class CreateVisitorsTable extends Migration
     public function up()
     {
         Schema::create('visitors', function (Blueprint $table) {
-            $table->bigIncrements('visitor_id');
+            $table->bigIncrements('id');
             $table->string('visitor_name', 50);
             $table->date('arrival_date');
             $table->string('car_plate_no', 20);
@@ -45,6 +45,7 @@ class CreateVisitorsTable extends Migration
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
+            $table->timestamps();
         });
     }
 
