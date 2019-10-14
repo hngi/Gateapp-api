@@ -24,11 +24,11 @@ class UserProfileController extends Controller
 
         $users = User::all();
         foreach ($users as $user) {
-            if($user->role == 0) {
+            if($user->role == 0) {      
                 array_push($admins, $user);
-            }else if($user->role == 1){
+            }else if($user->role == 1){     
                 array_push($residents, $user);
-            }else if($user->role == 2) {
+            }else if($user->role == 2) {    
                 array_push($gatemans, $user);
             }
         }
@@ -40,8 +40,8 @@ class UserProfileController extends Controller
     }
 
     public function showOneAdmin($id) {
-        $user = User::find($id);
-        if($user->role == 0) {
+        $user = User::find($id); 
+        if($user->role == 0) {      
             $res['status'] = true;
             $res['message'] = 'Admin found';
             $res['admin'] = $user;
@@ -53,9 +53,9 @@ class UserProfileController extends Controller
         }
     }
 
-    public function show($id) {
+    public function show($id) { 
         $user = User::find($id);
-        if($user->role == 1 || $user->role == 2) {
+        if($user->role == 1 || $user->role == 2) { // condition statements shows specific resident or gate man users except admin by id
             $res['status'] = true;
             $res['message'] = 'User found';
             $res['user'] = $user;
@@ -74,8 +74,8 @@ class UserProfileController extends Controller
 
     }
 
-    public function update(Request $request) { 
-        $user = Auth::user();
+    public function update(Request $request) {  // update user information
+        $user = Auth::user();           
         $this->validate($request, [
             'first_name' => 'required|min:2',
             'last_name' => 'required|min:2',
@@ -96,7 +96,7 @@ class UserProfileController extends Controller
             DB::commit();
             $res['status']  = true;
             $res['user']    = $user;
-            $res['message'] = 'Your Account Was Successfully Updated.';
+            $res['message'] = 'Your Account Was Successfully Updated';
 
             return response()->json($res, 200);
 
@@ -105,7 +105,7 @@ class UserProfileController extends Controller
             DB::rollBack();
 
             $res['status'] = false;
-            $res['message'] = 'An Error Occured While Trying To Update Your Account Information.';
+            $res['message'] = 'An Error Occured While Trying To Update Your Account Information';
             $res['hint'] = $e->getMessage();
 
             return response()->json($res, 501);
@@ -145,7 +145,7 @@ class UserProfileController extends Controller
 
     public function destroy() {
         $user = Auth::user();
-        if($user) {
+        if($user) {         // removes user account
             $user->delete();
             $res['message'] = 'User deleted successfully';
             return response()->json($res, 200);
