@@ -22,8 +22,8 @@ class CreateGatemanNotificationsTable extends Migration
             $table->string('date_sent');
             $table->timestamps();
 
-            $table->foreign('resisdent_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('gateman_id')->references('id')->on('user')->onDelete('cascade');
+            $table->foreign('resident_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('gateman_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('visitor_id')->references('id')->on('visitors')->onDelete('cascade');
             $table->foreign('home_id')->references('id')->on('homes')->onDelete('cascade');
         });

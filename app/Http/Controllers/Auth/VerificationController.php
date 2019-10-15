@@ -20,7 +20,7 @@ class VerificationController extends Controller
 
         $this->validate($request, [
             'verifycode'  => 'required|max:6',
-            'device_type' => $request->input('device_type');
+            'device_id' => 'required|min:12'
         ]);
 
         $verifycode = $request->input('verifycode');
@@ -35,7 +35,7 @@ class VerificationController extends Controller
             if ($user->email_verified_at == null){
                 //generate a new verify code 
                 $user->verifycode  =  $this->generatedPassword();
-                $user->device_type =  $request->input('verifycode');
+                $user->device_id   =  $request->input('device_id');
                 $user->email_verified_at = date("Y-m-d H:i:s");
                 $user->save();
                 
