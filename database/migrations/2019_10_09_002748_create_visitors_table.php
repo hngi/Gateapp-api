@@ -24,7 +24,6 @@ class CreateVisitorsTable extends Migration
             $table->timestamp('time_in')->useCurrent();
             $table->timestamp('time_out')->nullable();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('home_id')->nullable();
 
             // table indexes
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
