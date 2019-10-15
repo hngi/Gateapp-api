@@ -22,7 +22,9 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('image')->default('no_image.jpg');
             $table->string('verifycode');
+            $table->enum('user_type', array('admin','resident','gateman'));
             $table->enum('role', array(0,1,2));
+            $table->string('fcm_column')->unique()->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

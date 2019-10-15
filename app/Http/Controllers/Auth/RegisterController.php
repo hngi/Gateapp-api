@@ -44,10 +44,7 @@ class RegisterController extends Controller
         try{
            $user = User::create([
                 'first_name'     => $request->input('first_name'),
-                'last_name'     => $request->input('last_name'),
-                'email'    => $request->input('email'),
                 'image'    => 'no_image.jpg',
-                'password' => Hash::make($request->input('password')),
                 'phone'    => $request->input('phone'),
                 'role'     => $role,
                 'verifycode' => $verifycode
@@ -56,8 +53,8 @@ class RegisterController extends Controller
             $msg['message'] = 'A verification code has been sent to your email, please use to veriify your account, also check your spam folder for email';
             $msg['user']    = $user;
 
-            //Send a mail form account verification
-            Mail::to($user->email)->send(new WelcomeMail($user));
+            //Send a mail form account verification(Dont need the message here we are using sms instead)
+            // Mail::to($user->email)->send(new WelcomeMail($user));
             //if operation was successful save commit save to database
             DB::commit();
             $msg['status'] = 201;
