@@ -20,11 +20,13 @@ class VerificationController extends Controller
 
         $this->validate($request, [
             'verifycode'  => 'required|max:6',
-            'device_id' => 'required|min:12'
+            'device_id' => 'required'
         ]);
 
         $verifycode = $request->input('verifycode');
-        $checkCode  = User::where('verifycode', $verifycode)->exists();
+        $checkCode  = User::where('verifycode', $verifycode)
+                            ->where('device_id', $request->input('device_id'))
+                            ->exists();
 
         if ($checkCode) {
 
@@ -35,7 +37,6 @@ class VerificationController extends Controller
             if ($user->email_verified_at == null){
                 //generate a new verify code 
                 $user->verifycode  =  $this->generatedPassword();
-                $user->device_id   =  $request->input('device_id');
                 $user->email_verified_at = date("Y-m-d H:i:s");
                 $user->save();
                 
@@ -43,6 +44,8 @@ class VerificationController extends Controller
                 $msg['verified'] = "True";
                 $msg['user'] = $user;
                 $msg['token'] = 'Bearer ' . $token;
+                $msg['token_type'] = 'bearer';
+                $msg['expires_in(minutes)'] = (int)auth()->factory()->getTTL();
                 $msg['image_link'] = 'https://res.cloudinary.com/getfiledata/image/upload/';
                 $msg['image_format'] = 'w_200,c_thumb,ar_4:4,g_face/';
 

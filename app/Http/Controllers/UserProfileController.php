@@ -112,11 +112,11 @@ class UserProfileController extends Controller
         }
    }
 
-    public function password(Request $request) {
+    public function phone(Request $request) {
         $user = Auth::user();
 
         $this->validate($request, [
-            'old_phone' => 'required'
+            'old_phone' => 'required',
             'new_phone' => 'required|unique:phone,'.$user->id,
         ]);
          //start temporay transaction

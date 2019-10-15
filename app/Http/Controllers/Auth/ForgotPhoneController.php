@@ -13,7 +13,7 @@ use App\Mail\NewPassword;
 
 use App\User;
 
-class ForgotPasswordController extends Controller
+class ForgotPhoneController extends Controller
 {
     //generate verify code for the user
     public function generatedCode()
@@ -22,13 +22,14 @@ class ForgotPasswordController extends Controller
     }
 
 
-    public function verifyPassword(Request $request)
+    public function verifyPhone(Request $request)
     {
 
     // Do a validation for the input
         $this->validate($request, [
             'old_phone' => 'required',
             'new_phone' => 'required',
+            'new_device_id' => 'required',
         ]);
         $user = User::where('phone', $request->input('old_phone'))->first();
 
@@ -42,12 +43,17 @@ class ForgotPasswordController extends Controller
         DB::beginTransaction();
         try{
             //generate a new verify code 
-            $user->phone      = $request->input('new_phone');
-            $user->verifycode = $this->generatedCode();
+            $user->email_verified_at    = null;
+            $user->phone          = $request->input('new_phone');
+            if ($user->device_id != $request->input('new_device_id')) {
+                  $user->device_id      = $request->input('new_device_id');
+             }
+            $user->verifycode     = $this->generatedCode();
             $user->save();
 
             //Send Sms to new phone number
-            // Mail::to($user->email)->send(new NewPassword($user));
+            //We use mail for now untill sms is implemented
+            Mail::to($user->email)->send(new NewPassword($user));
             //Commit changes 
             DB::commit();
 
@@ -60,6 +66,7 @@ class ForgotPasswordController extends Controller
              DB::rollBack();
              $res['success'] = false;
              $res['message'] = 'OTP Token not sent. Please try again!';
+            $res['hint'] = $e->getMessage();
              return response()->json($res, 501);
           }
     }
