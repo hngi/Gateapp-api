@@ -25,15 +25,20 @@ class LoginController extends Controller
         $this->jwt = $jwt;
     }
 
+    public function expireTime() {
+        $myTTL = 20160; //minutes
+        return $this->jwt->factory()->setTTL($myTTL);
+    }
+
     public function authenticate(Request $request)
-    {
+    {     
+        $this->expireTime();
         // Do a validation for the input
         $this->validateRequest($request);
-
         $credentials = $request->only('email', 'password');
 
         try {
-            if (!$token = $this->jwt->attempt($credentials, ['exp' => Carbon::now()->addDay(2)->timestamp])) {
+            if (!$token = $this->jwt->attempt($credentials)) {
                 return response()->json(['message' => 'invalid_credentials'], 404);
             }
         } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
@@ -55,12 +60,23 @@ class LoginController extends Controller
             $msg['image_link'] = $image_link;
             $msg['image_small_view_format'] = $image_format;
             $msg['token'] = 'Bearer '. $token;
+            $msg['token_type'] = 'bearer';
+            $msg['expires_in(minutes)'] = auth()->factory()->getTTL();
             return response()->json($msg, 200);
         } else {
             $msg['success'] = false;
             $msg['message'] = 'Login Unsuccessful: account has not been confirmed yet!';
             return response()->json($msg, 401);
         }
+    }
+
+    public function refresh()
+    {   
+        return response()->json([
+            'access_token' => 'Bearer '. auth()->refresh(),
+            'token_type'   => 'bearer',
+            'expires_in(minutes)'   => auth()->factory()->getTTL()
+        ], 200);
     }
 
     public function validateRequest(Request $request){
