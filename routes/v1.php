@@ -136,8 +136,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //(Users Messging)
     //Get message
     Route::get('messages/{other_user_id}', 'MessageController@conversation');
-
-    //Save Messge
+    //Save Message
     Route::post('/messages', 'MessageController@saveMessage');  
 
     //(Users And ServiceProvider)
