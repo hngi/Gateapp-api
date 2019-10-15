@@ -37,6 +37,10 @@ class LoginController extends Controller
         $this->validateRequest($request);
         $credentials = User::where('phone', $request->input('phone'))
                              ->where('device_id', $request->input('device_id'))->first();
+        if(!$credentials){
+            return response()->json(['message_1' => 'invalid_credentials',
+             'message_2' => 'Note: device type or phone number is not recognize, verify account and make this device your registered device'], 404);    
+        }
 
         if (!$token = Auth::guard()->login($credentials)) {
             return response()->json(['message_1' => 'invalid_credentials',
