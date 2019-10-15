@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+//Please write all api route in v1.php script file in the routes folder
 Route::prefix('v1')->group( function() {
     require_once "v1.php";
+
 });
