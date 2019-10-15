@@ -43,14 +43,14 @@ class RegisterController extends Controller
 
         try{
            $user = User::create([
-                'first_name'     => $request->input('first_name'),
+                'name'     => $request->input('name'),
                 'image'    => 'no_image.jpg',
                 'phone'    => $request->input('phone'),
                 'role'     => $role,
                 'verifycode' => $verifycode
             ]);
 
-            $msg['message'] = 'A verification code has been sent to your email, please use to veriify your account, also check your spam folder for email';
+            $msg['message'] = 'A verification code has been sent to your phone number, please use to veriify your account!';
             $msg['user']    = $user;
 
             //Send a mail form account verification(Dont need the message here we are using sms instead)
@@ -75,15 +75,13 @@ class RegisterController extends Controller
 
     public function validateRequest(Request $request){
             $rules = [
-                'email'    => 'required|email|unique:users',
-                'first_name'     => 'required|string',
-                'last_name'     => 'required|string',
-                'password' => 'required|min:8|confirmed',
-                'phone'    => 'required'
+                'name'           => 'required|string',
+                'phone'          => 'required|phone|unique:users',
+                'device_type'    => 'required|device_type|unique:users',
             ];
             $messages = [
                 'required' => ':attribute is required',
-                'email'    => ':attribute not a valid format',
+                'phone'    => ':attribute already exist',
             ];
         $this->validate($request, $rules, $messages);
     }

@@ -15,8 +15,8 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
+            $table->string('name')->nullable();
+            $table->string('username')->nullable();
             $table->string('phone')->unique()->nullable();
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('verifycode');
             $table->enum('user_type', array('admin','resident','gateman'));
             $table->enum('role', array(0,1,2));
+            $table->enum('2_factor_enabled', array('no', 'yes'));
             $table->string('fcm_column')->unique()->nullable();
             $table->rememberToken();
             $table->timestamps();

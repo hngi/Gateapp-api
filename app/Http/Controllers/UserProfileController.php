@@ -77,17 +77,16 @@ class UserProfileController extends Controller
     public function update(Request $request) {  // update user information
         $user = Auth::user();           
         $this->validate($request, [
-            'first_name' => 'required|min:2',
-            'last_name' => 'required|min:2',
+            'name' => 'required|min:2',
+            'username' => 'required|min:2',
             'email' => 'required|min:2|unique:users,email,'.$user->id,
-            'phone' => 'required',
         ]);
 
         //start temporay transaction
         DB::beginTransaction();
         try{
-            $user->first_name = $request->input('first_name');
-            $user->last_name  = $request->input('last_name');
+            $user->name      = $request->input('name');
+            $user->username  = $request->input('username');
             $user->email     = $request->input('email');
             $user->phone     = $request->input('phone');
             $user->save();
@@ -117,26 +116,26 @@ class UserProfileController extends Controller
         $user = Auth::user();
 
         $this->validate($request, [
-            'old_password'=> 'required|string',
-            'password' => 'required|min:8|different:old_password|confirmed'
+            'old_phone' => 'required'
+            'new_phone' => 'required|unique:phone,'.$user->id,
         ]);
          //start temporay transaction
         DB::beginTransaction();
         try{
-                $user->password = Hash::make($request->input('password'));
+                $user->password = Hash::make($request->input('new_phone'));
                 $user->save();
 
                  //if operation was successful save commit save to database
                 DB::commit();
                 $res['status'] = true;
-                $res['message'] = 'Password Changed Successfully!';
+                $res['message'] = 'Phone number Changed Successfully!';
                 return response()->json($res, 200);
             }catch(\Exception $e) {
 
                 //rollback what is saved
                 DB::rollBack();
                 $res['status'] = false;
-                $res['message'] = 'Password Update unsuccessful: An error occured, please try again!';
+                $res['message'] = 'Phone number Update unsuccessful: An error occured, please try again!';
                 return response()->json($res, 501);
         }
 

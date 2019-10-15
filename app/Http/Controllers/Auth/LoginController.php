@@ -35,11 +35,12 @@ class LoginController extends Controller
         $this->expireTime();
         // Do a validation for the input
         $this->validateRequest($request);
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('phone', 'device_type');
 
         try {
             if (!$token = $this->jwt->attempt($credentials)) {
-                return response()->json(['message' => 'invalid_credentials'], 404);
+                return response()->json(['message_1' => 'invalid_credentials',
+                 'message_2' => 'Note: device type or phone number is not recognize, verify account and make this device your registered device'], 404);
             }
         } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
             return response()->json(['token_expired'], 500);
@@ -81,12 +82,11 @@ class LoginController extends Controller
 
     public function validateRequest(Request $request){
             $rules = [
-                'email' => 'required|email',
-                'password' => 'required|min:8',
+                'phone' => 'required',
+                'device_type' => 'required',
             ];
             $messages = [
                 'required' => ':attribute is required',
-                'email' => ':attribute not a valid format',
             ];
         $this->validate($request, $rules, $messages);
     }
