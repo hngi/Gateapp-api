@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\User;
+use App\residentAddGateman;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -136,6 +137,36 @@ class UserProfileController extends Controller
                 return response()->json($res, 501);
         }
 
+    }
+
+    public function searchGateman($phone) {
+        $gateman = User::all()
+                        ->where('role', 2)
+                        ->where('phone', $phone)
+                        ->get();
+
+        if($gatemans) {
+            $res['status'] = true;
+            $res['message'] = 'Gateman found';
+            $res['gateman'] = $gateman;
+            return response()->json($res, 200);
+        }else {
+            $res['status'] = false;
+            $res['message'] = 'Gateman not found';
+            return response()->json($res, 404);
+        }
+    }
+
+    public function residentAddGateman(Request $request) {
+
+        $resident_gateman = new residentAddGateman();
+        $resident_gateman->gateman_id = $request->id;
+        $resident_gateman->resident_id = Auth::user()->id;
+        $resident_gateman->save();
+
+        $res['status'] = true;
+        $res['message'] = 'Gateman Added Successfully';
+        return response()->json($res, 200);
     }
 
     public function destroy() {

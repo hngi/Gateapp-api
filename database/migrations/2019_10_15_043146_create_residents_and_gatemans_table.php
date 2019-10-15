@@ -14,8 +14,11 @@ class CreateResidentsAndGatemansTable extends Migration
     public function up()
     {
         Schema::create('residents_and_gatemans', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->unsignedBigInteger('resident_id');  //references users table with role = 1
+            $table->unsignedBigInteger('gateman_id');   //references users table with role = 2
             $table->timestamps();
+
+
         });
     }
     /**

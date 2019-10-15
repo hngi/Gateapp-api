@@ -49,13 +49,13 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //Admin only Update Estates by estate_id
     Route::patch('/estate/{id}', 'EstateController@update')->middleware('admin');
 
-    //Admin only Create a service provider 
+    //Admin only Create a service provider
     Route::post('/service-provider', 'ServiceProviderController@create')->middleware('admin');
 
-    //Admin only Update a service provider 
+    //Admin only Update a service provider
     Route::delete('/service-provider/edit/{id}', 'ServiceProviderController@update')->middleware('admin');
 
-    //Admin only delete a specific service provider 
+    //Admin only delete a specific service provider
     Route::delete('/service-provider/delete/{id}', 'ServiceProviderController@destroy')->middleware('admin');
 
     //Refresh token
@@ -77,7 +77,13 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //show one user
     Route::get('/user/{id}', 'UserProfileController@show');
 
-    //Edit user ac count
+    //Filter gateman by phone number  residentAddGateman
+    Route::get('/user/gateman/{phone}', 'UserProfileController@searchGateman');
+
+    //Add Gateman to Resident
+    Route::post('/user/gateman', 'UserProfileController@residentAddGateman');
+
+    //Edit user account
     Route::put('/user/edit', 'UserProfileController@update');
 
     //Change Password
@@ -85,6 +91,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     //Delete user account
     Route::delete('/user/delete', 'UserProfileController@destroy');
+
+
 
 
     //(Users interactions with Estates)
@@ -106,10 +114,6 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //Create Estate
     Route::post('/estate', 'EstateController@store');
 
-<<<<<<< HEAD
-    //payment
-=======
->>>>>>> c0827c5403bd266feac460c602f5a3b3e503cbe3
 
     //(Users Payment)
     //save payment
@@ -141,15 +145,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //(Users Messging)
     //Get message
     Route::get('messages/{other_user_id}', 'MessageController@conversation');
-<<<<<<< HEAD
-
-    // Save a message to the Database with the sender's id and the receiver's id
-    //  as well as the message itself
-    Route::post('/messages', 'MessageController@saveMessage');
-    /*******************************End Message Routes */
-=======
     //Save Message
-    Route::post('/messages', 'MessageController@saveMessage');  
+    Route::post('/messages', 'MessageController@saveMessage');
 
     //(Users And ServiceProvider)
     //Get One
@@ -157,22 +154,11 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     //Get All Service Provider
     Route::get('/service-provider', 'ServiceProviderController@showAll');
->>>>>>> c0827c5403bd266feac460c602f5a3b3e503cbe3
 });
 
 //This our testing api routes
 Route::get('test', 'TestController@test');
-<<<<<<< HEAD
-// Kazeem Asifat QRCode generator *******************************************
-//The qr code has been mordify to be sent as jason
-
 Route::get('generate-code', 'TestController@qrCode');
-Route::get('generate-code', 'TestController@qrCode');
-//-------------------------------------------------------------------------------------
-//---------------- Api Route for Service Provider -----------------------------------
-=======
-Route::get('generate-code', 'TestController@qrCode');                          
->>>>>>> c0827c5403bd266feac460c602f5a3b3e503cbe3
 
 Route::get('init', function () {
     event(new App\Events\notify('Someone'));
