@@ -17,24 +17,24 @@ class RegisterController extends Controller
 {
 
     public function admin(Request $request) {
-        $msg = $this->create($request, $role='0');
+        $msg = $this->create($request, $role='0', $user_type='admin');
 
         return response()->json($msg, $msg['status']);
     }
 
     public function resident(Request $request) {
-        $msg = $this->create($request, $role='1');
+        $msg = $this->create($request, $role='1', $user_type='resident');
 
         return response()->json($msg, $msg['status']);
     }
 
     public function gateman(Request $request) {
-        $msg = $this->create($request, $role='2');
+        $msg = $this->create($request, $role='2', $user_type='gateman');
 
         return response()->json($msg, $msg['status']);
     }
 
-    public function create($request, $role)
+    public function create($request, $role, $user_type)
     {
         $this->validateRequest($request);
         $verifycode = Str::random(6);
@@ -43,21 +43,21 @@ class RegisterController extends Controller
 
         try{
            $user = User::create([
-                'first_name'     => $request->input('first_name'),
-                'last_name'     => $request->input('last_name'),
-                'email'    => $request->input('email'),
+                'name'     => $request->input('name'),
                 'image'    => 'no_image.jpg',
-                'password' => Hash::make($request->input('password')),
                 'phone'    => $request->input('phone'),
+                'email'    => $request->input('email'),
+                'user_type'=> $user_type,
                 'role'     => $role,
+                'device_id' => $request->input('device_id'),
                 'verifycode' => $verifycode
             ]);
 
-            $msg['message'] = 'A verification code has been sent to your email, please use to veriify your account, also check your spam folder for email';
+            $msg['message'] = 'A verification code has been sent to your phone number or email, please use to veriify your account!';
             $msg['user']    = $user;
 
-            //Send a mail form account verification
-            Mail::to($user->email)->send(new WelcomeMail($user));
+            //Send a mail form account verification(Dont need the message here we are using sms instead)
+            // Mail::to($user->email)->send(new WelcomeMail($user));
             //if operation was successful save commit save to database
             DB::commit();
             $msg['status'] = 201;
@@ -78,25 +78,16 @@ class RegisterController extends Controller
 
     public function validateRequest(Request $request){
             $rules = [
-                'email'    => 'required|email|unique:users',
-                'first_name'     => 'required|string',
-                'last_name'     => 'required|string',
-                'password' => 'required|min:8|confirmed',
-                'phone'    => 'required'
+                'name'               => 'required|string',
+                'phone'              => 'required|unique:users',
+                'email'              => 'required|email|unique:users',
+                'device_id'          => 'required|unique:users',
             ];
             $messages = [
                 'required' => ':attribute is required',
-                'email'    => ':attribute not a valid format',
+                'phone'    => ':attribute already exist',
+                'device_id'    => ':attribute please give the uniqid device token',
             ];
         $this->validate($request, $rules, $messages);
     }
-
-    // protected function validator(array $data)
-    // {
-    //     return Validator::make($data, [
-    //         'name' => ['required', 'string', 'max:255'],
-    //         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-    //         'password' => ['required', 'string', 'min:8', 'confirmed'],
-    //     ]);
-    // }
 }
