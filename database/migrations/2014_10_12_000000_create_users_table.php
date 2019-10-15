@@ -17,10 +17,9 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
-            $table->string('email')->unique();
+            $table->string('phone')->unique()->nullable();
+            $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->string('phone')->nullable();
             $table->string('image')->default('no_image.jpg');
             $table->string('verifycode');
             $table->enum('role', array(0,1,2));
