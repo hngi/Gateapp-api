@@ -78,10 +78,10 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('/user/{id}', 'UserProfileController@show');
 
     //Filter gateman by phone number  residentAddGateman
-    Route::get('/user/gateman/{phone}', 'UserProfileController@searchGateman');
+    Route::get('/user/gateman/{phone}', 'ResidentAndGatemanController@searchGateman');
 
     //Add Gateman to Resident
-    Route::post('/user/gateman', 'UserProfileController@residentAddGateman');
+    Route::post('/user/gateman/{id}', 'ResidentAndGatemanController@addGateman');
 
     //Edit user account
     Route::put('/user/edit', 'UserProfileController@update');
