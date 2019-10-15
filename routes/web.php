@@ -11,5 +11,5 @@
 */
 
 Route::get('/', function () {
-    return 'Welcome';
+    return 'Welcome <a href=""></a>';
 });
