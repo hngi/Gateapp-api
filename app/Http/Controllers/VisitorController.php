@@ -43,9 +43,8 @@ class VisitorController extends Controller
 
         // send response with the visitors' details
         return response()->json([
-        	'error'  => false,
         	'data'   => $visitors,
-        	'status' => true,
+        	'status' => true
         ], 200);
     }
 
@@ -62,12 +61,11 @@ class VisitorController extends Controller
 
         // output an error if the id is not found
         if (!$res) {
-            return response()->json(['message' => 'Record not found!'], 404);
+            return response()->json([  'status'  => false, 'message' => 'Record not found!'], 404);
         }
 
         // send response
         return response()->json([
-            'error'   => false,
             'visitor' => $res,
             'status'  => true
         ], 200);
@@ -107,17 +105,15 @@ class VisitorController extends Controller
         if ($this->user->visitors()->save($visitor)) {
         	// send response
             return response()->json([
-                'error'   => false,
                 'visitor' => $visitor,
                 'status'  => true,
-                'message' => 'Visitor successfully added',
+                'message' => 'Visitor successfully added'
             ], 200);
         } else {
             return response()->json([
-                'error' => true,
                 'status' => false,
                 'message' => 'Sorry, visitor could not be added'
-            ], 500);
+            ], 501);
         }    	
     }
 
@@ -183,14 +179,12 @@ class VisitorController extends Controller
         // send out response
         if ($success) {
             return response()->json([
-                'error'   => false,
                 'visitor' => $visitor,
                 'status'  => true,
                 'message' => "Visitor's information updated successfully"
             ], 200);  
         } else {
             return response()->json([
-                'error'   => true,
                 'status'  => false,
                 'message' => 'Sorry, visitor\'s could not be updated'
             ], 200);
@@ -216,13 +210,11 @@ class VisitorController extends Controller
 		// delete the requested visitor and send a response
 		if($visitor->delete()) {
             return response()->json([
-                'error' => false,
                 'status' => true,
                 'message' => 'Visitor information has been deleted successfully',
             ], 200);
 		} else {
             return response()->json([
-                'error' => true,
                 'status' => false,
                 'message' => 'Visitor could not be deleted',
             ], 500);
