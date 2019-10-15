@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->enum('role', array(0,1,2));
             $table->enum('2_factor_enabled', array('no', 'yes'));
             $table->string('fcm_column')->unique()->nullable();
-            $table->string('device_type')->unique()->nullable();
+            $table->string('device_id')->unique()->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
