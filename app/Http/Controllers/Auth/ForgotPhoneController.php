@@ -13,24 +13,25 @@ use App\Mail\NewPassword;
 
 use App\User;
 
-class ForgotPasswordController extends Controller
+class ForgotPhoneController extends Controller
 {
     //generate verify code for the user
-    public function generatedPassword()
+    public function generatedCode()
     {
          return Str::random(6);
     }
 
 
-    public function verifyPassword(Request $request)
+    public function verifyPhone(Request $request)
     {
 
     // Do a validation for the input
         $this->validate($request, [
-            'email' => 'required|email',
+            'old_phone' => 'required',
+            'new_phone' => 'required',
+            'new_device_id' => 'required',
         ]);
-        $userEmail = $request->input('email');
-        $user = User::where('email', $userEmail)->first();
+        $user = User::where('phone', $request->input('old_phone'))->first();
 
            if ($user == null)
            {
@@ -42,22 +43,30 @@ class ForgotPasswordController extends Controller
         DB::beginTransaction();
         try{
             //generate a new verify code 
-            $user->verifycode = $this->generatedPassword();
+            $user->email_verified_at    = null;
+            $user->phone          = $request->input('new_phone');
+            if ($user->device_id != $request->input('new_device_id')) {
+                  $user->device_id      = $request->input('new_device_id');
+             }
+            $user->verifycode     = $this->generatedCode();
             $user->save();
 
+            //Send Sms to new phone number
+            //We use mail for now untill sms is implemented
             Mail::to($user->email)->send(new NewPassword($user));
             //Commit changes 
             DB::commit();
 
             $res['success'] = true;
-            $res['message'] = 'Email has been sent. Please check your email inbox or spam folder for verification token!';
+            $res['message'] = 'OTP token has been sent. Please check your phone to verify account!';
             return response()->json($res, 200);
           } catch (\Exception $e) {
 
             //Rollback if there is an erro
              DB::rollBack();
              $res['success'] = false;
-             $res['message'] = 'Email not sent. Please try again!';
+             $res['message'] = 'OTP Token not sent. Please try again!';
+            $res['hint'] = $e->getMessage();
              return response()->json($res, 501);
           }
     }
