@@ -61,6 +61,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //Refresh token
     Route::post('/refresh', 'Auth\LoginController@refresh');
 
+   
+
 });
 
 
