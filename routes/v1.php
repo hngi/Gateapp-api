@@ -75,6 +75,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     // Delete a Service Provider category
     Route::delete('sp-category/{id}', 'SPCategoryController@deleteCategory')->middleware('admin');
+   
+
 });
 
 
@@ -161,6 +163,22 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('/service-provider', 'ServiceProviderController@showAll');
 
     Route::get('/service-provider/category/{category_id}', 'ServiceProviderController@byCategory');
+    /** Resident and Gateman Relationship */
+    // Get requests for a gateman
+    Route::get('gateman/requests', 'GatemanController@residentRequest')->middleware('checkGateman');
+
+    // Add a gateman 
+    Route::post('resident/addgateman/{id}', 'ResidentController@addGateman');
+
+
+    // remove a gateman by resident 
+    Route::delete('resident/removegateman/{id}', 'ResidentController@destroy');
+
+    // Get gateman by phone
+    Route::post('resident/gateman/phone', 'ResidentController@searchGatemanByPhone');
+    // Get gateman by name
+    Route::post('resident/gateman/name', 'ResidentController@searchGatemanByName');
+
 });
 
 //This our testing api routes
