@@ -153,7 +153,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     // Add a gateman 
     Route::post('resident/addgateman/{id}', 'ResidentController@addGateman');
 
-    // Add a gateman 
+    // remove a gateman by resident 
     Route::delete('resident/removegateman/{id}', 'ResidentController@destroy');
 });
 
