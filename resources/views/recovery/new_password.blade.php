@@ -50,7 +50,7 @@
     		</div>
     		<h2 class="welcome">New Password Recovery</h2>
     		<div>
-    			 <h4 style="color: grey;">Hello {{$user->name}}</h4>
+    			 <h4 style="color: grey;">Hello {{$user->first_name}} {{$user->last_name}}</h4>
     		</div>
     		<div>
     			 <p class="note">Use this verification token to create a new password</p>
