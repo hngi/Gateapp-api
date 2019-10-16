@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use JWTAuth;
 
-use App\GatemanGetAllResidentInvitation;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -40,7 +39,7 @@ class GatemanController extends Controller
         }
 
 
-        $residents = GatemanGetAllResidentInvitation::where('request_status', 1);
+        $residents = Gateman::where('request_status', 1);
 
         if (!$residents) {
 
