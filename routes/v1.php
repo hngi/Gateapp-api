@@ -36,16 +36,9 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //show one admin
     Route::get('admin/{id}', 'UserProfileController@showOneAdmin')->middleware('admin');
 
-     //**********John's Api***************//
-    //Edit Estate
-    Route::patch('/estate', 'EstateController@update')->middleware('admin');
-
     //Delete Estates by estate_id
     Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate')->middleware('admin');
 
-    //Admin only Delete Estates by estate_id
-    Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate')->middleware('admin');
-    
     //Admin only Update Estates by estate_id
     Route::patch('/estate/{id}', 'EstateController@update')->middleware('admin');
 
@@ -58,9 +51,6 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //Admin only delete a specific service provider 
     Route::delete('/service-provider/delete/{id}', 'ServiceProviderController@destroy')->middleware('admin');
 
-    //Refresh token
-    Route::post('/refresh', 'Auth\LoginController@refresh');
-
 });
 
 
@@ -68,6 +58,9 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 //Users Routes *******************************************************
 Route::group(['middleware' => ['jwt.verify']], function() {
 	//This is the route group every authenticated route with jwt token should go in here
+
+     //Refresh token
+    Route::post('/refresh', 'Auth\LoginController@refresh');
 
     //(User Profile)
     //Show active user i.e. current logged in user
@@ -158,7 +151,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 Route::get('test', 'TestController@test');
 Route::get('generate-code', 'TestController@qrCode');                          
 
-Route::get('init', function () {
-    event(new App\Events\notify('Someone'));
-    return "Notification sent";
-});
+// Route::get('init', function () {
+//     event(new App\Events\notify('Someone'));
+//     return "Notification sent";
+// });
