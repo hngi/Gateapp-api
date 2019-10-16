@@ -93,7 +93,7 @@ class ResidentController extends Controller
             $res['message']    = "Records do not exist";
             return response()->json($res, 404);  
         }
-       
+    }
 
 
     public function searchGatemanByPhone(Request $request)
