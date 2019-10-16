@@ -152,6 +152,10 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     // Add a gateman 
     Route::post('resident/addgateman/{id}', 'ResidentController@addGateman');
+    // Get gateman by phone
+    Route::post('resident/gateman/phone', 'ResidentController@searchGatemanByPhone');
+    // Get gateman by name
+    Route::post('resident/gateman/name', 'ResidentController@searchGatemanByName');
 });
 
 //This our testing api routes
