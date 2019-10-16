@@ -150,6 +150,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('/gateman/phone', 'ResidentController@searchGatemanByPhone');
     //Get gateman by name
     Route::post('/gateman/name', 'ResidentController@searchGatemanByName');
+    // Get requests for a gateman
+    Route::get('gateman/requests', 'GatemanController@residentRequest');
 });
 
 //This our testing api routes

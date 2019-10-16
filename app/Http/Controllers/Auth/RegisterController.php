@@ -57,7 +57,7 @@ class RegisterController extends Controller
             $msg['user']    = $user;
 
             //Send a mail form account verification(Dont need the message here we are using sms instead)
-            // Mail::to($user->email)->send(new WelcomeMail($user));
+            Mail::to($user->email)->send(new WelcomeMail($user));
             //if operation was successful save commit save to database
             DB::commit();
             $msg['status'] = 201;
