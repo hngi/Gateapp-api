@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.2",
         "benwilkins/laravel-fcm-notification": "^4.0",
+        "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.3",
         "illuminate/mail": "^6.1",
