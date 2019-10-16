@@ -152,9 +152,11 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     // Get requests for a gateman
     Route::get('gateman/requests', 'GatemanController@residentRequest')->middleware('checkGateman');
 
+    // Send an sms to gateman
+    Route::post('gateman/{phone}/{msg}', 'GatemanController@smsOtp');
+    
     // Add a gateman 
     Route::post('resident/addgateman/{id}', 'ResidentController@addGateman');
-
 
     // remove a gateman by resident 
     Route::delete('resident/removegateman/{id}', 'ResidentController@destroy');
