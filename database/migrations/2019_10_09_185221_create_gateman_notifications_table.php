@@ -15,12 +15,17 @@ class CreateGatemanNotificationsTable extends Migration
     {
         Schema::create('gateman_notifications', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('visitor_id')->unsigned();
-            $table->integer('gateman_id')->unsigned();
-            $table->integer('resident_id')->unsigned();
-            $table->integer('home_id')->unsigned();
+            $table->unsignedBigInteger('resident_id');
+            $table->unsignedBigInteger('gateman_id');
+            $table->unsignedBigInteger('visitor_id');
+            $table->unsignedBigInteger('home_id');
             $table->string('date_sent');
             $table->timestamps();
+
+            $table->foreign('resident_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('gateman_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('visitor_id')->references('id')->on('visitors')->onDelete('cascade');
+            $table->foreign('home_id')->references('id')->on('homes')->onDelete('cascade');
         });
     }
 
