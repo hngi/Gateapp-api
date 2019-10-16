@@ -3,7 +3,10 @@
 
 //Authentication Routes ******************************************************
     //Registration
-    Route::post('register/admin', 'Auth\RegisterController@admin');//has a role of 0
+
+use App\Http\Controllers\ServiceProviderController;
+
+Route::post('register/admin', 'Auth\RegisterController@admin');//has a role of 0
 
     Route::post('register/resident', 'Auth\RegisterController@resident');//has a role of 1
 
@@ -61,6 +64,17 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //Refresh token
     Route::post('/refresh', 'Auth\LoginController@refresh');
 
+    // Create a new Service Provider category
+    Route::post('/sp-category', 'SPCategoryController@newCategory')->middleware('admin');
+
+    // Get all Service Provider categories
+    Route::get('/sp-category', 'SPCategoryController@fetchCategories')->middleware('admin');
+
+    // Edit a Service Provider category
+    Route::put('sp-category/{id}', 'SPCategoryController@editCategory')->middleware('admin');
+
+    // Delete a Service Provider category
+    Route::delete('sp-category/{id}', 'SPCategoryController@deleteCategory')->middleware('admin');
 });
 
 
@@ -145,6 +159,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     //Get All Service Provider
     Route::get('/service-provider', 'ServiceProviderController@showAll');
+
+    Route::get('/service-provider/category/{category_id}', 'ServiceProviderController@byCategory');
 });
 
 //This our testing api routes
