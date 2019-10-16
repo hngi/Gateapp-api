@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 use App\Mail\NewPassword;
 use App\User;
 
-class ResetPasswordController extends Controller
+class ResetPhoneController extends Controller
 {
      /**
      * Create a new controller instance.
@@ -31,41 +31,49 @@ class ResetPasswordController extends Controller
     // Do a validation for the input
         $this->validate($request, [
             'verifycode' => 'required|max:6|min:5',
-            'password'   => 'required|min:8|confirmed',
+            'device_id' => 'required|string'
         ]);
 
         $verifycode = $request->input('verifycode');
-        $password   = $request->input('password');
+        $device_id   = $request->input('device_id');
 
         $user = User::where('verifycode', $verifycode)->first();
 
        if ($user == null)
        {
           $res['success'] = false;
-          $res['message'] = 'Verification code does not exist, please try again!';
+          $res['message'] = 'Verification code does not exist or device not recognize, please try again!';
           return response()->json($res, 401);
        }else{
          //start temporay transaction
          DB::beginTransaction();
         try{
             //Save to Database
-            $user->password   = Hash::make($password);
+            $user->email_verified_at = date("Y-m-d H:i:s");
             $user->verifycode = $this->generatedPassword();
+            $user->device_id  = $request->input('device_id');
             $user->save();
 
+            $token = Auth::guard()->login($user);  
             //Commit changes
-            DB::commit();
-
+            DB::commit(); 
             $res['success'] = true;
-            $res['message'] = 'Your password has been changed successfully!';
-            return response()->json($res, 200);
+            $msg['message'] = 'Your phone number has been confirmed!';
+            $msg['verified'] = "True";
+            $msg['user'] = $user;
+            $msg['token'] = 'Bearer ' . $token;
+            $msg['token_type'] = 'bearer';
+            $msg['expires_in(minutes)'] = (int)auth()->factory()->getTTL();
+            $msg['image_link'] = 'https://res.cloudinary.com/getfiledata/image/upload/';
+            $msg['image_format'] = 'w_200,c_thumb,ar_4:4,g_face/';
 
+            return response()->json($msg, 200);
           } catch (\Exception $e) {
 
              //Rollback if error
              DB::rollBack();
              $res['success'] = false;
-             $res['message'] = 'An error occured: password not changed, please try again!';
+             $res['message'] = 'An error occured: please try again!';
              return response()->json($res, 501);
           }
        }
