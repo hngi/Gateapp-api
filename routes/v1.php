@@ -61,6 +61,9 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //Refresh token
     Route::post('/refresh', 'Auth\LoginController@refresh');
 
+    //Gateman view all residents invitations
+    Route::get('/all-resident-invitations', 'GetAllResidentRequest@GetAllRequestToGateman');
+
 });
 
 
