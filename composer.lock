@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c1305e48c50e7383e45dabecc32a504b",
+    "content-hash": "cdfc871d52de3251b83eeebf384c1171",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -51,6 +51,64 @@
             "description": "BaconQrCode is a QR code generator for PHP.",
             "homepage": "https://github.com/Bacon/BaconQrCode",
             "time": "2017-10-17T09:59:25+00:00"
+        },
+        {
+            "name": "benwilkins/laravel-fcm-notification",
+            "version": "v4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/benwilkins/laravel-fcm-notification.git",
+                "reference": "381da9cf67abaf65b121348e6b36cd8da9e2850a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/benwilkins/laravel-fcm-notification/zipball/381da9cf67abaf65b121348e6b36cd8da9e2850a",
+                "reference": "381da9cf67abaf65b121348e6b36cd8da9e2850a",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.2",
+                "illuminate/config": "~5.3|^6.0",
+                "illuminate/notifications": "~5.3|^6.0",
+                "illuminate/queue": "~5.3|^6.0",
+                "illuminate/support": "~5.3|^6.0",
+                "php": ">=5.6.4"
+            },
+            "require-dev": {
+                "mockery/mockery": "~1.0",
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Benwilkins\\FCM\\FcmNotificationServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Benwilkins\\FCM\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ben Wilkins",
+                    "email": "bentwilkins@gmail.com"
+                }
+            ],
+            "description": "Laravel FCM (Firebase Cloud Messaging) Notification Channel",
+            "keywords": [
+                "FCM",
+                "firebase",
+                "laravel",
+                "notifications"
+            ],
+            "time": "2019-09-18T13:59:28+00:00"
         },
         {
             "name": "cloudinary/cloudinary_php",
