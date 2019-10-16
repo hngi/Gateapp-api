@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Gateman;
+use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use JWTAuth;
@@ -18,21 +19,30 @@ class GatemanController extends Controller
     public function __construct()
     {
     	$this->user = auth()->user();
+
     }
 
 	/**
-	 * Gets all residents request for the gateman
+	 * Get the residents' details, requesting for the gateman
 	 */
     public function residentRequest()
     {
-    	// ensure user has the gateman role
-        if ($this->user->role != '2') {
-	        return response()->json([
-	        	'status' => false,
-	        	'message' => 'User is not a registered gateman',
-	        ], 200);
-        }
+    	$requests = Gateman::where('gateman_id', $this->user->id)->get();
 
+    	$users = [];
+
+    	// get the resident's name and id requesting for the gateman
+		foreach ($requests as $request) {
+	    	$user = User::select('id', 'name')->where('id', $request->user_id)->get();
+
+			array_push($users, $user);
+		}
+
+        return response()->json([
+        	'requests' => $requests->count(),
+        	'residents' => $users,
+        	'status' => true
+        ], 200);
 
     }
 
