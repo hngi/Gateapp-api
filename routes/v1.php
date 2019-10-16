@@ -145,6 +145,11 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     //Get All Service Provider
     Route::get('/service-provider', 'ServiceProviderController@showAll');
+
+    //Get gateman by number
+    Route::post('/gateman/phone', 'ResidentController@searchGatemanByPhone');
+    //Get gateman by name
+    Route::post('/gateman/name', 'ResidentController@searchGatemanByName');
 });
 
 //This our testing api routes
