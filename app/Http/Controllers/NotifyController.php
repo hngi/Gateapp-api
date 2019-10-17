@@ -8,14 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class NotifyController extends Controller
 {
-    public function index(){
-       // var pusher = new Pusher('API_KEY_HERE', {
-          //  encrypted: true
-        //  });
-    
-          // Subscribe to the channel we specified in our Laravel Event
-      ///    
-    }
+
     public function fetchnotifications($user_id)
     {
     	 $matchThese = ['gateman_id' => $user_id];
