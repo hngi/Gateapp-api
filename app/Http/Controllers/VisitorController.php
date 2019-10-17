@@ -236,7 +236,7 @@ class VisitorController extends Controller
                 'message' => 'Sorry, this visitor could not be deleted!',
             ], 500);
 		}
-	}
+    }
 }
 
 

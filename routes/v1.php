@@ -135,7 +135,6 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //Create a visitor
     Route::post('visitor', 'VisitorController@store');
 
-
     //(Users Messging)
     //Get message
     Route::get('messages/{other_user_id}', 'MessageController@conversation');
@@ -157,6 +156,16 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     
     // Get list of visitors for gateman view
     Route::get('gateman/visitors', 'GatemanController@viewVisitors');
+
+
+    //Verify a visitor
+    Route::put('gateman/admit', 'GatemanController@admitVisitor');
+
+    //Checkout visitor
+    Route::put('gateman/checkout', 'GatemanController@visitor_out');
+
+    //gateman Accept/decline invitation 
+    Route::put('gateman/response', 'GatemanController@response');
 
    // Gateman accepts resident's requests route
     Route::put('gateman/requests/accept/{id}', 'GatemanController@accept')->middleware('checkGateman');
