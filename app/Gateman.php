@@ -12,16 +12,11 @@ class Gateman extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id'
+        'user_id',
         'gateman_id',
         'request_status',
     ];
 
-    /**
-     * The user that belongs to the gateman
-     */
-    public function user()
-    {
-        return $this->belongsTo('App\User');
-    }
+    protected $table = 'resident_gateman';
 }
+
