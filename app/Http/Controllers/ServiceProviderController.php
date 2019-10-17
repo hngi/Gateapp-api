@@ -11,34 +11,61 @@ use Illuminate\Support\Facades\Validator;
 class ServiceProviderController extends Controller
 {
     public function showAll() {
-        $service = Service_Provider::all();
-
-        $res["status"] = true;
-        $res["message"] = "All service provider";
-        $res["data"] = $service;
-        return response()->json($res, 200);
+        $res = array();
+        
+        if (Auth::check()) {
+           $user = Auth::user();
+           $role = $user->role_id;
+            
+           if ($role === 1 || role === 2) {
+            $service = Service_Provider::all();
+            $res["status"] = 200;
+            $res["message"] = "All service provider";
+            $res["data"] = $service;
+               
+           } else {
+               $res['status'] = 401;
+               $res['message'] = "You must login as a resident";
+           }
+       } else {
+        $res['status'] = 401;
+        $res['message'] = "You are not logged in";
+       }
+        return response()->json($res, $res['status']);
     }
 
     public function show($id)
     {
-        $service = Service_Provider::find($id);
-        if($service){
-            $res["status"] = fasle;
+        $res = array();
+        
+        if (Auth::check()) {
+           $user = Auth::user();
+           $role = $user->role_id;
+            
+           if ($role === 1 || role === 2) {
+            $service = Service_Provider::find($id);
+            $res["status"] = 200;
             $res["message"] = "One service provider";
             $res["data"] = $service;
-            return response()->json($res, 200);
-        }else{
-
-            $res["status"] = fasle;
-            $res["message"] = "Not found";
-            return response()->json($res, 404);
-        }
+               
+           } else {
+               $res['status'] = 401;
+               $res['message'] = "You must login as a resident";
+           }
+       } else {
+        $res['status'] = 401;
+        $res['message'] = "You are not logged in";
+       }
+        return response()->json($res, $res['status']);
     }
 
     public function byCategory($category_id) {
         $res = array();
         
-        try {
+        if (Auth::check()) {
+            $user = Auth::user();
+            $role = $user->role_id;
+            if ($role === 1 || role === 2) {
             $services = Service_Provider::where('category_id', $category_id);
             
             
@@ -48,8 +75,8 @@ class ServiceProviderController extends Controller
                 $res['data'] = $services;
                 
             } else {    
-                $res['status'] = 404;
-                $res['message'] = "No service providers in this category";
+                $res['status'] = 401;
+                $res['message'] = "You are not logged in";
             }
         } catch(Exception $e) {
             $res['status'] = 501;
