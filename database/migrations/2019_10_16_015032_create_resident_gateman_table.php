@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePaymentsTable extends Migration
+class CreateResidentGatemanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,17 @@ class CreatePaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('resident_gateman', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->boolean('request_status')->nullable();  // null (pending) 0 (rejected) 1 (accepted)
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('home_id');
-            $table->double('amount');
-            $table->timestamps();
+            $table->unsignedBigInteger('gateman_id');
 
+            // table indexes
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('home_id')->references('id')->on('homes')->onDelete('cascade');
+            $table->foreign('gateman_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->timestamps();
         });
     }
 
@@ -32,6 +34,6 @@ class CreatePaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('resident_gateman');
     }
 }

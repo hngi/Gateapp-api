@@ -1,34 +1,29 @@
 <?php
 
 
-//Please indentify your trademark the way i have done around your api
+//Authentication Routes ******************************************************
+    //Registration
+    Route::post('register/admin', 'Auth\RegisterController@admin');//has a role of 0
 
-//*********************************Authentication Routes ******************
+    Route::post('register/resident', 'Auth\RegisterController@resident');//has a role of 1
 
-//JuniCodefire *******************************
-//registration
-Route::post('register/admin', 'Auth\RegisterController@admin');//has a role of 0
+    Route::post('register/gateman', 'Auth\RegisterController@gateman');//has a role 2
 
-Route::post('register/resident', 'Auth\RegisterController@resident');//has a role of 1
+    //forgot Password
+    Route::post('phone/verify', 'Auth\ForgotPhoneController@verifyPhone');
 
-Route::post('register/gateman', 'Auth\RegisterController@gateman');//has a role 2
+    //Verify account
+    Route::post('verify', 'Auth\VerificationController@verify');
 
-//Login
-Route::post('login', 'Auth\LoginController@authenticate');
+    //Resend Token
+    Route::get('resend/token', 'Auth\ForgotPhoneController@resedToken');
 
-//Verify account
-Route::post('verify', 'Auth\VerificationController@verify');
+    //Login
+    // Route::post('login', 'Auth\LoginController@authenticate'); Not Needed
 
-//forgot Password
-Route::post('password/verify', 'Auth\ForgotPasswordController@verifyPassword');
+    //Reset password for a new phone
+    // Route::put('phone/reset', 'Auth\ResetPhoneController@reset'); Not  Needed
 
-//Reset password for a new password
-Route::put('password/reset', 'Auth\ResetPasswordController@reset');
-
-//End JuniCodefire *******************************************************
-//-----------------------------------End Authentication Routes ----------------------------------------------------
-
-//Example how your route should be , please code along enjoy coding
 
 //Admin Routes (Specific Route)*******************************************************
 Route::group(['middleware' => ['jwt.verify']], function() {
@@ -43,25 +38,44 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //show one admin
     Route::get('admin/{id}', 'UserProfileController@showOneAdmin')->middleware('admin');
 
-     //**********John's Api***************//
-    //Edit Estate
-    Route::patch('/estate', 'EstateController@update')->middleware('admin');
-
     //Delete Estates by estate_id
     Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate')->middleware('admin');
 
-    //Admin only Delete Estates by estate_id
-    Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate')->middleware('admin');
-    
     //Admin only Update Estates by estate_id
-    Route::patch('/estate/{id}', 'EstateController@update');
+    Route::patch('/estate/{id}', 'EstateController@update')->middleware('admin');
 
+    //Admin only Create a service provider 
+    Route::post('/service-provider', 'ServiceProviderController@create')->middleware('admin');
+
+    //Admin only Update a service provider 
+    Route::put('/service-provider/edit/{id}', 'ServiceProviderController@update')->middleware('admin');
+
+    //Admin only delete a specific service provider 
+    Route::delete('/service-provider/delete/{id}', 'ServiceProviderController@destroy')->middleware('admin');
+
+    // Create a new Service Provider category
+    Route::post('/sp-category', 'SPCategoryController@newCategory')->middleware('admin');
+
+    // Get all Service Provider categories
+    Route::get('/sp-category', 'SPCategoryController@fetchCategories')->middleware('admin');
+
+    // Edit a Service Provider category
+    Route::put('sp-category/{id}', 'SPCategoryController@editCategory')->middleware('admin');
+
+    // Delete a Service Provider category
+    Route::delete('sp-category/{id}', 'SPCategoryController@deleteCategory')->middleware('admin');
 });
+
+
 
 //Users Routes *******************************************************
 Route::group(['middleware' => ['jwt.verify']], function() {
 	//This is the route group every authenticated route with jwt token should go in here
 
+     //Refresh token
+    Route::post('/refresh', 'Auth\LoginController@refresh');
+
+    //(User Profile)
     //Show active user i.e. current logged in user
     Route::get('/user', 'UserProfileController@index');
 
@@ -72,19 +86,21 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::put('/user/edit', 'UserProfileController@update');
 
     //Change Password
-    Route::put('/user/password', 'UserProfileController@password');
+    Route::put('/user/phone', 'UserProfileController@password');
 
     //Delete user account
     Route::delete('/user/delete', 'UserProfileController@destroy');
-    //*******Users interactions with Estates ****************************/
+
+
+    //(Users interactions with Estates)
     //View Estates
     Route::get('/estates', 'EstateController@index');
 
-     //View Estates
-     Route::get('/estate/id/{id}', 'EstateController@show');
+    //View Estates
+    Route::get('/estate/id/{id}', 'EstateController@show');
 
-     //Get Estates by name
-     Route::get('/estate/{name}', 'EstateController@search');
+    //Get Estates by name
+    Route::get('/estate/{name}', 'EstateController@search');
 
     //View Estates by city
     Route::get('/estate/city/{city}', 'EstateController@showCity');
@@ -92,30 +108,26 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //View Estates by country
     Route::get('/estate/country/{country}', 'EstateController@showCountry');
 
-    //**********John's Api***************//
     //Create Estate
     Route::post('/estate', 'EstateController@store');
 
-    //payment 
 
+    //(Users Payment)
     //save payment
-    Route::post('/payment', 'GetPayment@postPayment');
+    Route::post('/payment', 'PaymentController@postPayment');
+
+    //show all user payment
+    Route::get('/payment/user/{user_id}', 'PaymentController@aUserPayment');
+
     //show payment
-    Route::get('/payment/{id}', 'GetPayment@getPayment');
+    Route::get('/payment/{id}', 'PaymentController@oneUniquePayment');
 
-    //*********************************Visitor Routes ******************
-
-    // Ayeni Kehinde Oluwatosin *******************************
-
+    //(Users Visitors)
     // Show all visitor
     Route::get('visitor', 'VisitorController@index');
 
     // Show single visitor
     Route::get('visitor/{id}', 'VisitorController@show');
-
-    /** end Ayeni kehinde Oluwatosin ******************************/
-
-    // @iOreoluwa *******************************
 
     // Edit Visitor account
     Route::put('visitor/{id}', 'VisitorController@update');
@@ -123,54 +135,48 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     // Delete Visitor account
     Route::delete('visitor/{id}', 'VisitorController@destroy');
 
-    /** end @iOreoluwa ******************************/
-
-    // @andy *******************************
-    Route::post('visitor', [
-        'uses' => 'VisitorController@store',
-        'as'   => 'new.visitor',
-    ]);
-
-    //------------------------------End Visitor Routes --------------------
+    //Create a visitor
+    Route::post('visitor', 'VisitorController@store');
 
 
-    /*******************Dirkmal Message Routes */
-    // Get conversations between the current user and another user specified by their id (other_user_id)
+    //(Users Messging)
+    //Get message
     Route::get('messages/{other_user_id}', 'MessageController@conversation');
-
-    // Save a message to the Database with the sender's id and the receiver's id
-    //  as well as the message itself
+    //Save Message
     Route::post('/messages', 'MessageController@saveMessage');  
-    /*******************************End Message Routes */
+
+    //(Users And ServiceProvider)
+    //Get One
+    Route::get('/service-provider/{id}', 'ServiceProviderController@show');
+
+    //Get All Service Provider
+    Route::get('/service-provider', 'ServiceProviderController@showAll');
+
+    Route::get('/service-provider/category/{category_id}', 'ServiceProviderController@byCategory');
+    /** Resident and Gateman Relationship */
+    // Get requests for a gateman
+    Route::get('gateman/requests', 'GatemanController@residentRequest')->middleware('checkGateman');
+
+    // Add a gateman 
+    Route::post('resident/addgateman/{id}', 'ResidentController@addGateman');
+
+
+    // remove a gateman by resident 
+    Route::delete('resident/removegateman/{id}', 'ResidentController@destroy');
+
+    // Get gateman by phone
+    Route::post('resident/gateman/phone', 'ResidentController@searchGatemanByPhone');
+    // Get gateman by name
+    Route::post('resident/gateman/name', 'ResidentController@searchGatemanByName');
+
 });
 
 //This our testing api routes
 Route::get('test', 'TestController@test');
-// Kazeem Asifat QRCode generator *******************************************
-//The qr code has been mordify to be sent as jason
+Route::get('generate-code', 'TestController@qrCode');    
+Route::post('image', 'TestController@upload');                       
 
-Route::get('generate-code', 'TestController@qrCode');                          
-Route::get('generate-code', 'TestController@qrCode');
-//-------------------------------------------------------------------------------------
-//---------------- Api Route for Service Provider -----------------------------------
-
-
-// Tobbhie Notification API***********************************************************
-Route::get('init', function () {
-    event(new App\Events\notify('Someone'));
-    return "Notification sent";
-});
-//end
-
-//******************* To Create a service provider ************************
-Route::post('/estate/service-provider/', 'ServiceProviderController@create');
-
-//-------------------------------------------------------------------------------------
-
-//******************* To view a specific service provider ************************
-Route::get('/estate/service-provider/{id}', 'ServiceProviderController@show');
-
-//******************* To Delete a specific service provider ************************
-Route::delete('/estate/service-provider/delete/{id}', 'ServiceProviderController@destroy');
-
-//-------------------------------------------------------------------------------------
+// Route::get('init', function () {
+//     event(new App\Events\notify('Someone'));
+//     return "Notification sent";
+// });
