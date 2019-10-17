@@ -131,7 +131,7 @@ class VisitorController extends Controller
    
         // output an error if the id is not found
         if (!$visitor) {
-            return response()->json(['message' => 'Record not found!'], 404);
+            return response()->json(['message' => 'This visitor could not be found, check and try again!'], 404);
         }
 
         $updated = $visitor->fill($request->except(['token']));
@@ -176,17 +176,18 @@ class VisitorController extends Controller
         // update the visitor's requested data
         $success = $visitor->update($data);
 
-        // send out response
+        // send out response if the update was successful
         if ($success) {
             return response()->json([
                 'visitor' => $visitor,
                 'status'  => true,
-                'message' => "Visitor's information updated successfully"
+                'message' => "Visitor's data has been updated successfully!"
             ], 200);  
         } else {
+            // if the update action fails, send a response
             return response()->json([
                 'status'  => false,
-                'message' => 'Sorry, visitor\'s could not be updated'
+                'message' => 'Sorry, this visitor\'s information could not be updated, please try again.'
             ], 200);
         }  
 	}
@@ -202,21 +203,22 @@ class VisitorController extends Controller
     	// retrieve the visitor's detials with the id
 		$visitor = $this->user->visitors()->find($id);
 
-        // output an error if the id is not found
+        // output an error if the visitor id is not found
         if (!$visitor) {
-            return response()->json(['message' => 'Record not found!'], 400);
+            return response()->json(['message' => 'This visitor could not be found!'], 400);
         }
 		
 		// delete the requested visitor and send a response
-		if($visitor->delete()) {
+		elseif($visitor->delete()) {
             return response()->json([
                 'status' => true,
-                'message' => 'Visitor information has been deleted successfully',
+                'message' => 'Visitor has been deleted successfully!',
             ], 200);
 		} else {
+            // if delete action fails, send a response
             return response()->json([
                 'status' => false,
-                'message' => 'Visitor could not be deleted',
+                'message' => 'Sorry, this visitor could not be deleted!',
             ], 500);
 		}
 	}
