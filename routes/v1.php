@@ -65,6 +65,9 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     // Delete a Service Provider category
     Route::delete('sp-category/{id}', 'SPCategoryController@deleteCategory')->middleware('admin');
+    
+    //Admin only upload Profile Image of a service provider 
+    Route::post('/service-provider', 'ServiceProviderController@uploadImage')->middleware('admin');
 });
 
 
