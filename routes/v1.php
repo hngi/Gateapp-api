@@ -153,7 +153,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     /** Resident and Gateman Relationship */
     // Get requests for a gateman
     Route::get('gateman/requests', 'GatemanController@residentRequest')->middleware('checkGateman');
-
+    
+    Route::get('gateman/visitors', 'GatemanController@viewVisitors');
     //gateman Accept/decline invitation 
     Route::put('gateman/response', 'GatemanController@response');
 
