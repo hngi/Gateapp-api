@@ -22,6 +22,7 @@ class RegisterController extends Controller
         return response()->json($msg, $msg['status']);
     }
 
+    
     public function resident(Request $request) {
         $msg = $this->create($request, $role='1', $user_type='resident');
 

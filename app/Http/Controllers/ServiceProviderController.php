@@ -7,6 +7,7 @@ use App\Service_Provider;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\ImageController;
 
 class ServiceProviderController extends Controller
 {
@@ -153,6 +154,15 @@ class ServiceProviderController extends Controller
             $res["message"] = "An error occured, please try again";
             return response()->json($res, 501);
         }
+    }
+
+    public function upload(Request $request, ImageController $image) {
+        $this->validate($request, [
+         'image' => "image|max:4000|required",
+        ]);
+        
+        $res = $image->imageUpload($request);
+        return response()->json($res, $res['status_code']);
     }
 
 }
