@@ -34,6 +34,13 @@ class RegisterController extends Controller
         return response()->json($msg, $msg['status']);
     }
 
+    private function checkphone($phone) {
+        $check_phone  = User::where('phone', $phone)->exists();
+       if ($check_phone) {
+           return true;
+       }return false;
+    } 
+
     public function create($request, $role, $user_type)
     {
         $this->validateRequest($request);
@@ -42,17 +49,29 @@ class RegisterController extends Controller
         DB::beginTransaction();
 
         try{
-           $user = User::create([
-                'name'     => $request->input('name'),
-                'image'    => 'no_image.jpg',
-                'phone'    => $request->input('phone'),
-                'email'    => $request->input('email'),
-                'user_type'=> $user_type,
-                'role'     => $role,
-                'device_id' => $request->input('device_id'),
-                'verifycode' => $verifycode
-            ]);
 
+           $check = $this->checkphone($request->input('phone'));
+           if(!$check) {
+                $user = User::create([
+                    'name'     => $request->input('name'),
+                    'image'    => 'no_image.jpg',
+                    'phone'    => $request->input('phone'),
+                    'email'    => $request->input('email'),
+                    'user_type'=> $user_type,
+                    'role'     => $role,
+                    'device_id' => $request->input('device_id'),
+                    'verifycode' => $verifycode
+                ]);
+                $msg['status'] = 201;
+                $msg['app-hint'] = 'this is a new user!';
+           }else {
+                $user = User::where('phone', $request->input('phone'))->first();
+                $user->device_id = $request->input('device_id');
+                $user->save();
+                
+                $msg['status'] = 200;
+                $msg['app-hint'] = 'this is an existing user!';
+           }
             $msg['message'] = 'A verification code has been sent to your phone number or email, please use to veriify your account!';
             $msg['user']    = $user;
 
@@ -60,7 +79,6 @@ class RegisterController extends Controller
             Mail::to($user->email)->send(new WelcomeMail($user));
             //if operation was successful save commit save to database
             DB::commit();
-            $msg['status'] = 201;
             return $msg;
 
 
@@ -79,9 +97,9 @@ class RegisterController extends Controller
     public function validateRequest(Request $request){
             $rules = [
                 'name'               => 'required|string',
-                'phone'              => 'required|unique:users',
-                'email'              => 'required|email|unique:users',
-                'device_id'          => 'required|unique:users',
+                'phone'              => 'required',
+                'email'              => 'required',
+                'device_id'          => 'required',
             ];
             $messages = [
                 'required' => ':attribute is required',

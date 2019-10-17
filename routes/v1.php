@@ -9,18 +9,20 @@
 
     Route::post('register/gateman', 'Auth\RegisterController@gateman');//has a role 2
 
-    //Login
-    Route::post('login', 'Auth\LoginController@authenticate');
+    //forgot Password
+    Route::post('phone/verify', 'Auth\ForgotPhoneController@verifyPhone');
 
     //Verify account
     Route::post('verify', 'Auth\VerificationController@verify');
 
-    //forgot Password
-    Route::post('phone/verify', 'Auth\ForgotPhoneController@verifyPhone');
+    //Resend Token
+    Route::get('resend/token', 'Auth\ForgotPhoneController@resedToken');
 
-    //Reset password for a new password
-    Route::put('phone/reset', 'Auth\ResetPhoneController@reset');
+    //Login
+    // Route::post('login', 'Auth\LoginController@authenticate'); Not Needed
 
+    //Reset password for a new phone
+    // Route::put('phone/reset', 'Auth\ResetPhoneController@reset'); Not  Needed
 
 
 //Admin Routes (Specific Route)*******************************************************
@@ -36,16 +38,9 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //show one admin
     Route::get('admin/{id}', 'UserProfileController@showOneAdmin')->middleware('admin');
 
-     //**********John's Api***************//
-    //Edit Estate
-    Route::patch('/estate', 'EstateController@update')->middleware('admin');
-
     //Delete Estates by estate_id
     Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate')->middleware('admin');
 
-    //Admin only Delete Estates by estate_id
-    Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate')->middleware('admin');
-    
     //Admin only Update Estates by estate_id
     Route::patch('/estate/{id}', 'EstateController@update')->middleware('admin');
 
@@ -53,14 +48,22 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('/service-provider', 'ServiceProviderController@create')->middleware('admin');
 
     //Admin only Update a service provider 
-    Route::delete('/service-provider/edit/{id}', 'ServiceProviderController@update')->middleware('admin');
+    Route::put('/service-provider/edit/{id}', 'ServiceProviderController@update')->middleware('admin');
 
     //Admin only delete a specific service provider 
     Route::delete('/service-provider/delete/{id}', 'ServiceProviderController@destroy')->middleware('admin');
 
-    //Refresh token
-    Route::post('/refresh', 'Auth\LoginController@refresh');
+    // Create a new Service Provider category
+    Route::post('/sp-category', 'SPCategoryController@newCategory')->middleware('admin');
 
+    // Get all Service Provider categories
+    Route::get('/sp-category', 'SPCategoryController@fetchCategories')->middleware('admin');
+
+    // Edit a Service Provider category
+    Route::put('sp-category/{id}', 'SPCategoryController@editCategory')->middleware('admin');
+
+    // Delete a Service Provider category
+    Route::delete('sp-category/{id}', 'SPCategoryController@deleteCategory')->middleware('admin');
 });
 
 
@@ -68,6 +71,9 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 //Users Routes *******************************************************
 Route::group(['middleware' => ['jwt.verify']], function() {
 	//This is the route group every authenticated route with jwt token should go in here
+
+     //Refresh token
+    Route::post('/refresh', 'Auth\LoginController@refresh');
 
     //(User Profile)
     //Show active user i.e. current logged in user
@@ -145,13 +151,32 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     //Get All Service Provider
     Route::get('/service-provider', 'ServiceProviderController@showAll');
+
+    Route::get('/service-provider/category/{category_id}', 'ServiceProviderController@byCategory');
+    /** Resident and Gateman Relationship */
+    // Get requests for a gateman
+    Route::get('gateman/requests', 'GatemanController@residentRequest')->middleware('checkGateman');
+
+    // Add a gateman 
+    Route::post('resident/addgateman/{id}', 'ResidentController@addGateman');
+
+
+    // remove a gateman by resident 
+    Route::delete('resident/removegateman/{id}', 'ResidentController@destroy');
+
+    // Get gateman by phone
+    Route::post('resident/gateman/phone', 'ResidentController@searchGatemanByPhone');
+    // Get gateman by name
+    Route::post('resident/gateman/name', 'ResidentController@searchGatemanByName');
+
 });
 
 //This our testing api routes
 Route::get('test', 'TestController@test');
-Route::get('generate-code', 'TestController@qrCode');                          
+Route::get('generate-code', 'TestController@qrCode');    
+Route::post('image', 'TestController@upload');                       
 
-Route::get('init', function () {
-    event(new App\Events\notify('Someone'));
-    return "Notification sent";
-});
+// Route::get('init', function () {
+//     event(new App\Events\notify('Someone'));
+//     return "Notification sent";
+// });

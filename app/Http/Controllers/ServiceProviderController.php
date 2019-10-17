@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Service_Provider;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -32,6 +33,30 @@ class ServiceProviderController extends Controller
             $res["message"] = "Not found";
             return response()->json($res, 404);
         }
+    }
+
+    public function byCategory($category_id) {
+        $res = array();
+        
+        try {
+            $services = Service_Provider::where('category_id', $category_id);
+            
+            
+            if(!$services->isEmpty()) {
+                $res['status'] = 200;
+                $res['message'] = "Retrieved service providers";
+                $res['data'] = $services;
+                
+            } else {    
+                $res['status'] = 404;
+                $res['message'] = "No service providers in this category";
+            }
+        } catch(Exception $e) {
+            $res['status'] = 501;
+            $res['message'] = "An error occurred trying to retrieve service providers";
+        }
+
+        return response()->json($res, $res['status']);
     }
 
     public function create(Request $request)
