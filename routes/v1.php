@@ -173,6 +173,12 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     // Get gateman by name
     Route::get('search/gateman/name/{name}', 'ResidentController@searchGatemanByName');
 
+    // Show all pending gateman invitation
+    Route::get('resident/pending_invitation/', 'ResidentController@pendingInvitation');
+
+    // Show accepted gateman invite
+    Route::get('resident/acceptedInvitation/', 'ResidentController@acceptedInvitation');
+
 });
 
 //This our testing api routes
