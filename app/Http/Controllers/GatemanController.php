@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Gateman;
 use App\User;
 use App\Visitor;
+use App\Http\Resources\Visitor as VisitorResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use JWTAuth;
 
 class GatemanController extends Controller
@@ -119,7 +121,6 @@ class GatemanController extends Controller
      */
     public function viewVisitors()
     {
-<<<<<<< HEAD
         // get user id
         $user_id = Gateman::where([
         ['gateman_id', $this->user->id],
@@ -142,15 +143,50 @@ class GatemanController extends Controller
               'status' => false
             ], 404);
         }
-=======
->>>>>>> cbfd29636bd90427eed79307cb141510214f8919
     }
     
     /**
      * 
      */
-    public function admitVisitors()
+    
+    public function admitVisitor(Request $request)
     {
+        if (Auth::check()) {
+            $visitor = Visitor::where('qr_code', '=', "{$request->input('qr_code')}")
+            ->get();
+            if ($visitor ->isEmpty()){
+                //Error Handling
+                $res['Error']    = $request->input('qr_code'). " This QR code does not exist";
+                return response()->json($res, 404);  
+                 
+            } else
+                 //$visitor = VisitorResource::collection($visitor);
+                 dd($visitor);
+                 $user_id = $visitor->Visitor->user_id;
+                 $visitor = Visitor::whereIn('user_id', $user_id)->with('user');
+                 $visitor = VisitorResource::collection($visitor); //Use Resource to format Output 
+                 Visitor::where('qr_code', '=', "{$request->input('qr_code')}")
+                 ->update(['time_in' => CURRENT_TIMESTAMP]);
+                 return response()->json($visitor); 
+          }
+    }
 
+    public function visitor_out(Request $request)
+    {
+        if (Auth::check()) {
+            $visitor = Visitor::where('qr_code', '=', "{$request->input('qr_code')}")
+            ->get();
+            if ($visitor ->isEmpty()){
+                //Error Handling
+                $res['Error']    = "This QR code does not exist";
+                return response()->json($res, 404);  
+                 
+            } else
+                 $visitor = Visitor::whereIn('user_id', $user_id)->with('user');
+                 $visitor = VisitorResource::collection($visitor); //Use Resource to format Output 
+                 Visitor::where('qr_code', '=', "{$request->input('qr_code')}")
+                 ->update(['time_out' => CURRENT_TIMESTAMP]);
+                 return response()->json($visitor); 
+          }
     }
 }
