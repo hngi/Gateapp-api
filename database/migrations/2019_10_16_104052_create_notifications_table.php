@@ -18,11 +18,12 @@ class CreateNotificationsTable extends Migration
 
         Schema::create('notifications', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id')->comment('The notification recipient');
             $table->unsignedBigInteger('resident_id');
             $table->unsignedBigInteger('gateman_id');
             $table->unsignedBigInteger('visitor_id')->nullable();
             $table->unsignedBigInteger('home_id');
-            $table->enum('type', ['visitor_arrival', 'gateman_invite']);
+            $table->enum('type', ['visitor_arrival', 'gateman_invite', 'gateman_invite_response']);
             $table->string('title');
             $table->text('body');
             $table->timestamp('read_at')->nullable();
