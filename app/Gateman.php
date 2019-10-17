@@ -12,10 +12,12 @@ class Gateman extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id'
+        'user_id',
         'gateman_id',
         'request_status',
     ];
+
+    protected $table = 'resident_gateman';
 
     /**
      * The user that belongs to the gateman
