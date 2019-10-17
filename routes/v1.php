@@ -3,27 +3,26 @@
 
 //Authentication Routes ******************************************************
     //Registration
-
-use App\Http\Controllers\ServiceProviderController;
-
-Route::post('register/admin', 'Auth\RegisterController@admin');//has a role of 0
+    Route::post('register/admin', 'Auth\RegisterController@admin');//has a role of 0
 
     Route::post('register/resident', 'Auth\RegisterController@resident');//has a role of 1
 
     Route::post('register/gateman', 'Auth\RegisterController@gateman');//has a role 2
 
-    //Login
-    Route::post('login', 'Auth\LoginController@authenticate');
+    //forgot Password
+    Route::post('phone/verify', 'Auth\ForgotPhoneController@verifyPhone');
 
     //Verify account
     Route::post('verify', 'Auth\VerificationController@verify');
 
-    //forgot Password
-    Route::post('phone/verify', 'Auth\ForgotPhoneController@verifyPhone');
+    //Resend Token
+    Route::get('resend/token', 'Auth\ForgotPhoneController@resedToken');
 
-    //Reset password for a new password
-    Route::put('phone/reset', 'Auth\ResetPhoneController@reset');
+    //Login
+    // Route::post('login', 'Auth\LoginController@authenticate'); Not Needed
 
+    //Reset password for a new phone
+    // Route::put('phone/reset', 'Auth\ResetPhoneController@reset'); Not  Needed
 
 
 //Admin Routes (Specific Route)*******************************************************
@@ -183,7 +182,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
 //This our testing api routes
 Route::get('test', 'TestController@test');
-Route::get('generate-code', 'TestController@qrCode');                          
+Route::get('generate-code', 'TestController@qrCode');    
+Route::post('image', 'TestController@upload');                       
 
 // Route::get('init', function () {
 //     event(new App\Events\notify('Someone'));
