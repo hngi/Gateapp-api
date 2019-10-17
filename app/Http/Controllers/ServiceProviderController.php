@@ -67,6 +67,7 @@ class ServiceProviderController extends Controller
                'description' => 'required',
                'image' => 'required',
                'estate_id' => 'required|int'
+               'category_id' => 'required|int'
           ]);
 
         if ($validator->fails()) {
