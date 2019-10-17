@@ -34,8 +34,8 @@ class RegisterController extends Controller
         return response()->json($msg, $msg['status']);
     }
 
-    private function checkphone($phone) {
-        $check_phone  = User::where('phone', $phone)->exists();
+    private function checkphone($phone, $email) {
+        $check_phone  = User::where('phone', $phone)->orWhere('email', $email)->exists();
        if ($check_phone) {
            return true;
        }return false;
@@ -50,7 +50,7 @@ class RegisterController extends Controller
 
         try{
 
-           $check = $this->checkphone($request->input('phone'));
+           $check = $this->checkphone($request->input('phone'), $request->input('email'));
            if(!$check) {
                 $user = User::create([
                     'name'     => $request->input('name'),
