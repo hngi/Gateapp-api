@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEstatesTable extends Migration
+class CreateSpCategoryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateEstatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('estates', function (Blueprint $table) {
+        Schema::create('sp_category', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('estate_name')->nullable();
-            $table->string('city')->nullable();
-            $table->string('country')->nullable();
+            $table->string('title');
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class CreateEstatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('estates');
+        Schema::dropIfExists('sp_category');
     }
 }

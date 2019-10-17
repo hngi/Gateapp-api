@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class Estate extends JsonResource
+class Resident extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,12 +16,8 @@ class Estate extends JsonResource
     {
         return parent::toArray($request);
         /*[
-            'estate_id' => $this ->estate_id,
             'estate_name' => $this ->estate_name,
-            'city' => $this ->city ,
-            'country' => $this ->country 
-             
-
+            'estate_name' => $this ->estate_name,
         ];*/
     }
 }
