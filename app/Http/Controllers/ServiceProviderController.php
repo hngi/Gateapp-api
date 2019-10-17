@@ -133,7 +133,7 @@ class ServiceProviderController extends Controller
            'phone'       => 'required',
            'description' => 'required',
            'image'       => 'required',
-           'estate_id'   => 'required|int'
+           'estate_id'   => 'required|int',
            'category_id' => 'required|int'
       ]);
 
