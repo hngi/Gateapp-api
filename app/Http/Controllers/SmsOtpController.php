@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 
 // Create a sms otp class
-class SmsOtp extends Controller
+class SmsOtpController extends Controller
 {
 	/**
    * Method to send sms otp to gateman
@@ -44,15 +44,17 @@ class SmsOtp extends Controller
       curl_close($curl);
 
 
-      $res['status'] = true;
-      $res['data'] = array(""otp" => $response");
-      return response()->json($res, 200);
+      $res['status']        =  true;
+      $res['data']          =  $response;
+      $res['status_code']   =  200;
+      return $res;
      } catch(\Exception $e) {
 
       $res['status'] = false;
       $res['error_details'] = $e->getMessage();
       $res['data'] = "Error occured while sending OTP.";
-      return response()->json($res, 501);
+      $res['status_code']   =  501;
+      return $res;
      }
  }
 }

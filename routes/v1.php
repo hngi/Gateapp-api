@@ -29,6 +29,8 @@
 Route::group(['middleware' => ['jwt.verify']], function() {
 	//This is the route group every authenticated route with jwt token should go in here
 
+    //(Admin interactions with User)
+    
 	//Show all user(this route is for only admin)(admin)
     Route::get('user/all', 'UserProfileController@all')->middleware('admin');
 
@@ -38,11 +40,19 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //show one admin
     Route::get('admin/{id}', 'UserProfileController@showOneAdmin')->middleware('admin');
 
+
+
+    //(Admin interactions with Estates)
+
+    //Admin only Update Estates by estate_id
+    Route::put('/estate/{id}', 'EstateController@update')->middleware('admin');
+
     //Delete Estates by estate_id
     Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate')->middleware('admin');
 
-    //Admin only Update Estates by estate_id
-    Route::patch('/estate/{id}', 'EstateController@update')->middleware('admin');
+
+
+    //(Admin interactions with Service Providers)
 
     //Admin only Create a service provider 
     Route::post('/service-provider', 'ServiceProviderController@create')->middleware('admin');
@@ -73,6 +83,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('/refresh', 'Auth\LoginController@refresh');
 
     //(User Profile)
+
     //Show active user i.e. current logged in user
     Route::get('/user', 'UserProfileController@index');
 
@@ -90,6 +101,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
 
     //(Users interactions with Estates)
+
     //View Estates
     Route::get('/estates', 'EstateController@index');
 
@@ -109,7 +121,9 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('/estate', 'EstateController@store');
 
 
+
     //(Users Payment)
+
     //save payment
     Route::post('/payment', 'PaymentController@postPayment');
 
@@ -119,7 +133,10 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //show payment
     Route::get('/payment/{id}', 'PaymentController@oneUniquePayment');
 
+
+
     //(Users Visitors)
+
     // Show all visitor
     Route::get('visitor', 'VisitorController@index');
 
@@ -136,13 +153,18 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('visitor', 'VisitorController@store');
 
 
+
     //(Users Messging)
+
     //Get message
     Route::get('messages/{other_user_id}', 'MessageController@conversation');
     //Save Message
     Route::post('/messages', 'MessageController@saveMessage');  
 
+
+
     //(Users And ServiceProvider)
+
     //Get One
     Route::get('/service-provider/{id}', 'ServiceProviderController@show');
 
@@ -150,7 +172,11 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('/service-provider', 'ServiceProviderController@showAll');
 
     Route::get('/service-provider/category/{category_id}', 'ServiceProviderController@byCategory');
-    /** Resident and Gateman Relationship */
+
+
+
+    //(Resident and Gateman Relationship)
+
     // Get requests for a gateman
     Route::get('gateman/requests', 'GatemanController@residentRequest')->middleware('checkGateman');
 
