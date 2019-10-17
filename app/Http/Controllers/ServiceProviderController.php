@@ -138,7 +138,40 @@ class ServiceProviderController extends Controller
 
         }
     }
-
+    
+    public function uploadImage(Request $request) {
+        //get the uploaded image name
+        $file = $request->file('image');
+        $goodExtensions = ['png','jpg'];
+        $filename = $file->clientName();
+        
+        //get extension
+        $extension = $file->clientExtension();
+            
+        //check for extension
+        $check = in_array($extension, $goodExtensions);
+            
+        //dd($check)
+        if($check) {
+        $service = Service_Provider::create(request->all());
+            //move uploaded image
+            foreach ($request->image as $image) {
+                $filename = $image->store('image');
+                ImageDetail::create([
+                    'SP_id' => $Service_Provider->id,
+                    'filename' => $filename
+                ]);
+            }
+            //return json response
+            echo "Upload Successfully";
+        
+        } else {
+            //validate for allowed extensions
+            echo '<div class="alert alert-warning"><strong>Warning!</strong>
+            Sorry Only Upload png and jpg document</div>
+            //validate for allowed extensions
+            }
+        }
 
     public function destroy($id)
     {
