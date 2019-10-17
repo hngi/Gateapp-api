@@ -155,6 +155,9 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     // Get requests for a gateman
     Route::get('gateman/requests', 'GatemanController@residentRequest')->middleware('checkGateman');
 
+    //gateman Accept/decline invitation 
+    Route::put('gateman/response', 'GatemanController@response');
+
     // Add a gateman 
     Route::post('resident/addgateman/{id}', 'ResidentController@addGateman');
 
@@ -163,13 +166,17 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::delete('resident/removegateman/{id}', 'ResidentController@destroy');
 
     // Get gateman by phone
-    Route::post('resident/gateman/phone', 'ResidentController@searchGatemanByPhone');
+    Route::get('resident/gateman/phone/{phone}', 'ResidentController@searchGatemanByPhone');
     // Get gateman by name
+
     Route::post('resident/gateman/name', 'ResidentController@searchGatemanByName');
     
     
     // Get all Service Provider categories
     Route::get('/sp-category', 'SPCategoryController@fetchCategories')
+
+
+    Route::get('resident/gateman/name/{name}', 'ResidentController@searchGatemanByName');
 
 });
 

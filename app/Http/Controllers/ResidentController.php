@@ -76,7 +76,6 @@ class ResidentController extends Controller
     }
 
 
-
     // Resident can delete his gateman
     public function destroy($id) {
         
@@ -96,11 +95,11 @@ class ResidentController extends Controller
     }
 
 
-    public function searchGatemanByPhone(Request $request)
+    public function searchGatemanByPhone($phone)
     {
        if (Auth::check()) {
-        $this->validatePhone($request);
-        $gatemen = User::where('phone', 'LIKE', "%{$request->input('phone')}%")->where('role', "=", "2")->get();
+        //$this->validatePhone($request);
+        $gatemen = User::where('phone', 'LIKE', "%{$phone}%")->where('role', "=", "2")->get();
         
         
         if ($gatemen ->isEmpty()){
@@ -114,11 +113,11 @@ class ResidentController extends Controller
       } 
     }
 
-    public function searchGatemanByName(Request $request)
+    public function searchGatemanByName($name)
     {
        if (Auth::check()) {
-        $this->validateName($request);
-        $gatemen = User::where('name', 'LIKE', "%{$request->input('name')}%")
+        //$this->validateName($request);
+        $gatemen = User::where('name', 'LIKE', "%{$name}%")
         ->where('role', "=", "2")->get();
         if ($gatemen ->isEmpty()){
             //Error Handling
@@ -134,11 +133,11 @@ class ResidentController extends Controller
     public function validatePhone(Request $request){
         $rules = [
             'phone' => 'required',
-            'device_id' => 'required',
+            //'device_id' => 'required',
         ];
         $messages = [
             'phone' => ':attribute is required',
-            'device_id' => 'device_id is required',
+            //'device_id' => 'device_id is required',
         ];
         $this->validate($request, $rules, $messages);
     }
@@ -146,7 +145,7 @@ class ResidentController extends Controller
     public function validateName(Request $request){
         $rules = [
             'name' => 'required',
-            'device_id' => 'required',
+            //'device_id' => 'required',
         ];
         $messages = [
             'name' => ':attribute is required',
