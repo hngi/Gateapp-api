@@ -49,9 +49,48 @@ class GatemanController extends Controller
     /**
      * Method to update gateman's response to resident's request
      */
-    public function response()
+    public function response(Request $request)
     {
+        // ensure user has the gateman role
+        if ($this->user->role != '2') {
+            return response()->json([
+                'status' => false,
+                'message' => 'User is not a registered gateman',
+            ], 200);
+        }
 
+        $id =$request->input('invitation_id');
+        $status = $request->input('request_status');
+
+        $existence = Gateman::where('id', $id)->exists();
+
+        if($existence) {
+            try {
+                
+                DB::update('update resident_gateman set request_status = ? where id = ? and gateman_id = ?', [$status, $id, $this->user->id]);
+
+                if ($status == 1) {
+                    $res['message'] = "Invitation was rejected";
+                }elseif ($status == 0) {
+                    $res['message'] = "Invitation was accepted";
+                }
+                
+                $res['status'] = true;
+                $res['statusCode'] = 200;
+
+                return response()->json($res, $res['statusCode']);
+            }catch(\Exception $e) {
+
+                $data['message'] = "Could not handle request, please try again later";
+                $msg['hint'] = $e->getMessage();
+                return response()->json($data, 501);
+            }
+        }else{
+            $res['message'] = "Invitation not found";
+            $res['status'] = false;
+            $res['statusCode'] = 501;
+            return response()->json($res, $res['statusCode']);
+        }
     }
 
     /**
