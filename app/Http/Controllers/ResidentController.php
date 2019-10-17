@@ -22,30 +22,20 @@ class ResidentController extends Controller
     {
     	$this->user = auth()->user();
     }
-    //Search for Gateman by phone number 
-
-
-
-
-    //Search for Gateman by name
-
-
-    
-    
-
-     // Add a gateman by a resident 
-     public function addGateman($id) {
+   
+    public function addGateman($id) {
         
         DB::beginTransaction();
 
         try{
+
            $residentGateman = ResidentGateman::firstOrCreate([
                 'user_id'     => $this->user->id, //login user id
                 'gateman_id'  =>   $id
             ]);
             // Confirm that the Id entered is for a gateman 
             $gateman = User::find($id); 
-            
+
             if($gateman->role == 2){
 
                     DB::commit();
