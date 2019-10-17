@@ -155,5 +155,62 @@ class ResidentController extends Controller
 
     }
 
+    public function pendingInvitation($id){
+        DB::beginTransaction();
+
+        try{
+            $pendingInvitation = ResidentGateman::find([
+                "user_id" => $id,
+                "request_status" => 0
+            ]);
+
+            $res['message'] = 'My Pending Invitations';
+            $res['data']    = $pendingInvitation;
+
+            DB::commit();
+            $res['status'] = 201;
+            return $res;
+
+        }catch(\Exception $e) {
+            //if an error occurs the relationship is not established
+            DB::rollBack();
+
+            $res['message'] = "Error: Could not get pending gateman invitation";
+            $res['user'] = null;
+            $res['hint'] = $e->getMessage();
+            $res['status'] = 501;
+            return $res;
+        }
+    }
+
+
+    public function acceptedInvitation($id){
+        DB::beginTransaction();
+
+        try{
+            $pendingInvitation = ResidentGateman::find([
+                "user_id" => $id,
+                "request_status" => 1
+            ]);
+
+            $res['message'] = 'My Pending Invitations';
+            $res['data']    = $pendingInvitation;
+
+            DB::commit();
+            $res['status'] = 201;
+            return $res;
+
+        }catch(\Exception $e) {
+            //if an error occurs the relationship is not established
+            DB::rollBack();
+
+            $res['message'] = "Error: Could not get pending gateman invitation";
+            $res['user'] = null;
+            $res['hint'] = $e->getMessage();
+            $res['status'] = 501;
+            return $res;
+        }
+    }
+
 
 }
