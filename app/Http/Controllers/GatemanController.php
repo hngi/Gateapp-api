@@ -67,7 +67,7 @@ class GatemanController extends Controller
     }
 
     /**
-     * Method to for gateman to accept resident's request
+     * Method for gateman to accept resident's request
      */
     public function accept($id)
     {
@@ -111,7 +111,7 @@ class GatemanController extends Controller
     }
 
     /**
-     * Method to for gateman to reject resident's request
+     * Method for gateman to reject resident's request
      */
     public function reject($id)
     {
