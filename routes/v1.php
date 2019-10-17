@@ -1,5 +1,5 @@
 <?php
-
+use App\User;
 
 //Authentication Routes ******************************************************
     //Registration
@@ -150,10 +150,13 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     Route::get('/service-provider/category/{category_id}', 'ServiceProviderController@byCategory');
     /** Resident and Gateman Relationship */
+   
     // Get requests for a gateman
     Route::get('gateman/requests', 'GatemanController@residentRequest')->middleware('checkGateman');
     
+    // Get list of visitors for gateman view
     Route::get('gateman/visitors', 'GatemanController@viewVisitors');
+
 
     //Verify a visitor
     Route::put('gateman/admit', 'GatemanController@admitVisitor');
@@ -163,6 +166,12 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     //gateman Accept/decline invitation 
     Route::put('gateman/response', 'GatemanController@response');
+
+   // Gateman accepts resident's requests route
+    Route::put('gateman/requests/accept/{id}', 'GatemanController@accept')->middleware('checkGateman');
+
+    // Gateman rejects resident's requests route
+    Route::put('gateman/requests/reject/{id}', 'GatemanController@reject')->middleware('checkGateman');
 
     // Add a gateman 
     Route::post('resident/addGateman/{id}', 'ResidentController@addGateman');
@@ -180,12 +189,15 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('search/gateman/name/{name}', 'ResidentController@searchGatemanByName');
 
     // Show all pending gateman invitation
-    Route::get('resident/pending_invitation/', 'ResidentController@pendingInvitation');
+    Route::get('resident/pending_invitation', 'ResidentController@viewPendingGateman');
 
     // Show accepted gateman invite
-    Route::get('resident/acceptedInvitation/', 'ResidentController@acceptedInvitation');
+    Route::get('resident/acceptedInvitation', 'ResidentController@viewAcceptedGateman');
 
 });
+
+
+
 
 //This our testing api routes
 Route::get('test', 'TestController@test');
