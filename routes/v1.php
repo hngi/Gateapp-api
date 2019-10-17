@@ -189,10 +189,13 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('search/gateman/name/{name}', 'ResidentController@searchGatemanByName');
 
     // Show all pending gateman invitation
-    Route::get('resident/pending_invitation', 'ResidentController@viewPendingGateman');
+    Route::get('resident/pendingInvitation', 'ResidentController@viewPendingGateman');
 
     // Show accepted gateman invite
     Route::get('resident/acceptedInvitation', 'ResidentController@viewAcceptedGateman');
+
+    // Show all the residents a gateman works for
+    Route::get('gateman/viewResidents', 'GatemanController@viewResidents');
 
 });
 
