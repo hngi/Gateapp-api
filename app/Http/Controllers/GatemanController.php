@@ -187,8 +187,33 @@ class GatemanController extends Controller
     /**
      * 
      */
+    public function viewResidents()
+    {
+        // get user id
+        $user_id = Gateman::where([
+        ['gateman_id', $this->user->id],
+        ['request_status', 1],
+        ])->pluck('user_id');
+        // get visitors with the user_id
+        $resident = User::find($user_id);
+        // list out visitors details
+        if ($resident){
+            return response()->json([
+              'residents' => $resident->count(),
+              'resident' => $resident,
+              'status' => true
+            ], 200);
+        }
+        else {
+          return response()->json([
+              'message' => 'No Residents found',
+              'status' => false
+            ], 404);
+        }
+    }
     public function admitVisitors()
     {
+        
 
     }
 }
