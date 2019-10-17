@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use JWTAuth;
 
@@ -54,21 +55,40 @@ class VisitorController extends Controller
 	 * @param  int $id the visitor id
 	 * @return JSON
 	 */
-    public function show($id)
+       public function show($id)
     {
-    	// retrieve the visitor's detials with the id
-        $res = $this->user->visitors()->find($id);
+         // retrieve the visitor's detials with the id
+        try {
+            $res = $this->user->visitors()->find($id);
 
-        // output an error if the id is not found
-        if (!$res) {
-            return response()->json([  'status'  => false, 'message' => 'Record not found!'], 404);
-        }
-
-        // send response
+             // send response
         return response()->json([
             'visitor' => $res,
             'status'  => true
         ], 200);
+        }catch(\Exception $e){
+            return response()->json([  
+                'status'  => false, 
+                'message' => 'Record not found!'], 
+                404);
+        }
+    //    // retrieve the visitor's detials with the id
+    //     $res = $this->user->visitors()->find($id);
+    //     //dd($res);
+
+    //     // output an error if the id is not found
+    //     if (!$res) {
+    //         return response()->json([  
+    //         'status'  => false, 
+    //         'message' => 'Record not found!'], 
+    //         404);
+    //     }
+
+    //     // send response
+    //     return response()->json([
+    //         'visitor' => $res,
+    //         'status'  => true
+    //     ], 200);
     }
 
 	/**
@@ -79,6 +99,9 @@ class VisitorController extends Controller
 	 */
     public function store(Request $request)
     {
+        $this->user = auth()->user();
+        $visitor = new Visitor();
+
     	// validate the posted data
     	$this->validate($request, [
             'name' => ['required', 'regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
@@ -89,32 +112,38 @@ class VisitorController extends Controller
             'status' => 'required|string',
             'home_id' => 'required|integer',    		
     	]);
+            DB::beginTransaction();
+        try{
+            $visitor->name = $request->name;
+            $visitor->arrival_date = $request->arrival_date;
+            $visitor->car_plate_no = $request->car_plate_no;
+            $visitor->purpose = $request->purpose;
+            $visitor->image = $request->image ? $request->image : 'no_image.jpg';
+            $visitor->status = $request->status;
+            $visitor->user_id = $this->user->id;
+            $visitor->home_id = $request->home_id;
 
-        $visitor = new Visitor();
+            $this->user->visitors()->save($visitor);
 
-        $visitor->name = $request->name;
-        $visitor->arrival_date = $request->arrival_date;
-        $visitor->car_plate_no = $request->car_plate_no;
-        $visitor->purpose = $request->purpose;
-        $visitor->image = $request->image ? $request->image : 'no_image.jpg';
-        $visitor->status = $request->status;
-        $visitor->user_id = $this->user->id;
-        $visitor->home_id = $request->home_id;
-
-		// add new visitor
-        if ($this->user->visitors()->save($visitor)) {
-        	// send response
+            //Save if Successfull
+            DB::commit();
+            // send response
             return response()->json([
                 'visitor' => $visitor,
                 'status'  => true,
                 'message' => 'Visitor successfully added'
             ], 200);
-        } else {
+
+
+        }catch(\Exception $e){
+            DB::rollBack();
+
             return response()->json([
                 'status' => false,
-                'message' => 'Sorry, visitor could not be added'
+                'message' => 'Sorry, Visitor could not be added'
             ], 501);
-        }    	
+
+        }   	
     }
 
 	/**
@@ -223,5 +252,3 @@ class VisitorController extends Controller
 		}
 	}
 }
-
-

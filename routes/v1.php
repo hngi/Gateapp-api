@@ -189,3 +189,6 @@ Route::get('generate-code', 'TestController@qrCode');
 //     event(new App\Events\notify('Someone'));
 //     return "Notification sent";
 // });
+
+Route::get('visitor/{id}', 'VisitorController@show');
+Route::post('visitor', 'VisitorController@store');

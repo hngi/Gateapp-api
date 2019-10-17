@@ -45,7 +45,7 @@ class SmsOtp extends Controller
 
 
       $res['status'] = true;
-      $res['data'] = array(""otp" => $response");
+      $res['data'] = array("otp" => $response);
       return response()->json($res, 200);
      } catch(\Exception $e) {
 

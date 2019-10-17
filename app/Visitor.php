@@ -1,8 +1,10 @@
 <?php
 
 namespace App;
+use App\User;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
 class Visitor extends Model
@@ -22,6 +24,7 @@ class Visitor extends Model
         'time_out',
         'time_in',
         'home_id',
+        'user_id',
     ];
 
 
@@ -54,7 +57,7 @@ class Visitor extends Model
      */
     public function user()
     {
-        // return $this->belongsTo(User::class);
+        //return $this->belongsTo(User::class);
         return $this->belongsTo('App\User');
     }
 
@@ -75,4 +78,5 @@ class Visitor extends Model
     {
         return $major ? $major : $fallback;
     }
+
 }

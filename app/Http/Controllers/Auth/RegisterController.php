@@ -53,7 +53,7 @@ class RegisterController extends Controller
                 'verifycode' => $verifycode
             ]);
 
-            $msg['message'] = 'A verification code has been sent to your phone number or email, please use to veriify your account!';
+            $msg['message'] = 'A verification code has been sent to your phone number or email, please use to verify your account!';
             $msg['user']    = $user;
 
             //Send a mail form account verification(Dont need the message here we are using sms instead)

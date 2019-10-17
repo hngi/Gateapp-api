@@ -73,7 +73,7 @@ class ImageController extends Controller
             $res['status_code'] = 200;
             return $res;
 
-        }catch(/Exception $e) {
+        }catch(\Exception $e) {
 
           //if any operation fails, Thanos snaps finger - user was not created rollback what is saved
           DB::rollBack();
@@ -81,7 +81,7 @@ class ImageController extends Controller
           $res['message']  = 'An error occured, please try again';
           $res['hint']     = $e->getMessage();
           $res['status_code'] =  501;
-          return $res
+          return $res;
         }
     }
 
