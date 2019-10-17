@@ -157,4 +157,4 @@ Route::get('init', function () {
 });
 
 //fetch a user's notifications
-Route::get('/notifications/{id}', 'NotifyController@fetchnotifications');
+Route::get('/notifications/{user_id}', 'NotifyController@fetchnotifications');
