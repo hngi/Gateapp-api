@@ -192,3 +192,14 @@ Route::get('init', function () {
 
 //fetch a user's notifications
 Route::get('/notifications/{user_id}', 'NotifyController@fetchnotifications');
+
+//test route
+Route::get('/test', function () {
+    $user = App\User::find(7);
+    $notify_message = [
+        'title' => $user->name . ' sent you an invitation',
+        'body' => 'You have been invited as a gateman'
+    ];
+    $user->notify(new App\Notifications\FcmNotifications($notify_message));
+    return 'sent';
+});
