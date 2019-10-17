@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Gateman;
 use App\User;
+use App\Visitor;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use JWTAuth;
@@ -99,9 +100,30 @@ class GatemanController extends Controller
      */
     public function viewVisitors()
     {
-
+        // get user id
+        $user_id = Gateman::where([
+        ['gateman_id', $this->user->id],
+        ['request_status', 1],
+        ])->pluck('user_id');
+        // get visitors with the user_id
+        $visitors = Visitor::whereIn('user_id', $user_id)->with('user')
+        ->get();
+        // list out visitors details
+        if ($visitors){
+            return response()->json([
+              'visitors' => $visitors->count(),
+              'visitor' => $visitors,
+              'status' => true
+            ], 200);
+        }
+        else {
+          return response()->json([
+              'message' => 'No Visitors found',
+              'status' => false
+            ], 404);
+        }
     }
-
+    
     /**
      * 
      */
