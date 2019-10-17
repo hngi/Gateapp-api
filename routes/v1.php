@@ -45,13 +45,13 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //Admin only Update Estates by estate_id
     Route::patch('/estate/{id}', 'EstateController@update')->middleware('admin');
 
-    //Admin only Create a service provider 
+    //Admin only Create a service provider
     Route::post('/service-provider', 'ServiceProviderController@create')->middleware('admin');
 
-    //Admin only Update a service provider 
+    //Admin only Update a service provider
     Route::put('/service-provider/edit/{id}', 'ServiceProviderController@update')->middleware('admin');
 
-    //Admin only delete a specific service provider 
+    //Admin only delete a specific service provider
     Route::delete('/service-provider/delete/{id}', 'ServiceProviderController@destroy')->middleware('admin');
 
     // Create a new Service Provider category
@@ -155,13 +155,13 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Get requests for a gateman
     Route::get('gateman/requests', 'GatemanController@residentRequest')->middleware('checkGateman');
 
-    //gateman Accept/decline invitation 
+    //gateman Accept/decline invitation
     Route::put('gateman/response', 'GatemanController@response');
 
-    // Add a gateman 
+    // Add a gateman
     Route::post('resident/addGateman/{id}', 'ResidentController@addGateman');
 
-    // remove a gateman by resident 
+    // remove a gateman by resident
     Route::delete('resident/removeGateman/{id}', 'ResidentController@destroy');
 
     // Get gateman by phone
@@ -194,12 +194,14 @@ Route::get('init', function () {
 Route::get('/notifications/{user_id}', 'NotifyController@fetchnotifications');
 
 //test route
-Route::get('/test', function () {
-    $user = App\User::find(7);
-    $notify_message = [
-        'title' => $user->name . ' sent you an invitation',
-        'body' => 'You have been invited as a gateman'
-    ];
-    $user->notify(new App\Notifications\FcmNotifications($notify_message));
-    return 'sent';
+Route::get('/test-notification', function () {
+    $user = App\User::query()->inRandomOrder()->first();
+    $resident = \App\User::query()->inRandomOrder()->first();
+
+    $user->notify(new \App\Notifications\GatemanAcceptanceNotification([
+        'title' => "Invitation as Gateman",
+        'body' => "Hello {$user->name}, {$resident->name} has invited you as a gateman to his home....",
+        'resident_id' => $resident->id,
+        'gateman_id' => $user->id,
+    ]));
 });
