@@ -169,10 +169,9 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::delete('resident/removegateman/{id}', 'ResidentController@destroy');
 
     // Get gateman by phone
-    Route::post('resident/gateman/phone', 'ResidentController@searchGatemanByPhone');
+    Route::get('resident/gateman/phone/{phone}', 'ResidentController@searchGatemanByPhone');
     // Get gateman by name
-    Route::post('resident/gateman/name', 'ResidentController@searchGatemanByName');
-
+    Route::get('resident/gateman/name/{name}', 'ResidentController@searchGatemanByName');
 });
 
 //This our testing api routes
