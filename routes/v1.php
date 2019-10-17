@@ -155,3 +155,6 @@ Route::get('init', function () {
     event(new App\Events\notify('Someone'));
     return "Notification sent";
 });
+
+//fetch a user's notifications
+Route::get('/notifications/{user_id}', 'NotifyController@fetchnotifications');
