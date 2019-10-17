@@ -57,9 +57,6 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     // Create a new Service Provider category
     Route::post('/sp-category', 'SPCategoryController@newCategory')->middleware('admin');
 
-    // Get all Service Provider categories
-    Route::get('/sp-category', 'SPCategoryController@fetchCategories')->middleware('admin');
-
     // Edit a Service Provider category
     Route::put('sp-category/{id}', 'SPCategoryController@editCategory')->middleware('admin');
 
@@ -169,6 +166,10 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('resident/gateman/phone', 'ResidentController@searchGatemanByPhone');
     // Get gateman by name
     Route::post('resident/gateman/name', 'ResidentController@searchGatemanByName');
+    
+    
+    // Get all Service Provider categories
+    Route::get('/sp-category', 'SPCategoryController@fetchCategories')
 
 });
 
