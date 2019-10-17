@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\ResidentGateman;
+use App\Service_Provider;
 use App\User;
 use App\Http\Resources\Resident as ResidentResource;
 use Illuminate\Http\Request;
@@ -202,5 +203,38 @@ class ResidentController extends Controller
         }
     }
 
+    public function viewPendingGateman (){
+        $residentGateman = ResidentGateman::where('user_id', $this->user->id)
+            ->where('request_status', 0)
+            ->get('gateman_id');
 
+        $gateman = User::find($residentGateman);
+
+        if($gateman){
+            $msg["data"] = $gateman;
+            return response()->json($msg, 200);
+        }else{
+            $msg['message'] = 'No Gateman added';
+            $msg['status'] = 404;
+            return $msg;
+        }
+    }
+
+
+    public function viewAcceptedGateman (){
+        $residentGateman = ResidentGateman::where('user_id', $this->user->id)
+            ->where('request_status', 1)
+            ->get('gateman_id');
+
+        $gateman = User::find($residentGateman);
+
+        if($gateman){
+            $msg["data"] = $gateman;
+            return response()->json($msg, 200);
+        }else{
+            $msg['message'] = 'No Gateman added';
+            $msg['status'] = 404;
+            return $msg;
+        }
+    }
 }
