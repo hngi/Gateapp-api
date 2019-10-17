@@ -103,23 +103,33 @@ class EstateController extends Controller
 
         }
 
-    public function update(Estate $estate)
-    {
-        $data =request()->all();
-        if(empty($data['estate_name'])){
-            $estate->estate_name = $data['estate_name'];
-        }
-        else if(empty($data['city'])){
-            $estate->city = $data['city'];
-        }
-        else if (empty($data['country'])){
-            $estate->country = $data['country'];
-        }
-        $data= $estate->update();
-        return response()->json($data, 'Estate updated successfully');
+        public function update(Estate $estate) {
+            $data =request()->all([]);
 
+            $data =request()->all(["estate_name"=>"required", "city"=>"required", "country"=>"required"]);
+            //start temporay transaction
+            DB::beginTransaction();
+            try{
+                $estate->estate_name   =  $data['estate_name'];
+                $estate->city   =  $data['city'];
+                $estate->country   =  $data['country'];
+                $estate->save();
+                //if operation was successful save commit save to database
+                DB::commit();
+                $res['status']  = true;
+                $res['data']    = $estate;
+                $res['message'] = 'Your Estate Was Successfully Updated';
+                return response()->json($res, 200);
+            }catch(\Exception $e) {
+                //rollback what is saved
+                DB::rollBack();
+                $res['status'] = false;
+                $res['message'] = 'An Error Occured While Trying To Update Your Estate Information';
+                $res['hint'] = $e->getMessage();
+                return response()->json($res, 501);
+            }
     }
-
+    
 
     // Delete Estates by id 
         

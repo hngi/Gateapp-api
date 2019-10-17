@@ -20,6 +20,7 @@ class CreateServiceProvidersTable extends Migration
             $table->string('description', 2000);
             $table->string('image')->default('no_image.jpg');
             $table->unsignedBigInteger('estate_id');
+            $table->integer('category_id')->unsigned();
             $table->timestamps();
 
             $table->foreign('estate_id')->references('id')->on('estates')->onDelete('cascade');
