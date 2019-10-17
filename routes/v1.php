@@ -3,27 +3,26 @@
 
 //Authentication Routes ******************************************************
     //Registration
-
-use App\Http\Controllers\ServiceProviderController;
-
-Route::post('register/admin', 'Auth\RegisterController@admin');//has a role of 0
+    Route::post('register/admin', 'Auth\RegisterController@admin');//has a role of 0
 
     Route::post('register/resident', 'Auth\RegisterController@resident');//has a role of 1
 
     Route::post('register/gateman', 'Auth\RegisterController@gateman');//has a role 2
 
-    //Login
-    Route::post('login', 'Auth\LoginController@authenticate');
+    //forgot Password
+    Route::post('phone/verify', 'Auth\ForgotPhoneController@verifyPhone');
 
     //Verify account
     Route::post('verify', 'Auth\VerificationController@verify');
 
-    //forgot Password
-    Route::post('phone/verify', 'Auth\ForgotPhoneController@verifyPhone');
+    //Resend Token
+    Route::get('resend/token', 'Auth\ForgotPhoneController@resedToken');
 
-    //Reset password for a new password
-    Route::put('phone/reset', 'Auth\ResetPhoneController@reset');
+    //Login
+    // Route::post('login', 'Auth\LoginController@authenticate'); Not Needed
 
+    //Reset password for a new phone
+    // Route::put('phone/reset', 'Auth\ResetPhoneController@reset'); Not  Needed
 
 
 //Admin Routes (Specific Route)*******************************************************
@@ -56,9 +55,6 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     // Create a new Service Provider category
     Route::post('/sp-category', 'SPCategoryController@newCategory')->middleware('admin');
-
-    // Get all Service Provider categories
-    Route::get('/sp-category', 'SPCategoryController@fetchCategories')->middleware('admin');
 
     // Edit a Service Provider category
     Route::put('sp-category/{id}', 'SPCategoryController@editCategory')->middleware('admin');
@@ -157,26 +153,38 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     /** Resident and Gateman Relationship */
     // Get requests for a gateman
     Route::get('gateman/requests', 'GatemanController@residentRequest')->middleware('checkGateman');
-
+    
+    Route::get('gateman/visitors', 'GatemanController@viewVisitors');
     //gateman Accept/decline invitation 
     Route::put('gateman/response', 'GatemanController@response');
 
     // Add a gateman 
-    Route::post('resident/addgateman/{id}', 'ResidentController@addGateman');
-
+    Route::post('resident/addGateman/{id}', 'ResidentController@addGateman');
 
     // remove a gateman by resident 
-    Route::delete('resident/removegateman/{id}', 'ResidentController@destroy');
+    Route::delete('resident/removeGateman/{id}', 'ResidentController@destroy');
 
     // Get gateman by phone
-    Route::get('resident/gateman/phone/{phone}', 'ResidentController@searchGatemanByPhone');
+    Route::get('search/gateman/phone/{phone}', 'ResidentController@searchGatemanByPhone');
+       
+    // Get all Service Provider categories
+    Route::get('/sp-category', 'SPCategoryController@fetchCategories');
+
     // Get gateman by name
-    Route::get('resident/gateman/name/{name}', 'ResidentController@searchGatemanByName');
+    Route::get('search/gateman/name/{name}', 'ResidentController@searchGatemanByName');
+
+    // Show all pending gateman invitation
+    Route::get('resident/pending_invitation/', 'ResidentController@pendingInvitation');
+
+    // Show accepted gateman invite
+    Route::get('resident/acceptedInvitation/', 'ResidentController@acceptedInvitation');
+
 });
 
 //This our testing api routes
 Route::get('test', 'TestController@test');
-Route::get('generate-code', 'TestController@qrCode');                          
+Route::get('generate-code', 'TestController@qrCode');    
+Route::post('image', 'TestController@upload');                       
 
 // Route::get('init', function () {
 //     event(new App\Events\notify('Someone'));
