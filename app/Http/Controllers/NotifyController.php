@@ -18,8 +18,12 @@ class NotifyController extends Controller
     }
     public function fetchnotifications($user_id)
     {
-        $notifications = Notification::find($user_id);
-        if($notifications){
+    	 $matchThese = ['gateman_id' => $user_id];
+    	 $orThose = [ 'visitor_id' => $user_id];
+         $notifications = Notification::where($matchThese)->orWhere($orThose)->get();
+
+
+        if(!$notifications->isEmpty()){
             $res["status"] = True;
             $res["message"] = "One User's notifications";
             $res["data"] = $notifications;
@@ -33,6 +37,6 @@ class NotifyController extends Controller
     }
 
 
-    
+
 
 }
