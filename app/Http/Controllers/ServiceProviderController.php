@@ -67,6 +67,7 @@ class ServiceProviderController extends Controller
                'description' => 'required',
                'image' => 'required',
                'estate_id' => 'required|int'
+               'category_id' => 'required|int'
           ]);
 
         if ($validator->fails()) {
@@ -106,6 +107,7 @@ class ServiceProviderController extends Controller
            'description' => 'required',
            'image'       => 'required',
            'estate_id'   => 'required|int'
+           'category_id' => 'required|int'
       ]);
 
         if ($validator->fails()) {
@@ -120,6 +122,7 @@ class ServiceProviderController extends Controller
             $service->description = $request->input("description");
             $service->image       = $request->input("image");
             $service->estate_id   = $request->input("estate_id");
+            $service->category_id = $request->input("category_id");
             $service->save();
 
              //if operation was successful save commit save to database
