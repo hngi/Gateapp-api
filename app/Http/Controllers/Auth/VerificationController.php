@@ -24,9 +24,7 @@ class VerificationController extends Controller
         ]);
 
         $verifycode = $request->input('verifycode');
-        $checkCode  = User::where('verifycode', $verifycode)
-                            ->where('device_id', $request->input('device_id'))
-                            ->exists();
+        $checkCode  = User::where('verifycode', $verifycode)->exists();
 
         if ($checkCode) {
 
@@ -38,6 +36,7 @@ class VerificationController extends Controller
                 //generate a new verify code 
                 $user->verifycode  =  $this->generatedPassword();
                 $user->email_verified_at = date("Y-m-d H:i:s");
+                $user->device_id  = $request->input('device_id');
                 $user->save();
                 
                 $msg["message"] = "Account is verified. You can now login.";
