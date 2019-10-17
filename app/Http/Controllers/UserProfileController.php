@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Controllers\ImageController;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -152,5 +152,14 @@ class UserProfileController extends Controller
             $res['message'] = 'User unsuccessfully, user not found or an error occured, please try again!';
             return response()->json($res, 501);
         }
+    }
+    
+    public function upload(Request $request, ImageController $image) {
+        $this->validate($request, [
+         'image' => "image|max:4000|required",
+        ]);
+        //Image Engine
+        $res = $image->imageUpload($request, );
+        return response()->json($res, $res['status_code']);
     }
 }
