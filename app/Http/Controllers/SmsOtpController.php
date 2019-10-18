@@ -9,19 +9,13 @@ use App\User;
 class SmsOtpController extends Controller
 {
 	/**
-   * Method to send sms otp to gateman
+   * Method to send sms otp
    */
-  public function smsOtp($phone)
+  public function smsOtp($phone, $msg, $sender = 'GateApp OTP')
   {
    try {
-        $phone = User::where('phone', $phone)->exists();
-        // Let me quickly check if number exists in our database
-        if(!$phone)
-        {
-         throw new \Exception('Phone Number Does Not Exists In Our Database.');
-        }
   
-       $curl = curl_init();
+        $curl = curl_init();
   
        // API token from @junicode
          
@@ -34,15 +28,16 @@ class SmsOtpController extends Controller
        CURLOPT_FOLLOWLOCATION => true,
        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
        CURLOPT_CUSTOMREQUEST => "POST",
-       CURLOPT_POSTFIELDS =>"{\n    \"message\": \"Gateman Messsage Here!\",\n    \"to\": \"{$phone}\",\n    \"sender_id\": \"GateApp\",\n    \"callback_url\": \"https://sms.to/callback/handler\"\n}",
+       CURLOPT_POSTFIELDS =>"{\n    \"message\": \"${$msg}\",\n    \"to\": \"{$phone}\",\n    \"sender_id\": \"{$sender}\",\n    \"callback_url\": \"https://sms.to/callback/handler\"\n}",
        CURLOPT_HTTPHEADER => array(
-        "Authorization: Bearer s92RW6JYLZoU8BizxS8sIpRFr2TE6c9N"
-         ),
+         "Content-Type: application/json",
+         "Accept: application/json",
+         "Authorization: Bearer YOUR_API_KEY_OR_ACCESS_TOKEN_OF_SMS.TO_HERE"
+           ),
       ));
    
       $response = curl_exec($curl);
       curl_close($curl);
-
 
       $res['status']        =  true;
       $res['data']          =  $response;
@@ -51,7 +46,7 @@ class SmsOtpController extends Controller
      } catch(\Exception $e) {
 
       $res['status'] = false;
-      $res['error_details'] = $e->getMessage();
+      $res['details'] = $e->getMessage();
       $res['data'] = "Error occured while sending OTP.";
       $res['status_code']   =  501;
       return $res;
