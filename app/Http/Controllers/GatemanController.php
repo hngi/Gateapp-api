@@ -85,6 +85,11 @@ class GatemanController extends Controller
         if (!$gateman) {
             return response()->json(['status' => false, 'message' => 'Request not found!'], 404);
         } else {
+	        // ensure that only the right gateman can accept the request
+	        if ($gateman->gateman_id != $gateman_id) {
+	            return response()->json(['status' => false, 'message' => 'Access denied'], 401);
+	        }
+
         	// check if the request has not been accepted
         	$request = $gateman->where('id', $id)
         		->where('gateman_id', $gateman_id)
@@ -135,6 +140,11 @@ class GatemanController extends Controller
         if (!$gateman) {
             return response()->json(['status' => false, 'message' => 'Request not found!'], 404);
         } else {
+	        // ensure that only the right gateman can reject the request
+	        if ($gateman->gateman_id != $gateman_id) {
+	            return response()->json(['status' => false, 'message' => 'Access denied'], 401);
+	        }
+
         	// check if the request has not been accepted
         	$request = $gateman->where('id', $id)
         		->where('gateman_id', $gateman_id)
