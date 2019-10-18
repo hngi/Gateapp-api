@@ -234,7 +234,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // ====================== Notifications ======================
     //fetch a user's notifications
-    Route::get('/notifications/', 'NotifyController@fetchnotifications');
+    Route::get('notifications/', 'NotifyController@fetchnotifications');
     // Delete Notification
     Route::delete('notifications/{id}', 'NotifyController@delete');
     // Update Notification
@@ -248,6 +248,12 @@ Route::get('/test-notification', function () {
     $gateman = \App\User::query()->inRandomOrder()->first();
 
     $user->notify(new \App\Notifications\GatemanAcceptanceNotification($user, $gateman));
+});
+Route::get('/test-notification-2', function () {
+    $user = App\User::query()->inRandomOrder()->first();
+    $gateman = \App\User::query()->inRandomOrder()->first();
+
+    $gateman->notify(new \App\Notifications\InvitationAcceptanceNotification($user, $gateman));
 });
 
 
@@ -266,14 +272,14 @@ Route::get('/notifications/{user_id}', 'NotifyController@fetchnotifications');
 //         'gateman_id' => $user->id,
 //     ]));
 // });
-Route::get('/test-notification-2', function () {
-    $user = App\User::query()->inRandomOrder()->first();
-    $resident = \App\User::query()->inRandomOrder()->first();
+// Route::get('/test-notification-2', function () {
+//     $user = App\User::query()->inRandomOrder()->first();
+//     $resident = \App\User::query()->inRandomOrder()->first();
 
-    $resident->notify(new \App\Notifications\InvitationAcceptanceNotification([
-        'title' => "Your Invitation have been accepted",
-        'body' => "Hello {$resident->name}, {$user->name} have accepted your invitation",
-        'resident_id' => $resident->id,
-        'gateman_id' => $user->id,
-    ]));
-});
+//     $resident->notify(new \App\Notifications\InvitationAcceptanceNotification([
+//         'title' => "Your Invitation have been accepted",
+//         'body' => "Hello {$resident->name}, {$user->name} have accepted your invitation",
+//         'resident_id' => $resident->id,
+//         'gateman_id' => $user->id,
+//     ]));
+// });

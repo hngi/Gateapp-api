@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,15 +12,23 @@ use Benwilkins\FCM\FcmMessage;
 class InvitationAcceptanceNotification extends Notification
 {
     use Queueable;
-    protected $message;
+    protected $resident;
+    protected $gateman;
+    private $title;
+    private $body;
+
     /**
      * Create a new notification instance.
-     *
-     * @return void
+     * @param User $resident
+     * @param User $gateman
      */
-    public function __construct(array $message)
+    public function __construct(User $resident,  User $gateman)
     {
-        $this->message = $message;
+        $this->resident = $resident;
+        $this->gateman = $gateman;
+
+        $this->title = "{$this->resident->name}  has invited you as a gateman to his home";
+        $this->body = null;
     }
 
     /**
@@ -45,13 +54,11 @@ class InvitationAcceptanceNotification extends Notification
         $message = new FcmMessage();
         $message
             ->content([
-                'title' => $this->message['title'],
-                'body' => $this->message['body'],
+                'title' => $this->title,
+                'body' => $this->body,
             ])
             ->data([
-                'resident_id' => $this->message['resident_id'],
-                'gateman_id' => $this->message['gateman_id'],
-                'home_id' => $this->message['home_id'] ?? null,
+                'resident_id' => $this->resident->id,
             ])
             ->priority(FcmMessage::PRIORITY_HIGH);
 
@@ -66,7 +73,7 @@ class InvitationAcceptanceNotification extends Notification
      */
     public function routeNotificationForFcm($notification)
     {
-        //        return $this->device_token;
+        return $this->gateman->fcm_token;
     }
 
 
@@ -93,11 +100,9 @@ class InvitationAcceptanceNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'title' => $this->message['title'],
-            'body' => $this->message['body'],
-            'resident_id' => $this->message['resident_id'],
-            'gateman_id' => $this->message['gateman_id'],
-            'home_id' => $this->message['home_id'] ?? null,
+            'title' => $this->title,
+            'body' => $this->body,
+            'resident_id' => $this->resident->id,
         ];
     }
 }
