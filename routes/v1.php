@@ -247,3 +247,14 @@ Route::get('/test-notification', function () {
     $user->notify(new \App\Notifications\GatemanAcceptanceNotification($user, $gateman));
 });
 
+Route::get('/test-notification2', function () {
+
+    // $user = App\User::all()->random(1);
+    // $gateman = App\User::all()->random(1);
+    // $visitor = App\Visitor::all()->random(1);
+    $gateman = App\User::query()->inRandomOrder()->first();
+    $visitor = App\Visitor::query()->inRandomOrder()->first();
+
+    $gateman->notify(new App\Notifications\GatemanAdmitsVisitor($gateman, $visitor));
+});
+
