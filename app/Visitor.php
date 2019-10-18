@@ -25,6 +25,7 @@ class Visitor extends Model
         'time_in',
         'home_id',
         'user_id',
+        'qr_code',
     ];
 
 
