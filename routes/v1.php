@@ -75,7 +75,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
 
 
-//Users Routes *******************************************************
+// General Users Routes *******************************************************
 Route::group(['middleware' => ['jwt.verify']], function() {
 	//This is the route group every authenticated route with jwt token should go in here
 
@@ -128,39 +128,6 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
 
 
-
-    //(Users Payment)
-
-    //save payment
-    Route::post('/payment', 'PaymentController@postPayment');
-
-    //show all user payment
-    Route::get('/payment/user/{user_id}', 'PaymentController@aUserPayment');
-
-    //show payment
-    Route::get('/payment/{id}', 'PaymentController@oneUniquePayment');
-
-
-
-    //(Users Visitors)
-
-    // Show all visitor
-    Route::get('visitor', 'VisitorController@index');
-
-    // Show single visitor
-    Route::get('visitor/{id}', 'VisitorController@show');
-
-    // Edit Visitor account
-    Route::put('visitor/{id}', 'VisitorController@update');
-
-    // Delete Visitor account
-    Route::delete('visitor/{id}', 'VisitorController@destroy');
-
-    //Create a visitor
-    Route::post('visitor', 'VisitorController@store');
-
-
-
     //(Users Messging)
 
     //Get message
@@ -180,54 +147,98 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     Route::get('/service-provider/category/{category_id}', 'ServiceProviderController@byCategory');
 
-    // Get requests for a gateman
-    Route::get('gateman/requests', 'GatemanController@residentRequest')->middleware('checkGateman');
+     // Get all Service Provider categories
+     Route::get('/sp-category', 'SPCategoryController@fetchCategories');
+
+
+
     
-    // Get list of visitors for gateman view
-    Route::get('gateman/visitors', 'GatemanController@viewVisitors');
 
-
-    //Verify a visitor
-    Route::put('gateman/admit', 'GatemanController@admitVisitor');
-
-    //Checkout visitor
-    Route::put('gateman/checkout', 'GatemanController@visitor_out');
-
-    //gateman Accept/decline invitation 
-    Route::put('gateman/response', 'GatemanController@response');
-
-   // Gateman accepts resident's requests route
-    Route::put('gateman/requests/accept/{id}', 'GatemanController@accept')->middleware('checkGateman');
-
-    // Gateman rejects resident's requests route
-    Route::put('gateman/requests/reject/{id}', 'GatemanController@reject')->middleware('checkGateman');
-
-    // Add a gateman 
-    Route::post('resident/addGateman/{id}', 'ResidentController@addGateman');
-
-    // remove a gateman by resident 
-    Route::delete('resident/removeGateman/{id}', 'ResidentController@destroy');
-
-    // Get gateman by phone
-    Route::get('search/gateman/phone/{phone}', 'ResidentController@searchGatemanByPhone');
-       
-    // Get all Service Provider categories
-    Route::get('/sp-category', 'SPCategoryController@fetchCategories');
-
-    // Get gateman by name
-    Route::get('search/gateman/name/{name}', 'ResidentController@searchGatemanByName');
-
-    // Show all pending gateman invitation
-    Route::get('resident/pendingInvitation', 'ResidentController@viewPendingGateman');
-
-    // Show accepted gateman invite
-    Route::get('resident/acceptedInvitation', 'ResidentController@viewAcceptedGateman');
-
-    // Show all the residents a gateman works for
-    Route::get('gateman/viewResidents', 'GatemanController@viewResidents');
-
+    
 });
 
+// Logged in Residents Routes *******************************************************
+Route::group(['middleware' => ['jwt.verify']], function() {
+    //(Users Payment)
+
+    //save payment
+    Route::post('/payment', 'PaymentController@postPayment')->middleware('checkResident');
+
+    //show all user payment
+    Route::get('/payment/user/{user_id}', 'PaymentController@aUserPayment')->middleware('checkResident');
+
+    //show payment
+    Route::get('/payment/{id}', 'PaymentController@oneUniquePayment')->middleware('checkResident');
+
+
+
+    //(Users Visitors)
+
+    // Show all visitor
+    Route::get('visitor', 'VisitorController@index')->middleware('checkResident');
+
+    // Show single visitor
+    Route::get('visitor/{id}', 'VisitorController@show')->middleware('checkResident');
+
+    // Edit Visitor account
+    Route::put('visitor/{id}', 'VisitorController@update')->middleware('checkResident');
+
+    // Delete Visitor account
+    Route::delete('visitor/{id}', 'VisitorController@destroy')->middleware('checkResident');
+
+    //Create a visitor
+    Route::post('visitor', 'VisitorController@store')->middleware('checkResident');
+
+    //(Residents and Gateman)
+
+    // Add a gateman 
+    Route::post('resident/addGateman/{id}', 'ResidentController@addGateman')->middleware('checkResident');
+
+    // remove a gateman by resident 
+    Route::delete('resident/removeGateman/{id}', 'ResidentController@destroy')->middleware('checkResident');
+
+    // Get gateman by phone
+    Route::get('search/gateman/phone/{phone}', 'ResidentController@searchGatemanByPhone')->middleware('checkResident');
+
+    // Get gateman by name
+    Route::get('search/gateman/name/{name}', 'ResidentController@searchGatemanByName')->middleware('checkResident');
+
+    // Show all pending gateman invitation
+    Route::get('resident/pendingInvitation', 'ResidentController@viewPendingGateman')->middleware('checkResident');
+
+    // Show accepted gateman invite
+    Route::get('resident/acceptedInvitation', 'ResidentController@viewAcceptedGateman')->middleware('checkResident');
+});
+
+// Logged in Gateman Routes *******************************************************
+Route::group(['middleware' => ['jwt.verify']], function() {
+        // Get requests for a gateman
+        Route::get('gateman/requests', 'GatemanController@residentRequest')->middleware('checkGateman');
+    
+        // Get list of visitors for gateman view
+        Route::get('gateman/visitors', 'GatemanController@viewVisitors')->middleware('checkGateman');
+    
+    
+        //Verify a visitor
+        Route::put('gateman/admit', 'GatemanController@admitVisitor')->middleware('checkGateman');
+    
+        //Checkout visitor
+        Route::put('gateman/checkout', 'GatemanController@visitor_out')->middleware('checkGateman');
+    
+        //gateman Accept/decline invitation 
+        Route::put('gateman/response', 'GatemanController@response')->middleware('checkGateman');
+    
+       // Gateman accepts resident's requests route
+        Route::put('gateman/requests/accept/{id}', 'GatemanController@accept')->middleware('checkGateman');
+    
+        // Gateman rejects resident's requests route
+        Route::put('gateman/requests/reject/{id}', 'GatemanController@reject')->middleware('checkGateman');
+
+        // Show all the residents a gateman works for
+        Route::get('gateman/viewResidents', 'GatemanController@viewResidents')->middleware('checkGateman');
+
+
+});
 
 
 
