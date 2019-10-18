@@ -16,6 +16,7 @@ class CreateEstatesTable extends Migration
         Schema::create('estates', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('estate_name')->nullable();
+            $table->string('address')->unique()->nullable();
             $table->string('city')->nullable();
             $table->string('country')->nullable();
             $table->timestamps();

@@ -112,35 +112,36 @@ class UserProfileController extends Controller
         }
    }
 
-    public function phone(Request $request) {
-        $user = Auth::user();
+    // public function phone(Request $request) {
+    //     $user = Auth::user();
 
-        $this->validate($request, [
-            'old_phone' => 'required',
-            'new_phone' => 'required|unique:phone,'.$user->id,
-        ]);
-         //start temporay transaction
-        DB::beginTransaction();
-        try{
-                $user->password = Hash::make($request->input('new_phone'));
-                $user->save();
+    //     $this->validate($request, [
+    //         'old_phone' => 'required',
+    //         'new_phone' => 'required|unique:phone,'.$user->id,
+    //         'device_id' => 'required',
+    //     ]);
+    //      //start temporay transaction
+    //     DB::beginTransaction();
+    //     try{
+    //             $user->phone = $request->input('new_phone');
+    //             $user->save();
 
-                 //if operation was successful save commit save to database
-                DB::commit();
-                $res['status'] = true;
-                $res['message'] = 'Phone number Changed Successfully!';
-                return response()->json($res, 200);
-            }catch(\Exception $e) {
+    //              //if operation was successful save commit save to database
+    //             DB::commit();
+    //             $res['status'] = true;
+    //             $res['message'] = 'Phone number Changed Successfully!';
+    //             return response()->json($res, 200);
+    //         }catch(\Exception $e) {
 
-                //rollback what is saved
-                DB::rollBack();
-                $res['status'] = false;
-                $res['message'] = 'Phone number Update unsuccessful: An error occured, please try again!';
-                return response()->json($res, 501);
-        }
+    //             //rollback what is saved
+    //             DB::rollBack();
+    //             $res['status'] = false;
+    //             $res['message'] = 'Phone number Update unsuccessful: An error occured, please try again!';
+    //             return response()->json($res, 501);
+    //     }
 
 
-    }
+    // }
 
     public function destroy() {
         $user = Auth::user();
@@ -159,7 +160,7 @@ class UserProfileController extends Controller
          'image' => "image|max:4000|required",
         ]);
         //Image Engine
-        $res = $image->imageUpload($request, );
+        $res = $image->imageUpload($request);
         return response()->json($res, $res['status_code']);
     }
 }
