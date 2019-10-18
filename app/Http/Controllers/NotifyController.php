@@ -9,15 +9,21 @@ use Illuminate\Support\Facades\Auth;
 
 class NotifyController extends Controller
 {
-
+    public function index(){
+       // var pusher = new Pusher('API_KEY_HERE', {
+          //  encrypted: true
+        //  });
+    
+          // Subscribe to the channel we specified in our Laravel Event
+      ///    
+    }
     public function fetchnotifications()
     {
-
-    	 if (Auth::check()) {
+       if (Auth::check()) {
             $user_id = Auth::id();
-    	 $matchThese = ['gateman_id' => $user_id];
-    	 $orThose = [ 'visitor_id' => $user_id];
-         $notifications = Notification::where($matchThese)->orWhere($orThose)->get();
+    	 $matchThese = ['notifiable_id' => $user_id];
+    	
+         $notifications = Notification::where($matchThese)->get();
 
 
         if(!$notifications->isEmpty()){
@@ -32,8 +38,8 @@ class NotifyController extends Controller
             return response()->json($res, 404);
         }
     }
-}
 
+}
 
 
 

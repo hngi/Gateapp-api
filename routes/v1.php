@@ -131,16 +131,15 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     //Create a visitor
     Route::post('visitor', 'VisitorController@store');
-
+    
+    //fetch a user's notifications
+    Route::get('/notifications/', 'NotifyController@fetchnotifications');
 
     //(Users Messging)
     //Get message
     Route::get('messages/{other_user_id}', 'MessageController@conversation');
     //Save Message
     Route::post('/messages', 'MessageController@saveMessage');  
-
-    //fetch a user's notifications
-    Route::get('/notifications', 'NotifyController@fetchnotifications');
 
     //(Users And ServiceProvider)
     //Get One
