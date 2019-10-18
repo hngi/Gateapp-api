@@ -39,7 +39,7 @@ class TestController extends Controller
          'image' => "image|max:4000|required",
         ]);
         //Image Engine
-        $res = $image->imageUpload($request, );
+        $res = $image->imageUpload($request);
         return response()->json($res, $res['status_code']);
     }
 }
