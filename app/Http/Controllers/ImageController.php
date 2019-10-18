@@ -80,15 +80,9 @@ class ImageController extends Controller
             $res['status']  = true;
             $res['message'] = "Upload Successful!";
             $res['image_link'] = 'https://res.cloudinary.com/getfiledata/image/upload/';
-            $res['image_prop'] = [
-              'cropType1' => 'c_fit',
-              'cropType2' => 'g_face',
-              'imageStyle' => 'c_thumb',
-              'heigth' => 'h_577',
-              'width' =>  '433',
-              'widthThumb' => 'w_200',
-              'aspectRatio' => 'ar_4:4'
-            ];
+            $msg['image_round_format']  = 'w_200,c_fill,ar_1:1,g_auto,r_max/';
+            $msg['image_square_format'] = 'w_200,ar_1:1,c_fill,g_auto/';
+            $msg['image_example_link']  = 'https://res.cloudinary.com/getfiledata/image/upload/w_200,c_fill,ar_1:1,g_auto,r_max/noimage.jpg';
             $res['user_data'] =  $onCurrent;
             $res['image']  = $user_image;
             $res['status_code'] = 200;
