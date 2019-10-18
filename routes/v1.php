@@ -1,5 +1,5 @@
 <?php
-
+use App\User;
 
 //Authentication Routes ******************************************************
     //Registration
@@ -99,6 +99,9 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //Delete user account
     Route::delete('/user/delete', 'UserProfileController@destroy');
 
+    //Image upload api
+    Route::post('user/image', 'UserProfileController@upload');                       
+
 
     //(Users interactions with Estates) Some of the estate route are controlled ny the admin
 
@@ -177,15 +180,27 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     Route::get('/service-provider/category/{category_id}', 'ServiceProviderController@byCategory');
 
-
-
-    //(Resident and Gateman Relationship)
-
     // Get requests for a gateman
     Route::get('gateman/requests', 'GatemanController@residentRequest')->middleware('checkGateman');
+    
+    // Get list of visitors for gateman view
+    Route::get('gateman/visitors', 'GatemanController@viewVisitors');
+
+
+    //Verify a visitor
+    Route::put('gateman/admit', 'GatemanController@admitVisitor');
+
+    //Checkout visitor
+    Route::put('gateman/checkout', 'GatemanController@visitor_out');
 
     //gateman Accept/decline invitation 
     Route::put('gateman/response', 'GatemanController@response');
+
+   // Gateman accepts resident's requests route
+    Route::put('gateman/requests/accept/{id}', 'GatemanController@accept')->middleware('checkGateman');
+
+    // Gateman rejects resident's requests route
+    Route::put('gateman/requests/reject/{id}', 'GatemanController@reject')->middleware('checkGateman');
 
     // Add a gateman 
     Route::post('resident/addGateman/{id}', 'ResidentController@addGateman');
@@ -203,17 +218,23 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('search/gateman/name/{name}', 'ResidentController@searchGatemanByName');
 
     // Show all pending gateman invitation
-    Route::get('resident/pending_invitation/', 'ResidentController@pendingInvitation');
+    Route::get('resident/pendingInvitation', 'ResidentController@viewPendingGateman');
 
     // Show accepted gateman invite
-    Route::get('resident/acceptedInvitation/', 'ResidentController@acceptedInvitation');
+    Route::get('resident/acceptedInvitation', 'ResidentController@viewAcceptedGateman');
+
+    // Show all the residents a gateman works for
+    Route::get('gateman/viewResidents', 'GatemanController@viewResidents');
 
 });
+
+
+
 
 //This our testing api routes
 Route::get('test', 'TestController@test');
 Route::get('generate-code', 'TestController@qrCode');    
-Route::post('image', 'TestController@upload');                       
+Route::post('test_image', 'TestController@upload');                       
 
 // Route::get('init', function () {
 //     event(new App\Events\notify('Someone'));

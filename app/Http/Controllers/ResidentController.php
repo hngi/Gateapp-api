@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\ResidentGateman;
+use App\Service_Provider;
 use App\User;
 use App\Http\Resources\Resident as ResidentResource;
 use Illuminate\Http\Request;
@@ -145,62 +146,40 @@ class ResidentController extends Controller
 
     }
 
-    public function pendingInvitation($id){
-        DB::beginTransaction();
+    
 
-        try{
-            $pendingInvitation = ResidentGateman::find([
-                "user_id" => $id,
-                "request_status" => 0
-            ]);
+    public function viewPendingGateman (){
+        $residentGateman = ResidentGateman::where('user_id', $this->user->id)
+            ->where('request_status', 0)
+            ->get('gateman_id');
 
-            $res['message'] = 'My Pending Invitations';
-            $res['data']    = $pendingInvitation;
+        $gateman = User::find($residentGateman);
 
-            DB::commit();
-            $res['status'] = 201;
-            return $res;
-
-        }catch(\Exception $e) {
-            //if an error occurs the relationship is not established
-            DB::rollBack();
-
-            $res['message'] = "Error: Could not get pending gateman invitation";
-            $res['user'] = null;
-            $res['hint'] = $e->getMessage();
-            $res['status'] = 501;
-            return $res;
+        if($gateman){
+            $msg["data"] = $gateman;
+            return response()->json($msg, 200);
+        }else{
+            $msg['message'] = 'No Gateman added';
+            $msg['status'] = 404;
+            return $msg;
         }
     }
 
 
-    public function acceptedInvitation($id){
-        DB::beginTransaction();
+    public function viewAcceptedGateman (){
+        $residentGateman = ResidentGateman::where('user_id', $this->user->id)
+            ->where('request_status', 1)
+            ->get('gateman_id');
 
-        try{
-            $pendingInvitation = ResidentGateman::find([
-                "user_id" => $id,
-                "request_status" => 1
-            ]);
+        $gateman = User::find($residentGateman);
 
-            $res['message'] = 'My Pending Invitations';
-            $res['data']    = $pendingInvitation;
-
-            DB::commit();
-            $res['status'] = 201;
-            return $res;
-
-        }catch(\Exception $e) {
-            //if an error occurs the relationship is not established
-            DB::rollBack();
-
-            $res['message'] = "Error: Could not get pending gateman invitation";
-            $res['user'] = null;
-            $res['hint'] = $e->getMessage();
-            $res['status'] = 501;
-            return $res;
+        if($gateman){
+            $msg["data"] = $gateman;
+            return response()->json($msg, 200);
+        }else{
+            $msg['message'] = 'No Gateman added';
+            $msg['status'] = 404;
+            return $msg;
         }
     }
-
-
 }
