@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Gateman;
 use App\User;
+use App\Visitor;
+use App\Http\Resources\Visitor as VisitorResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use JWTAuth;
 
 class GatemanController extends Controller
@@ -66,49 +70,90 @@ class GatemanController extends Controller
     }
 
     /**
-     * Method to update gateman's response to resident's request
+     * Method for gateman to accept resident's request
      */
-    public function response(Request $request)
+    public function accept($id)
     {
-        // ensure user has the gateman role
-        if ($this->user->role != '2') {
-            return response()->json([
-                'status' => false,
-                'message' => 'User is not a registered gateman',
-            ], 200);
+    	// set the gateman id
+    	$gateman_id = $this->user->id;
+
+    	// retrieve the request
+        $gateman = Gateman::find($id);
+
+		// check for the existence of the request on the db
+        if (!$gateman) {
+            return response()->json(['status' => false, 'message' => 'Request not found!'], 404);
+        } else {
+        	// check if the request has not been accepted
+        	$request = $gateman->where('gateman_id', $gateman_id)
+        		->where('request_status', 0)
+        		->exists();
+        	
+        	// update the request
+        	if ($request) {
+        		$gateman->request_status = 1;
+
+        		if ($gateman->save()) {
+			        return response()->json([
+			        	'message' => 'The request has been accepted successfully',
+			        	'status' => true
+			        ], 202);
+        		} else {
+			        return response()->json([
+			        	'message' => 'The request could not be accepted at the moment',
+			        	'status' => false
+			        ], 500);
+				}
+        	} else {
+		        return response()->json([
+		        	'message' => 'This request has already been accepted',
+		        	'status' => true
+		        ], 200);
+        	}
         }
+    }
 
-        $id =$request->input('invitation_id');
-        $status = $request->input('request_status');
+    /**
+     * Method for gateman to reject resident's request
+     */
+    public function reject($id)
+    {
+    	// set the gateman id
+    	$gateman_id = $this->user->id;
 
-        $existence = Gateman::where('id', $id)->exists();
+    	// retrieve the request
+        $gateman = Gateman::find($id);
 
-        if($existence) {
-            try {
-                
-                DB::update('update resident_gateman set request_status = ? where id = ? and gateman_id = ?', [$status, $id, $this->user->id]);
+		// check for the existence of the request on the db
+        if (!$gateman) {
+            return response()->json(['status' => false, 'message' => 'Request not found!'], 404);
+        } else {
+        	// check if the request has not been accepted
+        	$request = $gateman->where('gateman_id', $gateman_id)
+        		->where('request_status', 0)
+        		->exists();
+        	
+        	// update the request
+        	if ($request) {
+        		$gateman->request_status = 1;
 
-                if ($status == 1) {
-                    $res['message'] = "Invitation was rejected";
-                }elseif ($status == 0) {
-                    $res['message'] = "Invitation was accepted";
-                }
-                
-                $res['status'] = true;
-                $res['statusCode'] = 200;
-
-                return response()->json($res, $res['statusCode']);
-            }catch(\Exception $e) {
-
-                $data['message'] = "Could not handle request, please try again later";
-                $msg['hint'] = $e->getMessage();
-                return response()->json($data, 501);
-            }
-        }else{
-            $res['message'] = "Invitation not found";
-            $res['status'] = false;
-            $res['statusCode'] = 501;
-            return response()->json($res, $res['statusCode']);
+        		if ($gateman->destroy($id)) {
+			        return response()->json([
+			        	'message' => 'The request has been rejected successfully',
+			        	'status' => true
+			        ], 202);
+        		} else {
+			        return response()->json([
+			        	'message' => 'The request could not be rejected at the moment',
+			        	'status' => false
+			        ], 500);
+				}
+        	} else {
+		        return response()->json([
+		        	'message' => 'This request has already been accepted',
+		        	'status' => true
+		        ], 200);
+        	}
         }
     }
 
@@ -118,13 +163,122 @@ class GatemanController extends Controller
      */
     public function viewVisitors()
     {
+        // get user id
+        $user_id = Gateman::where([
+        ['gateman_id', $this->user->id],
+        ['request_status', 1],
+        ])->pluck('user_id');
+        // get visitors with the user_id
+        $visitors = Visitor::whereIn('user_id', $user_id)->with('user')
+        ->get();
+        // list out visitors details
+        if ($visitors){
+            return response()->json([
+              'visitors' => $visitors->count(),
+              'visitor' => $visitors,
+              'status' => true
+            ], 200);
+        }
+        else {
+          return response()->json([
+              'message' => 'No Visitors found',
+              'status' => false
+            ], 404);
+        }
     }
-
+    
     /**
      * 
      */
-    public function admitVisitors()
-    {
 
+    
+    public function admitVisitor(Request $request)
+    {
+        
+            $resident = Visitor::where('qr_code', $request->input('qr_code'))->first();
+            if ($resident){
+                //Error Handling
+                $resident = $resident->id;
+                // Check that Gateman works for user
+                $residentGateman = Gateman::where([
+                    ['gateman_id', $this->user->id],
+                    ['user_id', $resident],
+                    ['request_status', 1],
+                    ])->first();
+                if ($residentGateman){
+                    $avisitor = Visitor::where('id', $resident)->update(['time_in' => NOW()]);
+                $visitor = Visitor::where('id', $resident)->with('user')->get();
+                return response()->json($visitor); 
+                return response()->json($visitor, 202);
+
+                }else {
+                $res['Error']    = " Unauthorized- Access Denied!";
+                return response()->json($res, 403);  
+                }
+                 
+            } else{
+                $res['Error']    = $request->input('qr_code'). " This QR code does not exist";
+                return response()->json($res, 404);  
+
+            } 
+    }
+
+
+    public function viewResidents()
+    {
+        // get user id
+        $user_id = Gateman::where([
+        ['gateman_id', $this->user->id],
+        ['request_status', 1],
+        ])->pluck('user_id');
+        // get visitors with the user_id
+        $resident = User::find($user_id);
+        // list out visitors details
+        if ($resident){
+            return response()->json([
+              'residents' => $resident->count(),
+              'resident' => $resident,
+              'status' => true
+            ], 200);
+        }
+        else {
+          return response()->json([
+              'message' => 'No Residents found',
+              'status' => false
+            ], 404);
+        }
+    }
+    
+        
+
+
+    public function visitor_out(Request $request)
+    {
+        $resident = Visitor::where('qr_code', $request->input('qr_code'))->first();
+            if ($resident){
+                //Error Handling
+                $resident = $resident->id;
+                // Check that Gateman works for user
+                $residentGateman = Gateman::where([
+                    ['gateman_id', $this->user->id],
+                    ['user_id', $resident],
+                    ['request_status', 1],
+                    ])->first();
+                if ($residentGateman){
+                    $avisitor = Visitor::where('id', $resident)->update(['time_in' => NOW()]);
+                $visitor = Visitor::where('id', $resident)->with('user')->get();
+                return response()->json($visitor); 
+                return response()->json($visitor, 202);
+
+                }else {
+                $res['Error']    = " Unauthorized - Access Denied!";
+                return response()->json($res, 403);  
+                } 
+                 
+            } else{
+                $res['Error']    = $request->input('qr_code'). " This QR code does not exist";
+                return response()->json($res, 404);  
+
+            }   
     }
 }
