@@ -40,6 +40,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //show one admin
     Route::get('admin/{id}', 'UserProfileController@showOneAdmin')->middleware('admin');
 
+    // Show all visitor
+    Route::get('allVisitors', 'VisitorController@index')->middleware('admin');
 
 
     //(Admin interactions with Estates)
@@ -174,8 +176,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     //(Users Visitors)
 
-    // Show all visitor
-    Route::get('allVisitors', 'VisitorController@index')->middleware('checkResident');
+    
 
     // Show signed in user visitor
     Route::get('visitors', 'VisitorController@residentVisitor')->middleware('checkResident');
