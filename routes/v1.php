@@ -2,6 +2,7 @@
 
 
 //Authentication Routes ******************************************************
+
     //Registration
     Route::post('register/admin', 'Auth\RegisterController@admin');//has a role of 0
 
@@ -26,8 +27,10 @@
 
 
 //Admin Routes (Specific Route)*******************************************************
+
 Route::group(['middleware' => ['jwt.verify']], function() {
 	//This is the route group every authenticated route with jwt token should go in here
+
 
     //(Admin interactions with User)
 
@@ -67,9 +70,11 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
 
 
+
 // General Users Routes *******************************************************
 Route::group(['middleware' => ['jwt.verify']], function() {
 	//This is the route group every authenticated route with jwt token should go in here
+
 
      //Refresh token
     Route::post('/refresh', 'Auth\LoginController@refresh');
@@ -132,6 +137,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     //Create a visitor
     Route::post('visitor', 'VisitorController@store');
+
 
 
     //(Users Messging)
@@ -234,6 +240,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
         //Checkout visitor
         Route::put('gateman/checkout', 'GatemanController@visitor_out')->middleware('checkGateman');
 
+
         //gateman Accept/decline invitation
         Route::put('gateman/response', 'GatemanController@response')->middleware('checkGateman');
 
@@ -255,6 +262,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
         // Update Notification
         Route::put('notifications/{id}', 'NotifyController@markread');
 
+
 });
 
 
@@ -271,6 +279,23 @@ Route::get('/test-notification', function () {
 
     $user->notify(new \App\Notifications\GatemanAcceptanceNotification($user, $gateman));
 });
+Route::get('/test-notification-2', function () {
+    $user = App\User::query()->inRandomOrder()->first();
+    $gateman = \App\User::query()->inRandomOrder()->first();
+
+    $gateman->notify(new \App\Notifications\InvitationAcceptanceNotification($user, $gateman));
+});
+
+
+
+Route::get('/test-notification2', function () {
+    
+    $gateman = App\User::query()->inRandomOrder()->first();
+    $visitor = App\Visitor::query()->inRandomOrder()->first();
+
+    $gateman->notify(new App\Notifications\GatemanAdmitsVisitor($gateman, $visitor));
+});
+
 
 // Route::get('init', function () {
 //     event(new App\Events\notify('Someone'));
