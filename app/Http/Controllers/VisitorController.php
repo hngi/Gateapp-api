@@ -6,6 +6,8 @@ use App\Visitor;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\QrCodeGenerator;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use JWTAuth;
@@ -25,6 +27,8 @@ class VisitorController extends Controller
         // $this->user = JWTAuth::parseToken()->authenticate();
     }
 
+    
+
 	/**
 	 * Get all visitor
 	 *
@@ -39,11 +43,14 @@ class VisitorController extends Controller
     	// return the requested number of visitors.
     	// if there was no pagination set by the query,
     	// limit the response to 15 data set
-    	$visitors = Visitor::paginate($per_page);
+        $visitors = Visitor::paginate($per_page);
+        
 
         // send response with the visitors' details
         return response()->json([
-        	'data'   => $visitors,
+            'data'   => $visitors,
+            
+    
         	'status' => true
         ], 200);
     }
@@ -88,7 +95,10 @@ class VisitorController extends Controller
             'image' => 'string|nullable',
             'status' => 'required|string',
             'home_id' => 'required|integer',    		
-    	]);
+        ]);
+        $randomToken = Str::random(6);
+        $qr = new QrCodeGenerator;
+        
 
         $visitor = new Visitor();
 
@@ -100,14 +110,19 @@ class VisitorController extends Controller
         $visitor->status = $request->status;
         $visitor->user_id = $this->user->id;
         $visitor->home_id = $request->home_id;
+        $visitor->qr_code = $randomToken;
+
 
 		// add new visitor
         if ($this->user->visitors()->save($visitor)) {
+            $visitor_id = $visitor->id;
+            $qr_code = $qr->generateCode($visitor_id.$randomToken);
         	// send response
             return response()->json([
                 'visitor' => $visitor,
                 'status'  => true,
-                'message' => 'Visitor successfully added'
+                'message' => 'Visitor successfully added',
+                'qr_image_src'=> $qr_code
             ], 200);
         } else {
             return response()->json([
@@ -165,7 +180,7 @@ class VisitorController extends Controller
             'time_in' => 'date_format:"Y-m-d H:i:s"',
             'time_out' => 'date_format:Y-m-d H:i:s|nullable',
             'user_id' => 'integer',
-            'home_id' => 'integer',         
+             'home_id' => 'integer',         
         ]);
 
         // check if the data is valid
@@ -221,7 +236,7 @@ class VisitorController extends Controller
                 'message' => 'Sorry, this visitor could not be deleted!',
             ], 500);
 		}
-	}
+    }
 }
 
 
