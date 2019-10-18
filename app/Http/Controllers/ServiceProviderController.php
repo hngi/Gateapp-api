@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Service_Provider;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\ImageController;
 
 class ServiceProviderController extends Controller
 {
@@ -15,21 +17,25 @@ class ServiceProviderController extends Controller
         
         if (Auth::check()) {
            $user = Auth::user();
-           $role = $user->role_id;
+           $role = $user->role;
             
-           if ($role === 1 || role === 2) {
-            $service = Service_Provider::all();
-            $res["status"] = 200;
-            $res["message"] = "All service provider";
-            $res["data"] = $service;
-               
+           if ($role === "1" || $role === "2") {
+                $service = Service_Provider::all();
+                if (!$service->isEmpty()) {
+                    $res["status"] = 200;
+                    $res["message"] = "All service providers.";
+                    $res["data"] = $service;       
+                } else {
+                    $res["status"] = 200;
+                    $res["message"] = "No service providers registered";
+                }
            } else {
                $res['status'] = 401;
-               $res['message'] = "You must login as a resident";
+               $res['message'] = "You must login as a resident or admin.";
            }
        } else {
         $res['status'] = 401;
-        $res['message'] = "You are not logged in";
+        $res['message'] = "You are not logged in.";
        }
         return response()->json($res, $res['status']);
     }
@@ -40,22 +46,27 @@ class ServiceProviderController extends Controller
         
         if (Auth::check()) {
            $user = Auth::user();
-           $role = $user->role_id;
+           $role = $user->role;
             
-           if ($role === 1 || role === 2) {
-            $service = Service_Provider::find($id);
-            $res["status"] = 200;
-            $res["message"] = "One service provider";
-            $res["data"] = $service;
+           if ($role === "1" || $role === "2") {
+                $service = Service_Provider::find($id);
+                if (!is_null($service)) {
+                    $res["status"] = 200;
+                    $res["message"] = "Service provider found.";
+                    $res["data"] = $service;
+                } else {
+                    $res["status"] = 200;
+                    $res["message"] = "No service provider found.";   
+                }
                
-           } else {
-               $res['status'] = 401;
-               $res['message'] = "You must login as a resident";
-           }
-       } else {
-        $res['status'] = 401;
-        $res['message'] = "You are not logged in";
-       }
+            } else {
+                $res['status'] = 401;
+                $res['message'] = "You must login as a resident or admin.";
+            }
+        } else {
+            $res['status'] = 401;
+            $res['message'] = "You are not logged in.";
+        }
         return response()->json($res, $res['status']);
     }
 
@@ -64,25 +75,33 @@ class ServiceProviderController extends Controller
         
         if (Auth::check()) {
             $user = Auth::user();
-            $role = $user->role_id;
-            if ($role === 1 || role === 2) {
-            $services = Service_Provider::where('category_id', $category_id);
-            
-            
-            if(!$services->isEmpty()) {
-                $res['status'] = 200;
-                $res['message'] = "Retrieved service providers";
-                $res['data'] = $services;
-                
-            } else {    
+            $role = $user->role;
+           
+            if ($role === "1" || $role === "2") {
+                try {
+                    $services = Service_Provider::where('category_id', $category_id)->get(); 
+                    
+                    if(!$services->isEmpty()) {
+                        $res['status'] = 200;
+                        $res['message'] = "Retrieved service providers";
+                        $res['data'] = $services;
+                        
+                    } else {    
+                        $res['status'] = 404;
+                        $res['message'] = "No service providers in this category";
+                    }
+                } catch(Exception $e) {
+                    $res['status'] = 501;
+                    $res['message'] = "An error occurred trying to retrieve service providers $e";
+                }
+            } else {
                 $res['status'] = 401;
-                $res['message'] = "You are not logged in";
+                $res['message'] = "You must login as a resident or admin.";
             }
-        } catch(Exception $e) {
-            $res['status'] = 501;
-            $res['message'] = "An error occurred trying to retrieve service providers";
+        } else {
+            $res['status'] = 401;
+            $res['message'] = "You are not logged in";
         }
-
         return response()->json($res, $res['status']);
     }
 
@@ -93,7 +112,7 @@ class ServiceProviderController extends Controller
                'phone' => 'required',
                'description' => 'required',
                'image' => 'required',
-               'estate_id' => 'required|int'
+               'estate_id' => 'required|int',
                'category_id' => 'required|int'
           ]);
 
@@ -174,14 +193,23 @@ class ServiceProviderController extends Controller
         $service = Service_Provider::destroy($id);
 
         if($service){
-            $res['status'] = true;
-            $res["message"] = $service." Service Provider Deleted!";
+            $res['status'] = 200;
+            $res["message"] = "Service Provider Deleted!";
             return response()->json($res, 200);
         }else{
-            $res['status'] = false;
-            $res["message"] = "An error occured, please try again";
-            return response()->json($res, 501);
+            $res['status'] = 404;
+            $res["message"] = "No service found";
+            return response()->json($res, $res['status']);
         }
     }
+
+    // public function upload(Request $request, ImageController $image) {
+    //     $this->validate($request, [
+    //      'image' => "image|max:4000|required",
+    //     ]);
+        
+    //     $res = $image->imageUpload($request);
+    //     return response()->json($res, $res['status_code']);
+    // }
 
 }
