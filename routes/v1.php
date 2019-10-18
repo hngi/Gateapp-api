@@ -43,6 +43,17 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //show one admin
     Route::get('admin/{id}', 'UserProfileController@showOneAdmin')->middleware('admin');
 
+
+    // Show all visitor
+    Route::get('allVisitors', 'VisitorController@index')->middleware('admin');
+
+
+    //(Admin interactions with Estates)
+
+    //Admin only Update Estates by estate_id
+    Route::put('/estate/edit/{id}', 'EstateController@update')->middleware('admin');
+
+
     //Delete Estates by estate_id
     Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate')->middleware('admin');
 
@@ -174,7 +185,6 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
 
     //(Users Visitors)
-
     // Show signed in user visitor
     Route::get('visitor', 'VisitorController@residentVisitor')->middleware('checkResident');
 
