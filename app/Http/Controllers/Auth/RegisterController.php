@@ -22,6 +22,7 @@ class RegisterController extends Controller
         return response()->json($msg, $msg['status']);
     }
 
+    
     public function resident(Request $request) {
         $msg = $this->create($request, $role='1', $user_type='resident');
 
@@ -34,8 +35,8 @@ class RegisterController extends Controller
         return response()->json($msg, $msg['status']);
     }
 
-    private function checkphone($phone) {
-        $check_phone  = User::where('phone', $phone)->exists();
+    private function checkphone($phone, $email) {
+        $check_phone  = User::where('phone', $phone)->orWhere('email', $email)->exists();
        if ($check_phone) {
            return true;
        }return false;
@@ -50,7 +51,7 @@ class RegisterController extends Controller
 
         try{
 
-           $check = $this->checkphone($request->input('phone'));
+           $check = $this->checkphone($request->input('phone'), $request->input('email'));
            if(!$check) {
                 $user = User::create([
                     'name'     => $request->input('name'),
@@ -65,7 +66,7 @@ class RegisterController extends Controller
                 $msg['status'] = 201;
                 $msg['app-hint'] = 'this is a new user!';
            }else {
-                $user = User::where('phone', $request->input('phone'))->first();
+                $user = User::where('phone', $request->input('phone'))->orWhere('email',  $request->input('email'))->first();
                 $user->device_id = $request->input('device_id');
                 $user->save();
                 
