@@ -19,10 +19,10 @@
     Route::get('resend/token', 'Auth\ForgotPhoneController@resedToken');
 
     //Login
-    // Route::post('login', 'Auth\LoginController@authenticate'); Not Needed
+    Route::post('login', 'Auth\LoginController@authenticate'); //Not Needed
 
     //Reset password for a new phone
-    // Route::put('phone/reset', 'Auth\ResetPhoneController@reset'); Not  Needed
+    Route::put('phone/reset', 'Auth\ResetPhoneController@reset'); //Not  Needed
 
 
 //Admin Routes (Specific Route)*******************************************************
@@ -45,10 +45,10 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //(Admin interactions with Estates)
 
     //Admin only Update Estates by estate_id
-    Route::put('/estate/{id}', 'EstateController@update')->middleware('admin');
+    Route::put('/estate/edit/{id}', 'EstateController@update')->middleware('admin');
 
     //Delete Estates by estate_id
-    Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate')->middleware('admin');
+    Route::delete('/estate/delete/{id}', 'EstateController@deleteEstate')->middleware('admin');
 
 
 
@@ -100,16 +100,10 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::delete('/user/delete', 'UserProfileController@destroy');
 
 
-    //(Users interactions with Estates)
+    //(Users interactions with Estates) Some of the estate route are controlled ny the admin
 
-    //View Estates
+    //View All Estates
     Route::get('/estates', 'EstateController@index');
-
-    //View Estates
-    Route::get('/estate/id/{id}', 'EstateController@show');
-
-    //Get Estates by name
-    Route::get('/estate/{name}', 'EstateController@search');
 
     //View Estates by city
     Route::get('/estate/city/{city}', 'EstateController@showCity');
@@ -117,8 +111,18 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //View Estates by country
     Route::get('/estate/country/{country}', 'EstateController@showCountry');
 
+    //View one Estates 
+    Route::get('/estate/{id}', 'EstateController@show');
+
+    //Get Estates by name
+    Route::get('/estate/{name}', 'EstateController@search');
+
     //Create Estate
     Route::post('/estate', 'EstateController@store');
+
+    //Select Estate
+    Route::post('/estate/choose/{id}', 'EstateController@estateMemeber');
+
 
 
 
