@@ -131,7 +131,14 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     //Create a visitor
     Route::post('visitor', 'VisitorController@store');
+    
+    //fetch a user's notifications
+    Route::get('/notifications/', 'NotifyController@fetchnotifications');
 
+    // Delete Notification
+    Route::delete('notifications/{id}', 'NotifyController@destroy');
+     // Update Notification
+    Route::put('notifications/{id}', 'NotifyController@markread');
 
     //(Users Messging)
     //Get message
@@ -156,5 +163,3 @@ Route::get('init', function () {
     return "Notification sent";
 });
 
-//fetch a user's notifications
-Route::get('/notifications/{user_id}', 'NotifyController@fetchnotifications');

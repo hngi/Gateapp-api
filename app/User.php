@@ -56,4 +56,14 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Home::class);
     }
+    /**
+     * Route notifications for the FCM channel.
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return string
+     */
+    public function routeNotificationForFcm($notification)
+    {
+        return $this->device_id;
+    }
 }
