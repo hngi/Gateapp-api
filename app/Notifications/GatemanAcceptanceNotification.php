@@ -103,3 +103,4 @@ class GatemanAcceptanceNotification extends Notification
         ];
     }
 }
+

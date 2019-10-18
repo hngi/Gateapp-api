@@ -64,8 +64,10 @@ class GatemanController extends Controller
     {
     	// set the gateman id
     	$gateman_id = $this->user->id;
+
     	// retrieve the request
         $gateman = Gateman::find($id);
+
 		// check for the existence of the request on the db
         if (!$gateman) {
             return response()->json(['status' => false, 'message' => 'Request not found!'], 404);
@@ -78,6 +80,7 @@ class GatemanController extends Controller
         	// update the request
         	if ($request) {
         		$gateman->request_status = 1;
+
         		if ($gateman->save()) {
 			        return response()->json([
 			        	'message' => 'The request has been accepted successfully',
@@ -97,6 +100,7 @@ class GatemanController extends Controller
         	}
         }
     }
+
     /**
      * Method for gateman to reject resident's request
      */
@@ -104,8 +108,10 @@ class GatemanController extends Controller
     {
     	// set the gateman id
     	$gateman_id = $this->user->id;
+
     	// retrieve the request
         $gateman = Gateman::find($id);
+
 		// check for the existence of the request on the db
         if (!$gateman) {
             return response()->json(['status' => false, 'message' => 'Request not found!'], 404);
@@ -118,6 +124,7 @@ class GatemanController extends Controller
         	// update the request
         	if ($request) {
         		$gateman->request_status = 1;
+
         		if ($gateman->destroy($id)) {
 			        return response()->json([
 			        	'message' => 'The request has been rejected successfully',
@@ -137,11 +144,7 @@ class GatemanController extends Controller
         	}
         }
     }
-    /**
-     * Method to display all visitors of the resident whom
-     * the gateman is assigned to
-     */
-    public function viewVisitors()
+    public function viewResidents()
     {
         // get user id
         $user_id = Gateman::where([
@@ -171,6 +174,7 @@ class GatemanController extends Controller
      *
      */
 
+
     public function admitVisitor(Request $request)
     {
 
@@ -187,8 +191,9 @@ class GatemanController extends Controller
                 if ($residentGateman){
                     $avisitor = Visitor::where('id', $resident)->update(['time_in' => NOW()]);
                 $visitor = Visitor::where('id', $resident)->with('user')->get();
+                return response()->json($visitor);
                 return response()->json($visitor, 202);
-                
+
                 }else {
                 $res['Error']    = " Unauthorized- Access Denied!";
                 return response()->json($res, 403);
@@ -197,8 +202,11 @@ class GatemanController extends Controller
             } else{
                 $res['Error']    = $request->input('qr_code'). " This QR code does not exist";
                 return response()->json($res, 404);
+
             }
     }
+
+
     public function viewResidents()
     {
         // get user id
@@ -225,6 +233,8 @@ class GatemanController extends Controller
     }
 
 
+
+
     public function visitor_out(Request $request)
     {
         $resident = Visitor::where('qr_code', $request->input('qr_code'))->first();
@@ -242,6 +252,7 @@ class GatemanController extends Controller
                 $visitor = Visitor::where('id', $resident)->with('user')->get();
                 return response()->json($visitor);
                 return response()->json($visitor, 202);
+
                 }else {
                 $res['Error']    = " Unauthorized - Access Denied!";
                 return response()->json($res, 403);
@@ -250,6 +261,7 @@ class GatemanController extends Controller
             } else{
                 $res['Error']    = $request->input('qr_code'). " This QR code does not exist";
                 return response()->json($res, 404);
+
             }
     }
 }
