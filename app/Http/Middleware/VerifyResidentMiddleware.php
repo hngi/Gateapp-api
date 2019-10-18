@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class VerifyGateman
+class VerifyResidentMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,14 +15,16 @@ class VerifyGateman
      */
     public function handle($request, Closure $next)
     {
-        $user = $request->user();
+        $user = auth()->user();
 
-        if (!$user) {
+        // WE need  an authenticated user
+        if (! $user) {
             return response(['unauthorised'], 401);
         }
 
-        if ($user->role != 0 && $user->role != 2) {
-            return response(['Forbidden'], 403);
+        // The user must be an admin or a logged in resident
+        if ($user->role != 0 && $user->role != 1) {
+            return response(['Forbidden', 'No allowed to access this route!'], 403);
         }
 
         return $next($request);
