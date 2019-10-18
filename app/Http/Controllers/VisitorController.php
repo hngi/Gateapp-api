@@ -35,6 +35,33 @@ class VisitorController extends Controller
 	 * @param  int $page number of pages for pagination 
 	 * @return JSON
 	 */
+    public function residentVisitor(Request $request)
+    {
+    	
+        $visitors = Visitor::where('user_id', $this->user->id)->get();
+
+        if ($visitors->isEmpty()){
+            return response()->json([
+                'Message'   => "No Visitors found for this user",
+                'status' => false
+            ], 404);
+          
+
+        }else{
+              // send response with the visitors' details
+        return response()->json([
+            'visitors' => $visitors->count(),
+            'visitor'   => $visitors,
+        	'status' => true
+        ], 200);
+            
+
+        }
+        
+
+        
+    }
+
     public function index(Request $request)
     {
     	// get number of visitors to be fetched
