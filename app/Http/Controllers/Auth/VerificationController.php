@@ -45,8 +45,10 @@ class VerificationController extends Controller
                 $msg['token'] = 'Bearer ' . $token;
                 $msg['token_type'] = 'bearer';
                 $msg['expires_in(minutes)'] = (int)auth()->factory()->getTTL();
-                $msg['image_link'] = 'https://res.cloudinary.com/getfiledata/image/upload/';
-                $msg['image_format'] = 'w_200,c_thumb,ar_4:4,g_face/';
+                $res['image_link'] = 'https://res.cloudinary.com/getfiledata/image/upload/';
+                $msg['image_round_format']  = 'w_200,c_fill,ar_1:1,g_auto,r_max/';
+                $msg['image_square_format'] = 'w_200,ar_1:1,c_fill,g_auto/';
+                $msg['image_example_link']  = 'https://res.cloudinary.com/getfiledata/image/upload/w_200,c_fill,ar_1:1,g_auto,r_max/noimage.jpg';
 
                 return response()->json($msg, 200);
                 
