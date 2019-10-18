@@ -190,7 +190,10 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //(Users Visitors)
 
     // Show all visitor
-    Route::get('visitor', 'VisitorController@index')->middleware('checkResident');
+    Route::get('allVisitors', 'VisitorController@index')->middleware('checkResident');
+
+    // Show signed in user visitor
+    Route::get('visitors', 'VisitorController@residentVisitor')->middleware('checkResident');
 
     // Show single visitor
     Route::get('visitor/{id}', 'VisitorController@show')->middleware('checkResident');

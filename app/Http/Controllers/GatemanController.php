@@ -50,7 +50,7 @@ class GatemanController extends Controller
 		else {
 	    	$users = [];
 
-	    	// get the resident's details and id requesting for the gateman
+	    	// get the resident's details requesting for the gateman together with the request id
 			foreach ($requests as $request) {
 		    	$user = User::join('resident_gateman', 'resident_gateman.user_id', '=', 'users.id')
 		    		->where('users.id', '=', $request->user_id)
@@ -86,7 +86,8 @@ class GatemanController extends Controller
             return response()->json(['status' => false, 'message' => 'Request not found!'], 404);
         } else {
         	// check if the request has not been accepted
-        	$request = $gateman->where('gateman_id', $gateman_id)
+        	$request = $gateman->where('id', $id)
+        		->where('gateman_id', $gateman_id)
         		->where('request_status', 0)
         		->exists();
 
@@ -101,7 +102,8 @@ class GatemanController extends Controller
         		        $resident->notify(new GatemanAcceptanceNotification($resident, $this->user));
 			        return response()->json([
 			        	'message' => 'The request has been accepted successfully',
-			        	'status' => true
+			        	'status' => true,
+			        	'resident_gateman' => $gateman
 			        ], 202);
         		} else {
 			        return response()->json([
@@ -134,18 +136,19 @@ class GatemanController extends Controller
             return response()->json(['status' => false, 'message' => 'Request not found!'], 404);
         } else {
         	// check if the request has not been accepted
-        	$request = $gateman->where('gateman_id', $gateman_id)
+        	$request = $gateman->where('id', $id)
+        		->where('gateman_id', $gateman_id)
         		->where('request_status', 0)
         		->exists();
 
         	// update the request
         	if ($request) {
-        		$gateman->request_status = 1;
-
+	        	// reject the request
         		if ($gateman->destroy($id)) {
 			        return response()->json([
 			        	'message' => 'The request has been rejected successfully',
-			        	'status' => true
+			        	'status' => true,
+			        	'resident_gateman' => $gateman
 			        ], 202);
         		} else {
 			        return response()->json([
