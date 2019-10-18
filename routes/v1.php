@@ -205,3 +205,14 @@ Route::get('/test-notification', function () {
         'gateman_id' => $user->id,
     ]));
 });
+Route::get('/test-notification-2', function () {
+    $user = App\User::query()->inRandomOrder()->first();
+    $resident = \App\User::query()->inRandomOrder()->first();
+
+    $resident->notify(new \App\Notifications\InvitationAcceptanceNotification([
+        'title' => "Your Invitation have been accepted",
+        'body' => "Hello {$resident->name}, {$user->name} have accepted your invitation",
+        'resident_id' => $resident->id,
+        'gateman_id' => $user->id,
+    ]));
+});
