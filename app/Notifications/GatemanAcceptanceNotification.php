@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,15 +12,24 @@ use Benwilkins\FCM\FcmMessage;
 class GatemanAcceptanceNotification extends Notification
 {
     use Queueable;
-    protected $message;
+
+    protected $resident;
+    protected $gateman;
+    private $title;
+    private $body;
 
     /**
      * Create a new notification instance.
-     * @param array $message
+     * @param User $resident
+     * @param User $gateman
      */
-    public function __construct(array $message)
+    public function __construct(User $resident,  User $gateman)
     {
-        $this->message = $message;
+        $this->resident = $resident;
+        $this->gateman = $gateman;
+
+        $this->title = "{$this->gateman->name} has accepted to be your gateman";
+        $this->body = null;
     }
 
     /**
@@ -45,13 +55,11 @@ class GatemanAcceptanceNotification extends Notification
         $message = new FcmMessage();
         $message
             ->content([
-            'title' => $this->message['title'],
-            'body' => $this->message['body'],
+            'title' => $this->title,
+            'body' =>$this->body,
             ])
             ->data([
-                'resident_id' => $this->message['resident_id'],
-                'gateman_id' => $this->message['gateman_id'],
-                'home_id' => $this->message['home_id'] ?? null,
+                'gateman_id' => $this->gateman->id,
             ])
             ->priority(FcmMessage::PRIORITY_HIGH);
 
@@ -66,7 +74,7 @@ class GatemanAcceptanceNotification extends Notification
      */
     public function routeNotificationForFcm($notification)
     {
-//        return $this->device_token;
+        return $this->resident->fcm_token;
     }
 
 
@@ -89,11 +97,9 @@ class GatemanAcceptanceNotification extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'title' => $this->message['title'],
-            'body' => $this->message['body'],
-            'resident_id' => $this->message['resident_id'],
-            'gateman_id' => $this->message['gateman_id'],
-            'home_id' => $this->message['home_id'] ?? null,
+            'title' => $this->title,
+            'body' => $this->body,
+            'gateman_id' => $this->gateman->id,
         ];
     }
 }

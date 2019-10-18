@@ -14,28 +14,31 @@ class NotifyController extends Controller
        // var pusher = new Pusher('API_KEY_HERE', {
           //  encrypted: true
         //  });
-    
+
           // Subscribe to the channel we specified in our Laravel Event
-      ///    
+      ///
     }
     public function fetchnotifications()
     {
-       
+
         $user = auth()->user();
         $notifications = $user->notifications;
 
-    
+
         $res["data"] = $notifications;
         return response()->json($res, 200);
-        
+
     }
     public function markread($id){
       $notification = DatabaseNotification::where('id', $id)->where('notifiable_id:', auth()->user()->id)->first();
       $notification->markAsRead();
     }
+
     public function delete($id){
-       $notification = DatabaseNotification::where('id', $id)->where('notifiable_id:', auth()->user()->id)->first();
-      $user->notifications()->delete();
+        $notification = DatabaseNotification::where('id', $id)->where('notifiable_id:', auth()->user()->id)->first();
+        $notification->delete();
+
+        return response()->json(null, 201);
     }
 
 
