@@ -17,6 +17,7 @@ class UserProfileController extends Controller
     	$user = Auth::user(); //this is you active user logged in
         return response()->json($user, 200);
     }
+
     public function all() {
         $admins = [];
         $residents = [];
@@ -78,7 +79,7 @@ class UserProfileController extends Controller
         $user = Auth::user();           
         $this->validate($request, [
             'name' => 'required|min:2',
-            'username' => 'required|min:2',
+            'username' => 'required|min:2|unique:users,username,'.$user->id,
             'email' => 'required|min:2|unique:users,email,'.$user->id,
         ]);
 
