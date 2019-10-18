@@ -108,11 +108,11 @@ class ServiceProviderController extends Controller
     public function create(Request $request)
     {
          $validator = Validator::make($request->all(), [
-               'name' => 'required|string|min:3',
-               'phone' => 'required',
+               'name'        => 'required|string|min:3',
+               'phone'       => 'required',
                'description' => 'required',
-               'image' => 'required',
-               'estate_id' => 'required|int',
+               'image'       => "image|max:4000|required",
+               'estate_id'   => 'required|int',
                'category_id' => 'required|int'
           ]);
 
@@ -151,7 +151,7 @@ class ServiceProviderController extends Controller
            'name'        => 'required|string|min:3',
            'phone'       => 'required',
            'description' => 'required',
-           'image'       => 'required',
+           'image'       => "image|max:4000|required",
            'estate_id'   => 'required|int',
            'category_id' => 'required|int'
       ]);

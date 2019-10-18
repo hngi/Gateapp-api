@@ -21,8 +21,8 @@ class VerifyGateman
             return response(['unauthorised'], 401);
         }
 
-        if ($user->role != 0 && $user->role != 2) {
-            return response(['Forbidden'], 403);
+        if ($user->role != 2) {
+            return response(['Forbidden','Not allowed to access this route!'], 403);
         }
 
         return $next($request);

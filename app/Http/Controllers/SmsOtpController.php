@@ -28,7 +28,7 @@ class SmsOtpController extends Controller
        CURLOPT_FOLLOWLOCATION => true,
        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
        CURLOPT_CUSTOMREQUEST => "POST",
-       CURLOPT_POSTFIELDS =>"{\n    \"message\": \"${$msg}\",\n    \"to\": \"{$phone}\",\n    \"sender_id\": \"{$sender}\",\n    \"callback_url\": \"https://sms.to/callback/handler\"\n}",
+       CURLOPT_POSTFIELDS =>"{\n    \"message\": \"{$msg}\",\n    \"to\": \"{$phone}\",\n    \"sender_id\": \"{$sender}\",\n    \"callback_url\": \"https://sms.to/callback/handler\"\n}",
        CURLOPT_HTTPHEADER => array(
          "Content-Type: application/json",
          "Accept: application/json",
