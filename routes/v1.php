@@ -99,7 +99,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //Delete user account
     Route::delete('/user/delete', 'UserProfileController@destroy');
 
-    //Image upload api
+    //User Image upload api
     Route::post('user/image', 'UserProfileController@upload');                       
 
 
