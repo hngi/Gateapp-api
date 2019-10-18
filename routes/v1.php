@@ -135,8 +135,8 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/notifications/', 'NotifyController@fetchnotifications');
 
     // Delete Notification
-    Route::delete('notifications/{id}', 'NotifyController@destroy');
-    // Update Notification
+    Route::delete('notifications/{id}', 'NotifyController@delete');
+     // Update Notification
     Route::put('notifications/{id}', 'NotifyController@markread');
 
     //(Users Messging)
