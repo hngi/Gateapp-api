@@ -32,8 +32,10 @@ class SmsOtp extends Controller
        CURLOPT_CUSTOMREQUEST => "POST",
        CURLOPT_POSTFIELDS =>"{\n    \"message\": \"SMS OTP HERE!\",\n    \"to\": \"{$phone}\",\n    \"sender_id\": \"GateApp\",\n    \"callback_url\": \"https://sms.to/callback/handler\"\n}",
        CURLOPT_HTTPHEADER => array(
-        "Authorization: Bearer s92RW6JYLZoU8BizxS8sIpRFr2TE6c9N"
-         ),
+         "Content-Type: application/json",
+         "Accept: application/json",
+         "Authorization: Bearer YOUR_API_KEY_OR_ACCESS_TOKEN_OF_SMS.TO_HERE"
+           ),
       ));
    
       $response = curl_exec($curl);
