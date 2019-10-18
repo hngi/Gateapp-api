@@ -66,7 +66,7 @@ class RegisterController extends Controller
                 $msg['status'] = 201;
                 $msg['app-hint'] = 'this is a new user!';
            }else {
-                $user = User::where('phone', $request->input('phone'))->first();
+                $user = User::where('phone', $request->input('phone'))->orWhere('email',  $request->input('email'))->first();
                 $user->device_id = $request->input('device_id');
                 $user->save();
                 

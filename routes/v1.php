@@ -58,10 +58,10 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('/service-provider', 'ServiceProviderController@create')->middleware('admin');
 
     //Admin only Update a service provider 
-    Route::put('/service-provider/edit/{id}', 'ServiceProviderController@update')->middleware('admin');
+    Route::put('/service-provider/{id}', 'ServiceProviderController@update')->middleware('admin');
 
     //Admin only delete a specific service provider 
-    Route::delete('/service-provider/delete/{id}', 'ServiceProviderController@destroy')->middleware('admin');
+    Route::delete('/service-provider/{id}', 'ServiceProviderController@destroy')->middleware('admin');
 
     // Create a new Service Provider category
     Route::post('/sp-category', 'SPCategoryController@newCategory')->middleware('admin');
