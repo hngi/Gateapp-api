@@ -9,10 +9,9 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Benwilkins\FCM\FcmMessage;
 
-class GatemanAcceptanceNotification extends Notification
+class InvitationAcceptanceNotification extends Notification
 {
     use Queueable;
-
     protected $resident;
     protected $gateman;
     private $title;
@@ -28,7 +27,7 @@ class GatemanAcceptanceNotification extends Notification
         $this->resident = $resident;
         $this->gateman = $gateman;
 
-        $this->title = "{$this->gateman->name} has accepted to be your gateman";
+        $this->title = "{$this->resident->name}  has invited you as a gateman to his home";
         $this->body = null;
     }
 
@@ -55,11 +54,11 @@ class GatemanAcceptanceNotification extends Notification
         $message = new FcmMessage();
         $message
             ->content([
-            'title' => $this->title,
-            'body' =>$this->body,
+                'title' => $this->title,
+                'body' => $this->body,
             ])
             ->data([
-                'gateman_id' => $this->gateman->id,
+                'resident_id' => $this->resident->id,
             ])
             ->priority(FcmMessage::PRIORITY_HIGH);
 
@@ -74,11 +73,17 @@ class GatemanAcceptanceNotification extends Notification
      */
     public function routeNotificationForFcm($notification)
     {
-        return $this->resident->fcm_token;
+        return $this->gateman->fcm_token;
     }
 
 
-        public function toMail($notifiable)
+    /**
+     * Get the mail representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return \Illuminate\Notifications\Messages\MailMessage
+     */
+    public function toMail($notifiable)
     {
         return (new MailMessage)
             ->line('The introduction to the notification.')
@@ -88,19 +93,16 @@ class GatemanAcceptanceNotification extends Notification
 
     /**
      * Get the array representation of the notification.
-     * This will be JSON encoded into the data column
-     * of the notifications table
      *
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toDatabase($notifiable)
+    public function toArray($notifiable)
     {
         return [
             'title' => $this->title,
             'body' => $this->body,
-            'gateman_id' => $this->gateman->id,
+            'resident_id' => $this->resident->id,
         ];
     }
 }
-
