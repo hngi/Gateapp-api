@@ -95,6 +95,8 @@ class GatemanController extends Controller
         		$gateman->request_status = 1;
 
         		if ($gateman->save()) {
+                        // Send the resident a notification informing them
+                        //  of the acceptance
         		        $resident = User::find($gateman['user_id']);
         		        $resident->notify(new GatemanAcceptanceNotification($resident, $this->user));
 			        return response()->json([

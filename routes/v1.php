@@ -272,6 +272,16 @@ Route::get('/test-notification', function () {
     $user->notify(new \App\Notifications\GatemanAcceptanceNotification($user, $gateman));
 });
 
+
+Route::get('/test-notification2', function () {
+    
+    $gateman = App\User::query()->inRandomOrder()->first();
+    $visitor = App\Visitor::query()->inRandomOrder()->first();
+
+    $gateman->notify(new App\Notifications\GatemanAdmitsVisitor($gateman, $visitor));
+});
+
+
 // Route::get('init', function () {
 //     event(new App\Events\notify('Someone'));
 //     return "Notification sent";
