@@ -185,23 +185,13 @@ Route::get('test', 'TestController@test');
 Route::get('generate-code', 'TestController@qrCode');
 
 
-Route::get('init', function () {
-    event(new App\Events\notify('Someone'));
-    return "Notification sent";
-});
-
 //fetch a user's notifications
 Route::get('/notifications/{user_id}', 'NotifyController@fetchnotifications');
 
 //test route
 Route::get('/test-notification', function () {
     $user = App\User::query()->inRandomOrder()->first();
-    $resident = \App\User::query()->inRandomOrder()->first();
+    $gateman = \App\User::query()->inRandomOrder()->first();
 
-    $user->notify(new \App\Notifications\GatemanAcceptanceNotification([
-        'title' => "Invitation as Gateman",
-        'body' => "Hello {$user->name}, {$resident->name} has invited you as a gateman to his home....",
-        'resident_id' => $resident->id,
-        'gateman_id' => $user->id,
-    ]));
+    $user->notify(new \App\Notifications\GatemanAcceptanceNotification($user, $gateman));
 });
