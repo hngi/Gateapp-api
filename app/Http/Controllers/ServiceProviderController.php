@@ -185,13 +185,13 @@ class ServiceProviderController extends Controller
         }
     }
 
-    public function upload(Request $request, ImageController $image) {
-        $this->validate($request, [
-         'image' => "image|max:4000|required",
-        ]);
+    // public function upload(Request $request, ImageController $image) {
+    //     $this->validate($request, [
+    //      'image' => "image|max:4000|required",
+    //     ]);
         
-        $res = $image->imageUpload($request);
-        return response()->json($res, $res['status_code']);
-    }
+    //     $res = $image->imageUpload($request);
+    //     return response()->json($res, $res['status_code']);
+    // }
 
 }

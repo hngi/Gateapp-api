@@ -99,6 +99,9 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //Delete user account
     Route::delete('/user/delete', 'UserProfileController@destroy');
 
+    //Image upload api
+    Route::post('user/image', 'UserProfileController@upload');                       
+
 
     //(Users interactions with Estates) Some of the estate route are controlled ny the admin
 
@@ -231,7 +234,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 //This our testing api routes
 Route::get('test', 'TestController@test');
 Route::get('generate-code', 'TestController@qrCode');    
-Route::post('image', 'TestController@upload');                       
+Route::post('test_image', 'TestController@upload');                       
 
 // Route::get('init', function () {
 //     event(new App\Events\notify('Someone'));
