@@ -3,9 +3,6 @@
 
 //Authentication Routes ******************************************************
 //Registration
-
-use App\Http\Controllers\ServiceProviderController;
-
 Route::post('register/admin', 'Auth\RegisterController@admin'); //has a role of 0
 
 Route::post('register/resident', 'Auth\RegisterController@resident'); //has a role of 1
@@ -39,29 +36,30 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //show one admin
     Route::get('admin/{id}', 'UserProfileController@showOneAdmin')->middleware('admin');
 
+    //**********John's Api***************//
+    //Edit Estate
+    Route::patch('/estate', 'EstateController@update')->middleware('admin');
+
     //Delete Estates by estate_id
+    Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate')->middleware('admin');
+
+    //Admin only Delete Estates by estate_id
     Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate')->middleware('admin');
 
     //Admin only Update Estates by estate_id
     Route::patch('/estate/{id}', 'EstateController@update')->middleware('admin');
 
-    //Admin only Create a service provider
+    //Admin only Create a service provider 
     Route::post('/service-provider', 'ServiceProviderController@create')->middleware('admin');
 
-    //Admin only Update a service provider
-    Route::put('/service-provider/edit/{id}', 'ServiceProviderController@update')->middleware('admin');
+    //Admin only Update a service provider 
+    Route::delete('/service-provider/edit/{id}', 'ServiceProviderController@update')->middleware('admin');
 
-    //Admin only delete a specific service provider
+    //Admin only delete a specific service provider 
     Route::delete('/service-provider/delete/{id}', 'ServiceProviderController@destroy')->middleware('admin');
 
-    // Create a new Service Provider category
-    Route::post('/sp-category', 'SPCategoryController@newCategory')->middleware('admin');
-
-    // Edit a Service Provider category
-    Route::put('sp-category/{id}', 'SPCategoryController@editCategory')->middleware('admin');
-
-    // Delete a Service Provider category
-    Route::delete('sp-category/{id}', 'SPCategoryController@deleteCategory')->middleware('admin');
+    //Refresh token
+    Route::post('/refresh', 'Auth\LoginController@refresh');
 });
 
 
@@ -69,9 +67,6 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 //Users Routes *******************************************************
 Route::group(['middleware' => ['jwt.verify']], function () {
     //This is the route group every authenticated route with jwt token should go in here
-
-    //Refresh token
-    Route::post('/refresh', 'Auth\LoginController@refresh');
 
     //(User Profile)
     //Show active user i.e. current logged in user
@@ -136,6 +131,13 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //Create a visitor
     Route::post('visitor', 'VisitorController@store');
 
+    //fetch a user's notifications
+    Route::get('/notifications/', 'NotifyController@fetchnotifications');
+
+    // Delete Notification
+    Route::delete('notifications/{id}', 'NotifyController@destroy');
+    // Update Notification
+    Route::put('notifications/{id}', 'NotifyController@markread');
 
     //(Users Messging)
     //Get message
@@ -149,46 +151,17 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //Get All Service Provider
     Route::get('/service-provider', 'ServiceProviderController@showAll');
-
-    Route::get('/service-provider/category/{category_id}', 'ServiceProviderController@byCategory');
-    /** Resident and Gateman Relationship */
-    // Get requests for a gateman
-    Route::get('gateman/requests', 'GatemanController@residentRequest')->middleware('checkGateman');
-
-    //gateman Accept/decline invitation
-    Route::put('gateman/response', 'GatemanController@response');
-
-    // Add a gateman
-    Route::post('resident/addGateman/{id}', 'ResidentController@addGateman');
-
-    // remove a gateman by resident
-    Route::delete('resident/removeGateman/{id}', 'ResidentController@destroy');
-
-    // Get gateman by phone
-    Route::get('search/gateman/phone/{phone}', 'ResidentController@searchGatemanByPhone');
-
-    // Get all Service Provider categories
-    Route::get('/sp-category', 'SPCategoryController@fetchCategories');
-
-    // Get gateman by name
-    Route::get('search/gateman/name/{name}', 'ResidentController@searchGatemanByName');
-
-    // Show all pending gateman invitation
-    Route::get('resident/pending_invitation/', 'ResidentController@pendingInvitation');
-
-    // Show accepted gateman invite
-    Route::get('resident/acceptedInvitation/', 'ResidentController@acceptedInvitation');
 });
 
 //This our testing api routes
 Route::get('test', 'TestController@test');
 Route::get('generate-code', 'TestController@qrCode');
 
-
 Route::get('init', function () {
     event(new App\Events\notify('Someone'));
     return "Notification sent";
 });
+
 
 //fetch a user's notifications
 Route::get('/notifications/{user_id}', 'NotifyController@fetchnotifications');
