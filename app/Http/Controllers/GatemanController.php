@@ -151,7 +151,8 @@ class GatemanController extends Controller
         		if ($gateman->destroy($id)) {
 			        return response()->json([
 			        	'message' => 'The request has been rejected successfully',
-			        	'status' => true
+			        	'status' => true,
+			        	'resident_gateman' => $gateman
 			        ], 202);
         		} else {
 			        return response()->json([
