@@ -77,6 +77,10 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     // Delete a Service Provider category
     Route::delete('sp-category/{id}', 'SPCategoryController@deleteCategory')->middleware('admin');
+
+
+    // Show all visitor
+    Route::get('visitors/all', 'VisitorController@index')->middleware('admin');
 });
 
 
@@ -133,26 +137,9 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //Select Estate
     Route::post('/estate/choose/{id}', 'EstateController@estateMemeber');
 
-    //(Users Visitors)
-    // Show all visitor
-    Route::get('visitor', 'VisitorController@index');
-
-    // Show single visitor
-    Route::get('visitor/{id}', 'VisitorController@show');
-
-    // Edit Visitor account
-    Route::put('visitor/{id}', 'VisitorController@update');
-
-    // Delete Visitor account
-    Route::delete('visitor/{id}', 'VisitorController@destroy');
-
-    //Create a visitor
-    Route::post('visitor', 'VisitorController@store');
-
 
 
     //(Users Messging)
-
     //Get message
     Route::get('messages/{other_user_id}', 'MessageController@conversation');
     //Save Message
@@ -186,7 +173,6 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 // Logged in Residents Routes *******************************************************
 Route::group(['middleware' => ['jwt.verify']], function() {
     //(Users Payment)
-
     //save payment
     Route::post('/payment', 'PaymentController@postPayment')->middleware('checkResident');
 
@@ -199,11 +185,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
 
     //(Users Visitors)
-
-    
-
     // Show signed in user visitor
-    Route::get('visitors', 'VisitorController@residentVisitor')->middleware('checkResident');
+    Route::get('visitor', 'VisitorController@residentVisitor')->middleware('checkResident');
 
     // Show single visitor
     Route::get('visitor/{id}', 'VisitorController@show')->middleware('checkResident');
