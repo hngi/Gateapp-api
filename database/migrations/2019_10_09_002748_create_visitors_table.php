@@ -16,7 +16,7 @@ class CreateVisitorsTable extends Migration
         Schema::create('visitors', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 50);
-            $table->date('arrival_date')->nullable();
+            $table->date('arrival_date');
             $table->string('car_plate_no', 20);
             $table->string('purpose', 40);
             $table->string('image', 100)->default('noimage.jpg');
