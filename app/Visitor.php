@@ -22,10 +22,12 @@ class Visitor extends Model
         'purpose',
         'image',
         'status',
-        'time_out',
         'time_in',
-        'home_id',
+        'time_out',
         'qr_code',
+        'home_id',
+        'visiting_period',
+        'description'
     ];
 
 
