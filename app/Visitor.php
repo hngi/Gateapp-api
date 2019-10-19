@@ -21,11 +21,13 @@ class Visitor extends Model
         'car_plate_no',
         'purpose',
         'image',
+        'visiting_period',
         'status',
-        'time_out',
         'time_in',
-        'home_id',
+        'time_out',
         'qr_code',
+        'visiting_period',
+        'description'
     ];
 
 
@@ -45,12 +47,6 @@ class Visitor extends Model
      * @var string
      */
     protected $primaryKey = 'id';
-
-
-    /**
-     * Disable Laravel created_at and updated_at tables
-     */
-    public $timestamps = false;
 
     /**
      * Get the user that the visitor visited.

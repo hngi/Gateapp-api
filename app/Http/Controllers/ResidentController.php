@@ -29,27 +29,37 @@ class ResidentController extends Controller
         DB::beginTransaction();
 
         try{
+           $check_exist = ResidentGateman::where('user_id',  $this->user->id)->where('gateman_id', $id)->first();
+           if(!$check_exist){
+               $residentGateman = ResidentGateman::firstOrCreate([
+                    'user_id'     => $this->user->id, //login user id
+                    'gateman_id'  =>   $id
+                ]);
+                // Confirm that the Id entered is for a gateman 
+                $gateman = User::find($id); 
+    
+                if($gateman->role == 2){
+    
+                        DB::commit();
+                        $msg['message'] = 'Your Invite has been sent to Gateman';
+                        $msg['residentGateman'] = $residentGateman;
+                        $msg['status'] = 201;
+                        return $msg;
+                        
+                }else {
+                    $msg['message'] = 'That user is not a gateman please try again';
+                    $msg['status'] = 404;
+                    return $msg;      
+                }
 
-           $residentGateman = ResidentGateman::firstOrCreate([
-                'user_id'     => $this->user->id, //login user id
-                'gateman_id'  =>   $id
-            ]);
-            // Confirm that the Id entered is for a gateman 
-            $gateman = User::find($id); 
-
-            if($gateman->role == 2){
-
-                    DB::commit();
-                    $msg['message'] = 'Your Invite has been sent to Gateman';
-                    $msg['residentGateman'] = $residentGateman;
-                    $msg['status'] = 201;
-                    return $msg;
-                    
-            }else {
-                $msg['message'] = 'That user is not a gateman please try again';
-                $msg['status'] = 404;
-                return $msg;      
-            }
+           }else {
+               
+                $msg['message'] = "An invitation has already been sent!";
+                $msg['user'] = null;
+                $msg['hint'] = $e->getMessage();
+                $msg['status'] = 501;
+                return $msg;
+           }
            
 
         }catch(\Exception $e) {
