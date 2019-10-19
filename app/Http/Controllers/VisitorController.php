@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use JWTAuth;
 
 class VisitorController extends Controller
 {
@@ -26,20 +25,13 @@ class VisitorController extends Controller
     public function __construct()
     {
         $this->user = auth()->user();
-        // $this->user = JWTAuth::parseToken()->authenticate();
     }
 
-    
-
-	/**
-	 * Get all visitor
-	 *
-	 * @param  int $page number of pages for pagination 
-	 * @return JSON
-	 */
+    /**
+     * Gets all visitors for a signed in user
+     */
     public function residentVisitor(Request $request)
     {
-    	
         $visitors = Visitor::where('user_id', $this->user->id)->get();
 
         if ($visitors->isEmpty()){
@@ -47,23 +39,23 @@ class VisitorController extends Controller
                 'Message'   => "No Visitors found for this user",
                 'status' => false
             ], 404);
-          
-
-        }else{
-              // send response with the visitors' details
-        return response()->json([
-            'visitors' => $visitors->count(),
-            'visitor'   => $visitors,
-        	'status' => true
-        ], 200);
-            
-
         }
-        
-
-        
+        else{
+              // send response with the visitors' details
+            return response()->json([
+                'visitors' => $visitors->count(),
+                'visitor'   => $visitors,
+            	'status' => true
+            ], 200);
+        }        
     }
 
+    /**
+     * Admin gets all visitors
+     *
+     * @param  int $page number of pages for pagination 
+     * @return JSON
+     */
     public function index(Request $request)
     {
     	// get number of visitors to be fetched
@@ -73,13 +65,10 @@ class VisitorController extends Controller
     	// if there was no pagination set by the query,
     	// limit the response to 15 data set
         $visitors = Visitor::paginate($per_page);
-        
 
         // send response with the visitors' details
         return response()->json([
-            'data'   => $visitors,
-            
-    
+            'visitors' => $visitors,    
         	'status' => true
         ], 200);
     }
@@ -115,13 +104,22 @@ class VisitorController extends Controller
 	 */
     public function store(Request $request,QrCodeGenerator $qr, ImageController $image)
     {
+<<<<<<< HEAD
     	// validate the posted data
     	$this->validate($request, [
+=======
+        // validate the posted data
+        $this->validate($request, [
+>>>>>>> 852dc86bab322c630a0dbcebb67192bf72783ebf
             'name'              => ['required', 'regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
             'arrival_date'      => 'required|date_format:Y-m-d',
             'car_plate_no'      => 'string|nullable',
             'purpose'           => 'required|string', 
+<<<<<<< HEAD
             'visiting_period' 	=> 'string',
+=======
+            'visiting_period'   => 'string',
+>>>>>>> 852dc86bab322c630a0dbcebb67192bf72783ebf
         ]);
         $randomToken = Str::random(6);
         DB::beginTransaction(); 
@@ -161,7 +159,11 @@ class VisitorController extends Controller
             $res['message']  = 'Error, Visitor not created, please try again';
             $res['hint']     = $e->getMessage();
             return response()->json($msg, 501);
+<<<<<<< HEAD
         }	
+=======
+        }   
+>>>>>>> 852dc86bab322c630a0dbcebb67192bf72783ebf
     }
 
 	/**
@@ -178,10 +180,10 @@ class VisitorController extends Controller
    
         // output an error if the id is not found
         if (!$visitor) {
-            return response()->json(['message' => 'This visitor could not be found, check and try again!'], 404);
+            return response()->json([
+                'message' => 'This visitor could not be found, check and try again!'
+            ], 404);
         }
-
-        $updated = $visitor->fill($request->except(['token']));
 
         // bootstrap the carbon support package
         $time = Carbon::now();

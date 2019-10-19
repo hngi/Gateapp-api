@@ -16,7 +16,11 @@ class CreateVisitorsTable extends Migration
         Schema::create('visitors', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 50);
+<<<<<<< HEAD
             $table->date('arrival_date');
+=======
+            $table->date('arrival_date')->nullable();
+>>>>>>> 852dc86bab322c630a0dbcebb67192bf72783ebf
             $table->string('car_plate_no', 20);
             $table->string('purpose', 40);
             $table->string('image', 100)->default('noimage.jpg');
@@ -25,6 +29,7 @@ class CreateVisitorsTable extends Migration
             $table->timestamp('time_out')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->string('qr_code', 10);
+<<<<<<< HEAD
             $table->string('visiting_period', 15);
             $table->string('description');
 ​
@@ -33,6 +38,16 @@ class CreateVisitorsTable extends Migration
 ​
             $table->timestamps();
 ​
+=======
+            $table->unsignedBigInteger('home_id');
+            $table->string('visiting_period', 15);
+            $table->string('description');
+
+            // table indexes
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('home_id')->references('id')->on('homes')->onDelete('cascade');
+
+>>>>>>> 852dc86bab322c630a0dbcebb67192bf72783ebf
             // table meta
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
