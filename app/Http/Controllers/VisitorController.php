@@ -184,7 +184,6 @@ class VisitorController extends Controller
             'car_plate_no' => Visitor::useit($request->car_plate_no, $visitor->car_plate_no),
             'purpose' => Visitor::useit($request->purpose, $visitor->purpose),
             'image' => Visitor::useit($request->image, $visitor->image),
-            'status' => Visitor::useit($request->status, $visitor->status),
             'time_in' => Visitor::useit($request->time_in, $visitor->time_in),
             'time_out' => Visitor::useit($request->time_out, $visitor->time_out),
             'user_id' => Visitor::useit($request->user_id, $visitor->user_id),
