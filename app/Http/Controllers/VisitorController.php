@@ -261,7 +261,7 @@ class VisitorController extends Controller
         $user = Auth::user();
 
         $this->validate($request, [
-         'image' => "image|max:4000|required",
+         'image' => "image|max:4000",
         ]);
         $res = null;
         if($request->hasFile('image')) {
