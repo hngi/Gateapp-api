@@ -59,7 +59,7 @@ class ResidentController extends Controller
                 } elseif($check_exist->request_status == 1) {
                     $msg['message'] = "Invitation already accepted!";
                 }  
-                return response()->json($msg, 402); 
+                return response()->json($msg, 405); 
            }
            
 
