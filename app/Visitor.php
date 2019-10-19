@@ -4,11 +4,13 @@ namespace App;
 use App\User;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Notifications\Notifiable;
 
 
 class Visitor extends Model
 {
+    use Notifiable;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -16,10 +18,10 @@ class Visitor extends Model
      */
     protected $fillable = [
         'name',
-        'arrival_date', 
-        'car_plate_no', 
-        'purpose', 
-        'image', 
+        'arrival_date',
+        'car_plate_no',
+        'purpose',
+        'image',
         'status',
         'time_out',
         'time_in',
@@ -80,4 +82,15 @@ class Visitor extends Model
         return $major ? $major : $fallback;
     }
 
+
+    /**
+     * Route notifications for the FCM channel.
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return string
+     */
+    public function routeNotificationForFcm($notification)
+    {
+        return $this->device_id;
+    }
 }

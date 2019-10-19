@@ -33,13 +33,13 @@ class TestController extends Controller
         return response()->json($res, 200);
     }
 
-    //the method test the file (image) upload
+    //the method to test the file (image) upload
     public function upload(Request $request, ImageController $image) {
         $this->validate($request, [
          'image' => "image|max:4000|required",
         ]);
         //Image Engine
-        $res = $image->imageUpload($request, );
+        $res = $image->imageUpload($request);
         return response()->json($res, $res['status_code']);
     }
 }
