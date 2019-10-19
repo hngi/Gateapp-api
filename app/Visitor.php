@@ -21,10 +21,10 @@ class Visitor extends Model
         'car_plate_no',
         'purpose',
         'image',
+        'visiting_period',
         'status',
         'time_out',
         'time_in',
-        'home_id',
         'qr_code',
     ];
 
