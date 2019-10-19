@@ -111,6 +111,7 @@ class VisitorController extends Controller
             'car_plate_no'      => 'string|nullable',
             'purpose'           => 'required|string', 
             'visiting_period' 	=> 'string',
+            'description'       => 'string',
         ]);
         $randomToken = Str::random(6);
         DB::beginTransaction(); 
