@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Gateman;
+use App\Notifications\GatemanAcceptanceNotification;
 use App\User;
 use App\Visitor;
 use App\Http\Resources\Visitor as VisitorResource;
@@ -49,7 +50,7 @@ class GatemanController extends Controller
 		else {
 	    	$users = [];
 
-	    	// get the resident's details and id requesting for the gateman
+	    	// get the resident's details requesting for the gateman together with the request id
 			foreach ($requests as $request) {
 		    	$user = User::join('resident_gateman', 'resident_gateman.user_id', '=', 'users.id')
 		    		->where('users.id', '=', $request->user_id)
@@ -84,19 +85,30 @@ class GatemanController extends Controller
         if (!$gateman) {
             return response()->json(['status' => false, 'message' => 'Request not found!'], 404);
         } else {
+	        // ensure that only the right gateman can accept the request
+	        if ($gateman->gateman_id != $gateman_id) {
+	            return response()->json(['status' => false, 'message' => 'Access denied'], 401);
+	        }
+
         	// check if the request has not been accepted
-        	$request = $gateman->where('gateman_id', $gateman_id)
+        	$request = $gateman->where('id', $id)
+        		->where('gateman_id', $gateman_id)
         		->where('request_status', 0)
         		->exists();
-        	
+
         	// update the request
         	if ($request) {
         		$gateman->request_status = 1;
 
         		if ($gateman->save()) {
+                        // Send the resident a notification informing them
+                        //  of the acceptance
+        		        $resident = User::find($gateman['user_id']);
+        		        $resident->notify(new GatemanAcceptanceNotification($resident, $this->user));
 			        return response()->json([
 			        	'message' => 'The request has been accepted successfully',
-			        	'status' => true
+			        	'status' => true,
+			        	'resident_gateman' => $gateman
 			        ], 202);
         		} else {
 			        return response()->json([
@@ -128,19 +140,25 @@ class GatemanController extends Controller
         if (!$gateman) {
             return response()->json(['status' => false, 'message' => 'Request not found!'], 404);
         } else {
+	        // ensure that only the right gateman can reject the request
+	        if ($gateman->gateman_id != $gateman_id) {
+	            return response()->json(['status' => false, 'message' => 'Access denied'], 401);
+	        }
+
         	// check if the request has not been accepted
-        	$request = $gateman->where('gateman_id', $gateman_id)
+        	$request = $gateman->where('id', $id)
+        		->where('gateman_id', $gateman_id)
         		->where('request_status', 0)
         		->exists();
-        	
+
         	// update the request
         	if ($request) {
-        		$gateman->request_status = 1;
-
+	        	// reject the request
         		if ($gateman->destroy($id)) {
 			        return response()->json([
 			        	'message' => 'The request has been rejected successfully',
-			        	'status' => true
+			        	'status' => true,
+			        	'resident_gateman' => $gateman
 			        ], 202);
         		} else {
 			        return response()->json([
@@ -159,7 +177,7 @@ class GatemanController extends Controller
 
     /**
      * Method to display all visitors of the resident whom
-     * the gateman is assigned to 
+     * the gateman is assigned to
      */
     public function viewVisitors()
     {
@@ -186,15 +204,15 @@ class GatemanController extends Controller
             ], 404);
         }
     }
-    
+
     /**
-     * 
+     *
      */
 
-    
+
     public function admitVisitor(Request $request)
     {
-        
+
             $resident = Visitor::where('qr_code', $request->input('qr_code'))->first();
             if ($resident){
                 //Error Handling
@@ -208,19 +226,19 @@ class GatemanController extends Controller
                 if ($residentGateman){
                     $avisitor = Visitor::where('id', $resident)->update(['time_in' => NOW()]);
                 $visitor = Visitor::where('id', $resident)->with('user')->get();
-                return response()->json($visitor); 
+                return response()->json($visitor);
                 return response()->json($visitor, 202);
 
                 }else {
                 $res['Error']    = " Unauthorized- Access Denied!";
-                return response()->json($res, 403);  
+                return response()->json($res, 403);
                 }
-                 
+
             } else{
                 $res['Error']    = $request->input('qr_code'). " This QR code does not exist";
-                return response()->json($res, 404);  
+                return response()->json($res, 404);
 
-            } 
+            }
     }
 
 
@@ -248,8 +266,8 @@ class GatemanController extends Controller
             ], 404);
         }
     }
-    
-        
+
+
 
 
     public function visitor_out(Request $request)
@@ -267,18 +285,18 @@ class GatemanController extends Controller
                 if ($residentGateman){
                     $avisitor = Visitor::where('id', $resident)->update(['time_in' => NOW()]);
                 $visitor = Visitor::where('id', $resident)->with('user')->get();
-                return response()->json($visitor); 
+                return response()->json($visitor);
                 return response()->json($visitor, 202);
 
                 }else {
                 $res['Error']    = " Unauthorized - Access Denied!";
-                return response()->json($res, 403);  
-                } 
-                 
+                return response()->json($res, 403);
+                }
+
             } else{
                 $res['Error']    = $request->input('qr_code'). " This QR code does not exist";
-                return response()->json($res, 404);  
+                return response()->json($res, 404);
 
-            }   
+            }
     }
 }
