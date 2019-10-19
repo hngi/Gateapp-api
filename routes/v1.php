@@ -182,7 +182,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('visitor/{id}', 'VisitorController@show')->middleware('checkResident');
 
     // Edit Visitor account
-    Route::put('visitor/{id}', 'VisitorController@update')->middleware('checkResident');
+    Route::post('visitor/{id}', 'VisitorController@update')->middleware('checkResident');
 
     // Delete Visitor account
     Route::delete('visitor/{id}', 'VisitorController@destroy')->middleware('checkResident');

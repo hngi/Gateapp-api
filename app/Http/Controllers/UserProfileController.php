@@ -126,11 +126,19 @@ class UserProfileController extends Controller
     }
     
     public function upload(Request $request, ImageController $image) {
+        $user = Auth::user();
+
         $this->validate($request, [
          'image' => "image|max:4000|required",
         ]);
         //Image Engine
-        $res = $image->imageUpload($request);
+        $res = $image->imageUpload($request, $user);
+ 
+        $user->image = $res['image'] ? $res['image'] : 'noimage.jpg';
+        $user->save();
+
+        $res['status']  = true;
+        $res['user']    = $user; 
         return response()->json($res, $res['status_code']);
     }
 }
