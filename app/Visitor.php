@@ -48,12 +48,6 @@ class Visitor extends Model
      */
     protected $primaryKey = 'id';
 
-
-    /**
-     * Disable Laravel created_at and updated_at tables
-     */
-    public $timestamps = false;
-
     /**
      * Get the user that the visitor visited.
      * This expects that visitor table has a col named user_id
