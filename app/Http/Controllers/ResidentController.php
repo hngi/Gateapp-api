@@ -30,27 +30,38 @@ class ResidentController extends Controller
         DB::beginTransaction();
 
         try{
+           $check_exist = ResidentGateman::where('user_id',  $this->user->id)->where('gateman_id', $id)->first();
+           if(!$check_exist){
+               $residentGateman = ResidentGateman::firstOrCreate([
+                    'user_id'     => $this->user->id, //login user id
+                    'gateman_id'  =>   $id
+                ]);
+                // Confirm that the Id entered is for a gateman 
+                $gateman = User::find($id); 
+    
+                if($gateman->role == 2){
+    
+                        DB::commit();
+                        $msg['status'] = true;
+                        $msg['message'] = 'Your Invite has been sent to Gateman';
+                        $msg['residentGateman'] = $residentGateman;
+                        return response()->json($msg, 200); 
+                        
+                }else {
+                    $msg['status'] = false;
+                    $msg['message'] = 'That user is not a gateman please try again';
+                    return response()->json($msg, 404); 
+                }
 
-           $residentGateman = ResidentGateman::firstOrCreate([
-                'user_id'     => $this->user->id, //login user id
-                'gateman_id'  =>   $id
-            ]);
-            // Confirm that the Id entered is for a gateman 
-            $gateman = User::find($id); 
-
-            if($gateman->role == 2){
-
-                    DB::commit();
-                    $msg['message'] = 'Your Invite has been sent to Gateman';
-                    $msg['residentGateman'] = $residentGateman;
-                    $msg['status'] = 201;
-                    return $msg;
-                    
-            }else {
-                $msg['message'] = 'That user is not a gateman please try again';
-                $msg['status'] = 404;
-                return $msg;      
-            }
+           }else {
+                $msg['status'] = false;
+                if($check_exist->request_status == null){
+                    $msg['message'] = "An invitation has already been sent and has not been aatended to yet!";
+                } elseif($check_exist->request_status == 1) {
+                    $msg['message'] = "Invitation already accepted!";
+                }  
+                return response()->json($msg, 405); 
+           }
            
 
         }catch(\Exception $e) {
@@ -60,8 +71,7 @@ class ResidentController extends Controller
             $msg['message'] = "Error: Could not invite gateman, please try again!";
             $msg['user'] = null;
             $msg['hint'] = $e->getMessage();
-            $msg['status'] = 501;
-            return $msg;
+            return response()->json($msg, 501); 
         }
 
 
@@ -174,7 +184,7 @@ class ResidentController extends Controller
         }else{
             $msg['message'] = 'No Gateman added';
             $msg['status'] = 404;
-            return $msg;
+            return response()->json($mag, 404); 
         }
     }
 
@@ -192,7 +202,7 @@ class ResidentController extends Controller
         }else{
             $msg['message'] = 'No Gateman added';
             $msg['status'] = 404;
-            return $msg;
+            return response()->json($msg, 404); 
         }
     }
 }

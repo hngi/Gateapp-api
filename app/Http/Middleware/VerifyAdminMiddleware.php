@@ -24,7 +24,7 @@ class VerifyAdminMiddleware
 
         // The user must be an admin
         if ($user->role != 0) {
-            return response(['Forbidden', 'No allowed to access this route!'], 403);
+            return response(['Forbidden', 'Not allowed to access this route!'], 403);
         }
 
         return $next($request);
