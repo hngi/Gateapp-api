@@ -41,24 +41,25 @@ class ResidentController extends Controller
                 if($gateman->role == 2){
     
                         DB::commit();
+                        $msg['status'] = true;
                         $msg['message'] = 'Your Invite has been sent to Gateman';
                         $msg['residentGateman'] = $residentGateman;
-                        $msg['status'] = 201;
-                        return $msg;
+                        return response()->json($msg, 200); 
                         
                 }else {
+                    $msg['status'] = fasle;
                     $msg['message'] = 'That user is not a gateman please try again';
-                    $msg['status'] = 404;
-                    return $msg;      
+                    return response()->json($msg, 404); 
                 }
 
            }else {
-               
-                $msg['message'] = "An invitation has already been sent!";
-                $msg['user'] = null;
-                $msg['hint'] = $e->getMessage();
-                $msg['status'] = 501;
-                return $msg;
+                $msg['status'] = fasle;
+                if($check_exist->request_status == null){
+                    $msg['message'] = "An invitation has already been sent and has not been aatended to yet!";
+                } elseif($check_exist->request_status == 1) {
+                    $msg['message'] = "Invitation already accepted!";
+                }  
+                return response()->json($msg, 402); 
            }
            
 
@@ -69,8 +70,7 @@ class ResidentController extends Controller
             $msg['message'] = "Error: Could not invite gateman, please try again!";
             $msg['user'] = null;
             $msg['hint'] = $e->getMessage();
-            $msg['status'] = 501;
-            return $msg;
+            return response()->json($msg, 501); 
         }
 
 
@@ -171,7 +171,7 @@ class ResidentController extends Controller
         }else{
             $msg['message'] = 'No Gateman added';
             $msg['status'] = 404;
-            return $msg;
+            return response()->json($mag, 404); 
         }
     }
 
@@ -189,7 +189,7 @@ class ResidentController extends Controller
         }else{
             $msg['message'] = 'No Gateman added';
             $msg['status'] = 404;
-            return $msg;
+            return response()->json($msg, 404); 
         }
     }
 }
