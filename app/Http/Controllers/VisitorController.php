@@ -91,38 +91,23 @@ class VisitorController extends Controller
 	 */
        public function show($id)
     {
-         // retrieve the visitor's detials with the id
-        try {
-            $res = $this->user->visitors()->find($id);
+        // retrieve the visitor's detials with the id
+        $res = $this->user->visitors()->find($id);
+        //dd($res);
 
-             // send response
+        // output an error if the id is not found
+        if (!$res) {
+            return response()->json([  
+            'status'  => false, 
+            'message' => 'Record not found!'], 
+            404);
+        }
+
+        // send response
         return response()->json([
             'visitor' => $res,
             'status'  => true
         ], 200);
-        }catch(\Exception $e){
-            return response()->json([  
-                'status'  => false, 
-                'message' => 'Record not found!'], 
-                404);
-        }
-    //    // retrieve the visitor's detials with the id
-    //     $res = $this->user->visitors()->find($id);
-    //     //dd($res);
-
-    //     // output an error if the id is not found
-    //     if (!$res) {
-    //         return response()->json([  
-    //         'status'  => false, 
-    //         'message' => 'Record not found!'], 
-    //         404);
-    //     }
-
-    //     // send response
-    //     return response()->json([
-    //         'visitor' => $res,
-    //         'status'  => true
-    //     ], 200);
     }
 
 	/**
