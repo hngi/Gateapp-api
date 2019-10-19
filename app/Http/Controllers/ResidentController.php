@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\ResidentGateman;
 use App\Service_Provider;
 use App\User;
+use App\Home;
 use App\Http\Resources\Resident as ResidentResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -90,17 +91,28 @@ class ResidentController extends Controller
     {
        if (Auth::check()) {
         //$this->validatePhone($request);
-        $gatemen = User::where('phone', 'LIKE', "%{$phone}%")->where('role', "=", "2")->get();
+        //$gatemen = User::where('phone', 'LIKE', "%{$phone}%")->where('role', "=", "2")->get();
         
-        
-        if ($gatemen ->isEmpty()){
+        $gatemen = User::where([
+            ['phone', $phone],
+            ['role', "2"],
+            ])->first(); 
+ 
+        if (!($gatemen)){
             //Error Handling
             $res['Error']    = "No Gateman found with this phone number";
             return response()->json($res, 404);  
              
         } else
-             $allgatemen = ResidentResource::collection($gatemen); //Use Resource to format Output 
-             return response()->json($allgatemen); 
+             $homeResident = Home::Where("user_id", $this->user->id)->pluck("estate_id");
+             $homeGateman = Home::Where("user_id", $gatemen->id)->pluck("estate_id");
+             if($homeGateman != $homeResident) {
+                $res['Error']    = "Gateman and Resident are not in the same estate";
+                return response()->json($res, 404); 
+             }
+              
+             return response()->json($gatemen);
+
       } 
     }
 
@@ -108,8 +120,9 @@ class ResidentController extends Controller
     {
        if (Auth::check()) {
         //$this->validateName($request);
-        $gatemen = User::where('name', 'LIKE', "%{$name}%")
-        ->where('role', "=", "2")->get();
+        //$gatemen = User::where('name', 'LIKE', "%{$name}%")->where('role', "=", "2")->get();
+        $gatemen = User::where('name', '=', "%{$name}%")->where('role', "=", "2")->get();
+
         if ($gatemen ->isEmpty()){
             //Error Handling
             $res['Error']    = "No Gateman found with this name";
