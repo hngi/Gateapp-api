@@ -23,8 +23,8 @@ class VerifyResidentMiddleware
         }
 
         // The user must be an admin or a logged in resident
-        if ($user->role != 0 && $user->role != 1) {
-            return response(['Forbidden', 'No allowed to access this route!'], 403);
+        if ($user->role != 1) {
+            return response(['Forbidden', 'Not allowed to access this route!'], 403);
         }
 
         return $next($request);

@@ -17,6 +17,7 @@ class UserProfileController extends Controller
     	$user = Auth::user(); //this is you active user logged in
         return response()->json($user, 200);
     }
+
     public function all() {
         $admins = [];
         $residents = [];
@@ -78,7 +79,7 @@ class UserProfileController extends Controller
         $user = Auth::user();           
         $this->validate($request, [
             'name' => 'required|min:2',
-            'username' => 'required|min:2',
+            'username' => 'required|min:2|unique:users,username,'.$user->id,
             'email' => 'required|min:2|unique:users,email,'.$user->id,
         ]);
 
@@ -111,37 +112,6 @@ class UserProfileController extends Controller
 
         }
    }
-
-    // public function phone(Request $request) {
-    //     $user = Auth::user();
-
-    //     $this->validate($request, [
-    //         'old_phone' => 'required',
-    //         'new_phone' => 'required|unique:phone,'.$user->id,
-    //         'device_id' => 'required',
-    //     ]);
-    //      //start temporay transaction
-    //     DB::beginTransaction();
-    //     try{
-    //             $user->phone = $request->input('new_phone');
-    //             $user->save();
-
-    //              //if operation was successful save commit save to database
-    //             DB::commit();
-    //             $res['status'] = true;
-    //             $res['message'] = 'Phone number Changed Successfully!';
-    //             return response()->json($res, 200);
-    //         }catch(\Exception $e) {
-
-    //             //rollback what is saved
-    //             DB::rollBack();
-    //             $res['status'] = false;
-    //             $res['message'] = 'Phone number Update unsuccessful: An error occured, please try again!';
-    //             return response()->json($res, 501);
-    //     }
-
-
-    // }
 
     public function destroy() {
         $user = Auth::user();
