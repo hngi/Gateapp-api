@@ -104,22 +104,13 @@ class VisitorController extends Controller
 	 */
     public function store(Request $request,QrCodeGenerator $qr, ImageController $image)
     {
-<<<<<<< HEAD
     	// validate the posted data
     	$this->validate($request, [
-=======
-        // validate the posted data
-        $this->validate($request, [
->>>>>>> 852dc86bab322c630a0dbcebb67192bf72783ebf
             'name'              => ['required', 'regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
             'arrival_date'      => 'required|date_format:Y-m-d',
             'car_plate_no'      => 'string|nullable',
             'purpose'           => 'required|string', 
-<<<<<<< HEAD
             'visiting_period' 	=> 'string',
-=======
-            'visiting_period'   => 'string',
->>>>>>> 852dc86bab322c630a0dbcebb67192bf72783ebf
         ]);
         $randomToken = Str::random(6);
         DB::beginTransaction(); 
@@ -159,11 +150,7 @@ class VisitorController extends Controller
             $res['message']  = 'Error, Visitor not created, please try again';
             $res['hint']     = $e->getMessage();
             return response()->json($msg, 501);
-<<<<<<< HEAD
         }	
-=======
-        }   
->>>>>>> 852dc86bab322c630a0dbcebb67192bf72783ebf
     }
 
 	/**
