@@ -11,7 +11,6 @@ use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 
 class VisitorController extends Controller
 {
@@ -173,56 +172,38 @@ class VisitorController extends Controller
             ], 404);
         }
 
-        // bootstrap the carbon support package
-        $time = Carbon::now();
-        $time_in = $time->format('Y-m-d H:i:s');
-
-        // fetch the necesssary data needed to be updated for the visitor
-        $data = [
-            'name' => Visitor::useit($request->name, $visitor->name),
-            'arrival_date' => Visitor::useit($request->arrival_date, $visitor->arrival_date),
-            'car_plate_no' => Visitor::useit($request->car_plate_no, $visitor->car_plate_no),
-            'purpose' => Visitor::useit($request->purpose, $visitor->purpose),
-            'image' => Visitor::useit($request->image, $visitor->image),
-            'time_in' => Visitor::useit($request->time_in, $visitor->time_in),
-            'time_out' => Visitor::useit($request->time_out, $visitor->time_out),
-            'user_id' => Visitor::useit($request->user_id, $visitor->user_id),
-        ];
-
         // validate the posted data
-        $validator = Validator::make($data, [
-            'name' => ['required', 'regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
+        $this->validate($request, [
+            'name' => ['regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
             'arrival_date' => 'date_format:Y-m-d',
-            'car_plate_no' => 'string|nullable',
+            'car_plate_no' => 'string',
             'purpose' => 'string',
-            'image' => 'image|max:4000',
-            'time_in' => 'date_format:"Y-m-d H:i:s"',
-            'time_out' => 'date_format:Y-m-d H:i:s|nullable',
-            'user_id' => 'integer',        
+            'visiting_period' => 'string', 
+            'description' => 'string', 
         ]);
 
-        // check if the data is valid
-        if($validator->fails()) {
-            return response()->json($validator->errors());
-        }
+        $visitor->name = $request->name ?? $visitor->name;
+        $visitor->arrival_date = $request->arrival_date ?? $visitor->arrival_date;
+        $visitor->car_plate_no = $request->car_plate_no ?? $visitor->car_plate_no;
+        $visitor->purpose = $request->purpose ?? $visitor->purpose;
+        $visitor->image = $request->image ?? $visitor->image;
+        $visitor->visiting_period = $request->visiting_period ?? $visitor->visiting_period;
+        $visitor->description = $request->description ?? $visitor->description;
 
-        // update the visitor's requested data
-        $success = $visitor->update($data);
-
-        // send out response if the update was successful
-        if ($success) {
+        // update visitor's data
+        if ($visitor->save()) {
+            // send response
             return response()->json([
                 'visitor' => $visitor,
                 'status'  => true,
                 'message' => "Visitor's data has been updated successfully!"
-            ], 200);  
-        } else {
-            // if the update action fails, send a response
-            return response()->json([
-                'status'  => false,
-                'message' => 'Sorry, this visitor\'s information could not be updated, please try again.'
             ], 200);
-        }  
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Sorry, this visitor\'s information could not be updated, please try again.'
+            ], 501);
+        }
 	}
 
 	/**
