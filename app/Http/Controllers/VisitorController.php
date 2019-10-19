@@ -196,7 +196,6 @@ class VisitorController extends Controller
             'car_plate_no' => 'string|nullable',
             'purpose' => 'string',
             'image' => 'image|max:4000',
-            'status' => 'string',
             'time_in' => 'date_format:"Y-m-d H:i:s"',
             'time_out' => 'date_format:Y-m-d H:i:s|nullable',
             'user_id' => 'integer',        
