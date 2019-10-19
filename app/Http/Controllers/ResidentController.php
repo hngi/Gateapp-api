@@ -47,13 +47,13 @@ class ResidentController extends Controller
                         return response()->json($msg, 200); 
                         
                 }else {
-                    $msg['status'] = fasle;
+                    $msg['status'] = false;
                     $msg['message'] = 'That user is not a gateman please try again';
                     return response()->json($msg, 404); 
                 }
 
            }else {
-                $msg['status'] = fasle;
+                $msg['status'] = false;
                 if($check_exist->request_status == null){
                     $msg['message'] = "An invitation has already been sent and has not been aatended to yet!";
                 } elseif($check_exist->request_status == 1) {
