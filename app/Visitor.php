@@ -69,15 +69,6 @@ class Visitor extends Model
     }
 
     /**
-     * Logic method for pulling in default values for empty values
-     */
-    protected static function useit($major, $fallback)
-    {
-        return $major ? $major : $fallback;
-    }
-
-
-    /**
      * Route notifications for the FCM channel.
      *
      * @param  \Illuminate\Notifications\Notification  $notification
