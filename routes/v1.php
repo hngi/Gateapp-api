@@ -276,8 +276,3 @@ Route::get('/test-notification2', function () {
     $gateman->notify(new App\Notifications\GatemanAdmitsVisitor($gateman, $visitor));
 });
 
-
-// Route::get('init', function () {
-//     event(new App\Events\notify('Someone'));
-//     return "Notification sent";
-// });
