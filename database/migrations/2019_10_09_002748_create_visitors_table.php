@@ -1,9 +1,9 @@
 <?php
-​
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-​
+
 class CreateVisitorsTable extends Migration
 {
     /**
@@ -18,6 +18,7 @@ class CreateVisitorsTable extends Migration
             $table->string('name', 50);
             $table->date('arrival_date');
             $table->string('car_plate_no', 20);
+            $table->string('phone_no', 25);
             $table->string('purpose', 40);
             $table->string('image', 100)->default('noimage.jpg');
             $table->bigInteger('status')->default(0);
@@ -27,19 +28,18 @@ class CreateVisitorsTable extends Migration
             $table->string('qr_code', 10);
             $table->string('visiting_period', 15);
             $table->string('description');
-​
+			$table->timestamps();
+
             // table indexes
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-​
-            $table->timestamps();
-​
-            // table meta
+			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+			
+			// table meta
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
         });
     }
-​
+
     /**
      * Reverse the migrations.
      *
