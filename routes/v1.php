@@ -240,7 +240,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
         // Delete Notification
         Route::delete('notifications/{id}', 'NotifyController@delete');
         // Update Notification
-        Route::put('notifications/{id}', 'NotifyController@markread');
+        Route::patch('notifications/{id}', 'NotifyController@markread');
 
 
 });
@@ -254,15 +254,14 @@ Route::post('test_image', 'TestController@upload');
 
 //test notification
 Route::get('/test-notification', function () {
-    $user = App\User::query()->inRandomOrder()->first();
-    $gateman = \App\User::query()->inRandomOrder()->first();
+    $user = \App\User::query()->where('role', 1)->inRandomOrder()->first();
+    $gateman = \App\User::query()->where('role', 2)->inRandomOrder()->first();
 
     $user->notify(new \App\Notifications\GatemanAcceptanceNotification($user, $gateman));
 });
 Route::get('/test-notification-2', function () {
-    $user = App\User::query()->inRandomOrder()->first();
-    $gateman = \App\User::query()->inRandomOrder()->first();
-
+    $user = \App\User::query()->where('role', 1)->inRandomOrder()->first();
+    $gateman = \App\User::query()->where('role', 2)->inRandomOrder()->first();
     $gateman->notify(new \App\Notifications\GatemanInvitationNotification($user, $gateman));
 });
 
@@ -270,10 +269,11 @@ Route::get('/test-notification-2', function () {
 
 Route::get('/test-notification2', function () {
 
-    $gateman = App\User::query()->inRandomOrder()->first();
-    $visitor = App\Visitor::query()->inRandomOrder()->first();
+    $resident = \App\User::query()->where('role', 1)->inRandomOrder()->first();
+    $gateman = \App\User::query()->where('role', 2)->inRandomOrder()->first();
+    $visitor = \App\Visitor::query()->inRandomOrder()->first();
 
-    $gateman->notify(new App\Notifications\GatemanAdmitsVisitor($gateman, $visitor));
+    $gateman->notify(new App\Notifications\VisitorArrivalNotification($resident, $gateman, $visitor));
 });
 
 

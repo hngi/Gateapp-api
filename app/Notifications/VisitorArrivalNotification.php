@@ -10,27 +10,30 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Benwilkins\FCM\FcmMessage;
 
-class GatemanAdmitsVisitor extends Notification
+class VisitorArrivalNotification extends Notification
 {
     use Queueable;
 
-    protected $visitor;
-    protected $gateman;
+    private $resident;
+    private $visitor;
+    private $gateman;
     private $title;
     private $body;
 
     /**
      * Create a new notification instance.
-     * @param Visitor $visitor
+     * @param User $resident
      * @param User $gateman
+     * @param Visitor $visitor
      */
-    public function __construct(User $gateman, Visitor $visitor)
+    public function __construct(User $resident, User $gateman, Visitor $visitor)
     {
+        $this->resident = $resident;
         $this->visitor = $visitor;
         $this->gateman = $gateman;
 
         $this->title = $this->visitor->name .  "has arrived to see you";
-        $this->body = null;
+        $this->body = "They were are being checked in by {$this->gateman->name}";
     }
 
 
@@ -62,7 +65,8 @@ class GatemanAdmitsVisitor extends Notification
             'body' => $this->body,
             ])
             ->data([
-                'visitor_id' => $this->visitor->id
+                'visitor_details' => $this->visitor->toArray(),
+                'gateman_details' => $this->gateman->toArray(),
             ])
             ->priority(FcmMessage::PRIORITY_HIGH);
 
@@ -77,7 +81,7 @@ class GatemanAdmitsVisitor extends Notification
      */
     public function routeNotificationForFcm($notification)
     {
-       return $this->gateman->fcm_token;
+       return $this->resident->fcm_token;
     }
 
     /**
@@ -107,7 +111,8 @@ class GatemanAdmitsVisitor extends Notification
         return [
             'title' => $this->title,
             'body' => $this->body,
-            'visitor_id' => $this->visitor->id
+            'visitor_details' => $this->visitor->toArray(),
+            'gateman_details' => $this->gateman->toArray(),
         ];
     }
 }
