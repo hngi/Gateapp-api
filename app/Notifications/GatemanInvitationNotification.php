@@ -9,7 +9,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Benwilkins\FCM\FcmMessage;
 
-class InvitationAcceptanceNotification extends Notification
+class GatemanInvitationNotification extends Notification
 {
     use Queueable;
     protected $resident;

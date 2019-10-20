@@ -95,7 +95,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::delete('/user/delete', 'UserProfileController@destroy');
 
     //User Image upload api
-    // Route::post('user/image', 'UserProfileController@upload');                       
+    // Route::post('user/image', 'UserProfileController@upload');
 
 
     //(Users interactions with Estates)
@@ -263,13 +263,13 @@ Route::get('/test-notification-2', function () {
     $user = App\User::query()->inRandomOrder()->first();
     $gateman = \App\User::query()->inRandomOrder()->first();
 
-    $gateman->notify(new \App\Notifications\InvitationAcceptanceNotification($user, $gateman));
+    $gateman->notify(new \App\Notifications\GatemanInvitationNotification($user, $gateman));
 });
 
 
 
 Route::get('/test-notification2', function () {
-    
+
     $gateman = App\User::query()->inRandomOrder()->first();
     $visitor = App\Visitor::query()->inRandomOrder()->first();
 
