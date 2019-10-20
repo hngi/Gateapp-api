@@ -27,7 +27,6 @@ class VerificationController extends Controller
         $myTTL = 120960; //minutes
         return $this->jwt->factory()->setTTL($myTTL);
     }
-
     public function verify(Request $request, User $user) {
 
         $this->validate($request, [
