@@ -19,34 +19,12 @@ class Visitor extends Model
         'name',
         'arrival_date',
         'car_plate_no',
+        'phone_no',
         'purpose',
         'image',
         'visiting_period',
-        'status',
-        'time_in',
-        'time_out',
-        'qr_code',
-        'visiting_period',
         'description'
     ];
-
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-
-    protected $hidden = [
-    ];
-
-
-    /**
-     * The primary key associated with the table.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'id';
 
     /**
      * Get the user that the visitor visited.
