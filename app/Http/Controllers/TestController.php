@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\QrCodeGenerator;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\SmsOtpController;
 use Illuminate\Support\Str;
 use App\User;
 
@@ -41,5 +42,13 @@ class TestController extends Controller
         //Image Engine
         $res = $image->imageUpload($request);
         return response()->json($res, $res['status_code']);
+    }
+
+     //the method to test the file (image) upload
+     public function sendSms(Request $request, SmsOtpController $sms) {
+         $phone = '08111570173';
+        //Sms Engine
+        $res = $sms->smsOtp($phone, $msg);
+        // return response()->json($res, $res['status_code']);
     }
 }

@@ -100,19 +100,26 @@ class UserProfileController extends Controller
                 $res['important'] = 'A six digit OTP token has ben sent to you email or phone because this phone number is new!';
              }
             //Upload image 
-            $data = $this->upload($request, $image);
-            if($data['status_code'] !=  200) {
-                return response()->json($data, $data['status_code']);
+             //Upload image 
+             if($request->hasFile('image')) {
+                $data = $this->upload($request, $image);
+                if($data['status_code'] !=  200) {
+                    return response()->json($data, $data['status_code']);
+                }
+                $user->image = $data['image'];
+            }else {
+                $data = null;
+                $user->image = 'noimage.jpg';
             }
-            $user->image = $data['image'] ?? 'noimage.jpg';
+
 
             $user->save();
             
             //if operation was successful save commit save to database
             DB::commit();
-            $res['image_info']   = $data;
             $res['status']  = true;
             $res['user']    = $user;
+            $res['image_info']   = $data;
             $res['message'] = 'Your Account Was Successfully Updated';
 
             return response()->json($res, 200);
@@ -149,11 +156,7 @@ class UserProfileController extends Controller
          'image' => "image|max:4000",
         ]);
         //Image Engine
-        $res = null;
-        if($request->hasFile('image')) {
-            //Image Engine
-            $res = $image->imageUpload($request, $user);
-        }
+        $res = $image->imageUpload($request, $user);
         return $res;
     }
 }
