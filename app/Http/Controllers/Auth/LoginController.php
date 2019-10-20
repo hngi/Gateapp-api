@@ -35,8 +35,7 @@ class LoginController extends Controller
         $this->expireTime();
         // Do a validation for the input
         $this->validateRequest($request);
-        $credentials = User::where('phone', $request->input('phone'))
-                             ->where('device_id', $request->input('device_id'))->first();
+        $credentials = User::where('phone', $request->input('phone'))->first();
         if(!$credentials){
             return response()->json(['message_1' => 'invalid_credentials',
              'message_2' => 'Note: device type or phone number is not recognize, verify account and make this device your registered device'], 404);    
