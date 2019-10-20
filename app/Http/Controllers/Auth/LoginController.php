@@ -26,7 +26,7 @@ class LoginController extends Controller
     }
 
     public function expireTime() {
-        $myTTL = 20160; //minutes
+        $myTTL = 120960; //minutes
         return $this->jwt->factory()->setTTL($myTTL);
     }
 

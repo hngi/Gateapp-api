@@ -16,12 +16,19 @@ class VerificationController extends Controller
         return substr(md5(time()), 0, 6);
     }
 
+    public function expireTime() {
+        $myTTL = 120960; //minutes
+        return $this->jwt->factory()->setTTL($myTTL);
+    }
+
     public function verify(Request $request, User $user) {
 
         $this->validate($request, [
             'verifycode'  => 'required|max:6',
             'device_id' => 'required'
         ]);
+
+        $this->expireTime();
 
         $verifycode = $request->input('verifycode');
         $checkCode  = User::where('verifycode', $verifycode)->exists();

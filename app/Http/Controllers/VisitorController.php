@@ -145,7 +145,7 @@ class VisitorController extends Controller
                 'image_info'  => $data,
                 'message'     => 'Visitor successfully added',
                 'visitor'     => $visitor,
-                'image_info'  => $res,
+                'image_info'  => $data,
                 'qr_image_src'=> $qr_code
             ], 200);
         }catch(\Exeception $e) {
