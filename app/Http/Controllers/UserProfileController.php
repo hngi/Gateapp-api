@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
+use App\Mail\VerifyToken;
 
 class UserProfileController extends Controller
 {
@@ -75,25 +76,38 @@ class UserProfileController extends Controller
 
     }
 
-    public function update(Request $request) {  // update user information
+    public function update(Request $request, ImageController $image) {  // update user information
         $user = Auth::user();           
         $this->validate($request, [
             'name' => 'required|min:2',
-            'username' => 'required|min:2|unique:users,username,'.$user->id,
-            'email' => 'required|min:2|unique:users,email,'.$user->id,
+            'phone' => 'required|min:2|unique:users,phone,'.$user->id,
+            'username' => 'min:2|unique:users,username,'.$user->id,
+            'email' => 'min:2|unique:users,email,'.$user->id,
         ]);
-
+        
         //start temporay transaction
         DB::beginTransaction();
         try{
             $user->name      = $request->input('name');
             $user->username  = $request->input('username');
             $user->email     = $request->input('email');
-            $user->phone     = $request->input('phone');
+            if($user->phone != $request->input('phone')){
+                $user->email_verified_at = null;
+                $user->verifycode = Str::random(6);
+                $user->phone     = $request->input('phone');
+                 //We use mail for now untill sms is implemented
+                 Mail::to($user->email)->send(new VerifyToken($user));
+                $res['important'] = 'A six digit OTP token has ben sent to you email or phone because this phone number is new!';
+             }
+            //Upload image 
+            $data = $this->upload($request, $image);
+            $user->image = $data['image'] ? $data['image'] : 'noimage.jpg';
+
             $user->save();
             
             //if operation was successful save commit save to database
             DB::commit();
+            $res['image_info']   = $data;
             $res['status']  = true;
             $res['user']    = $user;
             $res['message'] = 'Your Account Was Successfully Updated';
@@ -125,20 +139,18 @@ class UserProfileController extends Controller
         }
     }
     
-    public function upload(Request $request, ImageController $image) {
+    public function upload($request, $image) {
         $user = Auth::user();
 
         $this->validate($request, [
-         'image' => "image|max:4000|required",
+         'image' => "image|max:4000",
         ]);
         //Image Engine
-        $res = $image->imageUpload($request, $user);
- 
-        $user->image = $res['image'] ? $res['image'] : 'noimage.jpg';
-        $user->save();
-
-        $res['status']  = true;
-        $res['user']    = $user; 
-        return response()->json($res, $res['status_code']);
+        $res = null;
+        if($request->hasFile('image')) {
+            //Image Engine
+            $res = $image->imageUpload($request, $user);
+        }
+        return $res;
     }
 }

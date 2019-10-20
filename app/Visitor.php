@@ -27,7 +27,8 @@ class Visitor extends Model
         'time_out',
         'qr_code',
         'visiting_period',
-        'description'
+        'phone_no',
+        'description',
     ];
 
 

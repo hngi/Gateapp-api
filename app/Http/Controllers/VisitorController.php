@@ -110,8 +110,9 @@ class VisitorController extends Controller
             'arrival_date'      => 'required|date_format:Y-m-d',
             'car_plate_no'      => 'string|nullable',
             'purpose'           => 'required|string', 
-            'visiting_period' 	=> 'string',
-            'description'       => 'string',
+            'visiting_period' 	=> 'required|string',
+            'phone_no'      	=> 'string',
+            'description'       => 'string|nullable',
         ]);
         $randomToken = Str::random(6);
         DB::beginTransaction(); 
@@ -121,6 +122,8 @@ class VisitorController extends Controller
             $visitor->arrival_date = $request->arrival_date;
             $visitor->car_plate_no = $request->car_plate_no;
             $visitor->purpose = $request->purpose;
+            $visitor->phone_no = $request->phone_no;
+            $visitor->description = $request->description;
             $visitor->status  = 0;
             $visitor->user_id = $this->user->id;
             $visitor->visiting_period = $request->visiting_period;
@@ -130,8 +133,8 @@ class VisitorController extends Controller
             $qr_code = $qr->generateCode($randomToken);
 
             //Upload image 
-            $res = $this->upload($request, $image);
-            $visitor->image = $res['image'] ? $res['image'] : 'noimage.jpg';
+            $data = $this->upload($request, $image);
+            $visitor->image = $data['image'] ? $data['image'] : 'noimage.jpg';
             //Save Visitor
             $this->user->visitors()->save($visitor);
             //if operation was successful save commit+ save to database
@@ -139,6 +142,7 @@ class VisitorController extends Controller
             // send response
             return response()->json([
                 'status'      => true,
+                'image_info'  => $data,
                 'message'     => 'Visitor successfully added',
                 'visitor'     => $visitor,
                 'image_info'  => $res,
@@ -161,7 +165,7 @@ class VisitorController extends Controller
 	 * @param  int $id      the visitor id
 	 * @return JSON
 	 */
-	public function update(Request $request, $id)
+	public function update(Request $request, $id, ImageController $image)
 	{
         // gets the visitor's record from the database
         $visitor = $this->user->visitors()->find($id);
@@ -184,7 +188,6 @@ class VisitorController extends Controller
             'car_plate_no' => Visitor::useit($request->car_plate_no, $visitor->car_plate_no),
             'purpose' => Visitor::useit($request->purpose, $visitor->purpose),
             'image' => Visitor::useit($request->image, $visitor->image),
-            'status' => Visitor::useit($request->status, $visitor->status),
             'time_in' => Visitor::useit($request->time_in, $visitor->time_in),
             'time_out' => Visitor::useit($request->time_out, $visitor->time_out),
             'user_id' => Visitor::useit($request->user_id, $visitor->user_id),
@@ -197,7 +200,6 @@ class VisitorController extends Controller
             'car_plate_no' => 'string|nullable',
             'purpose' => 'string',
             'image' => 'image|max:4000',
-            'status' => 'string',
             'time_in' => 'date_format:"Y-m-d H:i:s"',
             'time_out' => 'date_format:Y-m-d H:i:s|nullable',
             'user_id' => 'integer',        
@@ -257,7 +259,7 @@ class VisitorController extends Controller
             ], 500);
 		}
     }
-    public function upload($request, $image) {
+    public function upload($request, $image, $table=null) {
         $user = Auth::user();
 
         $this->validate($request, [
@@ -266,7 +268,7 @@ class VisitorController extends Controller
         $res = null;
         if($request->hasFile('image')) {
             //Image Engine
-            $res = $image->imageUpload($request);
+            $res = $image->imageUpload($request, $table);
         }
         return $res;
     }

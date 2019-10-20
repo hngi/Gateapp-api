@@ -80,11 +80,9 @@ class LoginController extends Controller
     public function validateRequest(Request $request){
             $rules = [
                 'phone' => 'required',
-                'device_id' => 'required',
             ];
             $messages = [
                 'phone' => ':attribute is required',
-                'device_id' => 'device_id is required',
             ];
         $this->validate($request, $rules, $messages);
     }
