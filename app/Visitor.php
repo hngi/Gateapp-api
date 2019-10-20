@@ -20,34 +20,16 @@ class Visitor extends Model
         'name',
         'arrival_date',
         'car_plate_no',
+        'phone_no',
         'purpose',
         'image',
-        'visiting_period',
         'status',
         'time_in',
         'time_out',
         'qr_code',
         'visiting_period',
-        'description'
+        'description',
     ];
-
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-
-    protected $hidden = [
-    ];
-
-
-    /**
-     * The primary key associated with the table.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'id';
 
     /**
      * Get the user that the visitor visited.
@@ -68,15 +50,6 @@ class Visitor extends Model
         // return $this->belongsTo(Home::class);
         return $this->belongsTo('App\Home');
     }
-
-    /**
-     * Logic method for pulling in default values for empty values
-     */
-    protected static function useit($major, $fallback)
-    {
-        return $major ? $major : $fallback;
-    }
-
 
     /**
      * Route notifications for the FCM channel.

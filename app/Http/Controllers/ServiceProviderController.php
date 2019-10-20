@@ -105,13 +105,12 @@ class ServiceProviderController extends Controller
         return response()->json($res, $res['status']);
     }
 
-    public function create(Request $request)
+    public function create(Request $request, ImageController $image)
     {
          $validator = Validator::make($request->all(), [
                'name'        => 'required|string|min:3',
                'phone'       => 'required',
                'description' => 'required',
-               'image'       => "image|max:4000|required",
                'estate_id'   => 'required|int',
                'category_id' => 'required|int'
           ]);
@@ -123,10 +122,24 @@ class ServiceProviderController extends Controller
         DB::beginTransaction();
         try{
 
-            $service = Service_Provider::create($request->all());
+            $service              = new Service_Provider;
+            $service->name        = $request->input("name");
+            $service->phone       = $request->input("phone");
+            $service->description = $request->input("description");
+            $service->estate_id   = $request->input("estate_id");
+            $service->category_id = $request->input("category_id");
+
+            //Upload image 
+            $data = $this->upload($request, $image);
+            if($data['status_code'] !=  200) {
+                return response()->json($data, $data['status_code']);
+            }
+            $service->image = $data['image'] ?? 'noimage.jpg';
+            $service->save();
 
             //if operation was successful save commit save to database
             DB::commit();
+            $res['image_info'] = $data;
             $res["status"] = true;
             $res["message"] = "Service Provider created";
             $res["data"] = $service;
@@ -145,20 +158,16 @@ class ServiceProviderController extends Controller
 
     }
 
-     public function update(Request $request, $id)
+     public function update(Request $request, $id, ImageController $image)
     {
-      $validator = Validator::make($request->all(), [
-           'name'        => 'required|string|min:3',
-           'phone'       => 'required',
-           'description' => 'required',
-           'image'       => "image|max:4000|required",
-           'estate_id'   => 'required|int',
-           'category_id' => 'required|int'
-      ]);
+        $this->validate($request, [
+            'name'        => 'required|string|min:3',
+            'phone'       => 'required',
+            'description' => 'required',
+            'estate_id'   => 'required|int',
+            'category_id' => 'required|int'
+        ]);
 
-        if ($validator->fails()) {
-        return ['message' => 'Please fill all Fields']; 
-        }
         //start temporay transaction
         DB::beginTransaction();
         try{    
@@ -166,15 +175,23 @@ class ServiceProviderController extends Controller
             $service->name        = $request->input("name");
             $service->phone       = $request->input("phone");
             $service->description = $request->input("description");
-            $service->image       = $request->input("image");
             $service->estate_id   = $request->input("estate_id");
             $service->category_id = $request->input("category_id");
-            $service->save();
+
+             //Upload image 
+             $data = $this->upload($request, $image, $service);
+             if($data['status_code'] !=  200) {
+                return response()->json($data, $data['status_code']);
+             }
+             $service->image = $data['image'] ?? 'noimage.jpg';
+             $service->save();
 
              //if operation was successful save commit save to database
             DB::commit();
             $res["status"]  = true;
+            $res['image_info']   = $data;
             $res["message"] = "Service provider Updated Successfully!";
+            $res["service"] = $service;
             return response()->json($res, 200);
         }catch(\Exception $e) {
             //rollback what is saved
@@ -202,14 +219,17 @@ class ServiceProviderController extends Controller
             return response()->json($res, $res['status']);
         }
     }
+    public function upload($request, $image, $table=null) {
+        $user = Auth::user();
 
-    // public function upload(Request $request, ImageController $image) {
-    //     $this->validate($request, [
-    //      'image' => "image|max:4000|required",
-    //     ]);
-        
-    //     $res = $image->imageUpload($request);
-    //     return response()->json($res, $res['status_code']);
-    // }
-
+        $this->validate($request, [
+         'image' => "image|max:4000",
+        ]);
+        $res = null;
+        if($request->hasFile('image')) {
+            //Image Engine
+            $res = $image->imageUpload($request, $table);
+        }
+        return $res;
+    }
 }

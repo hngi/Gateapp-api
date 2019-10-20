@@ -7,21 +7,34 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\JWTAuth;
 
 class VerificationController extends Controller
 {
+    public function __construct(JWTAuth $jwt)
+    {
+        $this->jwt = $jwt;
+    }
+
       //generate new password for the user
     public function generatedPassword()
     {
         return substr(md5(time()), 0, 6);
     }
 
+    public function expireTime() {
+        $myTTL = 120960; //minutes
+        return $this->jwt->factory()->setTTL($myTTL);
+    }
     public function verify(Request $request, User $user) {
 
         $this->validate($request, [
             'verifycode'  => 'required|max:6',
             'device_id' => 'required'
         ]);
+
+        $this->expireTime();
 
         $verifycode = $request->input('verifycode');
         $checkCode  = User::where('verifycode', $verifycode)->exists();
