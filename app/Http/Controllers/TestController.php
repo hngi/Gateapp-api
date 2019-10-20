@@ -49,6 +49,6 @@ class TestController extends Controller
          $phone = '08111570173';
         //Sms Engine
         $res = $sms->smsOtp($phone, $msg);
-        return response()->json($res, $res['status_code']);
+        // return response()->json($res, $res['status_code']);
     }
 }
