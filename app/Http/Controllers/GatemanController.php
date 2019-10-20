@@ -48,23 +48,15 @@ class GatemanController extends Controller
 
     	// return response if there are invitations
 		else {
-	    	$users = [];
-
 	    	// get the resident's details requesting for the gateman together with the request id
-			foreach ($requests as $request) {
-		    	$user = User::join('resident_gateman', 'resident_gateman.user_id', '=', 'users.id')
-		    		->where('users.id', '=', $request->user_id)
-		    		->where('resident_gateman.request_status', 0)
-		    		->where('resident_gateman.gateman_id', $this->user->id)
-		    		->limit(4)
-		    		->get(['users.*', 'resident_gateman.id as request_id', 'resident_gateman.*']);
-
-				array_push($users, $user);
-			}
+	    	$user = User::join('resident_gateman', 'resident_gateman.user_id', 'users.id')
+	    		->where('resident_gateman.request_status', 0)
+	    		->where('resident_gateman.gateman_id', $this->user->id)
+	    		->get(['users.*', 'resident_gateman.id as request_id', 'resident_gateman.gateman_id']);
 
 	        return response()->json([
 	        	'requests' => $requests->count(),
-	        	'residents' => $users,
+	        	'residents' => $user,
 	        	'status' => true
 	        ], 200);
 	    }
@@ -183,12 +175,15 @@ class GatemanController extends Controller
     {
         // get user id
         $user_id = Gateman::where([
-        ['gateman_id', $this->user->id],
-        ['request_status', 1],
+        	['gateman_id', $this->user->id],
+        	['request_status', 1],
         ])->pluck('user_id');
+        
         // get visitors with the user_id
-        $visitors = Visitor::whereIn('user_id', $user_id)->with('user')
-        ->get();
+        $visitors = Visitor::whereIn('user_id', $user_id)
+        	->with('user')
+        	->get();
+        
         // list out visitors details
         if ($visitors){
             return response()->json([
@@ -205,40 +200,38 @@ class GatemanController extends Controller
         }
     }
 
-    /**
-     *
-     */
-
-
     public function admitVisitor(Request $request)
     {
+        $resident = Visitor::where('qr_code', $request->input('qr_code'))->first();
+        
+        if ($resident){
+            //Error Handling
+            $resident = $resident->id;
 
-            $resident = Visitor::where('qr_code', $request->input('qr_code'))->first();
-            if ($resident){
-                //Error Handling
-                $resident = $resident->id;
-                // Check that Gateman works for user
-                $residentGateman = Gateman::where([
-                    ['gateman_id', $this->user->id],
-                    ['user_id', $resident],
-                    ['request_status', 1],
-                    ])->first();
-                if ($residentGateman){
-                    $avisitor = Visitor::where('id', $resident)->update(['time_in' => NOW()]);
-                $visitor = Visitor::where('id', $resident)->with('user')->get();
-                return response()->json($visitor);
-                return response()->json($visitor, 202);
+            // Check that Gateman works for user
+            $residentGateman = Gateman::where([
+                ['gateman_id', $this->user->id],
+                ['user_id', $resident],
+                ['request_status', 1],
+            ])->first();
 
-                }else {
-                $res['Error']    = " Unauthorized- Access Denied!";
-                return response()->json($res, 403);
-                }
+            if ($residentGateman){
+                $avisitor = Visitor::where('id', $resident)->update(['time_in' => NOW()]);
 
-            } else{
-                $res['Error']    = $request->input('qr_code'). " This QR code does not exist";
-                return response()->json($res, 404);
+                // $avisitor = Visitor::where('id', $resident)->update(['time_in' => NOW(), 'status' => 1]);
 
+            	$visitor = Visitor::where('id', $resident)->with('user')->get();
+            	return response()->json($visitor, 202);
             }
+            else {
+            	$res['Error'] = "Unauthorized - Access Denied!";
+            	return response()->json($res, 403);
+            }
+        }
+        else {
+            $res['Error'] = $request->input('qr_code'). " This QR code does not exist";
+            return response()->json($res, 404);
+        }
     }
 
 
@@ -246,11 +239,13 @@ class GatemanController extends Controller
     {
         // get user id
         $user_id = Gateman::where([
-        ['gateman_id', $this->user->id],
-        ['request_status', 1],
+        	['gateman_id', $this->user->id],
+        	['request_status', 1],
         ])->pluck('user_id');
+
         // get visitors with the user_id
         $resident = User::find($user_id);
+
         // list out visitors details
         if ($resident){
             return response()->json([
@@ -267,36 +262,37 @@ class GatemanController extends Controller
         }
     }
 
-
-
-
     public function visitor_out(Request $request)
     {
         $resident = Visitor::where('qr_code', $request->input('qr_code'))->first();
-            if ($resident){
-                //Error Handling
-                $resident = $resident->id;
-                // Check that Gateman works for user
-                $residentGateman = Gateman::where([
-                    ['gateman_id', $this->user->id],
-                    ['user_id', $resident],
-                    ['request_status', 1],
-                    ])->first();
-                if ($residentGateman){
-                    $avisitor = Visitor::where('id', $resident)->update(['time_in' => NOW()]);
-                $visitor = Visitor::where('id', $resident)->with('user')->get();
-                return response()->json($visitor);
-                return response()->json($visitor, 202);
+        
+        if ($resident){
+            //Error Handling
+            $resident = $resident->id;
 
-                }else {
-                $res['Error']    = " Unauthorized - Access Denied!";
-                return response()->json($res, 403);
-                }
+            // Check that Gateman works for user
+            $residentGateman = Gateman::where([
+                ['gateman_id', $this->user->id],
+                ['user_id', $resident],
+                ['request_status', 1],
+			])->first();
 
-            } else{
-                $res['Error']    = $request->input('qr_code'). " This QR code does not exist";
-                return response()->json($res, 404);
+            if ($residentGateman){
+                $avisitor = Visitor::where('id', $resident)->update(['time_out' => NOW()]);
+                
+                // $avisitor = Visitor::where('id', $resident)->update(['time_out' => NOW(), 'status' => 1]);
 
+            	$visitor = Visitor::where('id', $resident)->with('user')->get();
+            	return response()->json($visitor, 202);
             }
+            else {
+            	$res['Error'] = "Unauthorized - Access Denied!";
+            	return response()->json($res, 403);
+            }
+        }
+        else {
+            $res['Error'] = $request->input('qr_code'). " This QR code does not exist";
+            return response()->json($res, 404);
+        }
     }
 }
