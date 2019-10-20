@@ -130,19 +130,26 @@ class ServiceProviderController extends Controller
             $service->category_id = $request->input("category_id");
 
             //Upload image 
-            $data = $this->upload($request, $image);
-            if($data['status_code'] !=  200) {
-                return response()->json($data, $data['status_code']);
+            //Upload image 
+            if($request->hasFile('image')) {
+                $data = $this->upload($request, $image);
+                if($data['status_code'] !=  200) {
+                    return response()->json($data, $data['status_code']);
+                }
+                $service->image = $data['image'];
+            }else {
+                $data = null;
+                $service->image = 'noimage.jpg';
             }
-            $service->image = $data['image'] ?? 'noimage.jpg';
+;
             $service->save();
 
             //if operation was successful save commit save to database
             DB::commit();
-            $res['image_info'] = $data;
             $res["status"] = true;
             $res["message"] = "Service Provider created";
             $res["data"] = $service;
+            $res['image_info'] = $data;
             return response()->json($res, 200);
 
         }catch(\Exception $e) {
@@ -178,20 +185,26 @@ class ServiceProviderController extends Controller
             $service->estate_id   = $request->input("estate_id");
             $service->category_id = $request->input("category_id");
 
-             //Upload image 
-             $data = $this->upload($request, $image, $service);
-             if($data['status_code'] !=  200) {
-                return response()->json($data, $data['status_code']);
-             }
-             $service->image = $data['image'] ?? 'noimage.jpg';
+              //Upload image 
+            if($request->hasFile('image')) {
+                $data = $this->upload($request, $image, $service);
+                if($data['status_code'] !=  200) {
+                    return response()->json($data, $data['status_code']);
+                }
+                $visitor->image = $data['image'];
+            }else {
+                $data = null;
+                $visitor->image = 'noimage.jpg';
+            }
+
              $service->save();
 
              //if operation was successful save commit save to database
             DB::commit();
             $res["status"]  = true;
-            $res['image_info']   = $data;
             $res["message"] = "Service provider Updated Successfully!";
             $res["service"] = $service;
+            $res['image_info']   = $data;
             return response()->json($res, 200);
         }catch(\Exception $e) {
             //rollback what is saved
@@ -225,11 +238,8 @@ class ServiceProviderController extends Controller
         $this->validate($request, [
          'image' => "image|max:4000",
         ]);
-        $res = null;
-        if($request->hasFile('image')) {
-            //Image Engine
-            $res = $image->imageUpload($request, $table);
-        }
+        //Image Engine
+        $res = $image->imageUpload($request, $table);
         return $res;
     }
 }
