@@ -130,13 +130,16 @@ class ServiceProviderController extends Controller
             $service->category_id = $request->input("category_id");
 
             //Upload image 
-            $info = $this->upload($request, $image);
-            $service->image = $info['image'] ? $info['image'] : 'noimage.jpg';
+            $data = $this->upload($request, $image);
+            if($data['status_code'] !=  200) {
+                return response()->json($data, $data['status_code']);
+            }
+            $service->image = $data['image'] ?? 'noimage.jpg';
             $service->save();
 
             //if operation was successful save commit save to database
             DB::commit();
-            $res['image_info'] = $info;
+            $res['image_info'] = $data;
             $res["status"] = true;
             $res["message"] = "Service Provider created";
             $res["data"] = $service;
@@ -177,7 +180,10 @@ class ServiceProviderController extends Controller
 
              //Upload image 
              $data = $this->upload($request, $image, $service);
-             $service->image = $data['image'] ? $data['image'] : 'noimage.jpg';
+             if($data['status_code'] !=  200) {
+                return response()->json($data, $data['status_code']);
+             }
+             $service->image = $data['image'] ?? 'noimage.jpg';
              $service->save();
 
              //if operation was successful save commit save to database
