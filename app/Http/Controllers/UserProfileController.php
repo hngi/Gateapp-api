@@ -101,7 +101,10 @@ class UserProfileController extends Controller
              }
             //Upload image 
             $data = $this->upload($request, $image);
-            $user->image = $data['image'] ? $data['image'] : 'noimage.jpg';
+            if($data['status_code'] !=  200) {
+                return response()->json($data, $data['status_code']);
+            }
+            $user->image = $data['image'] ?? 'noimage.jpg';
 
             $user->save();
             
