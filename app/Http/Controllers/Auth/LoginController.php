@@ -35,8 +35,7 @@ class LoginController extends Controller
         $this->expireTime();
         // Do a validation for the input
         $this->validateRequest($request);
-        $credentials = User::where('phone', $request->input('phone'))
-                             ->where('device_id', $request->input('device_id'))->first();
+        $credentials = User::where('phone', $request->input('phone'))->first();
 
         if (!$token = Auth::guard()->login($credentials)) {
             return response()->json(['message_1' => 'invalid_credentials',
@@ -76,11 +75,9 @@ class LoginController extends Controller
     public function validateRequest(Request $request){
             $rules = [
                 'phone' => 'required',
-                'device_id' => 'required',
             ];
             $messages = [
                 'phone' => ':attribute is required',
-                'device_id' => 'device_id is required',
             ];
         $this->validate($request, $rules, $messages);
     }

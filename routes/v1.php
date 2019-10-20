@@ -22,9 +22,6 @@
     //Login
     Route::post('login', 'Auth\LoginController@authenticate'); //Not Needed
 
-    //Reset password for a new phone
-    Route::put('phone/reset', 'Auth\ResetPhoneController@reset'); //Not  Needed
-
 
 //Admin Routes (Specific Route)*******************************************************
 
@@ -53,7 +50,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('/service-provider', 'ServiceProviderController@create')->middleware('admin');
 
     //Admin only Update a service provider
-    Route::put('/service-provider/{id}', 'ServiceProviderController@update')->middleware('admin');
+    Route::post('/service-provider/{id}', 'ServiceProviderController@update')->middleware('admin');
 
     //Admin only delete a specific service provider
     Route::delete('/service-provider/{id}', 'ServiceProviderController@destroy')->middleware('admin');
@@ -92,16 +89,13 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('/user/{id}', 'UserProfileController@show');
 
     //Edit user ac count
-    Route::put('/user/edit', 'UserProfileController@update');
-
-    //Change Password
-    Route::put('/user/phone', 'UserProfileController@password');
+    Route::post('/user/edit', 'UserProfileController@update');
 
     //Delete user account
     Route::delete('/user/delete', 'UserProfileController@destroy');
 
     //User Image upload api
-    Route::post('user/image', 'UserProfileController@upload');                       
+    // Route::post('user/image', 'UserProfileController@upload');                       
 
 
     //(Users interactions with Estates)
