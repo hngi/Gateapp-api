@@ -48,23 +48,15 @@ class GatemanController extends Controller
 
     	// return response if there are invitations
 		else {
-	    	$users = [];
-
 	    	// get the resident's details requesting for the gateman together with the request id
-			foreach ($requests as $request) {
-		    	$user = User::join('resident_gateman', 'resident_gateman.user_id', '=', 'users.id')
-		    		->where('users.id', '=', $request->user_id)
-		    		->where('resident_gateman.request_status', 0)
-		    		->where('resident_gateman.gateman_id', $this->user->id)
-		    		->limit(4)
-		    		->get(['users.*', 'resident_gateman.id as request_id', 'resident_gateman.*']);
-
-				array_push($users, $user);
-			}
+	    	$user = User::join('resident_gateman', 'resident_gateman.user_id', 'users.id')
+	    		->where('resident_gateman.request_status', 0)
+	    		->where('resident_gateman.gateman_id', $this->user->id)
+	    		->get(['users.*', 'resident_gateman.id as request_id', 'resident_gateman.gateman_id']);
 
 	        return response()->json([
 	        	'requests' => $requests->count(),
-	        	'residents' => $users,
+	        	'residents' => $user,
 	        	'status' => true
 	        ], 200);
 	    }
