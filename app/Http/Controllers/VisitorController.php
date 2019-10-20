@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Visitor;
+use Exeception;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -85,7 +86,10 @@ class VisitorController extends Controller
 
         // output an error if the id is not found
         if (!$res) {
-            return response()->json([  'status'  => false, 'message' => 'Record not found!'], 404);
+            return response()->json([
+                'status'  => false,
+                'message' => 'Record not found!'
+            ], 404);
         }
 
         // send response
@@ -101,28 +105,37 @@ class VisitorController extends Controller
 	 * @param  obj $request an instance of the Request::class
 	 * @return JSON
 	 */
-    public function store(Request $request,QrCodeGenerator $qr, ImageController $image)
-    {
+    public function store(
+        Request $request,
+        QrCodeGenerator $qr,
+        ImageController $image
+    ){
     	// validate the posted data
     	$this->validate($request, [
             'name'              => ['required', 'regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
             'arrival_date'      => 'required|date_format:Y-m-d',
-            'car_plate_no'      => 'string|nullable',
-            'purpose'           => 'required|string', 
-            'visiting_period' 	=> 'string',
+            'car_plate_no'      => 'string',
+            'phone_no'          => 'string',
+            'purpose'           => 'string', 
+            'visiting_period' 	=> 'required|string',
             'description'       => 'string',
         ]);
+
         $randomToken = Str::random(6);
-        DB::beginTransaction(); 
+
+        DB::beginTransaction();
+
         try{
             $visitor = new Visitor();
             $visitor->name = $request->name;
             $visitor->arrival_date = $request->arrival_date;
-            $visitor->car_plate_no = $request->car_plate_no;
-            $visitor->purpose = $request->purpose;
+            $visitor->car_plate_no = $request->car_plate_no ?? '';
+            $visitor->phone_no = $request->phone_no ?? '';
+            $visitor->purpose = $request->purpose ?? '';
             $visitor->status  = 0;
             $visitor->user_id = $this->user->id;
             $visitor->visiting_period = $request->visiting_period;
+            $visitor->description = $request->description ?? '';
             $visitor->qr_code = $randomToken;
 
             //Generate qr image
@@ -130,11 +143,14 @@ class VisitorController extends Controller
 
             //Upload image 
             $res = $this->upload($request, $image);
-            $visitor->image = $res['image'] ? $res['image'] : 'noimage.jpg';
+            $visitor->image = $res['image'] ?? 'noimage.jpg';
+
             //Save Visitor
             $this->user->visitors()->save($visitor);
-            //if operation was successful save commit+ save to database
+
+            //if operation was successful save commit save to database
             DB::commit();
+
             // send response
             return response()->json([
                 'status'      => true,
@@ -143,14 +159,14 @@ class VisitorController extends Controller
                 'image_info'  => $res,
                 'qr_image_src'=> $qr_code
             ], 200);
-        }catch(\Exeception $e) {
+        }catch(Exeception $e) {
             //if any operation fails, Thanos snaps finger - user was not created rollback what is saved
             DB::rollBack();
             $res['status']   = false;
             $res['message']  = 'Error, Visitor not created, please try again';
             $res['hint']     = $e->getMessage();
             return response()->json($msg, 501);
-        }	
+        }
     }
 
 	/**
@@ -160,8 +176,11 @@ class VisitorController extends Controller
 	 * @param  int $id      the visitor id
 	 * @return JSON
 	 */
-	public function update(Request $request, $id)
-	{
+	public function update(
+        $id,
+        Request $request,
+        ImageController $image
+    ){
         // gets the visitor's record from the database
         $visitor = $this->user->visitors()->find($id);
    
@@ -174,35 +193,50 @@ class VisitorController extends Controller
 
         // validate the posted data
         $this->validate($request, [
-            'name' => ['regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
-            'arrival_date' => 'date_format:Y-m-d',
-            'car_plate_no' => 'string',
-            'purpose' => 'string',
-            'visiting_period' => 'string', 
-            'description' => 'string', 
+            'name'              => ['regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
+            'arrival_date'      => 'date_format:Y-m-d',
+            'car_plate_no'      => 'string',
+            'phone_no'          => 'string',
+            'purpose'           => 'string',
+            'visiting_period'   => 'string', 
+            'description'       => 'string', 
         ]);
 
-        $visitor->name = $request->name ?? $visitor->name;
-        $visitor->arrival_date = $request->arrival_date ?? $visitor->arrival_date;
-        $visitor->car_plate_no = $request->car_plate_no ?? $visitor->car_plate_no;
-        $visitor->purpose = $request->purpose ?? $visitor->purpose;
-        $visitor->image = $request->image ?? $visitor->image;
-        $visitor->visiting_period = $request->visiting_period ?? $visitor->visiting_period;
-        $visitor->description = $request->description ?? $visitor->description;
+        DB::beginTransaction();
 
-        // update visitor's data
-        if ($visitor->save()) {
+        try{
+            $visitor->name = $request->name ?? $visitor->name;
+            $visitor->arrival_date = $request->arrival_date ?? $visitor->arrival_date;
+            $visitor->car_plate_no = $request->car_plate_no ?? $visitor->car_plate_no;
+            $visitor->phone_no = $request->phone_no ?? $visitor->phone_no;
+            $visitor->purpose = $request->purpose ?? $visitor->purpose;
+            $visitor->visiting_period = $request->visiting_period ?? $visitor->visiting_period;
+            $visitor->description = $request->description ?? $visitor->description;
+
+            // Upload updated image 
+            $res = $this->upload($request, $image);
+            $visitor->image = $res['image'] ?? $visitor->image;
+
+            //Save Visitor
+            $visitor->save();
+
+            //if operation was successful save commit save to database
+            DB::commit();
+
             // send response
             return response()->json([
-                'visitor' => $visitor,
-                'status'  => true,
-                'message' => "Visitor's data has been updated successfully!"
-            ], 200);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Sorry, this visitor\'s information could not be updated, please try again.'
-            ], 501);
+                'status'      => true,
+                'message'     => "Visitor's data has been updated successfully!",
+                'visitor'     => $visitor,
+                'image_info'  => $res
+            ], 200);      
+        }catch(Exeception $e) {
+            //if any operation fails, rollback what is saved
+            DB::rollBack();
+            $res['status']   = false;
+            $res['message']  = "Error, Visitor's data could not be updated, please try again.";
+            $res['hint']     = $e->getMessage();
+            return response()->json($msg, 501);
         }
 	}
 
@@ -236,6 +270,7 @@ class VisitorController extends Controller
             ], 500);
 		}
     }
+
     public function upload($request, $image) {
         $user = Auth::user();
 
@@ -249,7 +284,6 @@ class VisitorController extends Controller
         }
         return $res;
     }
-
 }
 
 
