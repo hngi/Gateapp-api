@@ -66,7 +66,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
 
     // Show all visitor
-    Route::get('visitors/all', 'VisitorController@index')->middleware('admin');
+    Route::get('4', 'VisitorController@index')->middleware('admin');
 });
 
 

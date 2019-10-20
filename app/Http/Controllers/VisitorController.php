@@ -142,11 +142,17 @@ class VisitorController extends Controller
             $qr_code = $qr->generateCode($randomToken);
 
             //Upload image 
-            $data = $this->upload($request, $image);
-            if($data['status_code'] !=  200) {
-                return response()->json($data, $data['status_code']);
+            if($request->hasFile('image')) {
+                $data = $this->upload($request, $image);
+                if($data['status_code'] !=  200) {
+                    return response()->json($data, $data['status_code']);
+                }
+                $visitor->image = $data['image'];
+            }else {
+                $data = null;
+                $visitor->image = 'noimage.jpg';
             }
-            $visitor->image = $data['image'] ?? 'noimage.jpg';
+
 
             //Save Visitor
             $this->user->visitors()->save($visitor);
@@ -218,11 +224,17 @@ class VisitorController extends Controller
             $visitor->description = $request->description ?? $visitor->description;
 
             // Upload updated image 
-            $data = $this->upload($request, $image, $visitor);
-            if($data['status_code'] !=  200) {
-                return response()->json($data, $data['status_code']);
+             //Upload image 
+             if($request->hasFile('image')) {
+                $data = $this->upload($request, $image, $visitor);
+                if($data['status_code'] !=  200) {
+                    return response()->json($data, $data['status_code']);
+                }
+                $visitor->image = $data['image'];
+            }else {
+                $data = null;
+                $visitor->image = 'noimage.jpg';
             }
-            $visitor->image = $data['image'] ?? $visitor->image;
 
             //Save Visitor
             $visitor->save();
@@ -280,15 +292,12 @@ class VisitorController extends Controller
     public function upload($request, $image, $table=null) {
         $user = Auth::user();
 
-        $this->validate($request, [
-         'image' => "image|max:4000",
-        ]);
-        $res = null;
-        if($request->hasFile('image')) {
+            $this->validate($request, [
+              'image' => "image|max:4000",
+            ]);
             //Image Engine
             $res = $image->imageUpload($request, $table);
-        }
-        return $res;
+            return $res;
     }
 }
 
