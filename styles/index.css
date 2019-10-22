@@ -28,10 +28,6 @@
 .features h3{
     font-weight: bold;
 }
-.feature-underline {
-    width: 3vw;
-    border-top: 4px solid #49A347;
-}
 .indiv-feature{
     height: 30vh;
 }
@@ -51,7 +47,7 @@
 .what-is-gateguard p{
     font-size: 16px;
 }
-.gateguard-underline{
+.green-underline{
     width: 3vw;
     border-top: 4px solid #49A347;
 }
