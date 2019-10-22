@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 use App\Mail\WelcomeMail;
+use App\Mail\VerifyToken;
 
 class RegisterController extends Controller
 {
@@ -22,6 +23,7 @@ class RegisterController extends Controller
         return response()->json($msg, $msg['status']);
     }
 
+    
     public function resident(Request $request) {
         $msg = $this->create($request, $role='1', $user_type='resident');
 
@@ -34,8 +36,8 @@ class RegisterController extends Controller
         return response()->json($msg, $msg['status']);
     }
 
-    private function checkphone($phone) {
-        $check_phone  = User::where('phone', $phone)->exists();
+    private function checkphone($phone, $email) {
+        $check_phone  = User::where('phone', $phone)->orWhere('email', $email)->exists();
        if ($check_phone) {
            return true;
        }return false;
@@ -50,11 +52,11 @@ class RegisterController extends Controller
 
         try{
 
-           $check = $this->checkphone($request->input('phone'));
+           $check = $this->checkphone($request->input('phone'), $request->input('email'));
            if(!$check) {
                 $user = User::create([
                     'name'     => $request->input('name'),
-                    'image'    => 'no_image.jpg',
+                    'image'    => 'noimage.jpg',
                     'phone'    => $request->input('phone'),
                     'email'    => $request->input('email'),
                     'user_type'=> $user_type,
@@ -63,34 +65,41 @@ class RegisterController extends Controller
                     'verifycode' => $verifycode
                 ]);
                 $msg['status'] = 201;
-                $msg['app-hint'] = 'this is a new user!';
+                $msg['app-hint'] = 'This is a new user!';
+
+                Mail::to($user->email)->send(new WelcomeMail($user));
            }else {
-                $user = User::where('phone', $request->input('phone'))->first();
-                $user->device_id = $request->input('device_id');
+                $user = User::where('phone', $request->input('phone'))->orWhere('email',  $request->input('email'))->first();
+
+                $user->email_verified_at = null;
+                $user->device_id         = $request->input('device_id');
+                $user->verifycode        = $verifycode;
                 $user->save();
                 
                 $msg['status'] = 200;
-                $msg['app-hint'] = 'this is an existing user!';
+                $msg['app-hint'] = 'This is an existing user!';
+                Mail::to($user->email)->send(new VerifyToken($user));
            }
             $msg['message'] = 'A verification code has been sent to your phone number or email, please use to veriify your account!';
             $msg['user']    = $user;
+            $msg['image_link'] = 'https://res.cloudinary.com/getfiledata/image/upload/';
+            $msg['image_round_format']  = 'w_200,c_fill,ar_1:1,g_auto,r_max/';
+            $msg['image_square_format'] = 'w_200,ar_1:1,c_fill,g_auto/';
+            $msg['image_example_link']  = 'https://res.cloudinary.com/getfiledata/image/upload/w_200,c_fill,ar_1:1,g_auto,r_max/noimage.jpg';
 
-            //Send a mail form account verification(Dont need the message here we are using sms instead)
-            Mail::to($user->email)->send(new WelcomeMail($user));
-            //if operation was successful save commit save to database
+
             DB::commit();
             return $msg;
-
 
         }catch(\Exception $e) {
             //if any operation fails, Thanos snaps finger - user was not created rollback what is saved
             DB::rollBack();
 
-            $msg['message'] = "Error: Account not created, please try again!";
-            $msg['user'] = null;
-            $msg['hint'] = $e->getMessage();
-            $msg['status'] = 501;
-            return $msg;
+            $res['message'] = "Error: Account not created, please try again!";
+            $res['user'] = null;
+            $res['hint'] = $e->getMessage();
+            $res['status'] = 501;
+            return $res;
         }
     }
 

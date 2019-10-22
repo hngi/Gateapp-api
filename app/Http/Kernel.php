@@ -66,6 +66,7 @@ class Kernel extends HttpKernel
         'JWTAuth' => \Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => \Tymon\JWTAuthFacades\JWTFactory::class,
         'checkGateman' => \App\Http\Middleware\VerifyGateman::class,
+        'checkResident' => \App\Http\Middleware\VerifyResidentMiddleware::class,
     ];
 
     /**
