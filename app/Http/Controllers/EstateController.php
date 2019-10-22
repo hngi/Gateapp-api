@@ -31,11 +31,31 @@ class EstateController extends Controller
     }
    
      // Display Estates by name 
+     public function name($name)
+     {
+         $country = ucfirst($name);
+         $estates = Estate::where('estate_name', 'LIKE', "%{$name}%")->get();
+         if (!$estates){
+            //Error Handling
+             $res['status']  = false;
+             $res['message'] = 'No Estates found';
+             return response()->json($res, 404);  
+             
+         }else{
+             $res['status']  = true;
+             $res['message'] = 'Data Found (By Name)';
+             $res['estates']  = $estates;
+             return response()->json($res, 200);  
+        }
+     }
 
      public function search($name)
      {
          $country = ucfirst($name);
-         $estates = Estate::where('estate_name', 'LIKE', "%{$name}%")->get();
+         $estates = Estate::where('estate_name', 'LIKE', "%{$name}%")
+                            ->orWhere('city','LIKE', "%{$city}%")
+                            ->orWhere('country','LIKE', "%{$country}%")
+                            ->get();
          if (!$estates){
             //Error Handling
              $res['status']  = false;
@@ -88,7 +108,7 @@ class EstateController extends Controller
              return response()->json($res, 200);
         }  
     }
-    
+
     // Display Estates by Country 
 
     public function showCountry($country)
