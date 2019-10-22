@@ -215,38 +215,36 @@ class EstateController extends Controller
 
     public function estateMemeber(Home $home, $id) {
         $user = Auth::user();
-
-        $check_if = Home::where('estate_id', $id)->where('user_id', $user->id)->exists();
-
-        if(!$check_if) {      
-            //Relationship between the estate and a member
-            DB::beginTransaction();
-            try{
-
+        dd($user);
+        // $check_if = Home::where('estate_id', $id)->where('user_id', $user->id)->exists();
+   
+        DB::beginTransaction();
+        try{
+            if(!$check_if) {   
                 $home->user_id   = $user->id;
                 $home->estate_id = $id;
                 $home->save();
-
-                $estate = Estate::where('id', $id)->first();
-
-                 DB::commit();
-                 $msg['message'] = 'Estate selected succesfully!';
-                 $msg['estate'] = $estate;
-                 $msg['who'] = $user;
-                 return response()->json($msg, 200); 
-
-            }catch(\Exeception $e) {
-                //if any operation fails, Thanos snaps finger - user was not created rollback what is saved
-                DB::rollBack();
-
-                $msg['message'] = "Error: Estate not updated, please try again!";
-                $msg['hint'] = $e->getMessage();
-                return response()->json($msg, 501); 
-
+            }else {
+                $check_if->user_id   = $user->id;
+                $check_if->estate_id = $id;
+                $check_if->save();
             }
-        }else {
-             $msg['message'] = "Am sorry you have already selected an estate or estate does not exist";
-             return response()->json($msg, 402); 
+            $estate = Estate::where('id', $id)->first();
+
+            DB::commit();
+            $msg['message'] = 'Estate selected succesfully!';
+            $msg['estate'] = $estate;
+            $msg['user'] = $user;
+            return response()->json($msg, 200); 
+
+        }catch(\Exeception $e) {
+            //if any operation fails, Thanos snaps finger - user was not created rollback what is saved
+            DB::rollBack();
+
+            $msg['message'] = "Error: Estate Selection failed, please try again!";
+            $msg['hint'] = $e->getMessage();
+            return response()->json($msg, 501); 
+
         }
 
     }
