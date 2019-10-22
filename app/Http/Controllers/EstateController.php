@@ -49,12 +49,12 @@ class EstateController extends Controller
         }
      }
 
-     public function search($name)
+     public function search($info)
      {
-         $country = ucfirst($name);
-         $estates = Estate::where('estate_name', 'LIKE', "%{$name}%")
-                            ->orWhere('city','LIKE', "%{$city}%")
-                            ->orWhere('country','LIKE', "%{$country}%")
+         $info = ucfirst($info);
+         $estates = Estate::where('estate_name', 'LIKE', "%{$info}%")
+                            ->orWhere('city','LIKE', "%{$info}%")
+                            ->orWhere('country','LIKE', "%{$info}%")
                             ->get();
          if (!$estates){
             //Error Handling
