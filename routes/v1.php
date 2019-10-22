@@ -112,7 +112,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('/estate/{id}', 'EstateController@show');
 
     //Get Estates by name
-    Route::get('/estate/{name}', 'EstateController@search');
+    Route::get('/estate/name/{name}', 'EstateController@search');
 
     //Create Estate
     Route::post('/estate', 'EstateController@store');

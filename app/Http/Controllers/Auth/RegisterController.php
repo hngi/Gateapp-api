@@ -89,7 +89,7 @@ class RegisterController extends Controller
 
 
             DB::commit();
-            return response()->json($msg, $msg['status']);
+            return $msg;
 
         }catch(\Exception $e) {
             //if any operation fails, Thanos snaps finger - user was not created rollback what is saved
