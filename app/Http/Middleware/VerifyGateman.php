@@ -22,7 +22,7 @@ class VerifyGateman
         }
 
         if ($user->role != 2) {
-            return response(['Forbidden'], 403);
+            return response(['Forbidden','Not allowed to access this route!'], 403);
         }
 
         return $next($request);

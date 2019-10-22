@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Controllers\ImageController;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
+use App\Mail\VerifyToken;
 
 class UserProfileController extends Controller
 {
@@ -17,6 +18,7 @@ class UserProfileController extends Controller
     	$user = Auth::user(); //this is you active user logged in
         return response()->json($user, 200);
     }
+
     public function all() {
         $admins = [];
         $residents = [];
@@ -74,27 +76,50 @@ class UserProfileController extends Controller
 
     }
 
-    public function update(Request $request) {  // update user information
+    public function update(Request $request, ImageController $image) {  // update user information
         $user = Auth::user();           
         $this->validate($request, [
             'name' => 'required|min:2',
-            'username' => 'required|min:2',
-            'email' => 'required|min:2|unique:users,email,'.$user->id,
+            'phone' => 'required|min:2|unique:users,phone,'.$user->id,
+            'username' => 'min:2|unique:users,username,'.$user->id,
+            'email' => 'min:2|unique:users,email,'.$user->id,
         ]);
-
+        
         //start temporay transaction
         DB::beginTransaction();
         try{
             $user->name      = $request->input('name');
             $user->username  = $request->input('username');
             $user->email     = $request->input('email');
-            $user->phone     = $request->input('phone');
+            if($user->phone != $request->input('phone')){
+                $user->email_verified_at = null;
+                $user->verifycode = Str::random(6);
+                $user->phone     = $request->input('phone');
+                 //We use mail for now untill sms is implemented
+                 Mail::to($user->email)->send(new VerifyToken($user));
+                $res['important'] = 'A six digit OTP token has ben sent to you email or phone because this phone number is new!';
+             }
+            //Upload image 
+             //Upload image 
+             if($request->hasFile('image')) {
+                $data = $this->upload($request, $image);
+                if($data['status_code'] !=  200) {
+                    return response()->json($data, $data['status_code']);
+                }
+                $user->image = $data['image'];
+            }else {
+                $data = null;
+                $user->image = 'noimage.jpg';
+            }
+
+
             $user->save();
             
             //if operation was successful save commit save to database
             DB::commit();
             $res['status']  = true;
             $res['user']    = $user;
+            $res['image_info']   = $data;
             $res['message'] = 'Your Account Was Successfully Updated';
 
             return response()->json($res, 200);
@@ -112,36 +137,6 @@ class UserProfileController extends Controller
         }
    }
 
-    public function phone(Request $request) {
-        $user = Auth::user();
-
-        $this->validate($request, [
-            'old_phone' => 'required',
-            'new_phone' => 'required|unique:phone,'.$user->id,
-        ]);
-         //start temporay transaction
-        DB::beginTransaction();
-        try{
-                $user->password = Hash::make($request->input('new_phone'));
-                $user->save();
-
-                 //if operation was successful save commit save to database
-                DB::commit();
-                $res['status'] = true;
-                $res['message'] = 'Phone number Changed Successfully!';
-                return response()->json($res, 200);
-            }catch(\Exception $e) {
-
-                //rollback what is saved
-                DB::rollBack();
-                $res['status'] = false;
-                $res['message'] = 'Phone number Update unsuccessful: An error occured, please try again!';
-                return response()->json($res, 501);
-        }
-
-
-    }
-
     public function destroy() {
         $user = Auth::user();
         if($user) {         // removes user account
@@ -152,5 +147,16 @@ class UserProfileController extends Controller
             $res['message'] = 'User unsuccessfully, user not found or an error occured, please try again!';
             return response()->json($res, 501);
         }
+    }
+    
+    public function upload($request, $image) {
+        $user = Auth::user();
+
+        $this->validate($request, [
+         'image' => "image|max:4000",
+        ]);
+        //Image Engine
+        $res = $image->imageUpload($request, $user);
+        return $res;
     }
 }
