@@ -74,6 +74,7 @@ class RegisterController extends Controller
                 $user->email_verified_at = null;
                 $user->device_id         = $request->input('device_id');
                 $user->verifycode        = $verifycode;
+                $user->name              = $name;
                 $user->save();
                 
                 $msg['status'] = 200;
