@@ -24,23 +24,14 @@
                     style="min-height:116px;height:auto;display:block;line-height:200%;font-weight:300">
                     <div style="margin:50px 50px">
                         <font color="#204056">
-                            <p style="line-height:200%;font-weight:300">
+                            <h1 style="line-height:200%;font-weight:300">
                                 Hello Support,
-                            </p>
-                            <p style="line-height:200%;font-weight:300">You have a new mail</p>
-                            <div style="line-height:200%;font-weight:300">
-                                <strong>Name:</strong> {{ $data['name'] }}
-                                <br>
-                                <strong>Email:</strong> {{ $data['email'] }}
-                                <br>
-                                <strong>Message:</strong> {{ $data['message'] }}
-                            </div>
-                            <p style="line-height:200%">
-                                <font color="#204056"></font>
-                            </p>
-                            <p style="line-height:200%">
-                                <font color="#204056"></font>
-                            </p>
+                            </h1>
+                            <h3 style="line-height:200%;font-weight:300">You have a new message from {{ $data['name'] }}
+                            </h3>
+                            <p style="line-height:200%;font-weight:300">Login into your account to check <a
+                                    href="#">Login</a></p>
+
                         </font>
                     </div>
                 </div>

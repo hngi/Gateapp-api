@@ -248,7 +248,10 @@ Route::put('faq/{id}', 'FaqController@update')->middleware('admin');
 Route::delete('faq/{id}', 'FaqController@destroy')->middleware('admin');
 
 //support routes
+Route::get('/support', 'SupportController@index')->middleware('admin');
 Route::post('/support/send', 'SupportController@send');
+Route::get('/support/{id}', 'SupportController@show')->middleware('admin');
+Route::delete('/support/{id}', 'SupportController@destroy')->middleware('admin');
 
 //This our testing api routes
 Route::get('test', 'TestController@test');
