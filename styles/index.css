@@ -5,6 +5,30 @@
     background-position: center;
     background-repeat: no-repeat;
 }
+.directory-image{
+    height: 70vh;
+}
+.directory-image img{
+    width: 320px;
+height: 386.98px;
+left: 1072.51px;
+top: 1064.48px;
+}
+
+.Residents-image{
+    height: 60vh;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("../images/image 4.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.guards-image{
+    height: 60vh;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("../images/Guards image.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 .welcome-image-words{
     height: 50vh;
     margin-top: 13vh;
@@ -25,12 +49,10 @@
 }
 .features{
 }
+
+}
 .features h3{
     font-weight: bold;
-}
-.feature-underline {
-    width: 3vw;
-    border-top: 4px solid #49A347;
 }
 .indiv-feature{
     height: 30vh;
@@ -51,7 +73,7 @@
 .what-is-gateguard p{
     font-size: 16px;
 }
-.gateguard-underline{
+.green-underline{
     width: 3vw;
     border-top: 4px solid #49A347;
 }
@@ -62,6 +84,15 @@
     height: 100%;
     width: 100%;
 }
+.visitorphone-image{
+    height: 70vh;
+}
+.visitorphone-image img{
+    width: 218.56px;
+height: 384.33px;
+left: 1072.51px;
+top: 1064.48px;
+}
 .feature-breakdown {
     min-height: 100vh;
     background: #e5e5e5;
@@ -69,4 +100,7 @@
 .residents-breakdown{
     height: 60vh;
     border: 1px solid black;
+}
+.clients{
+    overflow: hidden;
 }
