@@ -36,6 +36,7 @@ class SupportController extends Controller
             );
             Support::create($data);
             Mail::to('support@gateapp.com')->send(new SupportMail($data));
+            return response()->json(['message' => 'Thanks for contacting us!']);
         }
     }
 
