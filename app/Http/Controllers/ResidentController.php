@@ -55,8 +55,8 @@ class ResidentController extends Controller
 
            }else {
                 $msg['status'] = false;
-                if($check_exist->request_status == null){
-                    $msg['message'] = "An invitation has already been sent and has not been aatended to yet!";
+                if($check_exist->request_status == 0){
+                    $msg['message'] = "An invitation has already been sent and has not been attended to yet!";
                 } elseif($check_exist->request_status == 1) {
                     $msg['message'] = "Invitation already accepted!";
                 }  
