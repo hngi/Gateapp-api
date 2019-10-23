@@ -22,9 +22,6 @@
     //Login
     Route::post('login', 'Auth\LoginController@authenticate'); //Not Needed
 
-    //Reset password for a new phone
-    Route::put('phone/reset', 'Auth\ResetPhoneController@reset'); //Not  Needed
-
 
 //Admin Routes (Specific Route)*******************************************************
 
@@ -53,7 +50,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('/service-provider', 'ServiceProviderController@create')->middleware('admin');
 
     //Admin only Update a service provider
-    Route::put('/service-provider/{id}', 'ServiceProviderController@update')->middleware('admin');
+    Route::post('/service-provider/{id}', 'ServiceProviderController@update')->middleware('admin');
 
     //Admin only delete a specific service provider
     Route::delete('/service-provider/{id}', 'ServiceProviderController@destroy')->middleware('admin');
@@ -92,16 +89,13 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('/user/{id}', 'UserProfileController@show');
 
     //Edit user ac count
-    Route::put('/user/edit', 'UserProfileController@update');
-
-    //Change Password
-    Route::put('/user/phone', 'UserProfileController@password');
+    Route::post('/user/edit', 'UserProfileController@update');
 
     //Delete user account
     Route::delete('/user/delete', 'UserProfileController@destroy');
 
     //User Image upload api
-    Route::post('user/image', 'UserProfileController@upload');                       
+    // Route::post('user/image', 'UserProfileController@upload');
 
 
     //(Users interactions with Estates)
@@ -118,7 +112,10 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('/estate/{id}', 'EstateController@show');
 
     //Get Estates by name
-    Route::get('/estate/{name}', 'EstateController@search');
+    Route::get('/estate/name/{name}', 'EstateController@name');
+
+    //Get Estates by name, country, city
+    Route::get('/estate/search/{info}', 'EstateController@search');
 
     //Create Estate
     Route::post('/estate', 'EstateController@store');
@@ -182,7 +179,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('visitor/{id}', 'VisitorController@show')->middleware('checkResident');
 
     // Edit Visitor account
-    Route::put('visitor/{id}', 'VisitorController@update')->middleware('checkResident');
+    Route::post('visitor/edit/{id}', 'VisitorController@update')->middleware('checkResident');
 
     // Delete Visitor account
     Route::delete('visitor/{id}', 'VisitorController@destroy')->middleware('checkResident');
@@ -246,7 +243,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
         // Delete Notification
         Route::delete('notifications/{id}', 'NotifyController@delete');
         // Update Notification
-        Route::put('notifications/{id}', 'NotifyController@markread');
+        Route::patch('notifications/{id}', 'NotifyController@markread');
 
 
 });
@@ -260,26 +257,26 @@ Route::post('test_image', 'TestController@upload');
 
 //test notification
 Route::get('/test-notification', function () {
-    $user = App\User::query()->inRandomOrder()->first();
-    $gateman = \App\User::query()->inRandomOrder()->first();
+    $user = \App\User::query()->where('role', 1)->inRandomOrder()->first();
+    $gateman = \App\User::query()->where('role', 2)->inRandomOrder()->first();
 
     $user->notify(new \App\Notifications\GatemanAcceptanceNotification($user, $gateman));
 });
 Route::get('/test-notification-2', function () {
-    $user = App\User::query()->inRandomOrder()->first();
-    $gateman = \App\User::query()->inRandomOrder()->first();
-
-    $gateman->notify(new \App\Notifications\InvitationAcceptanceNotification($user, $gateman));
+    $user = \App\User::query()->where('role', 1)->inRandomOrder()->first();
+    $gateman = \App\User::query()->where('role', 2)->inRandomOrder()->first();
+    $gateman->notify(new \App\Notifications\GatemanInvitationNotification($user, $gateman));
 });
 
 
 
 Route::get('/test-notification2', function () {
-    
-    $gateman = App\User::query()->inRandomOrder()->first();
-    $visitor = App\Visitor::query()->inRandomOrder()->first();
 
-    $gateman->notify(new App\Notifications\GatemanAdmitsVisitor($gateman, $visitor));
+    $resident = \App\User::query()->where('role', 1)->inRandomOrder()->first();
+    $gateman = \App\User::query()->where('role', 2)->inRandomOrder()->first();
+    $visitor = \App\Visitor::query()->inRandomOrder()->first();
+
+    $gateman->notify(new App\Notifications\VisitorArrivalNotification($resident, $gateman, $visitor));
 });
 
 
