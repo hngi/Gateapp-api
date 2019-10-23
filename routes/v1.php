@@ -247,6 +247,9 @@ Route::post('faq', 'FaqController@store')->middleware('admin');
 Route::put('faq/{id}', 'FaqController@update')->middleware('admin');
 Route::delete('faq/{id}', 'FaqController@destroy')->middleware('admin');
 
+//support routes
+Route::post('/support/send', 'SupportController@send');
+
 //This our testing api routes
 Route::get('test', 'TestController@test');
 Route::get('generate-code', 'TestController@qrCode');
