@@ -55,7 +55,7 @@ class RegisterController extends Controller
            $check = $this->checkphone($request->input('phone'), $request->input('email'));
            if(!$check) {
                 $user = User::create([
-                    'name'     => $request->input('name'),
+                    'name'     => ucfirst($request->input('name')),
                     'image'    => 'noimage.jpg',
                     'phone'    => $request->input('phone'),
                     'email'    => $request->input('email'),
@@ -74,6 +74,7 @@ class RegisterController extends Controller
                 $user->email_verified_at = null;
                 $user->device_id         = $request->input('device_id');
                 $user->verifycode        = $verifycode;
+                $user->name              = ucfirst($request->input('name'));
                 $user->save();
                 
                 $msg['status'] = 200;
