@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4d8570e2158dc5a1914a3470225a3b4a",
+    "content-hash": "dca9c0329c01bd5700d99b5d3ca9ffe6",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -53,36 +53,42 @@
             "time": "2017-10-17T09:59:25+00:00"
         },
         {
-            "name": "brozot/laravel-fcm",
-            "version": "v1.2.1",
+            "name": "benwilkins/laravel-fcm-notification",
+            "version": "v4.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/brozot/Laravel-FCM.git",
-                "reference": "112152af74d32304e74b96bd1afc7cbd99e2bc5c"
+                "url": "https://github.com/benwilkins/laravel-fcm-notification.git",
+                "reference": "381da9cf67abaf65b121348e6b36cd8da9e2850a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brozot/Laravel-FCM/zipball/112152af74d32304e74b96bd1afc7cbd99e2bc5c",
-                "reference": "112152af74d32304e74b96bd1afc7cbd99e2bc5c",
+                "url": "https://api.github.com/repos/benwilkins/laravel-fcm-notification/zipball/381da9cf67abaf65b121348e6b36cd8da9e2850a",
+                "reference": "381da9cf67abaf65b121348e6b36cd8da9e2850a",
                 "shasum": ""
             },
             "require": {
-                "guzzlehttp/guzzle": "~6.0",
-                "illuminate/support": ">=5.0.0",
-                "monolog/monolog": "^1.19",
-                "php": ">=5.5.9"
+                "guzzlehttp/guzzle": "^6.2",
+                "illuminate/config": "~5.3|^6.0",
+                "illuminate/notifications": "~5.3|^6.0",
+                "illuminate/queue": "~5.3|^6.0",
+                "illuminate/support": "~5.3|^6.0",
+                "php": ">=5.6.4"
             },
             "require-dev": {
-                "laravel/laravel": "5.2.*",
-                "mockery/mockery": "0.9.*",
-                "phpunit/phpunit": "4.7.*",
-                "satooshi/php-coveralls": "dev-master"
+                "mockery/mockery": "~1.0",
+                "phpunit/phpunit": "~6.0"
             },
             "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Benwilkins\\FCM\\FcmNotificationServiceProvider"
+                    ]
+                }
+            },
             "autoload": {
                 "psr-4": {
-                    "LaravelFCM\\": "src/",
-                    "LaravelFCM\\Mocks\\": "tests/mocks"
+                    "Benwilkins\\FCM\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -91,21 +97,18 @@
             ],
             "authors": [
                 {
-                    "name": "Nicolas Brosy",
-                    "email": "nicolas.brosy@gmail.com"
+                    "name": "Ben Wilkins",
+                    "email": "bentwilkins@gmail.com"
                 }
             ],
-            "description": "Laravel / Lumen package for Firebase Cloud Messaging ",
+            "description": "Laravel FCM (Firebase Cloud Messaging) Notification Channel",
             "keywords": [
                 "FCM",
-                "Firebase Cloud Messaging",
                 "firebase",
                 "laravel",
-                "lumen",
-                "notification",
-                "push"
+                "notifications"
             ],
-            "time": "2016-08-08T19:43:05+00:00"
+            "time": "2019-09-18T13:59:28+00:00"
         },
         {
             "name": "cloudinary/cloudinary_php",
@@ -191,6 +194,237 @@
             ],
             "description": "implementation of xdg base directory specification for php",
             "time": "2014-10-24T07:27:01+00:00"
+        },
+        {
+            "name": "doctrine/cache",
+            "version": "v1.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/cache.git",
+                "reference": "d768d58baee9a4862ca783840eca1b9add7a7f57"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/d768d58baee9a4862ca783840eca1b9add7a7f57",
+                "reference": "d768d58baee9a4862ca783840eca1b9add7a7f57",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~7.1"
+            },
+            "conflict": {
+                "doctrine/common": ">2.2,<2.4"
+            },
+            "require-dev": {
+                "alcaeus/mongo-php-adapter": "^1.1",
+                "doctrine/coding-standard": "^4.0",
+                "mongodb/mongodb": "^1.1",
+                "phpunit/phpunit": "^7.0",
+                "predis/predis": "~1.0"
+            },
+            "suggest": {
+                "alcaeus/mongo-php-adapter": "Required to use legacy MongoDB driver"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.8.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\Common\\Cache\\": "lib/Doctrine/Common/Cache"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "Caching library offering an object-oriented API for many cache backends",
+            "homepage": "https://www.doctrine-project.org",
+            "keywords": [
+                "cache",
+                "caching"
+            ],
+            "time": "2018-08-21T18:01:43+00:00"
+        },
+        {
+            "name": "doctrine/dbal",
+            "version": "v2.9.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/dbal.git",
+                "reference": "22800bd651c1d8d2a9719e2a3dc46d5108ebfcc9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/22800bd651c1d8d2a9719e2a3dc46d5108ebfcc9",
+                "reference": "22800bd651c1d8d2a9719e2a3dc46d5108ebfcc9",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/cache": "^1.0",
+                "doctrine/event-manager": "^1.0",
+                "ext-pdo": "*",
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^5.0",
+                "jetbrains/phpstorm-stubs": "^2018.1.2",
+                "phpstan/phpstan": "^0.10.1",
+                "phpunit/phpunit": "^7.4",
+                "symfony/console": "^2.0.5|^3.0|^4.0",
+                "symfony/phpunit-bridge": "^3.4.5|^4.0.5"
+            },
+            "suggest": {
+                "symfony/console": "For helpful console commands such as SQL execution and import of files."
+            },
+            "bin": [
+                "bin/doctrine-dbal"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.9.x-dev",
+                    "dev-develop": "3.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\DBAL\\": "lib/Doctrine/DBAL"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                }
+            ],
+            "description": "Powerful PHP database abstraction layer (DBAL) with many features for database schema introspection and management.",
+            "homepage": "https://www.doctrine-project.org/projects/dbal.html",
+            "keywords": [
+                "abstraction",
+                "database",
+                "dbal",
+                "mysql",
+                "persistence",
+                "pgsql",
+                "php",
+                "queryobject"
+            ],
+            "time": "2018-12-31T03:27:51+00:00"
+        },
+        {
+            "name": "doctrine/event-manager",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/event-manager.git",
+                "reference": "a520bc093a0170feeb6b14e9d83f3a14452e64b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/event-manager/zipball/a520bc093a0170feeb6b14e9d83f3a14452e64b3",
+                "reference": "a520bc093a0170feeb6b14e9d83f3a14452e64b3",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1"
+            },
+            "conflict": {
+                "doctrine/common": "<2.9@dev"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^4.0",
+                "phpunit/phpunit": "^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\Common\\": "lib/Doctrine/Common"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                },
+                {
+                    "name": "Marco Pivetta",
+                    "email": "ocramius@gmail.com"
+                }
+            ],
+            "description": "Doctrine Event Manager component",
+            "homepage": "https://www.doctrine-project.org/projects/event-manager.html",
+            "keywords": [
+                "event",
+                "eventdispatcher",
+                "eventmanager"
+            ],
+            "time": "2018-06-11T11:59:03+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -926,16 +1160,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v6.0.4",
+            "version": "v6.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "372e0add8a58e0e3deb78f87cbb2dc40d3e0ff08"
+                "reference": "80914c430fb5e49f492812d704ba6aeec03d80a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/372e0add8a58e0e3deb78f87cbb2dc40d3e0ff08",
-                "reference": "372e0add8a58e0e3deb78f87cbb2dc40d3e0ff08",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/80914c430fb5e49f492812d704ba6aeec03d80a2",
+                "reference": "80914c430fb5e49f492812d704ba6aeec03d80a2",
                 "shasum": ""
             },
             "require": {
@@ -1067,7 +1301,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2019-09-24T13:40:36+00:00"
+            "time": "2019-10-15T13:38:24+00:00"
         },
         {
             "name": "laravel/tinker",

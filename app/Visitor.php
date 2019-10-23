@@ -3,10 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 
 class Visitor extends Model
 {
+    use Notifiable;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -14,39 +17,18 @@ class Visitor extends Model
      */
     protected $fillable = [
         'name',
-        'arrival_date', 
-        'car_plate_no', 
-        'purpose', 
-        'image', 
+        'arrival_date',
+        'car_plate_no',
+        'phone_no',
+        'purpose',
+        'image',
         'status',
-        'time_out',
         'time_in',
-        'home_id',
+        'time_out',
+        'qr_code',
+        'visiting_period',
+        'description',
     ];
-
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-
-    protected $hidden = [
-    ];
-
-
-    /**
-     * The primary key associated with the table.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'id';
-
-
-    /**
-     * Disable Laravel created_at and updated_at tables
-     */
-    public $timestamps = false;
 
     /**
      * Get the user that the visitor visited.
@@ -69,10 +51,13 @@ class Visitor extends Model
     }
 
     /**
-     * Logic method for pulling in default values for empty values
+     * Route notifications for the FCM channel.
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return string
      */
-    protected static function useit($major, $fallback)
+    public function routeNotificationForFcm($notification)
     {
-        return $major ? $major : $fallback;
+        return $this->device_id;
     }
 }

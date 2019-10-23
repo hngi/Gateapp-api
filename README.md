@@ -46,8 +46,6 @@
 * attach a screenshot or gif of what you did, if possible
 * do not send PR to the master branch
 
-
-
 ## Note 
 * if you want to manually delete form the database this is the link
 * https://remotemysql.com/phpmyadmin/
