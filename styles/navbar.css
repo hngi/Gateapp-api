@@ -1,0 +1,43 @@
+/* Navbar CSS */
+.app-logo{
+    margin-left: 7vw;
+}
+.nav-utilities{
+    margin-right: 7vw;
+}
+.app-logo img{
+    width: 10vw;
+}
+.nav-item .nav-link{
+    font-size: 12px;
+    font-weight: bold;
+    color: black !important;
+}
+.login-btn{
+    font-size: 12px;
+    width: 7vw;
+}
+.signup-btn{
+    font-size: 12px;
+    width: 7vw;
+}
+@media screen and (max-width: 992px) {
+    .login-btn,  .signup-btn{
+        width: 15vw;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .login-btn , .signup-btn{
+        width: 100px;
+        margin-left: 0rem !important;
+    }
+    .app-logo img {
+        width: 20vw;
+    }
+    .app-logo {
+        margin-left: 0vw;
+    }
+    
+}
+

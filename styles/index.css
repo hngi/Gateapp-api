@@ -1,0 +1,68 @@
+.welcome-image{
+    height: 60vh;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("../images/welcome-image.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.welcome-image-words{
+    height: 50vh;
+    margin-top: 13vh;
+}
+.welcome-image-words h1{
+    color: white;
+    font-weight: bold;
+    font-size: 30px;
+}
+.welcome-image-words p{
+    color: white;
+}
+.request-demo-btn{
+    background: #49A347;
+    color: white;
+    font-size: 12px;
+    border-radius: 0px;
+}
+.features{
+}
+.features h3{
+    font-weight: bold;
+}
+.indiv-feature{
+    height: 30vh;
+}
+.feature-img{
+    height: 8vh;
+}
+.indiv-feature div span{
+    font-weight: bold;
+    font-size: 12px;
+}
+.what-is-gateguard{
+    min-height: 40vh;
+}
+.what-is-gateguard h1{
+    font-weight: bold;
+}
+.what-is-gateguard p{
+    font-size: 16px;
+}
+.green-underline{
+    width: 3vw;
+    border-top: 4px solid #49A347;
+}
+.gateguard-image{
+    height: 60vh;
+}
+.gateguard-image img{
+    height: 100%;
+    width: 100%;
+}
+.feature-breakdown {
+    min-height: 100vh;
+    background: #e5e5e5;
+}
+.residents-breakdown{
+    height: 60vh;
+    border: 1px solid black;
+}
