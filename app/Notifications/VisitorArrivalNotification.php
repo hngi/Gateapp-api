@@ -3,17 +3,20 @@
 namespace App\Notifications;
 
 use App\User;
+use App\Visitor;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Benwilkins\FCM\FcmMessage;
 
-class InvitationAcceptanceNotification extends Notification
+class VisitorArrivalNotification extends Notification
 {
     use Queueable;
-    protected $resident;
-    protected $gateman;
+
+    private $resident;
+    private $visitor;
+    private $gateman;
     private $title;
     private $body;
 
@@ -21,15 +24,18 @@ class InvitationAcceptanceNotification extends Notification
      * Create a new notification instance.
      * @param User $resident
      * @param User $gateman
+     * @param Visitor $visitor
      */
-    public function __construct(User $resident,  User $gateman)
+    public function __construct(User $resident, User $gateman, Visitor $visitor)
     {
         $this->resident = $resident;
+        $this->visitor = $visitor;
         $this->gateman = $gateman;
 
-        $this->title = "{$this->resident->name}  has invited you as a gateman to his home";
-        $this->body = null;
+        $this->title = $this->visitor->name .  "has arrived to see you";
+        $this->body = "They were are being checked in by {$this->gateman->name}";
     }
+
 
     /**
      * Get the notification's delivery channels.
@@ -41,6 +47,7 @@ class InvitationAcceptanceNotification extends Notification
     {
         return ['fcm', 'database'];
     }
+
 
     /**
      * Get the mail representation of the notification.
@@ -54,11 +61,12 @@ class InvitationAcceptanceNotification extends Notification
         $message = new FcmMessage();
         $message
             ->content([
-                'title' => $this->title,
-                'body' => $this->body,
+            'title' => $this->title,
+            'body' => $this->body,
             ])
             ->data([
-                'resident_id' => $this->resident->id,
+                'visitor_details' => $this->visitor->toArray(),
+                'gateman_details' => $this->gateman->toArray(),
             ])
             ->priority(FcmMessage::PRIORITY_HIGH);
 
@@ -73,9 +81,8 @@ class InvitationAcceptanceNotification extends Notification
      */
     public function routeNotificationForFcm($notification)
     {
-        return $this->gateman->fcm_token;
+       return $this->resident->fcm_token;
     }
-
 
     /**
      * Get the mail representation of the notification.
@@ -86,23 +93,26 @@ class InvitationAcceptanceNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**
      * Get the array representation of the notification.
+     * This will be JSON encoded into the data column
+     * of the notifications table
      *
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toDatabase($notifiable)
     {
         return [
             'title' => $this->title,
             'body' => $this->body,
-            'resident_id' => $this->resident->id,
+            'visitor_details' => $this->visitor->toArray(),
+            'gateman_details' => $this->gateman->toArray(),
         ];
     }
 }

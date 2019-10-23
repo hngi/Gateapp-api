@@ -3,36 +3,33 @@
 namespace App\Notifications;
 
 use App\User;
-use App\Visitor;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Benwilkins\FCM\FcmMessage;
 
-class GatemanAdmitsVisitor extends Notification
+class GatemanInvitationNotification extends Notification
 {
     use Queueable;
-
-    protected $visitor;
+    protected $resident;
     protected $gateman;
     private $title;
     private $body;
 
     /**
      * Create a new notification instance.
-     * @param Visitor $visitor
+     * @param User $resident
      * @param User $gateman
      */
-    public function __construct(User $gateman, Visitor $visitor)
+    public function __construct(User $resident,  User $gateman)
     {
-        $this->visitor = $visitor;
+        $this->resident = $resident;
         $this->gateman = $gateman;
 
-        $this->title = $this->visitor->name .  "has arrived to see you";
+        $this->title = "{$this->resident->name}  has invited you as a gateman to his home";
         $this->body = null;
     }
-
 
     /**
      * Get the notification's delivery channels.
@@ -44,7 +41,6 @@ class GatemanAdmitsVisitor extends Notification
     {
         return ['fcm', 'database'];
     }
-
 
     /**
      * Get the mail representation of the notification.
@@ -58,11 +54,11 @@ class GatemanAdmitsVisitor extends Notification
         $message = new FcmMessage();
         $message
             ->content([
-            'title' => $this->title,
-            'body' => $this->body,
+                'title' => $this->title,
+                'body' => $this->body,
             ])
             ->data([
-                'visitor_id' => $this->visitor->id
+                'resident_id' => $this->resident->id,
             ])
             ->priority(FcmMessage::PRIORITY_HIGH);
 
@@ -77,8 +73,9 @@ class GatemanAdmitsVisitor extends Notification
      */
     public function routeNotificationForFcm($notification)
     {
-       return $this->gateman->fcm_token;
+        return $this->gateman->fcm_token;
     }
+
 
     /**
      * Get the mail representation of the notification.
@@ -89,25 +86,23 @@ class GatemanAdmitsVisitor extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->line('The introduction to the notification.')
+            ->action('Notification Action', url('/'))
+            ->line('Thank you for using our application!');
     }
 
     /**
      * Get the array representation of the notification.
-     * This will be JSON encoded into the data column
-     * of the notifications table
      *
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toDatabase($notifiable)
+    public function toArray($notifiable)
     {
         return [
             'title' => $this->title,
             'body' => $this->body,
-            'visitor_id' => $this->visitor->id
+            'resident_id' => $this->resident->id,
         ];
     }
 }
