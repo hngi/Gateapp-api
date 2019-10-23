@@ -10,8 +10,8 @@ use Illuminate\Queue\SerializesModels;
 class SupportMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $name;
     public $email;
+    public $subject;
     public $data;
     /**
      * Create a new message instance.
@@ -20,7 +20,7 @@ class SupportMail extends Mailable
      */
     public function __construct($data)
     {
-        $this->name = $data['name'];
+        $this->subject = $data['subject'];
         $this->email = $data['email'];
         $this->data = $data;
     }

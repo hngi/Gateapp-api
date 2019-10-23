@@ -27,7 +27,8 @@
                             <h1 style="line-height:200%;font-weight:300">
                                 Hello Support,
                             </h1>
-                            <h3 style="line-height:200%;font-weight:300">You have a new message from {{ $data['name'] }}
+                            <h3 style="line-height:200%;font-weight:300">You have a new message from
+                                {{ $data['email'] }}
                             </h3>
                             <p style="line-height:200%;font-weight:300">Login into your account to check <a
                                     href="#">Login</a></p>

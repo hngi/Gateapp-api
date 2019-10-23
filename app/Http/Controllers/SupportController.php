@@ -19,8 +19,8 @@ class SupportController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'name'     =>  'required',
             'email'  =>  'required|email',
+            'subject'     =>  'required',
             'message' =>  'required'
         ]);
 
@@ -30,8 +30,8 @@ class SupportController extends Controller
             return $response;
         } else {
             $data = array(
-                'name'      =>  $request->name,
                 'email'     => $request->email,
+                'subject'      =>  $request->subject,
                 'message'   =>   $request->message
             );
             Support::create($data);
