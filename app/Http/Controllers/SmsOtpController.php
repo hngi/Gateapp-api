@@ -37,7 +37,7 @@ class SmsOtpController extends Controller
        CURLOPT_HTTPHEADER => array(
          "Content-Type: application/json",
          "Accept: application/json",
-         "Authorization:".$this->bearer_token
+         "Authorization: Bearer ".$this->bearer_token
            ),
       ));
    

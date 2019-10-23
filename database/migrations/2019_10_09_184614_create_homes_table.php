@@ -17,7 +17,7 @@ class CreateHomesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('estate_id');
-            $table->string('house_no')->nullable();
+            $table->string('house_block')->nullable();
             $table->string('qr_code')->nullable();
             $table->timestamps();
 

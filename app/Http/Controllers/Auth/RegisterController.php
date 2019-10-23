@@ -55,7 +55,7 @@ class RegisterController extends Controller
            $check = $this->checkphone($request->input('phone'), $request->input('email'));
            if(!$check) {
                 $user = User::create([
-                    'name'     => $request->input('name'),
+                    'name'     => ucfirst($request->input('name')),
                     'image'    => 'noimage.jpg',
                     'phone'    => $request->input('phone'),
                     'email'    => $request->input('email'),
@@ -65,11 +65,7 @@ class RegisterController extends Controller
                     'verifycode' => $verifycode
                 ]);
                 $msg['status'] = 201;
-                $msg['app-hint'] = 'this is a new user!';
-                $msg['image_link'] = 'https://res.cloudinary.com/getfiledata/image/upload/';
-                $msg['image_round_format']  = 'w_200,c_fill,ar_1:1,g_auto,r_max/';
-                $msg['image_square_format'] = 'w_200,ar_1:1,c_fill,g_auto/';
-                $msg['image_example_link']  = 'https://res.cloudinary.com/getfiledata/image/upload/w_200,c_fill,ar_1:1,g_auto,r_max/noimage.jpg';
+                $msg['app-hint'] = 'This is a new user!';
 
                 Mail::to($user->email)->send(new WelcomeMail($user));
            }else {
@@ -78,19 +74,20 @@ class RegisterController extends Controller
                 $user->email_verified_at = null;
                 $user->device_id         = $request->input('device_id');
                 $user->verifycode        = $verifycode;
+                $user->name              = ucfirst($request->input('name'));
                 $user->save();
                 
                 $msg['status'] = 200;
-                $msg['app-hint'] = 'this is an existing user!';
-                $msg['image_link'] = 'https://res.cloudinary.com/getfiledata/image/upload/';
-                $msg['image_round_format']  = 'w_200,c_fill,ar_1:1,g_auto,r_max/';
-                $msg['image_square_format'] = 'w_200,ar_1:1,c_fill,g_auto/';
-                $msg['image_example_link']  = 'https://res.cloudinary.com/getfiledata/image/upload/w_200,c_fill,ar_1:1,g_auto,r_max/noimage.jpg';
-
+                $msg['app-hint'] = 'This is an existing user!';
                 Mail::to($user->email)->send(new VerifyToken($user));
            }
             $msg['message'] = 'A verification code has been sent to your phone number or email, please use to veriify your account!';
             $msg['user']    = $user;
+            $msg['image_link'] = 'https://res.cloudinary.com/getfiledata/image/upload/';
+            $msg['image_round_format']  = 'w_200,c_fill,ar_1:1,g_auto,r_max/';
+            $msg['image_square_format'] = 'w_200,ar_1:1,c_fill,g_auto/';
+            $msg['image_example_link']  = 'https://res.cloudinary.com/getfiledata/image/upload/w_200,c_fill,ar_1:1,g_auto,r_max/noimage.jpg';
+
 
             DB::commit();
             return $msg;
@@ -99,11 +96,11 @@ class RegisterController extends Controller
             //if any operation fails, Thanos snaps finger - user was not created rollback what is saved
             DB::rollBack();
 
-            $msg['message'] = "Error: Account not created, please try again!";
-            $msg['user'] = null;
-            $msg['hint'] = $e->getMessage();
-            $msg['status'] = 501;
-            return $msg;
+            $res['message'] = "Error: Account not created, please try again!";
+            $res['user'] = null;
+            $res['hint'] = $e->getMessage();
+            $res['status'] = 501;
+            return $res;
         }
     }
 
