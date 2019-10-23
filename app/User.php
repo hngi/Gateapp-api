@@ -66,4 +66,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->fcm_token;
     }
+
+    public function settings()
+    {
+        return $this->hasOne(\App\Setting::class);
+    }
 }

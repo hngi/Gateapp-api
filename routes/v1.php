@@ -91,6 +91,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //Edit user ac count
     Route::post('/user/edit', 'UserProfileController@update');
 
+    // Edit user settings
+    Route::post('/user/settings', 'UserProfileController@manageSettings');
+
     //Delete user account
     Route::delete('/user/delete', 'UserProfileController@destroy');
 

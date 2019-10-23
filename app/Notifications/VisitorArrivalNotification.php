@@ -12,7 +12,7 @@ use Benwilkins\FCM\FcmMessage;
 
 class VisitorArrivalNotification extends Notification
 {
-    use Queueable;
+    use Queueable, ResolveChannelsTrait;
 
     private $resident;
     private $visitor;
@@ -45,7 +45,7 @@ class VisitorArrivalNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['fcm', 'database'];
+        return $this->resolveChannels($this->resident);
     }
 
 
