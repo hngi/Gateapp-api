@@ -52,9 +52,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Visitor::class);
     }
-    public function homes()
+    public function home()
     {
-        return $this->hasMany(Home::class);
+        return $this->hasOne(Home::class);
     }
     /**
      * Route notifications for the FCM channel.

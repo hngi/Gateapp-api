@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Home extends Model
 {
     protected $fillable = [
-         'id', 'user_id', 'estate_id', 'house_no', 'qr_code',
+         'id', 'user_id', 'estate_id', 'house_block', 'qr_code',
+    ];
+
+     protected $hidden = [
+        'qr_code',
     ];
 
     public function payment()
@@ -15,7 +19,7 @@ class Home extends Model
         return $this->hasOne('App\Payment');
     }
 
-    public function home()
+    public function user()
     {
         return $this->belongsTo('App\User');
     }
