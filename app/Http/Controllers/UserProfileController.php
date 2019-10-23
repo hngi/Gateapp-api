@@ -17,7 +17,9 @@ class UserProfileController extends Controller
     public function index() {
     	$user_id = Auth::user()->id; //this is you active user logged in
         $user = User::where('id', $user_id)
-                      ->with('home')
+                      ->with(['home' => function($query){
+                            $query->with('estate');
+                         }])
                       ->first();
         return response()->json($user, 200);
     }
