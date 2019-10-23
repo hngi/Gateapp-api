@@ -31,8 +31,8 @@ class EstateController extends Controller
     }
    
      // Display Estates by name 
-     public function name($name)
-     {
+    public function name($name)
+    {
          $country = ucfirst($name);
          $estates = Estate::where('estate_name', 'LIKE', "%{$name}%")->get();
          if (!$estates){
