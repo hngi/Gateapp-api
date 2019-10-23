@@ -249,7 +249,7 @@ class EstateController extends Controller
 
     public function estateMemeber(Home $home, $id) {
         $user = Auth::user();
-        $check_if = Home::where('estate_id', $id)->where('user_id', $user->id)->first();
+        $check_if = Home::where('user_id', $user->id)->first();
    
         DB::beginTransaction();
         try{
