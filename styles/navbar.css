@@ -15,11 +15,11 @@
 }
 .login-btn{
     font-size: 12px;
-    width: 7vw;
+    width: 9vw;
 }
 .signup-btn{
     font-size: 12px;
-    width: 7vw;
+    width: 9vw;
 }
 @media screen and (max-width: 992px) {
     .login-btn,  .signup-btn{
