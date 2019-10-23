@@ -1,0 +1,73 @@
+/* Download App CSS */
+.download-app{
+    min-height: 100vh;
+    background: #e5e5e5;
+
+}
+.download-image-con {
+    height: 55vh;
+}
+.download-image-con img{
+    height: 100%;
+    width: 100%;
+}
+.details-con{
+    margin-top: 15vh;
+}
+.download-app h2{
+    font-weight: bold;
+}
+.download-app p{
+    font-size: 12px;
+    font-weight: bold;
+}
+.store-link {
+    height: 9vh;
+}
+.store-link img{
+    height: 100%;
+    width: 80%;
+}
+/* Footer CSS */
+.app-footer{
+    min-height: 40vh;
+    background: #49a347;
+}
+.list-header{
+    background: inherit;
+    color: white;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+.footer-links {
+    background: inherit;
+    color: white;
+    border: none;
+    font-size: 12px;
+}
+.footer-logo{
+    height: 5vh;
+}
+.footer-logo img{
+    height: 100%;
+    width: 100%;
+}
+.social-links img{
+    height: 2vh;
+    width: 2vh;
+}
+.footer-download{
+    height: 10vh;
+}
+.footer-download p{
+    color: white;
+    font-size: 12px;
+}
+.app-cons {
+    height: 5vh;
+}
+.app-cons img{
+    height: 100%;
+    width: 100%;
+}
