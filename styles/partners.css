@@ -107,7 +107,7 @@ body{
     align-items: center;
     width: 350px;
     height: 350px;
-    background: url(/images/fortis.png);
+    background: url(/images/fortis-bg.png);
     background-size:cover;
 }
 .real{
@@ -117,10 +117,13 @@ body{
     background: url(/images/j-l-scott.png);
 }
 .wind{
-    background: url(/images/windermere.png);
+    background: url(/images/win.png);
 }
 .alex{
     background: url(/images/alexandria.png);
+}
+.king{
+    background: url(/images/king-estate.png);
 }
 .logo-btn{
     width: 80%;
