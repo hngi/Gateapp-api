@@ -1,0 +1,215 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    margin: 0%;
+    padding: 0%;
+    width: 100%;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* MAIN CONTAINER STARTS HERE */
+.main{
+    display: grid;
+    grid-template-rows: repeat(3, auto);
+    width: 100%;
+}
+.kc-first-cont{
+    width: 100%;
+    height: 70vh;
+    background: url(/images/partners-img-01.png), #000000a4;
+    background-size: cover;
+    opacity: .9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #fff;
+    padding: 0px 10px;
+}
+.kc-first-cont h1 {
+    font-size: 4em;
+    line-height: 1em;
+    text-align: center;
+}
+.kc-first-cont p {
+    margin: 10px 0px;
+    font-size: 20px;
+    text-align: center;
+}
+.kc-first-cont button {
+    border: none;
+    background-color:#49A347;
+    color: #fff;
+    padding: .7em 1.2em;
+    margin: 20px 0px;
+    text-transform: uppercase;
+}
+
+/* OUR PARTNERS CONTAINER */
+
+.our-part-cnt{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.kc-cont-holder{
+    width: 85%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px 0px;
+}
+.kc-text p {
+    font-size: 2em;
+    color: #000;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 0%;
+    padding: 0%;
+}
+.hr {
+    border: none;
+    width: 50px;
+    height: 2px;
+    background-color: #49A347;
+    margin-top: 0%;
+}
+
+.switch-cont{
+    width: 100%;
+    display: flex;
+    margin-bottom: 2rem;
+}
+.switch-cont span {
+    border: 1px solid #49A347;
+    padding: .5em 1em;
+    font-weight: bold;
+}
+.toggle-active {
+    color: #fff;
+    background-color: #49A347;
+}
+
+.res-showcase-cont{
+    display: grid;
+    grid-template-columns: repeat( auto-fit, minmax(250px, 400px) );
+    grid-gap: 3rem;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.showcase{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 350px;
+    height: 350px;
+    background: url(/images/fortis.png);
+    background-size:cover;
+}
+.real{
+    background: url(/images/real-estate.png);
+}
+.john{
+    background: url(/images/j-l-scott.png);
+}
+.wind{
+    background: url(/images/windermere.png);
+}
+.alex{
+    background: url(/images/alexandria.png);
+}
+.logo-btn{
+    width: 80%;
+    height: 80%;
+    background-color: #0000009d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #fff;
+}
+.view-estate{
+    padding: .5em 1.5em;
+    border: 1px solid #fff;
+    color: #fff;
+    background-color: transparent;
+}
+
+
+/* ------------------------------------ */
+
+.slider{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:100px;
+}
+
+.slider span {
+    width: 50px;
+    height: 5px;
+    margin-right: 5px;
+    background-color: #979797;
+    border-radius: 3px;
+}
+.slider-active{
+    background-color: #000 !important;
+}
+
+/* ------------------------------ */
+.download{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height:500px;
+    background-color:rgba(196, 196, 196, 0.32);
+    padding: 7px;;
+}
+.download-cont{
+    width: 80%;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
+    background-color:transparent;
+}
+
+.phone-pics{
+    display: flex;
+    justify-content: space-around;
+}
+.splash-1{
+    margin-bottom: 4em;
+}
+.splash-2{
+    margin-top: 4em;
+}
+/* MEDIA QUERY */
+@media screen and (max-width: 768px) {
+    .kc-first-cont h1 {
+        font-size: 2em;
+        line-height: 1em;
+        text-align: center;
+    }
+    .kc-first-cont p {
+        margin: 5px 0px;
+        font-size: 15px;
+    }
+    
+}
+@media screen and (max-width: 450px) {
+    .showcase{
+    width: auto;
+    }
+} 
+
+/* ---------------- */
+.margin{
+    margin-bottom: 5px;
+}
