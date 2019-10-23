@@ -2,7 +2,6 @@
 .download-app{
     min-height: 70vh;
     background: #e5e5e5;
-    position: relative;
 }
 .download-image-con {
     height: 55vh;
@@ -71,13 +70,3 @@
     height: 100%;
     width: 100%;
 }
-.green-underline{
-    width: 3vw;
-    border-top: 4px solid #49A347;
-    margin-right: 100%;
-
-}
-
-/* #app{
-    position: absolute;
-} */
