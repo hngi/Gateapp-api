@@ -14,28 +14,16 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/login', function(){
+    return view('login');
+});
+
 //The Frame to start with for the web routing
 
 //Authentication Routes ******************************************************
 
-    // //Registration
-    // Route::post('register/admin', 'Auth\RegisterController@admin');//has a role of 0
-
-    // Route::post('register/resident', 'Auth\RegisterController@resident');//has a role of 1
-
-    // Route::post('register/gateman', 'Auth\RegisterController@gateman');//has a role 2
-
-    // //forgot Password
-    // Route::post('phone/verify', 'Auth\ForgotPhoneController@verifyPhone');
-
-    // //Verify account
-    // Route::post('verify', 'Auth\VerificationController@verify');
-
-    // //Resend Token
-    // Route::get('resend/token', 'Auth\ForgotPhoneController@resedToken');
-
-    //Login
-    Route::post('login', 'Web\LoginController@authenticate'); //Not Needed
+//Login
+Route::post('/loginadmin', 'Web\LoginController@authenticate'); 
 
 
 // //Admin Routes (Specific Route)*******************************************************

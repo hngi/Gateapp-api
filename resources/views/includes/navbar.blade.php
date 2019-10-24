@@ -3,8 +3,8 @@
         <img src="images/Logo.png" alt="">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse"
-        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-        aria-label="Toggle navigation">
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -24,7 +24,7 @@
             </li>
 
         </ul>
-        <button class="btn btn-success login-btn mx-2">LOGIN</button>
-        <button class="btn btn-outline-success signup-btn mx-2">SIGN UP</button>
+    <a class="btn btn-success login-btn mx-2" href ={{url('/login')}}>LOGIN</a>
+        <a class="btn btn-outline-success signup-btn mx-2" href ={{url('https://drive.google.com/open?id=1kds4OWSe-A4IwaIzP--E15qN_Yb3h43K')}}>SIGN UP</a>
     </div>
 </nav>

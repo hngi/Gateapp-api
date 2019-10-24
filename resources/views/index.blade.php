@@ -22,36 +22,7 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <nav class="navbar navbar-expand-lg navbar-light our-nav col-12 border-bottom">
-                <a class="navbar-brand app-logo" href="#">
-                    <img src="images/Logo.png" alt="">
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse nav-utilities" id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item mx-1">
-                            <a class="nav-link" href="#">Products</a>
-                        </li>
-                        <li class="nav-item mx-1">
-                            <a class="nav-link" href="#">Partners</a>
-                        </li>
-                        <li class="nav-item mx-1">
-                            <a class="nav-link" href="#">About Us</a>
-                        </li>
-                        <li class="nav-item mx-1">
-                            <a class="nav-link" href="#">Contact Us</a>
-                        </li>
-
-                    </ul>
-                    <a class="btn btn-success login-btn mx-2" href="{{ url('/login') }}">LOGIN<a/>
-                    <button class="btn btn-outline-success signup-btn mx-2" onclick="location.href='https://drive.google.com/open?id=1kds4OWSe-A4IwaIzP--E15qN_Yb3h43K'">DOWNLOAD</button>
-                </div>
-            </nav>
+            @include('includes.navbar')
             <div class="col-12 welcome-image border-bottom">
                 <!--  -->
                 <div class="col-12 col-md-6 mx-auto welcome-image-words text-center">
@@ -349,58 +320,7 @@
                         </div>
                     </div>
                 </div>
-                <footer class="border col-12 app-footer">
-                    <div class="col-11 mx-auto row mx-0 mt-5">
-                        <div class="col-12 col-md">
-                            <ul class="list-group footer-list">
-                                <li class="list-group-item pb-2 list-header">Features</li>
-                                <li class="list-group-item py-1 footer-links ">Visitor Management</li>
-                                <li class="list-group-item py-1 footer-links ">Delivery Management</li>
-                                <li class="list-group-item py-1 footer-links ">Communication Management</li>
-                            </ul>
-                        </div>
-                        <div class="col-12 col-md">
-                            <ul class="list-group footer-list">
-                                <li class="list-group-item pb-2 list-header">Company</li>
-                                <li class="list-group-item py-1 footer-links ">About Us</li>
-                                <li class="list-group-item py-1 footer-links ">Contact Us</li>
-                                <li class="list-group-item py-1 footer-links ">Frequently Asked Questions</li>
-                                <li class="list-group-item py-1 footer-links ">Terms and Conditions</li>
-                            </ul>
-                        </div>
-                        <div class="col-12 col-md">
-                            <ul class="list-group footer-list">
-                                <li class="list-group-item pb-2 list-header">Contact</li>
-                                <li class="list-group-item py-1 footer-links">Plot 6, Gibbert Avenue, Flutter
-                                    estate, <br>
-                                    Agidingbi, Ikeja, Lagos state.</li>
-                                <li class="list-group-item py-1 footer-links">+234 705 784 3748</li>
-                                <li class="list-group-item py-1 footer-links">contact@gateguard.org</li>
-                            </ul>
-                        </div>
-                        <div class="col-8 col-sm-6 col-md">
-                            <div class="col-12 col-md-8 mt-3 footer-logo">
-                                <img src="images/gateguard-white.png" alt="">
-                            </div>
-                            <div class="col-12 col-md-8 mt-3 social-links">
-                                <img class="mx-2" src="images/instagram.png" alt="">
-                                <img class="mx-2" src="images/twitter.png" alt="">
-                                <img class="mx-2" src="images/facebook.png" alt="">
-                            </div>
-                            <div class="col-12 mt-2 footer-download">
-                                <p class="mb-1">Download App</p>
-                                <div class="col-12 row mx-0 px-0">
-                                    <div class="col px-0 app-cons mr-2">
-                                        <img src="images/playstore.png" style="cursor: pointer" alt="playstore" onclick="location.href='https://drive.google.com/open?id=1kds4OWSe-A4IwaIzP--E15qN_Yb3h43K'">
-                                    </div>
-                                    <div class="col px-0 app-cons">
-                                        <img src="images/appstore.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+             @include('includes.footer')
             </div>
         </div>
     </div>
