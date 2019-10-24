@@ -251,6 +251,7 @@ Route::delete('faq/{id}', 'FaqController@destroy')->middleware('admin');
 Route::get('test', 'TestController@test');
 Route::get('generate-code', 'TestController@qrCode');
 Route::post('test_image', 'TestController@upload');
+Route::post('african_talking', 'SmsOtpController@africasTalkingTest');
 
 //test notification
 Route::get('/test-notification', function () {
