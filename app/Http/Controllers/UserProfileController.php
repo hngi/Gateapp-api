@@ -84,18 +84,19 @@ class UserProfileController extends Controller
     public function update(Request $request, ImageController $image) {  // update user information
         $user = Auth::user();           
         $this->validate($request, [
-            'name' => 'required|min:2',
-            'phone' => 'required|min:2|unique:users,phone,'.$user->id,
-            'username' => 'min:2|unique:users,username,'.$user->id,
-            'email' => 'min:2|unique:users,email,'.$user->id,
+            'name' => 'string',
+            'phone' => 'unique:users,phone,'.$user->id,
+            'username' => 'unique:users,username,'.$user->id,
+            'email'    => 'unique:users,email,'.$user->id,
         ]);
-        
+
         //start temporay transaction
         DB::beginTransaction();
         try{
             $user->name      = $request->input('name');
             $user->username  = $request->input('username');
-            $user->email     = $request->input('email');
+            $user->email     = $user->phone != $request->input('email') ? $request->input('email') : $user->phone;
+
             if($user->phone != $request->input('phone')){
                 $user->email_verified_at = null;
                 $user->verifycode = Str::random(6);
@@ -107,7 +108,7 @@ class UserProfileController extends Controller
             //Upload image 
              //Upload image 
              if($request->hasFile('image')) {
-                $data = $this->upload($request, $image);
+                $data = $this->upload($request, $image, $user);
                 if($data['status_code'] !=  200) {
                     return response()->json($data, $data['status_code']);
                 }

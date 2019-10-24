@@ -46,7 +46,7 @@ class RegisterController extends Controller
     public function create($request, $role, $user_type)
     {
         $this->validateRequest($request);
-        $verifycode = Str::random(6);
+        $verifycode = mt_rand(1000,9999);
         //start temporay transaction
         DB::beginTransaction();
 
