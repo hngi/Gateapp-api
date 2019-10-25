@@ -5,52 +5,38 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use AfricasTalking\SDK\AfricasTalking;
 use App\User;
-
 // Create a sms otp class
 class SmsOtpController extends Controller
 {
-	/**
-   * Method to send sms otp
-   */
-
-  private $url = "https://api.sms.to/sms/send";
-  private $authKey = "";
-  private $sender = "GatePass App";
-
-  public function smsOtp($phone, $msg)
-  {
+	
+  public function smsOtp($phone="&to=07060959269")
+  {  
+     // $this->to = $phone;
+     $body="Your Otp token is ".mt_rand(1000,9999);
    try {
   
-        $curl = curl_init();
+        // Account details
+  $apiKey = urlencode('WDRlRPJ6+Js-rm9JwdiHJatVEGfuGCIiMzv0goqmrM');
   
-       // API token from @junicode
-        $postData  = array(
-         'authkey' => $authKey,
-         'mobiles' => $mobile,
-         'message' => $message,
-         'sender'  => $senderId,
-         'route'   => $route
-       );
-       curl_setopt_array($curl, array(
-       CURLOPT_URL => $this->url,
-       CURLOPT_RETURNTRANSFER => true,
-       CURLOPT_ENCODING => "",
-       CURLOPT_MAXREDIRS => 10,
-       CURLOPT_TIMEOUT => 0,
-       CURLOPT_FOLLOWLOCATION => true,
-       CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-       CURLOPT_CUSTOMREQUEST => "POST",
-       CURLOPT_POSTFIELDS =>$postData,
-       CURLOPT_HTTPHEADER => array(
-         "Content-Type: application/json",
-         "Accept: application/json",
-         "Authorization: Bearer ".$this->authKey
-           ),
-      ));
-   
-      $response = curl_exec($curl);
-      curl_close($curl);
-
+        // Message details
+        $numbers = array(2348111570173);
+        $sender = urlencode('GateGuard');
+        $message = rawurlencode($body);
+       
+        $numbers = implode(',', $numbers);
+       
+        // Prepare data for POST request
+        $data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
+       
+        // Send the POST request with cURL
+        $ch = curl_init('https://api.txtlocal.com/send/');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        
+        // Process your response here
       // $res['status']        =  true;
       // $res['data']          =  $response;
       // $res['status_code']   =  200;
@@ -82,7 +68,7 @@ class SmsOtpController extends Controller
     $recipients = "+2347060959269";
 
     // Set your message
-    $message    = "I'm a lumberjack and its ok, I sleep all night and I work all day";
+    $message    = "Your OTP Token is: 8979";
 
     // Set your shortCode or senderId
     $from       = "GatePass01";
