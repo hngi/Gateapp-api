@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use App\WebEstate;
 use Illuminate\Support\Facades\DB;
 
-class ContactController extends Controller
+class WebEstateController extends Controller
 {
  public function addEstate(Request $request)
  {
