@@ -17,7 +17,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'password', 'phone', 'image', 'verifycode', 'role', 'user_type', 'device_id'
+        'name', 'username', 'email', 'password', 'phone', 'image', 'verifycode', 'role', 'user_type', 'device_id','duty_time'
     ];
 
     /**
@@ -65,5 +65,10 @@ class User extends Authenticatable implements JWTSubject
     public function routeNotificationForFcm($notification)
     {
         return $this->fcm_token;
+    }
+
+    public function settings()
+    {
+        return $this->hasOne(\App\Setting::class);
     }
 }

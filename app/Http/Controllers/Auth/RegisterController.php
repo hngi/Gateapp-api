@@ -18,20 +18,20 @@ class RegisterController extends Controller
 {
 
     public function admin(Request $request) {
-        $msg = $this->create($request, $role='0', $user_type='admin');
+        $msg = $this->create($request, $role='0', $user_type='admin', $duty_time=null );
 
         return response()->json($msg, $msg['status']);
     }
 
     
     public function resident(Request $request) {
-        $msg = $this->create($request, $role='1', $user_type='resident');
+        $msg = $this->create($request, $role='1', $user_type='resident', $duty_time=null);
 
         return response()->json($msg, $msg['status']);
     }
 
     public function gateman(Request $request) {
-        $msg = $this->create($request, $role='2', $user_type='gateman');
+        $msg = $this->create($request, $role='2', $user_type='gateman', $duty_time ='0');
 
         return response()->json($msg, $msg['status']);
     }
@@ -43,10 +43,11 @@ class RegisterController extends Controller
        }return false;
     } 
 
-    public function create($request, $role, $user_type)
+    public function create($request, $role, $user_type, $duty_time)
     {
+        
         $this->validateRequest($request);
-        $verifycode = Str::random(6);
+        $verifycode = mt_rand(1000,9999);
         //start temporay transaction
         DB::beginTransaction();
 
@@ -61,6 +62,7 @@ class RegisterController extends Controller
                     'email'    => $request->input('email'),
                     'user_type'=> $user_type,
                     'role'     => $role,
+                    'duty_time' => $duty_time,
                     'device_id' => $request->input('device_id'),
                     'verifycode' => $verifycode
                 ]);
