@@ -14,3 +14,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('estate/add', 'WebEstateController@estate');
+Route::post('estate/add', ['as'=>'estate.store','uses'=>'WebEstateController@addEstate']);
