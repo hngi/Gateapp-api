@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Http\Controllers\ImageController;
+use App\Setting;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -31,11 +32,11 @@ class UserProfileController extends Controller
 
         $users = User::all();
         foreach ($users as $user) {
-            if($user->role == 0) {      
+            if($user->role == 0) {
                 array_push($admins, $user);
-            }else if($user->role == 1){     
+            }else if($user->role == 1){
                 array_push($residents, $user);
-            }else if($user->role == 2) {    
+            }else if($user->role == 2) {
                 array_push($gatemans, $user);
             }
         }
@@ -47,8 +48,8 @@ class UserProfileController extends Controller
     }
 
     public function showOneAdmin($id) {
-        $user = User::find($id); 
-        if($user->role == 0) {      
+        $user = User::find($id);
+        if($user->role == 0) {
             $res['status'] = true;
             $res['message'] = 'Admin found';
             $res['admin'] = $user;
@@ -60,7 +61,7 @@ class UserProfileController extends Controller
         }
     }
 
-    public function show($id) { 
+    public function show($id) {
         $user = User::find($id);
         if($user->role == 1 || $user->role == 2) { // condition statements shows specific resident or gate man users except admin by id
             $res['status'] = true;
@@ -82,7 +83,7 @@ class UserProfileController extends Controller
     }
 
     public function update(Request $request, ImageController $image) {  // update user information
-        $user = Auth::user();           
+        $user = Auth::user();
         $this->validate($request, [
             'name' => 'string',
             'phone' => 'unique:users,phone,'.$user->id,
@@ -105,8 +106,8 @@ class UserProfileController extends Controller
                  Mail::to($user->email)->send(new VerifyToken($user));
                 $res['important'] = 'A six digit OTP token has ben sent to you email or phone because this phone number is new!';
              }
-            //Upload image 
-             //Upload image 
+            //Upload image
+             //Upload image
              if($request->hasFile('image')) {
                 $data = $this->upload($request, $image, $user);
                 if($data['status_code'] !=  200) {
@@ -120,7 +121,7 @@ class UserProfileController extends Controller
 
 
             $user->save();
-            
+
             //if operation was successful save commit save to database
             DB::commit();
             $res['status']  = true;
@@ -154,7 +155,7 @@ class UserProfileController extends Controller
             return response()->json($res, 501);
         }
     }
-    
+
     public function upload($request, $image) {
         $user = Auth::user();
 
@@ -164,5 +165,49 @@ class UserProfileController extends Controller
         //Image Engine
         $res = $image->imageUpload($request, $user);
         return $res;
+    }
+
+    /**
+     * Manage User's settings
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function manageSettings(Request $request)
+    {
+        $data = [
+            'app_notification' => $request->filled('app_notification'),
+            'push_notification' => $request->filled('push_notification'),
+            'location_tracking' => $request->filled('location_tracking'),
+        ];
+
+        DB::beginTransaction();
+
+        try {
+
+           $user = \auth()->user();
+
+           if ($user->settings) {
+                // remove items not filled in the request
+               array_walk($data, function ($item, $key) use (&$data) {
+                   if ($item == false) unset($data[$key]);
+               });
+
+               $user->settings()->update($data);
+           } else {
+               $user->settings()->create($data);
+           }
+
+           $data['user_id'] = $user->id;
+
+            DB::commit();
+
+            return response()->json(['message' => 'Settings updated.']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'message' => "An error occurred while updating your  settings",
+                'hint' => $e->getMessage(),
+            ], 501);
+        }
     }
 }
