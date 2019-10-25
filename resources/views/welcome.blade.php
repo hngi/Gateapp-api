@@ -17,7 +17,7 @@
         <a href=" https://www.figma.com/file/Py3gybtwKAh0AkaEMOsYXC/Final_gate_app_design?node-id=0%3A1" target="_blank">Figma Desgn</a>
     </p>
     <p>
-      Read the 
+      Read the
       <a href="https://documenter.getpostman.com/view/9048286/SVtWw7SL">API Docs</a>
     </p>
   </body>
