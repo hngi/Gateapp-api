@@ -29,7 +29,7 @@
 
 * clone this repo
 * cd into the project folder
-* Run composer install to install depedencies
+* Run `composer install` to install depedencies
 * Run `php artisan serve`
 * visit localhost:8000 in your web browser
 
