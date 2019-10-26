@@ -1,0 +1,150 @@
+.wrapper		{
+					display: flex;
+					width: 100%;
+					align-items: stretch;
+}
+
+#sidebar 		{
+					min-width: 250px;
+					max-width: 250px;
+					min-height: 100vh;
+					background-color: #49A347;
+					padding-left: 30px;
+}
+
+.gatepasslogo		{
+						
+}
+
+#sidebar.active {
+					margin-left: -250px;
+}
+
+a[data-toggle="collapse"]   {
+								position: relative;
+}
+
+.dropdown-toggle::after		{
+								display: block;
+								position: absolute;
+								top: 50%;
+								right: -20px;
+								transform: translateY(-50%);
+}
+
+a 					{
+						color: white;
+}
+
+a:hover		{
+					text-decoration: none;
+}
+
+ul 					{
+						list-style: none;
+}
+
+@media (max-width: 250px)	{
+				#sidebar		{
+					margin-left: 250px;
+				}
+
+				#sidebar.active		{
+					margin-left: 0;
+				}
+}
+
+.section		{
+					margin-left: 20px;
+					margin-top: 90px;
+					margin-right: 50px;
+					font-size: 1.1vw;
+					
+
+}
+
+label				{
+	margin-top: 5px;
+}
+
+input			{
+					width: 80%;
+					border-radius: 4px;
+					border: 1px solid black;
+					box-shadow: none;
+}
+
+input[type="file"]	{
+						text-align: left;
+						-webkit-rtl-ordering: left;
+						color: transparent;
+}
+input[type="file"]::-webkit-file-upload-button  {
+																-webkit-appearance:none;
+																float: right;
+																margin: 0 0 0 10px;
+																border: 1px solid #aaaaaa;
+																border-radius: 4px;
+																background-color: #49A347;
+																color: white;
+																width: 30%; 
+}
+
+.active				{
+						font-weight: bolder;
+}
+
+/*estate_list.html css here....*/
+
+.fa-bell				{
+							float: right;
+							margin-top: 25px;
+							font-size: 1.5vw;
+							margin-right: 45px;
+}
+
+#content				{
+						width: 90%;
+						margin-left: 60px;
+						font-size: 1.0vw;
+}
+input[type="search"]		{
+								width: 50%;
+								border: 1px solid black;
+}
+
+.green						{
+								color: #49A347;
+}
+
+/*estate_review css starts here*/
+.picture1			{
+							position: absolute;
+							top: 20px;
+
+}
+
+.aside-right		{
+						float: right;
+						color: #49A347;
+						font-size: 1vw;
+}
+
+.heading			{
+						font-weight: bolder;
+}
+
+.aside-red			{
+						color: red;
+						font-size: 1vw;
+						float: right;
+}
+
+.review_details			{
+							margin-left: 10px;
+}
+
+.grey				{
+						color: grey;
+}
+
