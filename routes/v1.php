@@ -52,7 +52,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     //Admin only Delete Estates by estate_id
     Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate')->middleware('admin');
-    
+
     //Admin only Update Estates by estate_id
     Route::patch('/estate/{id}', 'EstateController@update');
 
@@ -96,7 +96,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //Create Estate
     Route::post('/estate', 'EstateController@store');
 
-    //payment 
+    //payment
 
     //save payment
     Route::post('/payment', 'GetPayment@postPayment');
@@ -136,11 +136,11 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     /*******************Dirkmal Message Routes */
     // Get conversations between the current user and another user specified by their id (other_user_id)
-    
+
     // Save a message to the Database with the sender's id and the receiver's id
     //  as well as the message itself
     Route::get('messages/{other_user_id}', 'MessageController@conversation');
-    Route::post('/messages', 'MessageController@saveMessage');  
+    Route::post('/messages', 'MessageController@saveMessage');
     /*******************************End Message Routes */
 });
 
@@ -149,7 +149,7 @@ Route::get('test', 'TestController@test');
 // Kazeem Asifat QRCode generator *******************************************
 //The qr code has been mordify to be sent as jason
 
-Route::get('generate-code', 'TestController@qrCode');                          
+Route::get('generate-code', 'TestController@qrCode');
 Route::get('generate-code', 'TestController@qrCode');
 //-------------------------------------------------------------------------------------
 //---------------- Api Route for Service Provider -----------------------------------
@@ -174,3 +174,4 @@ Route::get('/estate/service-provider/{id}', 'ServiceProviderController@show');
 Route::delete('/estate/service-provider/delete/{id}', 'ServiceProviderController@destroy');
 
 //-------------------------------------------------------------------------------------
+Route::post('newsletter', 'NewsletterController@__invoke');
