@@ -70,19 +70,3 @@
     height: 100%;
     width: 100%;
 }
-
-.login{
-    background: #fff;
-    height: auto;
-    max-height: 40vh;
-    margin-top: 80px;
-    border-radius: 5px;
-    display: flex;
-    flex-flow: column nowrap;
-}
-
-.login h3{
-    font-weight: bold;
-    padding: 20px 0px;
-    text-align: center;
-}
