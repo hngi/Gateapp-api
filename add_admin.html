@@ -12,112 +12,116 @@
 	<title>Add Admin</title>
 </head>
 <body>
-			<div id="content">
-							
-								<div class="container-fluid">
+<div id="content">
 
-								</div>
-							
-			</div>
+<div class="container-fluid">
+
+</div>
+
+</div>
 				
-										<div class="wrapper">
-											<!-- @team-gateapp, side nav starts here... -->
-											<nav id="sidebar">
-												<div class="sidebar-header">
-													<img src="images/GatePass.png" style="margin-top: 20px;" class="gatepasslogo">																		
-												</div>
-												<br>
-												<br>
+<div class="wrapper">
+<!-- @team-gateapp, side nav starts here... -->
+<nav id="sidebar">
+			<div class="sidebar-header">
+				<img src="images/GatePass.png" style="margin-top: 20px; width: 80%;">
+			</div>
+			<br>
+			<br>
 
-												<h3 style="color: white;">Dashboard</h3>
+			<h3 style="color: white;">Dashboard</h3>
 
-															<ul>
-																
-												<li class="active">
-													<a href="#homesubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Admins</a>
-													<ul class="collapse list-unstyled" id="homesubmenu">
-														<li>
-															<small><a href="#">View all Admins</a></small>
-														</li>
-														<li>
-															<small><a href="#">Add an Admin</a></small>
-														</li>
-														
-													</ul>
-												</li>
+			<ul>
 
-												<li>
-													<a href="#">Residents</a>
-												</li>
+				<li class="active">
+					<a href="#homesubmenu" data-toggle="collapse" aria-expanded="false"
+						class="dropdown-toggle">Admins</a>
+					<ul class="collapse list-unstyled" id="homesubmenu">
+					<li>
+					<small><a href="admins.html">View all Admins</a></small>
+					</li>
+					<li>
+					<small><a href="add_admin.html">Add an Admin</a></small>
+					</li>
+					</ul>
+				</li>
 
-												<li>
-													<a href="#pageSubMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Visitors</a>
-													<ul class="collapse list-unstyled" id="pageSubMenu">
-														<li>
-															<small><a href="#">All Visitors</a></small>
-														</li>
-														<li>
-															<small><a href="#">Banned Visitors</a></small>
-														</li>
-													</ul>
-												</li>
+				<li>
+					<a href="#">Residents</a>
+				</li>
 
-
-												<li>
-													<a href="#page1SubMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Estates</a>
-													<ul class="collapse list-unstyled" id="page1SubMenu">
-														<li>
-															<small><a href="#">All Estates</a></small>
-														</li>
-														<li>
-															<small><a href="#">Add an Estate</a></small>
-														</li>
-													</ul>
-												</li>
-
-												
-
-												<li>
-													<a href="#page2SubMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Providers</a>
-													<ul class="collapse list-unstyled" id="page2SubMenu">
-														<li>
-															<small><a href="#">All Providers</a></small>
-														</li>
-														<li>
-															<small><a href="#">Provider Requests</a></small>
-														</li>
-													</ul>
-												</li>
+				<li>
+					<a href="#pageSubMenu" data-toggle="collapse" aria-expanded="false"
+						class="dropdown-toggle">Visitors</a>
+					<ul class="collapse list-unstyled" id="pageSubMenu">
+						<li>
+							<a href="#">Option 1</a>
+						</li>
+						<li>
+							<a href="#">Option 2</a>
+						</li>
+					</ul>
+				</li>
 
 
-															</ul>
-											</nav>
-											<!-- @team-gateapp, side nav ends here -->
-											<!-- main page content begins here -->
-											<div id="content">
-												<div class="section">
-													<h1 style="font-size: 2.8vw;">Add an Admin</h1>
-													<label>Email Address</label>
-													<br>
-													<input type="Email" name="email" required="type email address" placeholder=" admin@emailaddress.com">
-													<br>
+				<li>
+					<a href="#page1SubMenu" data-toggle="collapse" aria-expanded="false"
+						class="dropdown-toggle">Estates</a>
+					<ul class="collapse list-unstyled" id="page1SubMenu">
+						<li>
+					<small><a href="estate_list.html">All Estates</a></small>
+				</li>
 
-													<label>Select an Estate</label>
-													<br>
+				<li>
+					<small><a href="estate.html">Add an Estate</a></small>
+				</li>
+					</ul>
+				</li>
 
-													<select name="Estates" id="Estates" style="width: 80%; border-radius: 4px;">
-														<option value="0">None</option>
-														<option value="Peace Estates">Peace Estates</option>
-														<option value="M.K.O Abiola Gardens">M.K.O Abiola Gardens</option>
-														<option value="Lekki Gardens Phase 3">Lekki Gardens Phase 3</option>
-													</select>
-														<br>
-														<br>
-													<input type="button" name="button" value="create" style="width: 50%; background-color: #49A347; color: white;">													
-													</div>
-													</div>
-											</div>
-										</div>
+
+
+				<li>
+					<a href="#page2SubMenu" data-toggle="collapse" aria-expanded="false"
+						class="dropdown-toggle">Providers</a>
+					<ul class="collapse list-unstyled" id="page2SubMenu">
+						<li>
+							<a href="#">Option 1</a>
+						</li>
+						<li>
+							<a href="#">Option 2</a>
+						</li>
+					</ul>
+				</li>
+
+
+			</ul>
+		</nav>
+<!-- @team-gateapp, side nav ends here -->
+<!-- main page content begins here -->
+<div id="content">
+<div class="section">
+<h1 style="font-size: 2.8vw;">Add an Admin</h1>
+<label>Email Address</label>
+<br>
+<input type="Email" name="email" required="type email address" placeholder=" admin@emailaddress.com">
+<br>
+
+<label>Select an Estate</label>
+<br>
+
+<select name="Estates" id="Estates" style="width: 80%; border-radius: 4px;">
+	<option value="0">None</option>
+	<option value="Peace Estates">Peace Estates</option>
+	<option value="M.K.O Abiola Gardens">M.K.O Abiola Gardens</option>
+	<option value="Lekki Gardens Phase 3">Lekki Gardens Phase 3</option>
+</select>
+	<br>
+	<br>
+<input type="button" name="button" value="create" style="width: 50%; background-color: #49A347; color: white;">													
+</div>
+</div>
+</div>
+</div>
 				
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
