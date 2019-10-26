@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+		integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="styles/style.css">
+	<title>Estates</title>
+</head>
+
+<body>
+	<div id="content">
+
+		<div class="container">
+
+		</div>
+
+	</div>
+
+	<div class="wrapper">
+		<!-- @team-gateapp, side nav starts here... -->
+		<nav id="sidebar">
+			<div class="sidebar-header">
+				<img src="images/GatePass.png" style="margin-top: 20px; width: 80%;">
+			</div>
+			<br>
+			<br>
+
+			<h3 style="color: white;">Dashboard</h3>
+
+			<ul>
+
+				<li class="active">
+					<a href="#homesubmenu" data-toggle="collapse" aria-expanded="false"
+						class="dropdown-toggle">Admins</a>
+					<ul class="collapse list-unstyled" id="homesubmenu">
+						<li>
+							<a href="#">Option 1</a>
+						</li>
+						<li>
+							<a href="#">Option 2</a>
+						</li>
+						<li>
+							<a href="#">Option 3</a>
+						</li>
+					</ul>
+				</li>
+
+				<li>
+					<a href="#">Residents</a>
+				</li>
+
+				<li>
+					<a href="#pageSubMenu" data-toggle="collapse" aria-expanded="false"
+						class="dropdown-toggle">Visitors</a>
+					<ul class="collapse list-unstyled" id="pageSubMenu">
+						<li>
+							<a href="#">Option 1</a>
+						</li>
+						<li>
+							<a href="#">Option 2</a>
+						</li>
+					</ul>
+				</li>
+
+
+				<li>
+					<a href="#page1SubMenu" data-toggle="collapse" aria-expanded="false"
+						class="dropdown-toggle">Estates</a>
+					<ul class="collapse list-unstyled" id="page1SubMenu">
+						<li>
+							<a href="#">Option 1</a>
+						</li>
+						<li>
+							<a href="#">Option 2</a>
+						</li>
+					</ul>
+				</li>
+
+				<li>
+					<small><a href="#">All Estates</a></small>
+				</li>
+
+				<li>
+					<small><a href="#">Add an Estate</a></small>
+				</li>
+
+				<li>
+					<a href="#page2SubMenu" data-toggle="collapse" aria-expanded="false"
+						class="dropdown-toggle">Providers</a>
+					<ul class="collapse list-unstyled" id="page2SubMenu">
+						<li>
+							<a href="#">Option 1</a>
+						</li>
+						<li>
+							<a href="#">Option 2</a>
+						</li>
+					</ul>
+				</li>
+
+
+			</ul>
+		</nav>
+		<!-- @team-gateapp, side nav ends here -->
+		<!-- main page content begins here -->
+		<div id="content">
+			<div class="container-fluid">
+				<i class="fa fa-bell"></i>
+				<br>
+				<table style="width: 80%; margin-top: 60px;">
+					<tr>
+						<td>
+							<h1 style="font-size: 2.2vw;">Estates</h1>
+						</td>
+						<td><input type="search" name="search" style="float: right;" placeholder=" search estates"
+								id="myInput" onkeyup="myFunction()"></td>
+					</tr>
+				</table>
+				<table class="table-sm" style="width: 80%;" id="myTable">
+					<thead>
+						<tr style="border-top: 1px solid black; border-bottom: 1px solid black;">
+							<td>Name <i class="fa fa-filter"></i></td>
+							<td>Location <i class="fa fa-filter"></i></td>
+							<td>Added On <i class="fa fa-filter"></i></td>
+							<td></td>
+						</tr>
+					</thead>
+					<tr>
+						<td>Otedola Estate</td>
+						<td>Park Avenue, Lekki</td>
+						<td>10/10/2019</td>
+						<td><a href="#" class="green">Visit Details</a></td>
+					</tr>
+					<tr>
+						<td>Lekki Gardens Phase 3</td>
+						<td>Conspicious Address Value</td>
+						<td>10/10/2019</td>
+						<td><a href="#" class="green">Visit Details</a></td>
+					</tr>
+					<tr>
+						<td>M.K.O Gardens Estate</td>
+						<td>Km 10, Third Mainland Ikeja</td>
+						<td>10/10/2019</td>
+						<td><a href="#" class="green">Visit Details</a></td>
+					</tr>
+					<tr>
+						<td>Otedola Estate</td>
+						<td>Park Avenue, Lekki</td>
+						<td>10/10/2019</td>
+						<td><a href="#" class="green">Visit Details</a></td>
+					</tr>
+					<tr>
+						<td>Lekki Gardens Phase 3</td>
+						<td>Conspicious Address Value</td>
+						<td>10/10/2019</td>
+						<td><a href="#" class="green">Visit Details</a></td>
+					</tr>
+					<tr>
+						<td>M.K.O Gardens Estate</td>
+						<td>Km 10, Third Mainland Ikeja</td>
+						<td>10/10/2019</td>
+						<td><a href="#" class="green">Visit Details</a></td>
+					</tr>
+					<tr>
+						<td>Otedola Estate</td>
+						<td>Park Avenue, Lekki</td>
+						<td>10/10/2019</td>
+						<td><a href="#" class="green">Visit Details</a></td>
+					</tr>
+					<tr>
+						<td>Lekki Gardens Phase 3</td>
+						<td>Conspicious Address Value</td>
+						<td>10/10/2019</td>
+						<td><a href="#" class="green">Visit Details</a></td>
+					</tr>
+					<tr>
+						<td>M.K.O Gardens Estate</td>
+						<td>Km 10, Third Mainland Ikeja</td>
+						<td>10/10/2019</td>
+						<td><a href="#" class="green">Visit Details</a></td>
+					</tr>
+					<tr>
+						<td>Otedola Estate</td>
+						<td>Park Avenue, Lekki</td>
+						<td>10/10/2019</td>
+						<td><a href="#" class="green">Visit Details</a></td>
+					</tr>
+					<tr>
+						<td>Lekki Gardens Phase 3</td>
+						<td>Conspicious Address Value</td>
+						<td>10/10/2019</td>
+						<td><a href="#" class="green">Visit Details</a></td>
+					</tr>
+					<tr>
+						<td>M.K.O Gardens Estate</td>
+						<td>Km 10, Third Mainland Ikeja</td>
+						<td>10/10/2019</td>
+						<td><a href="#" class="green">Visit Details</a></td>
+					</tr>
+					<tr>
+						<td>Otedola Estate</td>
+						<td>Park Avenue, Lekki</td>
+						<td>10/10/2019</td>
+						<td><a href="#" class="green">Visit Details</a></td>
+					</tr>
+					<tr>
+						<td>Lekki Gardens Phase 3</td>
+						<td>Conspicious Address Value</td>
+						<td>10/10/2019</td>
+						<td><a href="#" class="green">Visit Details</a></td>
+					</tr>
+					<tr>
+						<td>M.K.O Gardens Estate</td>
+						<td>Km 10, Third Mainland Ikeja</td>
+						<td>10/10/2019</td>
+						<td><a href="#" class="green">Visit Details</a></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	</div>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+	integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+	</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+	integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+	</script>
+<script>
+	function myFunction() {
+		// Declare variables
+		var input, filter, table, tr, td, i, txtValue;
+		input = document.getElementById("myInput");
+		filter = input.value.toUpperCase();
+		table = document.getElementById("myTable");
+		tr = table.getElementsByTagName("tr");
+
+		// Loop through all table rows, and hide those who don't match the search query
+		for (i = 0; i < tr.length; i++) {
+			td = tr[i].getElementsByTagName("td")[0];
+			if (td) {
+				txtValue = td.textContent || td.innerText;
+				if (txtValue.toUpperCase().indexOf(filter) > -1) {
+					tr[i].style.display = "";
+				} else {
+					tr[i].style.display = "none";
+				}
+			}
+		}
+	}
+</script>
+
+</html>

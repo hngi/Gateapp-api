@@ -127,3 +127,39 @@
   width: 100%;
   vertical-align: middle;
 }
+.subscribe {
+  min-height: 60vh;
+}
+.subscribe h2{
+  font-weight: bold;
+}
+.subscribe-form > div {
+  margin-top: 15vh;
+}
+.subscribe-form input {
+  color: black;
+  border-radius: 0px;
+  border: 1px solid black;
+}
+.subscribe-form input::placeholder {
+  color: black;
+}
+.subscribe-form input:focus {
+  box-shadow: none;
+  border: 1px solid black;
+}
+.subscribe-form button {
+  background: #49a347;
+  color: white;
+  border: none;
+  border-radius: 0px;
+}
+/* .subscribe-form button:hover {
+  background: white;
+  color: #49a347;
+  border: 1px solid #49a347;
+  border-radius: 0px;
+} */
+.subscribe-form button:focus {
+  background: #49a347;
+}
