@@ -94,6 +94,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Edit user settings
     Route::post('/user/settings', 'UserProfileController@manageSettings');
 
+    // Update Firebase token
+    Route::post('/user/edit-fcm', 'UserProfileController@updateFcmToken');
+
     //Delete user account
     Route::delete('/user/delete', 'UserProfileController@destroy');
 

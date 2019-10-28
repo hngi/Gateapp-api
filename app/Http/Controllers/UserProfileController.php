@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 use App\Mail\VerifyToken;
+use Exception;
 
 class UserProfileController extends Controller
 {
@@ -208,6 +209,21 @@ class UserProfileController extends Controller
                 'message' => "An error occurred while updating your  settings",
                 'hint' => $e->getMessage(),
             ], 501);
+        }
+    }
+
+    public function updateFcmToken(Request $request)
+    {
+        $request->validate([
+            'fcm_token' => ['required', 'string']
+        ]);
+
+        try {
+            auth()->user()->update(['fcm_token' => $request->fcm_token]);
+
+            return response()->json(['message' => 'Firebase token updated']);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 501);
         }
     }
 }
