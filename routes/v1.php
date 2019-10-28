@@ -148,6 +148,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/service-provider', 'ServiceProviderController@showAll');
 
     Route::get('/service-provider/category/{category_id}', 'ServiceProviderController@byCategory');
+    
     /** Resident and Gateman Relationship */
     // Get requests for a gateman
     Route::get('gateman/requests', 'GatemanController@residentRequest')->middleware('checkGateman');
@@ -168,7 +169,8 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //show payment
     Route::get('/payment/{id}', 'PaymentController@oneUniquePayment')->middleware('checkResident');
 
-
+    //Service Directory by estate 
+    Route::get('/serviceProvider/estate/', 'ServiceProviderController@byEstate')->middleware('checkResident');
 
     //(Users Visitors)
 
