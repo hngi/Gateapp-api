@@ -244,7 +244,8 @@ class GatemanController extends Controller
         ])->pluck('user_id');
 
         // get visitors with the user_id
-        $resident = User::find($user_id);
+        //$resident = User::find($user_id);
+        $resident = User::whereIn('id',$user_id)->with('visitors')->withCount('visitors')->get();
 
         // list out visitors details
         if ($resident){

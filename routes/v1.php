@@ -91,6 +91,12 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //Edit user ac count
     Route::post('/user/edit', 'UserProfileController@update');
 
+    // Edit user settings
+    Route::post('/user/settings', 'UserProfileController@manageSettings');
+
+    // Update Firebase token
+    Route::post('/user/edit-fcm', 'UserProfileController@updateFcmToken');
+
     //Delete user account
     Route::delete('/user/delete', 'UserProfileController@destroy');
 
@@ -142,6 +148,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/service-provider', 'ServiceProviderController@showAll');
 
     Route::get('/service-provider/category/{category_id}', 'ServiceProviderController@byCategory');
+    
     /** Resident and Gateman Relationship */
     // Get requests for a gateman
     Route::get('gateman/requests', 'GatemanController@residentRequest')->middleware('checkGateman');
@@ -162,7 +169,8 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //show payment
     Route::get('/payment/{id}', 'PaymentController@oneUniquePayment')->middleware('checkResident');
 
-
+    //Service Directory by estate 
+    Route::get('/serviceProvider/estate/', 'ServiceProviderController@byEstate')->middleware('checkResident');
 
     //(Users Visitors)
 
@@ -247,10 +255,18 @@ Route::post('faq', 'FaqController@store')->middleware('admin');
 Route::put('faq/{id}', 'FaqController@update')->middleware('admin');
 Route::delete('faq/{id}', 'FaqController@destroy')->middleware('admin');
 
+//support routes
+Route::get('/support', 'SupportController@index')->middleware('admin');
+Route::post('/support/send', 'SupportController@send');
+Route::get('/support/{id}', 'SupportController@show')->middleware('admin');
+Route::delete('/support/{id}', 'SupportController@destroy')->middleware('admin');
+
 //This our testing api routes
 Route::get('test', 'TestController@test');
 Route::get('generate-code', 'TestController@qrCode');
 Route::post('test_image', 'TestController@upload');
+Route::post('african_talking', 'SmsOtpController@africasTalkingTest');
+Route::post('msg91', 'SmsOtpController@send');
 
 //test notification
 Route::get('/test-notification', function () {

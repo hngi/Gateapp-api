@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "africastalking/africastalking": "^2.3",
         "benwilkins/laravel-fcm-notification": "^4.0",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
