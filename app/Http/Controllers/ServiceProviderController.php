@@ -31,7 +31,7 @@ class ServiceProviderController extends Controller
            $user = Auth::user();
            $role = $user->role;
 
-           if ($role === "1" || $role === "2" || $role == '0') {
+           if ($role === "1" || $role === "2" || $role === "0" ) {
                 // $service = Service_Provider::all();
                 $query = DB::table('service_providers')
                                 ->join('estates', 'service_providers.estate_id', '=', 'estates.id')
@@ -46,6 +46,46 @@ class ServiceProviderController extends Controller
                     $res["message"] = "All service providers.";
                     $res["count"] = $service->count();
                     $res["data"] = $service;
+                } else {
+                    $res["status"] = 200;
+                    $res["message"] = "No service providers registered";
+                }
+           } else {
+               $res['status'] = 401;
+               $res['message'] = "You must login as a resident or admin.";
+           }
+       } else {
+        $res['status'] = 401;
+        $res['message'] = "You are not logged in.";
+       }
+        return response()->json($res, $res['status']);
+    }
+
+    public function groupByEstate() {
+        $res = array();
+        $uniqueEstate = array();
+
+        if (Auth::check()) {
+           $user = Auth::user();
+           $role = $user->role;
+
+           if ($role === "1" || $role === "2"  || $role === "0") {
+                $query = DB::table('service_providers')
+                                ->join('estates', 'service_providers.estate_id', '=', 'estates.id')
+                                ->join('sp_category', 'service_providers.category_id', '=', 'sp_category.id')
+                                ->select('service_providers.id as id', 'service_providers.name as name', 'service_providers.phone as phone', 'service_providers.description as description', 'estates.estate_name as estate', 'sp_category.title as categroy');
+
+                $service = $query->get();
+                foreach($service as $key => $serv) {
+                    $uniqueEstate[$serv->estate][] = $serv;
+                }
+
+                if (!$service->isEmpty()) {
+                    $res["status"] = 200;
+                    $res["message"] = "All service providers grouped by estate";
+                    $res["count"] = $service->count();
+                    $res["data"] = $uniqueEstate;
+
                 } else {
                     $res["status"] = 200;
                     $res["message"] = "No service providers registered";
@@ -99,7 +139,7 @@ class ServiceProviderController extends Controller
            $user = Auth::user();
            $role = $user->role;
 
-           if ($role === "1" || $role === "2" || $role == '0') {
+           if ($role === "1" || $role === "2" ) {
                 // $service = Service_Provider::find($id);
                 $query = DB::table('service_providers')
                 ->join('estates', 'service_providers.estate_id', '=', 'estates.id')
