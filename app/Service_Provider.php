@@ -9,7 +9,7 @@ class Service_Provider extends Model
     protected $table = 'service_providers';
 
     protected $fillable = [
-        'name', 'phone', 'description', 'image', 'estate_id', 'category_id'
+        'name', 'phone', 'description', 'image', 'estate_id', 'category_id', 'status'
     ];
 
     public function category()
