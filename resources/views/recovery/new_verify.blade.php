@@ -59,7 +59,7 @@
 
             <div>
                  <p class="team">if this mail is not authourize by you please discard</p>
-                 <p class="team" style="font-style: italic;">Gate Pass Team</p>
+                 <p class="team" style="font-style: italic;">GateGuard Team</p>
             </div>
     	</body>
     </html>

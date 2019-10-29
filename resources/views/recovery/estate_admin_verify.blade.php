@@ -1,8 +1,8 @@
 <!DOCTYPE html>
     <html lang="en-US">
     	<head>
-    		<title>Welcome</title>
-            <meta charset="utf-8">
+            <title>VerifyToken</title>
+    		<meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
     		<style type="text/css">
     			* {
@@ -35,6 +35,12 @@
     				text-align: center;
                     color: black !important;
     			}
+                .team{
+                    font-weight: normal;
+                    font-size: 15px;
+                    text-align: center;
+                    color: grey !important;
+                }
 
     		</style>
     	</head>
@@ -42,17 +48,18 @@
     		<div>
     			
     		</div>
-    		<h2 class="welcome">Welcome To Gate Pass</h2>
+    		<h2 class="welcome">Estate Admin Welcome</h2>
     		<div>
-    			 <h4>Hello {{$user->first_name}} {{$user->last_name}}</h4>
+    			 <h4 style="color: grey;">Hello {{$user->email}} </h4>
     		</div>
     		<div>
-    			 <p class="note">Use this verification token to confirm account</p>
-    			 <p class="verifycode">{{ $user->verifycode}}</p>
-    		</div>
+				 <p class="note">You have been added as an admin to {{ $estate->estate_name }} @ {{ $estate->address }}, {{ $estate->city }},  {{ $estate->country }}</p>
+    			 <p class="note">Use this current email and password to login into your account!</p>
+    			 <p class="verifycode">{{ $password }}</p>
+    		</div><br><br>
 
-			<div>
-                 <p class="team">if this mail is not authourize by you please discard</p>
+            <div>
+                 <p class="team">if this mail is not authourize by you please discard! Thank you</p>
                  <p class="team" style="font-style: italic;">GateGuard Team</p>
             </div>
     	</body>
