@@ -30,7 +30,7 @@ class RegistrationController extends Controller
             $user->email      = $request->input('email');
             $user->password   = Hash::make($password);
             $user->user_type  = 'estate_admin';
-            $user->role       = 3;
+            $user->role       = '3';
             $user->verifycode = $verifycode;
             $user->save();
             //Insert into admin estate

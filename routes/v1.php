@@ -70,6 +70,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
 
     // Show all visitor
+
     Route::get('visitors/all', 'VisitorController@index')->middleware('superAdminadmin');
 
     //create faq
@@ -84,8 +85,55 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/support/{id}', 'SupportController@show')->middleware('superAdmin');
     //delete support message
     Route::delete('/support/{id}', 'SupportController@destroy')->middleware('superAdmin');
-});
 
+    Route::get('visitors/all', 'VisitorController@index')->middleware('superAdmin');
+
+    // Show Total Number of Estates on the system 
+    Route::get('statistics/estate', 'Statistics\EstateStatsController@index')->middleware('superAdmin');
+
+    // Show  Total Number of Estates added that week 
+    Route::get('statistics/weeklyEstate', 'Statistics\EstateStatsController@showWeek')->middleware('superAdmin');
+    
+    // Show Total Number of Estates added that month 
+    Route::get('statistics/monthlyEstate', 'Statistics\EstateStatsController@showMonth')->middleware('superAdmin');
+
+    // Show Total Number of Service Providers on the system 
+    Route::get('statistics/service', 'Statistics\ServiceStatsController@index')->middleware('superAdmin');
+
+    // Show Total Number of Service Providers added that week 
+    Route::get('statistics/weeklyService', 'Statistics\ServiceStatsController@weeklyService')->middleware('superAdmin');
+
+    // Show Total Number of Service Providers added that month 
+    Route::get('statistics/monthlyService', 'Statistics\ServiceStatsController@monthlyService')->middleware('superAdmin');
+    
+    // Show Total Number of Visits scheduled on the Application
+    Route::get('statistics/visits', 'Statistics\VisitorStatsController@index')->middleware('superAdmin');
+    
+    //Show Total Number of Visits Scheduled for that week on the application 
+    Route::get('statistics/weeklyVisits', 'Statistics\VisitorStatsController@weeklyVisits')->middleware('superAdmin');
+
+    //Show Total Number of Visits Scheduled for that month on the application 
+    Route::get('statistics/monthlyVisits', 'Statistics\VisitorStatsController@monthlyVisits')->middleware('superAdmin');
+
+    //Show Total Number of Service Providers on the system 
+    Route::get('statistics/service', 'Statistics\ServiceStatsController@index')->middleware('superAdmin');
+
+    //Show Pending Service Provider Requests on the systen 
+    Route::get('statistics/pendingService', 'Statistics\ServiceStatsController@pendingRequests')->middleware('superAdmin');
+
+    //Show total Number of service Providers in the estate of logged in Estate Admin 
+    Route::get('statistics/estateService/', 'Statistics\ServiceStatsController@show')->middleware('estateAdmin');
+
+    //Show total number of pending service providers in the estate of logged in Estate Admin 
+    Route::get('statistics/pendingEstateService/', 'Statistics\ServiceStatsController@pendingEstateRequests')->middleware('estateAdmin');
+
+
+
+
+});
+    
+
+    
 
 
 
@@ -290,6 +338,7 @@ Route::get('/test-notification-2', function () {
     $gateman = \App\User::query()->where('role', 2)->inRandomOrder()->first();
     $gateman->notify(new \App\Notifications\GatemanInvitationNotification($user, $gateman));
 });
+
 
 
 

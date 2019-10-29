@@ -29,4 +29,6 @@ class VerifyEstateAdminMiddleware
 
         return $next($request);
     }
+
 }
+
