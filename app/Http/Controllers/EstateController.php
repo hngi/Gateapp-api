@@ -129,7 +129,7 @@ class EstateController extends Controller
     
 
 
-    public function store(Request $request, ImageController $image)
+    public function store(Request $request)
     {
         $this->validateRequest($request);
         //start temporay transaction
