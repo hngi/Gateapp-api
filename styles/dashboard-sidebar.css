@@ -35,7 +35,7 @@ a:focus {
 }
 
 #sidebar.active {
-    margin-left: -250px;
+    margin-left: -200px;
 }
 
 #sidebar .sidebar-header {

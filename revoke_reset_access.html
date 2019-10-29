@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="styles/global.css">
     <link rel="stylesheet" href="styles/dashboard-sidebar.css">
     <link rel="stylesheet" type="text/css" href="styles/seunogunyemi.css">
-    <title>Admin List</title>
+    <title>Revoke/Reset Access</title>
 </head>
 
 <body>
@@ -40,11 +40,11 @@
             </div>
             <ul class="list-unstyled components">
                 <p>Dashboard</p>
-                <li class="">
+                <li class="active">
                     <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false"
                         class="dropdown-toggle">Admins</a>
                     <ul class="collapse list-unstyled" id="adminSubmenu">
-                        <li class="active">
+                        <li>
                             <a href="#">View all admins</a>
                         </li>
                         <li>
@@ -101,19 +101,19 @@
             </button>
         </div>
     </div>
-											<!-- @team-gateapp, side nav ends here -->
+    	<!-- @team-gateapp, side nav ends here -->
 											<!-- main page content begins here -->
 											<div id="tablecontent">
 												<div class="container-fluid">
 												<a href="#" style="color: black;"><i class="fa fa-bell"></i></a>
 												<br>
-												<table class="search" style="width: 80%;">
+												<table style="width: 80%;">
 													<tr>
 														<td><h1>Admins</h1></td>
-												<td><input type="tablesearch" name="search" placeholder=" search admin users"></td>
+												<td><input type="search" name="search" placeholder=" search estates"></td>
 													</tr>
 												</table>
-													<table class="admins">
+													<table class="" style="width: 80%; text-align: center;">
 															<thead>
 																<tr style="border-top: 1px solid black; border-bottom: 1px solid black;">
 																	<td>Name <i class="fa fa-filter"></i></td>
@@ -223,6 +223,21 @@
 													</div>
 											</div>
 											</div>
+										</div>
+
+										<div class="revoke_right">
+											<h1>
+												Chukwudi Ubong
+											</h1>
+											<h3>
+												Otedola Estate
+											</h3>
+											<button class="btn btn-danger" style="background-color: #EB5757; width: 300px;"><a href="#">Revoke Access</a></button>
+											<!-- <input type="button" name="button" value="Revoke Access"> -->
+											<br>
+											<br>
+											<button class="btn btn-warning" style="background-color: #56CCF2; width: 300px;"><a href="#">Reset Password</a></button>
+											<!-- <input type="button" name="button" value="Reset Password"> -->
 										</div>
 				
 </body>
