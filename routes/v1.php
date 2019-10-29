@@ -3,9 +3,6 @@
 
 //Authentication Routes ******************************************************
 
-//Registration
-Route::post('register/admin', 'Auth\RegisterController@admin'); //has a role of 0
-
 Route::post('register/resident', 'Auth\RegisterController@resident'); //has a role of 1
 
 Route::post('register/gateman', 'Auth\RegisterController@gateman'); //has a role 2
@@ -21,6 +18,8 @@ Route::get('resend/token', 'Auth\ForgotPhoneController@resedToken');
 
 //Login
 Route::post('login', 'Auth\LoginController@authenticate'); //Not Needed
+//Login Admin
+Route::post('login/admin', 'Auth\AdminLoginController@authenticate'); //Admins Only (Super Admin and Estate Admin)
 
 
 //Admin Routes (Specific Route)*******************************************************
@@ -31,42 +30,44 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //(Admin interactions with User)
 
+    Route::post('create/estate_admin', 'EstateAdmin\RegistrationController@create')->middleware('superAdmin');//estate admin has a role of 3
+
     //Show all user(this route is for only admin)(admin)
-    Route::get('user/all', 'UserProfileController@all')->middleware('admin');
+    Route::get('user/all', 'UserProfileController@all')->middleware('superAdmin');
 
     //Show all user for a particular role(this route is for only admin)(admin)
-    Route::get('user/all/{role_id}', 'UserProfileController@role')->middleware('admin');
+    Route::get('user/all/{role_id}', 'UserProfileController@role')->middleware('superAdmin');
 
     //show one admin
-    Route::get('admin/{id}', 'UserProfileController@showOneAdmin')->middleware('admin');
+    Route::get('admin/{id}', 'UserProfileController@showOneAdmin')->middleware('superAdmin');
 
     //Delete Estates by estate_id
-    Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate')->middleware('admin');
+    Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate')->middleware('superAdmin');
 
     //Admin only Update Estates by estate_id
-    Route::patch('/estate/{id}', 'EstateController@update')->middleware('admin');
+    Route::patch('/estate/{id}', 'EstateController@update')->middleware('superAdmin');
 
     //Admin only Create a service provider
-    Route::post('/service-provider', 'ServiceProviderController@create')->middleware('admin');
+    Route::post('/service-provider', 'ServiceProviderController@create')->middleware('superAdmin');
 
     //Admin only Update a service provider
-    Route::post('/service-provider/{id}', 'ServiceProviderController@update')->middleware('admin');
+    Route::post('/service-provider/{id}', 'ServiceProviderController@update')->middleware('superAdmin');
 
     //Admin only delete a specific service provider
-    Route::delete('/service-provider/{id}', 'ServiceProviderController@destroy')->middleware('admin');
+    Route::delete('/service-provider/{id}', 'ServiceProviderController@destroy')->middleware('superAdmin');
 
     // Create a new Service Provider category
-    Route::post('/sp-category', 'SPCategoryController@newCategory')->middleware('admin');
+    Route::post('/sp-category', 'SPCategoryController@newCategory')->middleware('superAdmin');
 
     // Edit a Service Provider category
-    Route::put('sp-category/{id}', 'SPCategoryController@editCategory')->middleware('admin');
+    Route::put('sp-category/{id}', 'SPCategoryController@editCategory')->middleware('superAdmin');
 
     // Delete a Service Provider category
-    Route::delete('sp-category/{id}', 'SPCategoryController@deleteCategory')->middleware('admin');
+    Route::delete('sp-category/{id}', 'SPCategoryController@deleteCategory')->middleware('superAdmin');
 
 
     // Show all visitor
-    Route::get('visitors/all', 'VisitorController@index')->middleware('admin');
+    Route::get('visitors/all', 'VisitorController@index')->middleware('superAdminadmin');
 });
 
 
