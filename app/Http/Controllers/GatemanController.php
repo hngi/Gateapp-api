@@ -5,12 +5,17 @@ namespace App\Http\Controllers;
 use App\Gateman;
 use App\Notifications\GatemanAcceptanceNotification;
 use App\User;
+use App\Home;
 use App\Visitor;
+use Exception;
 use App\Http\Resources\Visitor as VisitorResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\DB;
+use \Illuminate\Database\QueryException;
+use App\Http\Controllers\ImageController;
 use JWTAuth;
 
 class GatemanController extends Controller
@@ -294,6 +299,62 @@ class GatemanController extends Controller
         else {
             $res['Error'] = $request->input('qr_code'). " This QR code does not exist";
             return response()->json($res, 404);
+        }
+    }
+
+    public function addEstateGateman(
+        $id,
+        Home $home,
+        User $new_user,
+        Request $request,
+        ImageController $image
+    ){
+        // validate the posted data
+        $this->validate($request, [
+            'name'  => ['required', 'regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
+            'phone' => ['required', 'string'],
+        ]);
+
+        DB::beginTransaction();
+
+        try{
+            // Create user
+            $new_user->name  = $request->name;
+            $new_user->phone = $request->phone;
+            $new_user->role  = 2;
+            $new_user->user_type = 'gateman';
+            $new_user->save();
+
+            // Register gateman estate
+            $home->user_id   = $new_user->id;
+            $home->estate_id = $id;
+            $home->save();
+
+            // transaction was successful
+            DB::commit();
+
+            $result = [
+                'name'      => $new_user->name,
+                'user_id'   => $new_user->id,
+                'phone'     => $new_user->phone,
+                'estate_id' => (int) $home->estate_id
+            ];
+
+            // send response
+            return response()->json([
+                'status'  => true,
+                'message' => 'The gateman was successfully added',
+                'result'  => $result
+            ], 200);
+        } catch(Exception $e) {
+            // transaction was not successful
+            DB::rollBack();
+
+            return response()->json([
+                'status'    => false,
+                'message'   => 'Error, the gateman could not be added',
+                'hint'      => $e->getMessage()
+            ], 200);
         }
     }
 }
