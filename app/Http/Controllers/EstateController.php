@@ -7,6 +7,7 @@ use App\Estate;
 use App\Home;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ImageController;
 
 class EstateController extends Controller
 {
@@ -128,7 +129,7 @@ class EstateController extends Controller
     
 
 
-    public function store(Request $request)
+    public function store(Request $request, ImageController $image)
     {
         $this->validateRequest($request);
         //start temporay transaction
