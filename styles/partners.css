@@ -92,14 +92,25 @@ body{
     color: #fff;
     background-color: #49A347;
 }
-
-.res-showcase-cont{
+.commercial-holder, .residenial-holder{
+    width: 100%;
+}
+.res-showcase-cont, .comm-showcase-cont{
     display: grid;
     grid-template-columns: repeat( auto-fit, minmax(250px, 400px) );
     grid-gap: 3rem;
     justify-content: center;
     align-items: center;
     width: 100%;
+    transition: .4s ease-in-out;
+}
+.hide{
+    display: none;
+    /* transform: scale(0%); */
+}
+#resident, #comm {
+    cursor: pointer;
+    transition: .4s ease-in-out;
 }
 .showcase{
     display: flex;
@@ -135,11 +146,19 @@ body{
     flex-direction: column;
     color: #fff;
 }
+.logo{
+    width: 100px;
+    height: 70px;
+    object-fit: contain;
+    margin-bottom: 10px;
+    color: #fff;
+}
 .view-estate{
     padding: .5em 1.5em;
     border: 1px solid #fff;
     color: #fff;
     background-color: transparent;
+    margin-top: 10px;
 }
 
 
@@ -153,7 +172,7 @@ body{
     height:100px;
 }
 
-.slider span {
+.span-carousel {
     width: 50px;
     height: 5px;
     margin-right: 5px;
