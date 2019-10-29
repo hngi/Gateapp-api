@@ -90,7 +90,7 @@ class UserProfileController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        if ($user->role == 1 || $user->role == 2) { // condition statements shows specific resident or gate man users except admin by id
+        if ($user->role == 1 || $user->role == 2) {
             $res['status'] = true;
             $res['message'] = 'User found';
             $res['user'] = $user;
