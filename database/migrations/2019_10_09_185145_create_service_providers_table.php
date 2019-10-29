@@ -36,5 +36,6 @@ class CreateServiceProvidersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('service_providers');
+        $table->dropSoftDeletes();
     }
 }
