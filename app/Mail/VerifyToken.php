@@ -30,6 +30,6 @@ class VerifyToken extends Mailable
      */
     public function build()
     {
-        return $this->view('recovery.new_password');
+        return $this->view('recovery.new_verify');
     }
 }
