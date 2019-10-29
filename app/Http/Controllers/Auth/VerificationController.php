@@ -20,7 +20,7 @@ class VerificationController extends Controller
       //generate new password for the user
     public function generatedPassword()
     {
-        return substr(md5(time()), 0, 6);
+        return mt_rand(1000,9999);
     }
 
     public function expireTime() {

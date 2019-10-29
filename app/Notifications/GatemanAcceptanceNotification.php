@@ -11,7 +11,7 @@ use Benwilkins\FCM\FcmMessage;
 
 class GatemanAcceptanceNotification extends Notification
 {
-    use Queueable;
+    use Queueable, ResolveChannelsTrait;
 
     protected $resident;
     protected $gateman;
@@ -40,7 +40,7 @@ class GatemanAcceptanceNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['fcm', 'database'];
+        return $this->resolveChannels($this->resident);
     }
 
     /**

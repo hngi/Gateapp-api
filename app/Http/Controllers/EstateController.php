@@ -31,8 +31,8 @@ class EstateController extends Controller
     }
    
      // Display Estates by name 
-     public function name($name)
-     {
+    public function name($name)
+    {
          $country = ucfirst($name);
          $estates = Estate::where('estate_name', 'LIKE', "%{$name}%")->get();
          if (!$estates){
@@ -247,10 +247,13 @@ class EstateController extends Controller
         $this->validate($request, $rules, $messages);
     }
 
-    public function estateMemeber(Home $home, $id) {
+    public function estateMemeber(Request $request, Home $home, $id) {
         $user = Auth::user();
-        $check_if = Home::where('estate_id', $id)->where('user_id', $user->id)->first();
-   
+        $check_if = Home::where('user_id', $user->id)->exists();
+        $this->validate($request, [
+            'house_block' => 'min:2',
+        ]);
+        
         DB::beginTransaction();
         try{
             if(!$check_if) {   
@@ -259,18 +262,21 @@ class EstateController extends Controller
                 $home->estate_id = $id;
                 $home->save();
             }else {
+                $home = Home::where('user_id', $user->id)
+                              ->with('estate')->with('user')->first();
+
                 $msg['message'] = 'Your estate has been updated succesfully!';
-                $check_if->user_id   = $user->id;
-                $check_if->estate_id = $id;
-                $check_if->save();
+                $home->user_id   = $user->id;
+                $home->estate_id = $id;
+                $home->house_block = ucfirst($request->input('house_block') ?? null);
+                $home->save();
             }
             $estate = Estate::where('id', $id)->first();
 
             DB::commit();
 
             $msg['status'] = true;
-            $msg['estate'] = $estate;
-            $msg['user'] = $user;
+            $msg['user_details'] =  $home;
             return response()->json($msg, 200); 
 
         }catch(\Exeception $e) {

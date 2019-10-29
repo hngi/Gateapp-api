@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Category;
+use App\Home;
 use Illuminate\Http\Request;
 use App\Service_Provider;
 use Exception;
@@ -40,6 +41,36 @@ class ServiceProviderController extends Controller
         return response()->json($res, $res['status']);
     }
 
+
+    public function byEstate() {
+        $user = Auth::user();
+        $user_id = $user->id;
+        $estate_id = Home::where('user_id',$user_id)->pluck('estate_id');
+        $res = array();
+
+        try {
+            
+          $service = Category::with(['service_provider' => function ($query) use ($estate_id) {
+        $query->whereIn('estate_id', $estate_id); }])->get();
+
+
+            if (!$service->isEmpty()) {
+                $res['status'] = 200;
+                $res['message'] = "Retrieved Service Providers per category";
+                $res['data'] = $service;
+            } else {
+                $res['status'] = 404;
+                $res['message'] = "No categories found";
+            }
+        } catch (Exception $e) {
+            $res['status'] = 501;
+            $res['message'] = "An error occurred retrieving categories";
+        }
+
+        return response()->json($res, $res['status']);
+    }
+
+
     public function show($id)
     {
         $res = array();
@@ -69,6 +100,7 @@ class ServiceProviderController extends Controller
         }
         return response()->json($res, $res['status']);
     }
+ 
 
     public function byCategory($category_id) {
         $res = array();
