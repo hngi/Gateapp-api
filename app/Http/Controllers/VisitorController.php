@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Visitor;
-use Exeception;
+use Exception;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -169,7 +169,7 @@ class VisitorController extends Controller
                 'image_info'  => $data,
                 'qr_image_src'=> $qr_code
             ], 200);
-        }catch(Exeception $e) {
+        }catch(Exception $e) {
             //if any operation fails, Thanos snaps finger - user was not created rollback what is saved
             DB::rollBack();
             $res['status']   = false;
@@ -249,7 +249,7 @@ class VisitorController extends Controller
                 'visitor'     => $visitor,
                 'image_info'  => $data
             ], 200);      
-        }catch(Exeception $e) {
+        }catch(Exception $e) {
             //if any operation fails, rollback what is saved
             DB::rollBack();
             $res['status']   = false;
