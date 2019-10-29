@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\ResidentGateman;
+use App\Service_Provider;
 use App\User;
+use App\Home;
 use App\Http\Resources\Resident as ResidentResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,27 +30,38 @@ class ResidentController extends Controller
         DB::beginTransaction();
 
         try{
+           $check_exist = ResidentGateman::where('user_id',  $this->user->id)->where('gateman_id', $id)->first();
+           if(!$check_exist){
+               $residentGateman = ResidentGateman::firstOrCreate([
+                    'user_id'     => $this->user->id, //login user id
+                    'gateman_id'  =>   $id
+                ]);
+                // Confirm that the Id entered is for a gateman 
+                $gateman = User::find($id); 
+    
+                if($gateman->role == 2){
+    
+                        DB::commit();
+                        $msg['status'] = true;
+                        $msg['message'] = 'Your Invite has been sent to Gateman';
+                        $msg['residentGateman'] = $residentGateman;
+                        return response()->json($msg, 200); 
+                        
+                }else {
+                    $msg['status'] = false;
+                    $msg['message'] = 'That user is not a gateman please try again';
+                    return response()->json($msg, 404); 
+                }
 
-           $residentGateman = ResidentGateman::firstOrCreate([
-                'user_id'     => $this->user->id, //login user id
-                'gateman_id'  =>   $id
-            ]);
-            // Confirm that the Id entered is for a gateman 
-            $gateman = User::find($id); 
-
-            if($gateman->role == 2){
-
-                    DB::commit();
-                    $msg['message'] = 'Your Invite has been sent to Gateman';
-                    $msg['residentGateman'] = $residentGateman;
-                    $msg['status'] = 201;
-                    return $msg;
-                    
-            }else {
-                $msg['message'] = 'That user is not a gateman please try again';
-                $msg['status'] = 404;
-                return $msg;      
-            }
+           }else {
+                $msg['status'] = false;
+                if($check_exist->request_status == 0){
+                    $msg['message'] = "An invitation has already been sent and has not been attended to yet!";
+                } elseif($check_exist->request_status == 1) {
+                    $msg['message'] = "Invitation already accepted!";
+                }  
+                return response()->json($msg, 405); 
+           }
            
 
         }catch(\Exception $e) {
@@ -58,8 +71,7 @@ class ResidentController extends Controller
             $msg['message'] = "Error: Could not invite gateman, please try again!";
             $msg['user'] = null;
             $msg['hint'] = $e->getMessage();
-            $msg['status'] = 501;
-            return $msg;
+            return response()->json($msg, 501); 
         }
 
 
@@ -89,17 +101,28 @@ class ResidentController extends Controller
     {
        if (Auth::check()) {
         //$this->validatePhone($request);
-        $gatemen = User::where('phone', 'LIKE', "%{$phone}%")->where('role', "=", "2")->get();
+        //$gatemen = User::where('phone', 'LIKE', "%{$phone}%")->where('role', "=", "2")->get();
         
-        
-        if ($gatemen ->isEmpty()){
+        $gatemen = User::where([
+            ['phone', $phone],
+            ['role', "2"],
+            ])->first(); 
+ 
+        if (!($gatemen)){
             //Error Handling
             $res['Error']    = "No Gateman found with this phone number";
             return response()->json($res, 404);  
              
         } else
-             $allgatemen = ResidentResource::collection($gatemen); //Use Resource to format Output 
-             return response()->json($allgatemen); 
+             $homeResident = Home::Where("user_id", $this->user->id)->pluck("estate_id");
+             $homeGateman = Home::Where("user_id", $gatemen->id)->pluck("estate_id");
+             if($homeGateman != $homeResident) {
+                $res['Error']    = "Gateman and Resident are not in the same estate";
+                return response()->json($res, 404); 
+             }
+              
+             return response()->json($gatemen);
+
       } 
     }
 
@@ -107,8 +130,9 @@ class ResidentController extends Controller
     {
        if (Auth::check()) {
         //$this->validateName($request);
-        $gatemen = User::where('name', 'LIKE', "%{$name}%")
-        ->where('role', "=", "2")->get();
+        //$gatemen = User::where('name', 'LIKE', "%{$name}%")->where('role', "=", "2")->get();
+        $gatemen = User::where('name', '=', "%{$name}%")->where('role', "=", "2")->get();
+
         if ($gatemen ->isEmpty()){
             //Error Handling
             $res['Error']    = "No Gateman found with this name";
@@ -145,62 +169,40 @@ class ResidentController extends Controller
 
     }
 
-    public function pendingInvitation($id){
-        DB::beginTransaction();
+    
 
-        try{
-            $pendingInvitation = ResidentGateman::find([
-                "user_id" => $id,
-                "request_status" => 0
-            ]);
+    public function viewPendingGateman (){
+        $residentGateman = ResidentGateman::where('user_id', $this->user->id)
+            ->where('request_status', 0)
+            ->get('gateman_id');
 
-            $res['message'] = 'My Pending Invitations';
-            $res['data']    = $pendingInvitation;
+        $gateman = User::find($residentGateman);
 
-            DB::commit();
-            $res['status'] = 201;
-            return $res;
-
-        }catch(\Exception $e) {
-            //if an error occurs the relationship is not established
-            DB::rollBack();
-
-            $res['message'] = "Error: Could not get pending gateman invitation";
-            $res['user'] = null;
-            $res['hint'] = $e->getMessage();
-            $res['status'] = 501;
-            return $res;
+        if($gateman){
+            $msg["data"] = $gateman;
+            return response()->json($msg, 200);
+        }else{
+            $msg['message'] = 'No Gateman added';
+            $msg['status'] = 404;
+            return response()->json($mag, 404); 
         }
     }
 
 
-    public function acceptedInvitation($id){
-        DB::beginTransaction();
+    public function viewAcceptedGateman (){
+        $residentGateman = ResidentGateman::where('user_id', $this->user->id)
+            ->where('request_status', 1)
+            ->get('gateman_id');
 
-        try{
-            $pendingInvitation = ResidentGateman::find([
-                "user_id" => $id,
-                "request_status" => 1
-            ]);
+        $gateman = User::find($residentGateman);
 
-            $res['message'] = 'My Pending Invitations';
-            $res['data']    = $pendingInvitation;
-
-            DB::commit();
-            $res['status'] = 201;
-            return $res;
-
-        }catch(\Exception $e) {
-            //if an error occurs the relationship is not established
-            DB::rollBack();
-
-            $res['message'] = "Error: Could not get pending gateman invitation";
-            $res['user'] = null;
-            $res['hint'] = $e->getMessage();
-            $res['status'] = 501;
-            return $res;
+        if($gateman){
+            $msg["data"] = $gateman;
+            return response()->json($msg, 200);
+        }else{
+            $msg['message'] = 'No Gateman added';
+            $msg['status'] = 404;
+            return response()->json($msg, 404); 
         }
     }
-
-
 }
