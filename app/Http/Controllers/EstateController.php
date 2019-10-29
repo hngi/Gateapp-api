@@ -7,6 +7,7 @@ use App\Estate;
 use App\Home;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ImageController;
 
 class EstateController extends Controller
 {
