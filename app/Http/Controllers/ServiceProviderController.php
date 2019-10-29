@@ -11,6 +11,17 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ImageController;
 
+
+
+// $query = DB::table('bookings')
+//                 ->join('users','bookings.user_id','=','users.id' )
+//                 ->join('rooms','bookings.rooms_id','=','rooms.id' )
+// 				->join('customers','bookings.customers_id','=','customers.id' )
+// 				->select('bookings.checkin_time as checkin_time', 'bookings.checkout_time as checkout_time', 'rooms.room_code as room_code','users.firstname as cashier_fname','users.lastname as cashier_lname','customers.name as cus_name', 'customers.address as cus_address', 'customers.phone as cus_phone', 'customers.gender as cus_gender');
+
+// 		$query->where('bookings.active', 1);
+// 		$query->orderBy('rooms.room_code', 'asc');
+
 class ServiceProviderController extends Controller
 {
     public function showAll() {
@@ -20,11 +31,20 @@ class ServiceProviderController extends Controller
            $user = Auth::user();
            $role = $user->role;
 
-           if ($role === "1" || $role === "2") {
-                $service = Service_Provider::all();
+           if ($role === "1" || $role === "2" || $role == '0') {
+                // $service = Service_Provider::all();
+                $query = DB::table('service_providers')
+                                ->join('estates', 'service_providers.estate_id', '=', 'estates.id')
+                                ->join('sp_category', 'service_providers.category_id', '=', 'sp_category.id')
+                                ->select('service_providers.id as id', 'service_providers.name as name', 'service_providers.phone as phone', 'service_providers.description as description', 'estates.estate_name as estate', 'sp_category.title as categroy');
+
+                // $query->orderBy('service_providers.name');
+                $service = $query->get();
+
                 if (!$service->isEmpty()) {
                     $res["status"] = 200;
                     $res["message"] = "All service providers.";
+                    $res["count"] = $service->count();
                     $res["data"] = $service;
                 } else {
                     $res["status"] = 200;
@@ -79,8 +99,16 @@ class ServiceProviderController extends Controller
            $user = Auth::user();
            $role = $user->role;
 
-           if ($role === "1" || $role === "2") {
-                $service = Service_Provider::find($id);
+           if ($role === "1" || $role === "2" || $role == '0') {
+                // $service = Service_Provider::find($id);
+                $query = DB::table('service_providers')
+                ->join('estates', 'service_providers.estate_id', '=', 'estates.id')
+                ->join('sp_category', 'service_providers.category_id', '=', 'sp_category.id')
+                ->where('service_providers.id', '=', $id)
+                ->select('service_providers.id as id', 'service_providers.name as name', 'service_providers.phone as phone', 'service_providers.description as description', 'estates.estate_name as estate', 'sp_category.title as categroy');
+
+                $service = $query->get();
+
                 if (!is_null($service)) {
                     $res["status"] = 200;
                     $res["message"] = "Service provider found.";
