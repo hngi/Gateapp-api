@@ -15,7 +15,7 @@ class CreateResidentGatemanTable extends Migration
     {
         Schema::create('resident_gateman', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->boolean('request_status')->nullable();  // null (pending) 0 (rejected) 1 (accepted)
+            $table->boolean('request_status')->default(0);  // null (pending) 0 (rejected) 1 (accepted)
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('gateman_id');
 

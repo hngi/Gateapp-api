@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateResidentsAndGatemansTable extends Migration
+class CreateFaqsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class CreateResidentsAndGatemansTable extends Migration
      */
     public function up()
     {
-        Schema::create('residents_and_gatemans', function (Blueprint $table) {
+        Schema::create('faqs', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('title');
+            $table->text('content');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateResidentsAndGatemansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('residents_and_gatemans');
+        Schema::dropIfExists('faqs');
     }
 }

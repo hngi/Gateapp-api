@@ -18,12 +18,5 @@ class Gateman extends Model
     ];
 
     protected $table = 'resident_gateman';
-
-    /**
-     * The user that belongs to the gateman
-     */
-    public function user()
-    {
-        return $this->belongsTo('App\User');
-    }
 }
+

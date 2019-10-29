@@ -7,21 +7,34 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\JWTAuth;
 
 class VerificationController extends Controller
 {
+    public function __construct(JWTAuth $jwt)
+    {
+        $this->jwt = $jwt;
+    }
+
       //generate new password for the user
     public function generatedPassword()
     {
-        return substr(md5(time()), 0, 6);
+        return mt_rand(1000,9999);
     }
 
+    public function expireTime() {
+        $myTTL = 120960; //minutes
+        return $this->jwt->factory()->setTTL($myTTL);
+    }
     public function verify(Request $request, User $user) {
 
         $this->validate($request, [
             'verifycode'  => 'required|max:6',
             'device_id' => 'required'
         ]);
+
+        $this->expireTime();
 
         $verifycode = $request->input('verifycode');
         $checkCode  = User::where('verifycode', $verifycode)->exists();
@@ -46,7 +59,9 @@ class VerificationController extends Controller
                 $msg['token_type'] = 'bearer';
                 $msg['expires_in(minutes)'] = (int)auth()->factory()->getTTL();
                 $msg['image_link'] = 'https://res.cloudinary.com/getfiledata/image/upload/';
-                $msg['image_format'] = 'w_200,c_thumb,ar_4:4,g_face/';
+                $msg['image_round_format']  = 'w_200,c_fill,ar_1:1,g_auto,r_max/';
+                $msg['image_square_format'] = 'w_200,ar_1:1,c_fill,g_auto/';
+                $msg['image_example_link']  = 'https://res.cloudinary.com/getfiledata/image/upload/w_200,c_fill,ar_1:1,g_auto,r_max/noimage.jpg';
 
                 return response()->json($msg, 200);
                 
