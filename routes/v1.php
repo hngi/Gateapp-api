@@ -71,7 +71,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Show all visitor
 
-    Route::get('visitors/all', 'VisitorController@index')->middleware('superAdminadmin');
+    Route::get('visitors/all', 'VisitorController@index')->middleware('superAdmin');
 
     //create faq
     Route::post('faq', 'FaqController@store')->middleware('superAdmin');
@@ -126,16 +126,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //Show total number of pending service providers in the estate of logged in Estate Admin 
     Route::get('statistics/pendingEstateService/', 'Statistics\ServiceStatsController@pendingEstateRequests')->middleware('estateAdmin');
-
-
-
-
 });
-    
-
-    
-
-
 
 // General Users Routes *******************************************************
 Route::group(['middleware' => ['jwt.verify']], function () {
