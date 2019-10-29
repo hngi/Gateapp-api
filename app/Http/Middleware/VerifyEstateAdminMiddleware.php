@@ -18,7 +18,7 @@ class VerifyEstateAdminMiddleware
         $user = auth()->user();
 
         // WE need  an authenticated user
-        if (! $user) {
+        if (!$user) {
             return response(['unauthorised'], 401);
         }
 
@@ -29,4 +29,6 @@ class VerifyEstateAdminMiddleware
 
         return $next($request);
     }
+
 }
+
