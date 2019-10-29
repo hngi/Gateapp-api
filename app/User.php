@@ -17,7 +17,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password', 'phone', 'image', 'verifycode', 'role',
+        'name', 'username', 'email', 'password', 'phone', 'image', 'verifycode', 'role', 'user_type', 'device_id','duty_time'
     ];
 
     /**
@@ -26,7 +26,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'email_verified_at', 'verifycode', 'role',
+        'password', 'remember_token', 'email_verified_at', 'verifycode', 'role', 'fcm_token', '2_factor_enabled'
     ];
 
     /**
@@ -45,5 +45,30 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    // visitor's relationship with user
+    public function visitors()
+    {
+        return $this->hasMany(Visitor::class);
+    }
+    public function home()
+    {
+        return $this->hasOne(Home::class);
+    }
+    /**
+     * Route notifications for the FCM channel.
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return string
+     */
+    public function routeNotificationForFcm($notification)
+    {
+        return $this->fcm_token;
+    }
+
+    public function settings()
+    {
+        return $this->hasOne(\App\Setting::class);
     }
 }

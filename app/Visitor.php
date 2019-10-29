@@ -1,35 +1,63 @@
 <?php
+
 namespace App;
+
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+
+
 class Visitor extends Model
 {
+    use Notifiable;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'visitor_name', 'arrival_date', 'car_plate_no', 'purpose', 'image', 'status',
+        'name',
+        'arrival_date',
+        'car_plate_no',
+        'phone_no',
+        'purpose',
+        'image',
+        'status',
+        'time_in',
+        'time_out',
+        'qr_code',
+        'visiting_period',
+        'description',
     ];
 
+    /**
+     * Get the user that the visitor visited.
+     * This expects that visitor table has a col named user_id
+     */
+    public function user()
+    {
+        // return $this->belongsTo(User::class);
+        return $this->belongsTo('App\User');
+    }
 
     /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
+     * Get the home that the visitor visited.
+     * This expects that visitor table has a col named home_id
      */
-
-    protected $hidden = [
-    ];
-
+    public function home()
+    {
+        // return $this->belongsTo(Home::class);
+        return $this->belongsTo('App\Home');
+    }
 
     /**
-     * The primary key associated with the table.
+     * Route notifications for the FCM channel.
      *
-     * @var string
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return string
      */
-    protected $primaryKey = 'visitor_id';
-
-
-    public $timestamps = false;
+    public function routeNotificationForFcm($notification)
+    {
+        return $this->device_id;
+    }
 }

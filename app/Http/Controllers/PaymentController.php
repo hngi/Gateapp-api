@@ -2,84 +2,107 @@
 
 namespace App\Http\Controllers;
 
-use App\Payment;
 use Illuminate\Http\Request;
+use App\Payment;
+use App\Home;
+use App\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class PaymentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+	//Fetch all resisdent payment
+	public function aUserPayment($id) {
+	    $user = Auth::user();
+	    $payments = Payment::where('user_id', $id)
+    			->with(['home' => function($query){
+                    $query->with('estate');
+                 }])
+    			->with('user')
+    			->get();
+    	foreach ($payments as $payment) {
+    		$home = Home::where('id', $payment->home_id)->first();
+			if (!$home && ($user->id == $home->user_id)) {
+				$res['message'] = "Payment not traceble to your home";
+			   	$res['payment'] = null;
+			   	$res['status'] = 404;
+			   	return response()->json($res, $res['status']);
+			}
+    	}
+		$res = $this->getPayment($payments);
+		return response()->json($res, $res['status']);
+	}
+	//fetch all payment by a user
+	public function oneUniquePayment($id) {
+	   $user = Auth::user();
+	   $payments = Payment::where('id', $id)
+	    			->with(['home' => function($query){
+	                    $query->with('estate');
+	                 }])
+	    			->with('user')
+	    			->first();
+	    $home = Home::where('id', $payments->home_id)->first();
+		if (!$home && ($user->id == $home->user_id)) {
+			$res['message'] = "Payment not traceble to your home";
+		   	$res['payment'] = null;
+		   	$res['status'] = 404;
+		   	return response()->json($res, $res['status']);
+		}
+		 $res = $this->getPayment($payments);
+		 return response()->json($res, $res['status']);
+	}
+    public function getPayment($payments)
+	{
+	   if(!$payments) {
+		   	$res['message'] = "Could not find payment";
+		   	$res['payment'] = null;
+		   	$res['status'] = 404;
+		   	return $res;
+	   	}
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+		$res['message'] = "Payment was found";
+     	$res['payment'] = $payments;
+   	    $res['status'] = 200;
+	   	return $res;
+	}
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+	public function postPayment(Request $request, Payment $payment, $home_id) {
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Payment  $payment
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Payment $payment)
-    {
-        //
-    }
+		$user = Auth::user();
+		$check_home_id = Home::where('id', $home_id)->exists();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Payment  $payment
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Payment $payment)
-    {
-        //
-    }
+		if($check_home_id) {
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Payment  $payment
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Payment $payment)
-    {
-        //
-    }
+			$this->validate($request, [
+	            'amount' => 'required|min:1',
+	        ]);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Payment  $payment
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Payment $payment)
-    {
-        //
-    }
+			 //start temporay transaction
+       		 DB::beginTransaction();
+	        try {
+		        $payment->home_id = $request->input('home_id');
+			 	$payment->amount  = $request->input('amount');
+			 	$payment->save();
+
+			 	//if operation was successful save commit save to database
+    			DB::commit();
+	        	$data['message'] = "Payment saved successfully";
+	        	$data['payment'] = $payment;
+		        	return response()->json($data, 200);
+	         }catch(\Exception $e) {
+
+	        	//if any operation fails, Thanos snaps finger - user was not created rollback what is saved
+          		DB::rollBack();
+	        	$data['message'] = "Failed to save payment, please try again";
+	        	$msg['hint'] = $e->getMessage();
+	        	return response()->json($data, 501);
+	        }
+		}else{
+			$data['message'] = "Home not found";
+			$status = 404;
+		}
+
+	}
+
 }

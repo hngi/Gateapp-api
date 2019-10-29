@@ -18,9 +18,12 @@ class CreateServiceProvidersTable extends Migration
             $table->string('name');
             $table->string('phone', 20);
             $table->string('description', 2000);
-            $table->string('image');
-            $table->integer('estate_id')->unsigned();
+            $table->string('image')->default('noimage.jpg');
+            $table->unsignedBigInteger('estate_id');
+            $table->integer('category_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('estate_id')->references('id')->on('estates')->onDelete('cascade');
         });
     }
 
