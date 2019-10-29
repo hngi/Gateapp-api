@@ -25,6 +25,7 @@ class CreateVisitorsTable extends Migration
             $table->timestamp('time_in')->nullable();
             $table->timestamp('time_out')->nullable();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('estate_id');
             $table->string('qr_code', 10);
             $table->string('visiting_period', 15)->nullable();
             $table->string('description')->nullable();

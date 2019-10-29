@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class VerifyAdminMiddleware
+class VerifyEstateAdminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -23,10 +23,9 @@ class VerifyAdminMiddleware
         }
 
         // The user must be an admin
-        if ($user->role != 0) {
+        if ($user->role != 3) {
             return response(['Forbidden', 'Not allowed to access this route!'], 403);
         }
 
         return $next($request);
     }
-}
