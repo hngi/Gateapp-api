@@ -20,6 +20,7 @@ class CreateServiceProvidersTable extends Migration
             $table->string('description', 2000);
             $table->string('image')->default('noimage.jpg');
             $table->unsignedBigInteger('estate_id');
+            $table->boolean('status')->default(0);
             $table->integer('category_id')->unsigned();
             $table->timestamps();
 
