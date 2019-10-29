@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        #body{
+    display:flex;
+    margin:0;
+    padding: 0;
+}
+#menu{
+   background-color: #49A347;
+   padding: 30px; 
+   color:white;
+   width:25%;
+   margin:0;
+}
+#menu h1{
+    font-family: Ubuntu;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 45px;
+}
+#menu h1 span{
+    color: rgb(83, 80, 80);
+}
+.fa-angle-up{
+    display:none;
+    opacity:0;
+}
+#menu p{
+    display: flex;
+    justify-content: space-between;
+    font-family: Ubuntu;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 45px;
+}
+#content{
+   width:75%;
+   padding: 30px; 
+
+}
+#svg{
+    margin-left:95%
+}
+#prov{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 40px;
+    align-items: center;
+    height: 50px;
+    border-bottom: 1px solid black;
+}
+#prov input{
+    padding: 0 10px;
+    height: 30px
+}
+#titles{
+    display:flex;
+    border-bottom: 1px solid black;
+}
+#titles p{
+    width:26%;
+}
+#show{
+    display: flex;
+}
+#show div{
+    width:30%;
+    margin-right:20px;
+}
+#links{
+    color:#49A347;
+}
+.fas{
+    color:white;
+}
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://kit.fontawesome.com/f202766429.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="body">
+        <div id="menu">
+            <h1><span>Gate</span>PASS</h1>
+           <p> Dashboard</p>
+           <p> <span>Admins</span>
+                <span>
+                    <i class="fas fa-angle-up"></i><i class="fas fa-angle-down"></i>
+                </span>
+           </p>
+           <p>Residents</p>
+           <p> <span>Visitors</span>
+                <span>
+                    <i class="fas fa-angle-up"></i><i class="fas fa-angle-down"></i>
+                </span>
+           </p>
+           <p> <span>Estates</span>
+                <span>
+                    <i class="fas fa-angle-up"></i><i class="fas fa-angle-down"></i>
+                </span>
+           </p>
+           <p> <span>Providers</span> 
+                <span><i class="fas fa-angle-up"></i><i class="fas fa-angle-down"></i></span>
+           </p>
+           <h6>All Providers</h6>
+           <h6>Provider Requests</h6>
+        </div>
+        <div id="content">
+            <div>
+                <p id="svg"><svg width="25" height="30" viewBox="0 0 25 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.4987 29.0833C14.1029 29.0833 15.4154 27.7708 15.4154 26.1666H9.58203C9.58203 26.9401 9.88932 27.682 10.4363 28.229C10.9833 28.776 11.7251 29.0833 12.4987 29.0833ZM21.2487 20.3333V13.0416C21.2487 8.5645 18.857 4.81659 14.6862 3.82492V2.83325C14.6862 1.62284 13.7091 0.645752 12.4987 0.645752C11.2883 0.645752 10.3112 1.62284 10.3112 2.83325V3.82492C6.12578 4.81659 3.7487 8.54992 3.7487 13.0416V20.3333L0.832031 23.2499V24.7083H24.1654V23.2499L21.2487 20.3333Z" fill="black"/>
+                    </svg>
+                    </p>
+                <div id="prov">
+                        <p>Providers</p>
+                        <input type="text" placeholder="Search Producers">
+                </div>
+            </div>
+            <div id="titles">
+                <p>Name</p>
+                <p>Service Type</p>
+                <p>Location</p>
+            </div>
+            <div id="show">
+                <Div>
+                   <p>General Cleanin’</p>
+                   <p>Hair as a Service (HaaS)</p>
+                   <p>BabySitter Inc.</p>
+                   <p>Obonge Catering</p>
+                   <p>General Cleanin’</p>
+                   <p>Hair as a Service (HaaS)</p>
+                   <p>BabySitter Inc.</p>
+                   <p>General Cleanin’</p>
+                   <p>Hair as a Service (HaaS)</p>
+                   <p>BabySitter Inc.</p>
+                </Div>
+                <div>
+                   <p>Beauty & Fashion</p>
+                   <p>Lifestyle & Care</p>
+                   <p>Food & Catering</p>
+                   <p>Cleaning & Sanitation</p> 
+                   <p>Beauty & Fashion</p>
+                   <p>Lifestyle & Care</p>
+                   <p>Food & Catering</p>
+                   <p>Cleaning & Sanitation</p> 
+                   <p>Beauty & Fashion</p>
+                   <p>Lifestyle & Care</p>
+                </div>
+                <div>
+                   <p>Conspicuous Address value</p>
+                   <p>Km 10, Third Mainland Ike...</p>
+                   <p>Park Avenue, Lekki o</p>
+                   <p>Conspicuous Address value</p>
+                   <p>Km 10, Third Mainland Ike...</p>
+                   <p>Park Avenue, Lekki o</p>
+                   <p>Conspicuous Address value</p>
+                   <p>Km 10, Third Mainland Ike...</p>
+                   <p>Park Avenue, Lekki o</p>
+                   <p>Km 10, Third Mainland Ike...</p>
+
+                </div>
+                <div id="links">
+                    <p>View Details</p>
+                    <p>View Details</p>
+                    <p>View Details</p>
+                    <p>View Details</p>
+                    <p>View Details</p>
+                    <p>View Details</p>
+                    <p>View Details</p>
+                    <p>View Details</p>
+                    <p>View Details</p>
+                    <p>View Details</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <script>
+        let cli = (e)=>{
+        //     if(e.target.className.includes('fas')){
+        //         e.target.style.display='none';
+        //     //    if(e.target.previousSibling||e.target.previousSibling){
+        //     //     e.target.previousSibling.style.display='block'
+        //     //     e.target.style.display='none';
+
+        //     //    }else if(e.target.nextSibling){
+        //     //     e.target.nextSibling.style.display='block'
+        //     //     e.target.style.display='none';
+
+               
+        //        }
+                
+                
+        //         console.log(e.target.previousSibling);
+        //         console.log(e.target)
+        //     }else{
+        //         console.log('not')
+        //     }
+        //     // console.log(e.target)
+        //     // console.log(e.target.className)
+        // }
+        // document.querySelector('#menu').addEventListener('click',cli)
+    </script> -->
+</body>
+</html>
