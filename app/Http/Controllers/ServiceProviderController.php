@@ -12,16 +12,6 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ImageController;
 
 
-
-// $query = DB::table('bookings')
-//                 ->join('users','bookings.user_id','=','users.id' )
-//                 ->join('rooms','bookings.rooms_id','=','rooms.id' )
-// 				->join('customers','bookings.customers_id','=','customers.id' )
-// 				->select('bookings.checkin_time as checkin_time', 'bookings.checkout_time as checkout_time', 'rooms.room_code as room_code','users.firstname as cashier_fname','users.lastname as cashier_lname','customers.name as cus_name', 'customers.address as cus_address', 'customers.phone as cus_phone', 'customers.gender as cus_gender');
-
-// 		$query->where('bookings.active', 1);
-// 		$query->orderBy('rooms.room_code', 'asc');
-
 class ServiceProviderController extends Controller
 {
     public function showAll() {
@@ -38,7 +28,6 @@ class ServiceProviderController extends Controller
                                 ->join('sp_category', 'service_providers.category_id', '=', 'sp_category.id')
                                 ->select('service_providers.id as id', 'service_providers.name as name', 'service_providers.phone as phone', 'service_providers.description as description', 'estates.estate_name as estate', 'sp_category.title as categroy');
 
-                // $query->orderBy('service_providers.name');
                 $service = $query->get();
 
                 if (!$service->isEmpty()) {
