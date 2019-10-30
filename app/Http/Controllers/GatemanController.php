@@ -422,7 +422,7 @@ class GatemanController extends Controller
                     ->get();
 
                 return response()->json([
-                    'count' => $user->count(),
+                    'count' => $gatemen->count(),
                     'status' => true,
                     'gatemen' => $gatemen,
                 ], 200);
@@ -440,7 +440,7 @@ class GatemanController extends Controller
                         'homes.id as home_id', 'users.id as user_id'
                     ]);
 
-                if($user) {
+                if($gateman) {
                     return response()->json([
                         'status' => true,
                         'gateman' => $gateman
