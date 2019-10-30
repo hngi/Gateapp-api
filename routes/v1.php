@@ -183,7 +183,17 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //Select Estate
     Route::post('/estate/choose/{id}', 'EstateController@estateMemeber');
 
+    // Get a single gateman or all gatemen for an estate
+    Route::get('estate/{estate_id}/gateman/{id?}', 'GatemanController@estateGatemen')->middleware('estateAdmin');
 
+    // Add gateman to an estate
+    Route::post('estate/{id}/gateman', 'GatemanController@addEstateGateman')->middleware('estateAdmin');
+
+    // Edit a gateman for an estate
+    Route::put('estate/{estate_id}/gateman/{id}', 'GatemanController@updateEstateGateman')->middleware('estateAdmin');
+
+    // Delete a single gateman or list of gatemen for an estate
+    Route::delete('estate/{estate_id}/gateman/{id}', 'GatemanController@deleteEstateGateman')->middleware('estateAdmin');
 
     //(Users Messging)
     //Get message
