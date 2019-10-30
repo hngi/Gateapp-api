@@ -15,17 +15,17 @@ class ServiceProviderController extends Controller
 {
     public function showAll() {
         $res = array();
-        
+
         if (Auth::check()) {
            $user = Auth::user();
            $role = $user->role;
-            
+
            if ($role === "1" || $role === "2") {
                 $service = Service_Provider::all();
                 if (!$service->isEmpty()) {
                     $res["status"] = 200;
                     $res["message"] = "All service providers.";
-                    $res["data"] = $service;       
+                    $res["data"] = $service;
                 } else {
                     $res["status"] = 200;
                     $res["message"] = "No service providers registered";
@@ -49,7 +49,7 @@ class ServiceProviderController extends Controller
         $res = array();
 
         try {
-            
+
           $service = Category::with(['service_provider' => function ($query) use ($estate_id) {
         $query->whereIn('estate_id', $estate_id); }])->get();
 
@@ -74,11 +74,11 @@ class ServiceProviderController extends Controller
     public function show($id)
     {
         $res = array();
-        
+
         if (Auth::check()) {
            $user = Auth::user();
            $role = $user->role;
-            
+
            if ($role === "1" || $role === "2") {
                 $service = Service_Provider::find($id);
                 if (!is_null($service)) {
@@ -87,9 +87,9 @@ class ServiceProviderController extends Controller
                     $res["data"] = $service;
                 } else {
                     $res["status"] = 200;
-                    $res["message"] = "No service provider found.";   
+                    $res["message"] = "No service provider found.";
                 }
-               
+
             } else {
                 $res['status'] = 401;
                 $res['message'] = "You must login as a resident or admin.";
@@ -100,25 +100,25 @@ class ServiceProviderController extends Controller
         }
         return response()->json($res, $res['status']);
     }
- 
+
 
     public function byCategory($category_id) {
         $res = array();
-        
+
         if (Auth::check()) {
             $user = Auth::user();
             $role = $user->role;
-           
+
             if ($role === "1" || $role === "2") {
                 try {
-                    $services = Service_Provider::where('category_id', $category_id)->get(); 
-                    
+                    $services = Service_Provider::where('category_id', $category_id)->get();
+
                     if(!$services->isEmpty()) {
                         $res['status'] = 200;
                         $res['message'] = "Retrieved service providers";
                         $res['data'] = $services;
-                        
-                    } else {    
+
+                    } else {
                         $res['status'] = 404;
                         $res['message'] = "No service providers in this category";
                     }
@@ -148,7 +148,7 @@ class ServiceProviderController extends Controller
           ]);
 
         if ($validator->fails()) {
-        return ['message' => 'Please fill all Fields']; 
+        return ['message' => 'Please fill all Fields'];
         }
         //start temporay transaction
         DB::beginTransaction();
@@ -161,8 +161,8 @@ class ServiceProviderController extends Controller
             $service->estate_id   = $request->input("estate_id");
             $service->category_id = $request->input("category_id");
 
-            //Upload image 
-            //Upload image 
+            //Upload image
+            //Upload image
             if($request->hasFile('image')) {
                 $data = $this->upload($request, $image);
                 if($data['status_code'] !=  200) {
@@ -209,7 +209,7 @@ class ServiceProviderController extends Controller
 
         //start temporay transaction
         DB::beginTransaction();
-        try{    
+        try{
             $service              = Service_Provider::find($id);
             $service->name        = $request->input("name");
             $service->phone       = $request->input("phone");
@@ -217,7 +217,7 @@ class ServiceProviderController extends Controller
             $service->estate_id   = $request->input("estate_id");
             $service->category_id = $request->input("category_id");
 
-              //Upload image 
+              //Upload image
             if($request->hasFile('image')) {
                 $data = $this->upload($request, $image, $service);
                 if($data['status_code'] !=  200) {
@@ -362,5 +362,25 @@ class ServiceProviderController extends Controller
         //Image Engine
         $res = $image->imageUpload($request, $table);
         return $res;
+    }
+
+    public function approve($id) {
+        $application = Service_Provider::where('id', '=', e($id))->first();
+        if($application)
+        {
+            $application->status = 1;
+            $application->save();
+
+            return response()->json(['status' => true, 'message' => 'Service provider accepted'], 200);
+        }
+    }
+    public function reject($id) {
+        $application = Service_Provider::where('id', '=', e($id))->first();
+        if($application)
+        {
+            $application->delete($id);
+
+            return response()->json(['message' => 'Service provider rejected']);
+        }
     }
 }

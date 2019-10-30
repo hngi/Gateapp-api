@@ -111,52 +111,55 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     Route::get('visitors/all', 'VisitorController@index')->middleware('superAdmin');
 
-    // Show Total Number of Estates on the system 
+    // Show Total Number of Estates on the system
     Route::get('statistics/estate', 'Statistics\EstateStatsController@index')->middleware('superAdmin');
 
-    // Show  Total Number of Estates added that week 
+    // Show  Total Number of Estates added that week
     Route::get('statistics/weeklyEstate', 'Statistics\EstateStatsController@showWeek')->middleware('superAdmin');
-    
-    // Show Total Number of Estates added that month 
+
+    // Show Total Number of Estates added that month
     Route::get('statistics/monthlyEstate', 'Statistics\EstateStatsController@showMonth')->middleware('superAdmin');
 
-    // Show Total Number of Service Providers on the system 
+    // Show Total Number of Service Providers on the system
     Route::get('statistics/service', 'Statistics\ServiceStatsController@index')->middleware('superAdmin');
 
-    // Show Total Number of Service Providers added that week 
+    // Show Total Number of Service Providers added that week
     Route::get('statistics/weeklyService', 'Statistics\ServiceStatsController@weeklyService')->middleware('superAdmin');
 
-    // Show Total Number of Service Providers added that month 
+    // Show Total Number of Service Providers added that month
     Route::get('statistics/monthlyService', 'Statistics\ServiceStatsController@monthlyService')->middleware('superAdmin');
-    
+
     // Show Total Number of Visits scheduled on the Application
     Route::get('statistics/visits', 'Statistics\VisitorStatsController@index')->middleware('superAdmin');
-    
-    //Show Total Number of Visits Scheduled for that week on the application 
+
+    //Show Total Number of Visits Scheduled for that week on the application
     Route::get('statistics/weeklyVisits', 'Statistics\VisitorStatsController@weeklyVisits')->middleware('superAdmin');
 
-    //Show Total Number of Visits Scheduled for that month on the application 
+    //Show Total Number of Visits Scheduled for that month on the application
     Route::get('statistics/monthlyVisits', 'Statistics\VisitorStatsController@monthlyVisits')->middleware('superAdmin');
 
-    //Show Total Number of Service Providers on the system 
+    //Show Total Number of Service Providers on the system
     Route::get('statistics/service', 'Statistics\ServiceStatsController@index')->middleware('superAdmin');
 
-    //Show Pending Service Provider Requests on the systen 
+    //Show Pending Service Provider Requests on the systen
     Route::get('statistics/pendingService', 'Statistics\ServiceStatsController@pendingRequests')->middleware('superAdmin');
 
-    //Show total Number of service Providers in the estate of logged in Estate Admin 
+    //Show total Number of service Providers in the estate of logged in Estate Admin
     Route::get('statistics/estateService/', 'Statistics\ServiceStatsController@show')->middleware('estateAdmin');
 
-    //Show total number of pending service providers in the estate of logged in Estate Admin 
+    //Show total number of pending service providers in the estate of logged in Estate Admin
     Route::get('statistics/pendingEstateService/', 'Statistics\ServiceStatsController@pendingEstateRequests')->middleware('estateAdmin');
 
 
+    Route::post('/service-provider/approve/{id}', 'ServiceProviderController@approve')->middleware('estateAdmin');
+
+    Route::post('/service-provider/reject/{id}', 'ServiceProviderController@reject')->middleware('estateAdmin');
 
 
 });
-    
 
-    
+
+
 
 
 
@@ -257,7 +260,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //show payment
     Route::get('/payment/{id}', 'PaymentController@oneUniquePayment')->middleware('checkResident');
 
-    //Service Directory by estate 
+    //Service Directory by estate
     Route::get('/serviceProvider/estate/', 'ServiceProviderController@byEstate')->middleware('checkResident');
 
     //(Users Visitors)
@@ -384,3 +387,6 @@ Route::get('/test-notification2', function () {
 //     event(new App\Events\notify('Someone'));
 //     return "Notification sent";
 // });
+
+// test admin accept and reject service provider
+
