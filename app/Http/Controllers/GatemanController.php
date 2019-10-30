@@ -314,7 +314,7 @@ class GatemanController extends Controller
         User $new_user,
         Request $request
     ){
-        // Verifies that the user is assigned to that estate
+        // Verifies that the logged-in user is assigned to the requested estate
         $user_estate = Home::whereUserIdAndEstateId($this->user->id, $id)->first();
         
         if (is_null($user_estate)) {
@@ -386,7 +386,7 @@ class GatemanController extends Controller
         $id = null,
         Request $request
     ){
-        // Verifies that the user is assigned to that estate
+        // Verifies that the logged-in user is assigned to the requested estate
         $user_estate = Home::whereUserIdAndEstateId($this->user->id, $estate_id)->first();
         
         if (is_null($user_estate)) {
