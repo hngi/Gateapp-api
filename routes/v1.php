@@ -44,6 +44,17 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //show all admin
     Route::get('/admin', 'UserProfileController@showAllAdmin')->middleware('superAdmin');
 
+
+    // Show all visitor
+    Route::get('allVisitors', 'VisitorController@index')->middleware('admin');
+
+
+    //(Admin interactions with Estates)
+
+    //Admin only Update Estates by estate_id
+    Route::put('/estate/edit/{id}', 'EstateController@update')->middleware('admin');
+
+
     //Delete Estates by estate_id
     Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate')->middleware('superAdmin');
 
@@ -250,7 +261,6 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/serviceProvider/estate/', 'ServiceProviderController@byEstate')->middleware('checkResident');
 
     //(Users Visitors)
-
     // Show signed in user visitor
     Route::get('visitor', 'VisitorController@residentVisitor')->middleware('checkResident');
    
@@ -333,6 +343,9 @@ Route::get('faq', 'FaqController@index');
 Route::get('faq/{id}', 'FaqController@show');
 //send support message
 Route::post('/support/send', 'SupportController@send');
+
+// Notification types
+Route::get('notifications/types', 'NotifyController@types');
 
 //This our testing api routes
 Route::get('test', 'TestController@test');
