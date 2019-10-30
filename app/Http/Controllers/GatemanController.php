@@ -325,7 +325,7 @@ class GatemanController extends Controller
         }
         else
         {
-            // validate the posted data
+            // Validate the posted data
             $this->validate($request, [
                 'name'  => ['required', 'regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
                 'phone' => ['required', 'string'],
@@ -395,12 +395,13 @@ class GatemanController extends Controller
                 'message'=> "Access denied",
             ], 403);
         }
-        else {
+        else
+        {
             // Check if requests is for a single gateman
             if (is_null($id)) {
                 // Request is for all gatemen associated with the estate 
                 // Get all gatemen users type associated with the estate
-                $user = User::join('homes', 'homes.user_id', 'users.id')
+                $gatemen = User::join('homes', 'homes.user_id', 'users.id')
                     ->where('users.user_type', 'gateman')
                     ->where('homes.estate_id', $estate_id)
                     ->get();
@@ -408,13 +409,14 @@ class GatemanController extends Controller
                 return response()->json([
                     'count' => $user->count(),
                     'status' => true,
-                    'gatemen' => $user,
+                    'gatemen' => $gatemen,
                 ], 200);
             }
-            else {
+            else
+            {
                 // Request is for a single gateman associated with the estate
                 // Get the gateman if only he is truly a gateman and is associated with the estate
-                $user = User::join('homes', 'homes.user_id', 'users.id')
+                $gateman = User::join('homes', 'homes.user_id', 'users.id')
                     ->where('users.id', $id)
                     ->where('homes.estate_id', $estate_id)
                     ->first([
@@ -426,7 +428,7 @@ class GatemanController extends Controller
                 if($user) {
                     return response()->json([
                         'status' => true,
-                        'gateman' => $user
+                        'gateman' => $gateman
                     ], 200);
                 }
                 else {
@@ -435,6 +437,73 @@ class GatemanController extends Controller
                         'message' => "We cannot verify the user with id: {$id} as a gateman assigned to ". Estate::find($estate_id)->estate_name,
                     ], 404);
                 }
+            }
+        }
+    }
+
+    /**
+     * Updates a gateman details for an estate
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function updateEstateGateman(
+        $estate_id,
+        $id,
+        Request $request
+    ){
+        // Verifies that the logged-in user is assigned to the requested estate
+        $user_estate = Home::whereUserIdAndEstateId($this->user->id, $estate_id)->first();
+        
+        if (is_null($user_estate)) {
+            return response()->json([
+                'status' => false,
+                'message'=> "Access denied",
+            ], 403);
+        }
+        else
+        {
+            $gateman = User::join('homes', 'homes.user_id', 'users.id')
+                ->where('users.id', $id)
+                ->where('users.user_type', 'gateman')
+                ->where('homes.estate_id', $estate_id)
+                ->get();
+
+            // Check if such user exists as a gateman for the estate
+            if (!$gateman->isEmpty()) {
+                // Validate the posted data
+                $this->validate($request, [
+                    'name'  => ['regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
+                    'phone' => ['string'],
+                ]);
+
+                $updatedUser = User::find($id);
+
+                // Update user's details
+                $updatedUser->name  = $request->name ?? $updatedUser->name;
+                $updatedUser->phone = $request->phone ?? $updatedUser->phone;
+
+                // Save the update
+                $updatedUser->save();
+
+                // Prepare result to be outputted
+                $result = [
+                    'name'      => $updatedUser->name,
+                    'phone'     => $updatedUser->phone
+                ];
+
+                // Return response
+                return response()->json([
+                    'status'  => true,
+                    'message' => "The gateman's record has successfully been updated",
+                    'result'  => $updatedUser
+                ], 200);
+            }
+            else
+            {
+                return response()->json([
+                    'status' => false,
+                    'message'=> "The user is not recognised as a gateman",
+                ], 400);
             }
         }
     }
