@@ -21,7 +21,7 @@ class ServiceProviderController extends Controller
            $user = Auth::user();
            $role = $user->role;
 
-           if ($role === "1" || $role === "2" || $role === "0" ) {
+           if ($role === "1" || $role === "2" ) {
                 // $service = Service_Provider::all();
                 $query = DB::table('service_providers')
                                 ->join('estates', 'service_providers.estate_id', '=', 'estates.id')
@@ -58,7 +58,7 @@ class ServiceProviderController extends Controller
            $user = Auth::user();
            $role = $user->role;
 
-           if ($role === "1" || $role === "2"  || $role === "0") {
+           if ($role === "1" || $role === "2") {
                 $query = DB::table('service_providers')
                                 ->join('estates', 'service_providers.estate_id', '=', 'estates.id')
                                 ->join('sp_category', 'service_providers.category_id', '=', 'sp_category.id')
