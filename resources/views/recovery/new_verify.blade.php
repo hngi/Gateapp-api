@@ -1,7 +1,7 @@
 <!DOCTYPE html>
     <html lang="en-US">
     	<head>
-            <title>New Password</title>
+            <title>VerifyToken</title>
     		<meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
     		<style type="text/css">
@@ -48,7 +48,7 @@
     		<div>
     			
     		</div>
-    		<h2 class="welcome">New Password Recovery</h2>
+    		<h2 class="welcome">VerifyToken</h2>
     		<div>
     			 <h4 style="color: grey;">Hello {{$user->first_name}} {{$user->last_name}}</h4>
     		</div>
@@ -59,7 +59,7 @@
 
             <div>
                  <p class="team">if this mail is not authourize by you please discard</p>
-                 <p class="team" style="font-style: italic;">Gate Pass Team</p>
+                 <p class="team" style="font-style: italic;">GateGuard Team</p>
             </div>
     	</body>
     </html>
