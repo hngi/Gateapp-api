@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Gateman;
+use App\Estate;
 use App\Notifications\GatemanAcceptanceNotification;
 use App\User;
 use App\Home;
@@ -302,59 +303,139 @@ class GatemanController extends Controller
         }
     }
 
+    /**
+     * Adds a gateman to an estate
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function addEstateGateman(
         $id,
         Home $home,
         User $new_user,
-        Request $request,
-        ImageController $image
+        Request $request
     ){
-        // validate the posted data
-        $this->validate($request, [
-            'name'  => ['required', 'regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
-            'phone' => ['required', 'string'],
-        ]);
-
-        DB::beginTransaction();
-
-        try{
-            // Create user
-            $new_user->name  = $request->name;
-            $new_user->phone = $request->phone;
-            $new_user->role  = 2;
-            $new_user->user_type = 'gateman';
-            $new_user->save();
-
-            // Register gateman estate
-            $home->user_id   = $new_user->id;
-            $home->estate_id = $id;
-            $home->save();
-
-            // transaction was successful
-            DB::commit();
-
-            $result = [
-                'name'      => $new_user->name,
-                'user_id'   => $new_user->id,
-                'phone'     => $new_user->phone,
-                'estate_id' => (int) $home->estate_id
-            ];
-
-            // send response
+        // Verifies that the user is assigned to that estate
+        $user_estate = Home::whereUserIdAndEstateId($this->user->id, $id)->first();
+        
+        if (is_null($user_estate)) {
             return response()->json([
-                'status'  => true,
-                'message' => 'The gateman was successfully added',
-                'result'  => $result
-            ], 200);
-        } catch(Exception $e) {
-            // transaction was not successful
-            DB::rollBack();
+                'status' => false,
+                'message'=> "Access denied",
+            ], 403);
+        }
+        else
+        {
+            // validate the posted data
+            $this->validate($request, [
+                'name'  => ['required', 'regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
+                'phone' => ['required', 'string'],
+            ]);
 
+            DB::beginTransaction();
+
+            try{
+                // Create user
+                $new_user->name  = $request->name;
+                $new_user->phone = $request->phone;
+                $new_user->role  = 2;
+                $new_user->user_type = 'gateman';
+                $new_user->save();
+
+                // Register gateman's estate
+                $home->user_id   = $new_user->id;
+                $home->estate_id = $id;
+                $home->save();
+
+                // transaction was successful
+                DB::commit();
+
+                $result = [
+                    'name'      => $new_user->name,
+                    'phone'     => $new_user->phone,
+                    'user_id'   => $new_user->id,
+                    'home_id'   => $home->id,
+                    'estate_id' => (int) $home->estate_id
+                ];
+
+                // send response
+                return response()->json([
+                    'status'  => true,
+                    'message' => 'The gateman was successfully added',
+                    'result'  => $result
+                ], 200);
+            } catch(Exception $e) {
+                // transaction was not successful
+                DB::rollBack();
+
+                return response()->json([
+                    'status'    => false,
+                    'message'   => 'Error, the gateman could not be added',
+                    'hint'      => $e->getMessage()
+                ], 200);
+            }
+        }
+    }
+
+    /**
+     * Gets a single gateman or all gatemen details for an estate
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function estateGatemen(
+        $estate_id,
+        $id = null,
+        Request $request
+    ){
+        // Verifies that the user is assigned to that estate
+        $user_estate = Home::whereUserIdAndEstateId($this->user->id, $estate_id)->first();
+        
+        if (is_null($user_estate)) {
             return response()->json([
-                'status'    => false,
-                'message'   => 'Error, the gateman could not be added',
-                'hint'      => $e->getMessage()
-            ], 200);
+                'status' => false,
+                'message'=> "Access denied",
+            ], 403);
+        }
+        else {
+            // Check if requests is for a single gateman
+            if (is_null($id)) {
+                // Request is for all gatemen associated with the estate 
+                // Get all gatemen users type associated with the estate
+                $user = User::join('homes', 'homes.user_id', 'users.id')
+                    ->where('users.user_type', 'gateman')
+                    ->where('homes.estate_id', $estate_id)
+                    ->get();
+
+                return response()->json([
+                    'count' => $user->count(),
+                    'status' => true,
+                    'gatemen' => $user,
+                ], 200);
+            }
+            else {
+                // Request is for a single gateman associated with the estate
+                // Get the gateman if only he is truly a gateman and is associated with the estate
+                $user = User::join('homes', 'homes.user_id', 'users.id')
+                    ->where('users.id', $id)
+                    ->where('homes.estate_id', $estate_id)
+                    ->first([
+                        'users.name', 'users.username', 'users.phone',
+                        'users.email', 'users.image', 'users.duty_time',
+                        'homes.id as home_id', 'users.id as user_id'
+                    ]);
+
+                if($user) {
+                    return response()->json([
+                        'status' => true,
+                        'gateman' => $user
+                    ], 200);
+                }
+                else {
+                    return response()->json([
+                        'status' => false,
+                        'message' => "We cannot verify the user with id: {$id} as a gateman assigned to ". Estate::find($estate_id)->estate_name,
+                    ], 404);
+                }
+            }
         }
     }
 }
