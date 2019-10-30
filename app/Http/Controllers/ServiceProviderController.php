@@ -289,6 +289,51 @@ class ServiceProviderController extends Controller
      }
     }
     
+        public function search($id)
+    {
+     $db = Service_Provider::find($id);
+     $name = $db->name ?? 'null';
+     $phone = $db->phone ?? 'null';
+     $cat_id = $db->category_id ?? 'null';
+     $des = $db->description ?? 'null';
+     $status = $db->status;
+     $created = $db->created_at ?? 'null';
+     $updated = $db->updated_at ?? 'null';
+     
+     if($status == 1)
+     {
+      $res["status"] = "Active";
+     }
+      else
+     {
+      $res["status"] = "Inactive";
+     }
+     
+     try {
+         $cat = Category::find($cat_id);
+         $cat_name = $cat->title;
+        
+         $res["status_code"] = 200;
+         $res["message"] = "Success!";
+         $res["name"] = $name;
+         $res["phone"] = $phone;
+         $res["description"] = $des;
+         $res["created"] = $created;
+         $res["updated"] = $updated;
+         $res["category"] = $cat_name;
+         
+         return response()->json($res, $res["status_code"]);
+        }
+         catch (\Exception $e)
+        {
+         $res["status_code"] = 501;
+         $res["message"] = "Failed!";
+         $res["error"] = $e->getMessage();
+             
+         return response()->json($res, $res["status_code"]);
+        }
+       }
+  
     public function search($id)
     {
      try {
@@ -310,16 +355,17 @@ class ServiceProviderController extends Controller
            $res["status"] = "Inactive";
           }
      
-         // Put all data into an array
-         $data = array($name, $phone, $des, $created, $updated);
-        
-         $cat = Sp_Category::find($cat_id);
+         $cat = Category::find($cat_id);
          $cat_name = $cat->title;
-         $data[] = $cat_name;
-        
+         
          $res["status_code"] = 200;
          $res["message"] = "Success!";
-         $res["data"] = $data;
+         $res["name"] = $name;
+         $res["phone"] = $phone;
+         $res["description"] = $des;
+         $res["created"] = $created;
+         $res["updated"] = $updated;
+         $res["category"] = $cat_name;
          
          return response()->json($res, $res["status_code"]);
         }
