@@ -236,7 +236,7 @@ class GatemanController extends Controller
             else {
                 $res['Error'] = "Unauthorized - Access Denied!";
                 $res['gatema'] = $resident;
-            	return response()->json($res, 403);
+            	return response()->json($res, 401);
             }
         }
         else {
@@ -335,8 +335,8 @@ class GatemanController extends Controller
         if (is_null($user_estate)) {
             return response()->json([
                 'status' => false,
-                'message'=> "Access denied",
-            ], 403);
+                'message'=> "Unauthorized!",
+            ], 401);
         }
         else
         {
@@ -386,7 +386,7 @@ class GatemanController extends Controller
                     'status'    => false,
                     'message'   => 'Error, the gateman could not be added',
                     'hint'      => $e->getMessage()
-                ], 200);
+                ], 501);
             }
         }
     }
@@ -407,8 +407,8 @@ class GatemanController extends Controller
         if (is_null($user_estate)) {
             return response()->json([
                 'status' => false,
-                'message'=> "Access denied",
-            ], 403);
+                'message'=> "Unauthorized!",
+            ], 401);
         }
         else
         {
@@ -450,7 +450,7 @@ class GatemanController extends Controller
                     return response()->json([
                         'status' => false,
                         'message' => "We cannot verify the user with id: {$id} as a gateman assigned to ". Estate::find($estate_id)->estate_name,
-                    ], 404);
+                    ], 406);
                 }
             }
         }
@@ -472,8 +472,8 @@ class GatemanController extends Controller
         if (is_null($user_estate)) {
             return response()->json([
                 'status' => false,
-                'message'=> "Access denied",
-            ], 403);
+                'message'=> "Unauthorized!",
+            ], 401);
         }
         else
         {
@@ -500,12 +500,6 @@ class GatemanController extends Controller
                 // Save the update
                 $updatedUser->save();
 
-                // Prepare result to be outputted
-                $result = [
-                    'name'      => $updatedUser->name,
-                    'phone'     => $updatedUser->phone
-                ];
-
                 // Return response
                 return response()->json([
                     'status'  => true,
@@ -517,8 +511,8 @@ class GatemanController extends Controller
             {
                 return response()->json([
                     'status' => false,
-                    'message'=> "The user is not recognised as a gateman",
-                ], 400);
+                    'message' => "We cannot verify the user with id: {$id} as a gateman assigned to ". Estate::find($estate_id)->estate_name,
+                ], 406);
             }
         }
     }
@@ -539,8 +533,8 @@ class GatemanController extends Controller
         if (is_null($user_estate)) {
             return response()->json([
                 'status' => false,
-                'message'=> "Access denied",
-            ], 403);
+                'message'=> "Unauthorized!",
+            ], 401);
         }
         else
         {
@@ -566,18 +560,17 @@ class GatemanController extends Controller
                     // if delete action fails, send a response
                     return response()->json([
                         'status' => false,
-                        'message' => 'Sorry, this gateman could not be deleted!',
-                    ], 500);
+                        'message' => 'Sorry, this gateman could not be deleted at the moment!',
+                    ], 501);
                 }
             }
             else
             {
                 return response()->json([
                     'status' => false,
-                    'message'=> "The user is not recognised as a gateman",
-                ], 400);
+                    'message' => "We cannot verify the user with id: {$id} as a gateman assigned to ". Estate::find($estate_id)->estate_name,
+                ], 406);
             }
         }
-
     }
 }
