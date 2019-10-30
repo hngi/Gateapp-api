@@ -379,6 +379,8 @@ Route::get('/test-notification2', function () {
     $gateman->notify(new App\Notifications\VisitorArrivalNotification($resident, $gateman, $visitor));
 });
 
+//----------- Service provider request route ---------------------------------//
+Route::post("service_provider/create_request", "ServiceProviderController@create_request");
 
 // Route::get('init', function () {
 //     event(new App\Events\notify('Someone'));
