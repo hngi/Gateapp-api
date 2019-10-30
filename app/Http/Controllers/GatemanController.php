@@ -9,6 +9,7 @@ use App\User;
 use App\Home;
 use App\Visitor;
 use Exception;
+use App\Visitor_History;
 use App\Http\Resources\Visitor as VisitorResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -212,25 +213,29 @@ class GatemanController extends Controller
         
         if ($resident){
             //Error Handling
-            $resident = $resident->id;
+            $resident_id = $resident->user_id;
+            $visitor_id = $resident->id;
 
             // Check that Gateman works for user
             $residentGateman = Gateman::where([
                 ['gateman_id', $this->user->id],
-                ['user_id', $resident],
+                ['user_id', $resident_id],
                 ['request_status', 1],
             ])->first();
 
             if ($residentGateman){
-                $avisitor = Visitor::where('id', $resident)->update(['time_in' => NOW()]);
+                 Visitor::where('id', $visitor_id)->update(['time_in' => NOW()]);
 
                 // $avisitor = Visitor::where('id', $resident)->update(['time_in' => NOW(), 'status' => 1]);
 
-            	$visitor = Visitor::where('id', $resident)->with('user')->get();
-            	return response()->json($visitor, 202);
+                $visitor = Visitor::where('id', $visitor_id)->with('user')->get();
+                $res ['Message'] = "Visitor Has been checked in succesfully";
+                $res ['Visitor details'] = $visitor;
+            	return response()->json($res, 202);
             }
             else {
-            	$res['Error'] = "Unauthorized - Access Denied!";
+                $res['Error'] = "Unauthorized - Access Denied!";
+                $res['gatema'] = $resident;
             	return response()->json($res, 403);
             }
         }
@@ -271,34 +276,44 @@ class GatemanController extends Controller
 
     public function visitor_out(Request $request)
     {
-        $resident = Visitor::where('qr_code', $request->input('qr_code'))->first();
+        $resident = Visitor::where('qr_code', $request->input('qr_code'))->where('time_in', '!=', null)->first();
         
         if ($resident){
             //Error Handling
-            $resident = $resident->id;
+            $resident_id = $resident->user_id;
+            $visitor_id = $resident->id;
 
             // Check that Gateman works for user
             $residentGateman = Gateman::where([
                 ['gateman_id', $this->user->id],
-                ['user_id', $resident],
+                ['user_id', $resident_id],
                 ['request_status', 1],
 			])->first();
 
             if ($residentGateman){
-                $avisitor = Visitor::where('id', $resident)->update(['time_out' => NOW()]);
-                
-                // $avisitor = Visitor::where('id', $resident)->update(['time_out' => NOW(), 'status' => 1]);
+                $visitor = Visitor::where('id', $visitor_id)
+                            ->update(['time_out' => NOW(), 'status' => 0, 'qr_code' => null]);
+                $avisitor = Visitor::where('user_id', $resident_id);
 
-            	$visitor = Visitor::where('id', $resident)->with('user')->get();
-            	return response()->json($visitor, 202);
+                $history = new Visitor_History;
+
+                $history->visitor_id = $avisitor->value('id');
+                $history->user_id = $avisitor->value('user_id');
+                $history->visit_date = $avisitor->value('time_out');
+                $history->save();
+
+                $visitor = Visitor::where('id', $visitor_id)->with('user')->get();
+                $res ['Message'] = "Visitor Has been checked out succesfully";
+                $res ['Visitor details'] = $visitor;
+            	return response()->json($res, 202);
             }
             else {
-            	$res['Error'] = "Unauthorized - Access Denied!";
+            	$res['Error'] = "Permission Denied!";
             	return response()->json($res, 403);
             }
         }
         else {
-            $res['Error'] = $request->input('qr_code'). " This QR code does not exist";
+            $res['Error'] = $request->input('qr_code'). " This QR code does not exist or this user has not been clocked in";
             return response()->json($res, 404);
         }
     }

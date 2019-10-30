@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Visitor_History;
 use App\Visitor;
 use Exception;
 use App\Http\Controllers\Controller;
@@ -73,6 +73,26 @@ class VisitorController extends Controller
         ], 200);
     }
 
+    public function residentHistory(Request $request)
+    {
+    	$visitors = Visitor_History::where('user_id', $this->user->id)->with('user')->with('visitor')->get();
+
+        if ($visitors->isEmpty()){
+            return response()->json([
+                'Message'   => "No Visitors found for this user",
+                'status' => false
+            ], 404);
+        }
+        else{
+              // send response with the visitors' details
+            return response()->json([
+                'visitors' => $visitors->count(),
+                'visitor_details'   => $visitors,
+            	'status' => true
+            ], 200);
+        }        
+    }
+
 	/**
 	 * Get a single visitor
 	 *
@@ -116,6 +136,7 @@ class VisitorController extends Controller
             'arrival_date'      => 'required|date_format:Y-m-d',
             'car_plate_no'      => 'string|nullable',
             'purpose'           => 'string', 
+            'visitor_group'     => 'string',
             'visiting_period' 	=> 'required|string',
             'phone_no'      	=> 'string',
             'description'       => 'string|nullable',
@@ -132,7 +153,9 @@ class VisitorController extends Controller
             $visitor->car_plate_no = $request->car_plate_no ?? '';
             $visitor->phone_no = $request->phone_no ?? '';
             $visitor->purpose = $request->purpose ?? '';
-            $visitor->status  = 0;
+            $visitor->visitor_group = $request->visitor_group ?? '';
+            $visitor->status  = 1;
+            $visitor->visit_count  = 1;
             $visitor->user_id = $this->user->id;
             $visitor->visiting_period = $request->visiting_period;
             $visitor->description = $request->description ?? '';
@@ -220,6 +243,7 @@ class VisitorController extends Controller
             $visitor->car_plate_no = $request->car_plate_no ?? $visitor->car_plate_no;
             $visitor->phone_no = $request->phone_no ?? $visitor->phone_no;
             $visitor->purpose = $request->purpose ?? $visitor->purpose;
+            $visitor->visitor_group = $request->visitor_group ?? '';
             $visitor->visiting_period = $request->visiting_period ?? $visitor->visiting_period;
             $visitor->description = $request->description ?? $visitor->description;
 

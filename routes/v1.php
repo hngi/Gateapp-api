@@ -44,6 +44,17 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //show all admin
     Route::get('/admin', 'UserProfileController@showAllAdmin')->middleware('superAdmin');
 
+
+    // Show all visitor
+    Route::get('allVisitors', 'VisitorController@index')->middleware('admin');
+
+
+    //(Admin interactions with Estates)
+
+    //Admin only Update Estates by estate_id
+    Route::put('/estate/edit/{id}', 'EstateController@update')->middleware('admin');
+
+
     //Delete Estates by estate_id
     Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate')->middleware('superAdmin');
 
@@ -52,7 +63,19 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //Admin only Create a service provider
     Route::post('/service-provider', 'ServiceProviderController@create')->middleware('superAdmin');
+    
+    // Service provider suspension route
+    Route::delete('/service-provider/suspend/{id}', 'ServiceProviderController@softDelete')->middleware('superAdmin');
+    
+    // Route to get all suspended service providers
+    Route::get('/service-provider/suspended','ServiceProviderController@softDeleted')->middleware('superAdmin');
+    
+    // Route to unsuspend service providers (added bonus)
+    Route::patch('/service-provider/unsuspend/{id}','ServiceProviderController@restore')->middleware('superAdmin');
 
+    // Service provider information based on id
+    Route::delete('/service-provider/info/{id}', 'ServiceProviderController@search')->middleware('superAdmin');
+    
     //Admin only Update a service provider
     Route::post('/service-provider/{id}', 'ServiceProviderController@update')->middleware('superAdmin');
 
@@ -237,9 +260,11 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/serviceProvider/estate/', 'ServiceProviderController@byEstate')->middleware('checkResident');
 
     //(Users Visitors)
-
     // Show signed in user visitor
     Route::get('visitor', 'VisitorController@residentVisitor')->middleware('checkResident');
+   
+    // Show signed in user visitor history
+    Route::get('visitorHistory', 'VisitorController@residentHistory')->middleware('checkResident');
 
     // Show single visitor
     Route::get('visitor/{id}', 'VisitorController@show')->middleware('checkResident');
@@ -317,6 +342,9 @@ Route::get('faq', 'FaqController@index');
 Route::get('faq/{id}', 'FaqController@show');
 //send support message
 Route::post('/support/send', 'SupportController@send');
+
+// Notification types
+Route::get('notifications/types', 'NotifyController@types');
 
 //This our testing api routes
 Route::get('test', 'TestController@test');
