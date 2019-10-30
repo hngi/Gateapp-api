@@ -252,107 +252,18 @@ class ServiceProviderController extends Controller
 
     public function destroy($id)
     {
-     $service = Service_Provider::destroy($id);
-     if($service)
-     {
-      $res['status'] = 200;
-      $res["message"] = "Service Provider Deleted!";
-       
-      return response()->json($res, 200);
-     }
-      else
-     {
-      $res['status'] = 404;
-      $res["message"] = "Unable To Delete Service Provider!";
-           
-      return response()->json($res, $res['status']);
-     }
-    }
-    
-    public function softDelete($id)
-    {
-     $service = Service_Provider::destroy($id);
-     if($service)
-     {
-      $res["status"] = 200;
-      $res["message"] = "Service Provider Suspended!";
-      $res["data"] = $service;
-         
-      return response()->json($res, $res["status"]);
-     }
-      else
-     {
-      $res["status"] = 501;
-      $res["message"] = "Unable To Suspend Service Provider!";
-         
-      return response()->json($res, $res["status"]);
-     }
-    }
-    
-    public function search($id)
-    {
-     try {
-          $db = Service_Provider::find($id);
-          $name = $db->name ?? 'null';
-          $phone = $db->phone ?? 'null';
-          $cat_id = $db->category_id ?? 'null';
-          $des = $db->description ?? 'null';
-          $status = $db->status;
-          $created = $db->created_at ?? 'null';
-          $updated = $db->updated_at ?? 'null';
-     
-          if($status == 1)
-          {
-           $res["status"] = "Active";
-          }
-           else
-          {
-           $res["status"] = "Inactive";
-          }
-     
-         // Put all data into an array
-         $data = array($name, $phone, $des, $created, $updated);
-        
-         $cat = Sp_Category::find($cat_id);
-         $cat_name = $cat->title;
-         $data[] = $cat_name;
-        
-         $res["status_code"] = 200;
-         $res["message"] = "Success!";
-         $res["data"] = $data;
-         
-         return response()->json($res, $res["status_code"]);
+        $service = Service_Provider::destroy($id);
+
+        if($service){
+            $res['status'] = 200;
+            $res["message"] = "Service Provider Deleted!";
+            return response()->json($res, 200);
+        }else{
+            $res['status'] = 404;
+            $res["message"] = "No service found";
+            return response()->json($res, $res['status']);
         }
-         catch (\Exception $e)
-        {
-         $res["status_code"] = 501;
-         $res["message"] = "Failed!";
-         $res["data"] = $e->getMessage();
-             
-         return response()->json($res, $res["status_code"]);
-        }
-       }
-    
-    public function restore($id)
-    {
-     $service = Service_Provider::onlyTrashed()->find($id);
-     if($service)
-     {
-      $res["status"] = 200;
-      $res["message"] = "Service Provider Was Unsuspended!";
-      $res["data"] = $service;
-         
-      return response()->json($res, $res["status"]);
     }
-     else
-    {
-     $res["status"] = 501;
-     $res["message"] = "Unable To Unsuspend Service Provider!";
-         
-     return response()->json($res, $res["status"]);
-    }
-   }
-    
     public function upload($request, $image, $table=null) {
         $user = Auth::user();
 
@@ -363,24 +274,19 @@ class ServiceProviderController extends Controller
         $res = $image->imageUpload($request, $table);
         return $res;
     }
+        public function approve($id)
+    {
+        $application = Service_Provider::findOrFail($id);
+        $application->status = 1;
+        $application->save();
 
-    public function approve($id) {
-        $application = Service_Provider::where('id', '=', e($id))->first();
-        if($application)
-        {
-            $application->status = 1;
-            $application->save();
-
-            return response()->json(['status' => true, 'message' => 'Service provider accepted'], 200);
-        }
+        return response()->json(['status' => true, 'message' => 'Service provider accepted'], 200);
     }
-    public function reject($id) {
-        $application = Service_Provider::where('id', '=', e($id))->first();
-        if($application)
-        {
-            $application->delete($id);
+    public function reject($id)
+    {
+        $application = Service_Provider::findOrFail($id);
+        $application->delete($id);
 
-            return response()->json(['message' => 'Service provider rejected']);
-        }
+        return response()->json(['status' => true, 'message' => 'Service provider rejected'], 200);
     }
 }
