@@ -67,6 +67,7 @@ class VisitorArrivalNotification extends Notification
             ->data([
                 'visitor_details' => $this->visitor->toArray(),
                 'gateman_details' => $this->gateman->toArray(),
+                'click_action' => 'FLUTTER_NOTIFICATION_ACTION'
             ])
             ->priority(FcmMessage::PRIORITY_HIGH);
 
