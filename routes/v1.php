@@ -269,6 +269,9 @@ Route::post('/support/send', 'SupportController@send');
 Route::get('/support/{id}', 'SupportController@show')->middleware('admin');
 Route::delete('/support/{id}', 'SupportController@destroy')->middleware('admin');
 
+// Notification types
+Route::get('notifications/types', 'NotifyController@types');
+
 //This our testing api routes
 Route::get('test', 'TestController@test');
 Route::get('generate-code', 'TestController@qrCode');
