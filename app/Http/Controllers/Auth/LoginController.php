@@ -25,29 +25,31 @@ class LoginController extends Controller
         $this->jwt = $jwt;
     }
 
+    public function expireTime() {
+        $myTTL = 120960; //minutes
+        return $this->jwt->factory()->setTTL($myTTL);
+    }
+
     public function authenticate(Request $request)
-    {
+    {     
+        $this->expireTime();
         // Do a validation for the input
         $this->validateRequest($request);
-
-        $credentials = $request->only('email', 'password');
-
-        try {
-            if (!$token = $this->jwt->attempt($credentials, ['exp' => Carbon::now()->addDay(2)->timestamp])) {
-                return response()->json(['message' => 'invalid_credentials'], 404);
-            }
-        } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-            return response()->json(['token_expired'], 500);
-        } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-            return response()->json(['token_invalid'], 500);
-        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
-            return response()->json(['token_absent' => $e->getMessage()], 500);
+        $credentials = User::where('phone', $request->input('phone'))->first();
+        if(!$credentials){
+            return response()->json(['message_1' => 'invalid_credentials',
+             'message_2' => 'Note: device type or phone number is not recognize, verify account and make this device your registered device'], 404);    
         }
 
-        $user = Auth::guard('api')->user();
+        if (!$token = Auth::guard()->login($credentials)) {
+            return response()->json(['message_1' => 'invalid_credentials',
+             'message_2' => 'Note: device type or phone number is not recognize, verify account and make this device your registered device'], 404);
+        }
+
         $image_link = 'https://res.cloudinary.com/getfiledata/image/upload/';
         $image_format = 'w_200,c_thumb,ar_4:4,g_face/';
-
+        
+        $user = Auth::guard('api')->user();
         if ($user->email_verified_at != null) {
             $msg['success'] = true;
             $msg['message'] = 'Login Successful!';
@@ -55,6 +57,8 @@ class LoginController extends Controller
             $msg['image_link'] = $image_link;
             $msg['image_small_view_format'] = $image_format;
             $msg['token'] = 'Bearer '. $token;
+            $msg['token_type'] = 'bearer';
+            $msg['expires_in(minutes)'] = auth()->factory()->getTTL();
             return response()->json($msg, 200);
         } else {
             $msg['success'] = false;
@@ -63,14 +67,21 @@ class LoginController extends Controller
         }
     }
 
+    public function refresh()
+    {   
+        return response()->json([
+            'access_token' => 'Bearer '. auth()->refresh(),
+            'token_type'   => 'bearer',
+            'expires_in(minutes)'   => (int)auth()->factory()->getTTL()
+        ], 200);
+    }
+
     public function validateRequest(Request $request){
             $rules = [
-                'email' => 'required|email',
-                'password' => 'required|min:8',
+                'phone' => 'required',
             ];
             $messages = [
-                'required' => ':attribute is required',
-                'email' => ':attribute not a valid format',
+                'phone' => ':attribute is required',
             ];
         $this->validate($request, $rules, $messages);
     }

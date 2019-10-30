@@ -9,12 +9,17 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "africastalking/africastalking": "^2.3",
+        "benwilkins/laravel-fcm-notification": "^4.0",
+        "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.3",
         "illuminate/mail": "^6.1",
         "jrm2k6/cloudder": "^0.6.0",
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",
+        "pusher/pusher-php-server": "^4.0",
+        "simplesoftwareio/simple-qrcode": "^2.0",
         "tymon/jwt-auth": "^1.0@dev",
         "vlucas/phpdotenv": "^3.3"
     },
