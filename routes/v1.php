@@ -52,6 +52,15 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //Admin only Create a service provider
     Route::post('/service-provider', 'ServiceProviderController@create')->middleware('superAdmin');
+    
+    // Service provider suspension route
+    Route::delete('/service-provider/suspend/{id}', 'ServiceProviderController@softDelete')->middleware('superAdmin');
+    
+    // Route to get all suspended service providers
+    Route::get('/service-provider/suspended','ServiceProviderController@softDeleted')->middleware('superAdmin');
+    
+    // Route to unsuspend service providers (added bonus)
+    Route::patch('/service-provider/unsuspend/{id}','ServiceProviderController@restore')->middleware('superAdmin');
 
     //Admin only Update a service provider
     Route::post('/service-provider/{id}', 'ServiceProviderController@update')->middleware('superAdmin');
