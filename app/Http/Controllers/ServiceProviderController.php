@@ -252,18 +252,75 @@ class ServiceProviderController extends Controller
 
     public function destroy($id)
     {
-        $service = Service_Provider::destroy($id);
-
-        if($service){
-            $res['status'] = 200;
-            $res["message"] = "Service Provider Deleted!";
-            return response()->json($res, 200);
-        }else{
-            $res['status'] = 404;
-            $res["message"] = "No service found";
-            return response()->json($res, $res['status']);
-        }
+     $db = Service_Provider::all();
+     if($db->status == 0)
+     {
+      $service = Service_Provider::destroy($id);
+      if($service)
+      {
+       $res['status'] = 200;
+       $res["message"] = "Service Provider Deleted!";
+       
+       return response()->json($res, 200);
+      }
+       else
+      {
+       $res['status'] = 404;
+       $res["message"] = "Unable To Delete Service Provider!";
+           
+       return response()->json($res, $res['status']);
+      }
+     }
     }
+    
+    public function softDelete($id)
+    {
+     $db = Service_Provider::all();
+     if($db->status == 0)
+     {
+      $service = Service_Provider::destroy($id);
+      if($service)
+      {
+       $res["status"] = 200;
+       $res["message"] = "Service Provider Suspended!";
+       $res["data"] = $service;
+         
+       return response()->json($res, $res["status"]);
+     }
+      else
+     {
+      $res["status"] = 501;
+      $res["message"] = "Unable To Suspend Service Provider!";
+         
+      return response()->json($res, $res["status"]);
+     }
+    }
+   }
+    
+    public function restore($id)
+    {
+     $db = Service_Provider::all();
+     if($db->status == 0)
+     {
+      $service = Service_Provider::onlyTrashed()->find($id);
+      if($service)
+      {
+       $res["status"] = 200;
+       $res["message"] = "Service Provider Was Unsuspended!";
+       $res["data"] = $service;
+         
+       return response()->json($res, $res["status"]);
+     }
+      else
+     {
+      $res["status"] = 501;
+      $res["message"] = "Unable To Unsuspend Service Provider!";
+         
+      return response()->json($res, $res["status"]);
+     }
+    }
+   }
+    
     public function upload($request, $image, $table=null) {
         $user = Auth::user();
 
