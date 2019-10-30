@@ -300,7 +300,7 @@ class ServiceProviderController extends Controller
     public function restore($id)
     {
      $db = Service_Provider::all();
-     if($db->status == 1)
+     if($db->status == 0)
      {
       $service = Service_Provider::onlyTrashed()->find($id);
       if($service)
