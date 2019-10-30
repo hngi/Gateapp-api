@@ -340,6 +340,7 @@ Route::put('revokeAdmin/{user_id}', 'UserProfileController@revokeAdmin')->middle
 //unblock selected admin
 Route::put('unrevokeAdmin/{user_id}', 'UserProfileController@unrevokeAdmin')->middleware('superAdmin');
 
+
 //This our testing api routes
 Route::get('test', 'TestController@test');
 Route::get('generate-code', 'TestController@qrCode');

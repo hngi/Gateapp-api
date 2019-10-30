@@ -33,6 +33,7 @@ class UserProfileController extends Controller
         $admins = [];
         $residents = [];
         $gatemans = [];
+<<<<<<< revokeAdminAccess
 
         $users = User::all();
         foreach ($users as $user) {
@@ -212,6 +213,187 @@ class UserProfileController extends Controller
 
         try {
 
+=======
+
+        $users = User::all();
+        foreach ($users as $user) {
+            if ($user->role == 0) {
+                array_push($admins, $user);
+            } else if ($user->role == 1) {
+                array_push($residents, $user);
+            } else if ($user->role == 2) {
+                array_push($gatemans, $user);
+            }
+        }
+        $res['status']    = true;
+        $res['admins']    = $admins;
+        $res['residents'] = $residents;
+        $res['gatemans']  = $gatemans;
+        return response()->json($res, 200);
+    }
+
+    public function showOneAdmin($id)
+    {
+        $user = User::find($id);
+        if ($user->role == 0 || $user->role == 3) {
+            $res['status'] = true;
+            $res['message'] = 'Admin found';
+            $res['admin'] = $user;
+            return response()->json($res, 200);
+        } else {
+            $res['status'] = false;
+            $res['message'] = 'Admin not found';
+            return response()->json($res, 404);
+        }
+    }
+
+    public function showAllAdmin()
+    {
+        $admins = [];
+        $users = User::all();
+        foreach ($users as $user) {
+            if ($user->role == 0 || $user->role == 3) {
+                array_push($admins, $user);
+            }
+        }
+        if ($admins == []) {
+            $res['status']    = false;
+            $res['message']    = "No Admin Found";
+            return response()->json($res, 404);
+        } else {
+
+            $res['status']    = true;
+            $res['admins']    = $admins;
+            return response()->json($res, 200);
+        }
+    }
+
+    public function show($id)
+    {
+        $user = User::find($id);
+        if ($user->role == 1 || $user->role == 2) {
+            $res['status'] = true;
+            $res['message'] = 'User found';
+            $res['user'] = $user;
+            return response()->json($res, 200);
+        } else {
+            $res['status'] = false;
+            $res['message'] = 'User not found';
+            return response()->json($res, 404);
+        }
+    }
+
+
+    public function role($role_id)
+    {
+        $users = User::where('role', $role_id)->get();
+        return response()->json($users);
+    }
+
+    public function update(Request $request, ImageController $image)
+    {  // update user information
+        $user = Auth::user();
+        $this->validate($request, [
+            'name' => 'string',
+            'phone' => 'unique:users,phone,' . $user->id,
+            'username' => 'unique:users,username,' . $user->id,
+            'email'    => 'unique:users,email,' . $user->id,
+        ]);
+
+        //start temporay transaction
+        DB::beginTransaction();
+        try {
+            $user->name      = $request->input('name');
+            $user->username  = $request->input('username');
+            $user->email     = $user->phone != $request->input('email') ? $request->input('email') : $user->phone;
+
+            if ($user->phone != $request->input('phone')) {
+                $user->email_verified_at = null;
+                $user->verifycode = Str::random(6);
+                $user->phone     = $request->input('phone');
+                //We use mail for now untill sms is implemented
+                Mail::to($user->email)->send(new VerifyToken($user));
+                $res['important'] = 'A six digit OTP token has ben sent to you email or phone because this phone number is new!';
+            }
+            //Upload image
+            //Upload image
+            if ($request->hasFile('image')) {
+                $data = $this->upload($request, $image, $user);
+                if ($data['status_code'] !=  200) {
+                    return response()->json($data, $data['status_code']);
+                }
+                $user->image = $data['image'];
+            } else {
+                $data = null;
+                $user->image = 'noimage.jpg';
+            }
+
+
+            $user->save();
+
+            //if operation was successful save commit save to database
+            DB::commit();
+            $res['status']  = true;
+            $res['user']    = $user;
+            $res['image_info']   = $data;
+            $res['message'] = 'Your Account Was Successfully Updated';
+
+            return response()->json($res, 200);
+        } catch (\Exception $e) {
+            //rollback what is saved
+            DB::rollBack();
+
+            $res['status'] = false;
+            $res['message'] = 'An Error Occured While Trying To Update Your Account Information';
+            $res['hint'] = $e->getMessage();
+
+            return response()->json($res, 501);
+        }
+    }
+
+    public function destroy()
+    {
+        $user = Auth::user();
+        if ($user) {         // removes user account
+            $user->delete();
+            $res['message'] = 'User deleted successfully';
+            return response()->json($res, 200);
+        } else {
+            $res['message'] = 'User unsuccessfully, user not found or an error occured, please try again!';
+            return response()->json($res, 501);
+        }
+    }
+
+    public function upload($request, $image)
+    {
+        $user = Auth::user();
+
+        $this->validate($request, [
+            'image' => "image|max:4000",
+        ]);
+        //Image Engine
+        $res = $image->imageUpload($request, $user);
+        return $res;
+    }
+
+    /**
+     * Manage User's settings
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function manageSettings(Request $request)
+    {
+        $data = [
+            'app_notification' => $request->filled('app_notification'),
+            'push_notification' => $request->filled('push_notification'),
+            'location_tracking' => $request->filled('location_tracking'),
+        ];
+
+        DB::beginTransaction();
+
+        try {
+
+>>>>>>> backend
             $user = \auth()->user();
 
             if ($user->settings) {
@@ -237,6 +419,7 @@ class UserProfileController extends Controller
                 'hint' => $e->getMessage(),
             ], 501);
         }
+<<<<<<< revokeAdminAccess
     }
 
     public function updateFcmToken(Request $request)
@@ -307,5 +490,22 @@ class UserProfileController extends Controller
         }
         
         return response()->json($res, $res['status']);
+=======
+    }
+
+    public function updateFcmToken(Request $request)
+    {
+        $request->validate([
+            'fcm_token' => ['required', 'string']
+        ]);
+
+        try {
+            auth()->user()->update(['fcm_token' => $request->fcm_token]);
+
+            return response()->json(['message' => 'Firebase token updated']);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 501);
+        }
+>>>>>>> backend
     }
 }

@@ -17,7 +17,11 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
+<<<<<<< revokeAdminAccess
         'name', 'username', 'email', 'password', 'phone', 'image', 'verifycode', 'role', 'user_type', 'device_id','duty_time', 'access'
+=======
+        'name', 'username', 'email', 'password', 'phone', 'image', 'verifycode', 'role', 'user_type', 'device_id','duty_time'
+>>>>>>> backend
     ];
 
     /**

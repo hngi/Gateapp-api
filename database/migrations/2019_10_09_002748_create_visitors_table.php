@@ -21,14 +21,25 @@ class CreateVisitorsTable extends Migration
             $table->string('phone_no', 25);
             $table->string('purpose', 40);
             $table->string('image', 100)->default('noimage.jpg');
+<<<<<<< revokeAdminAccess
+=======
+            $table->string('visitor_group', 50);
+>>>>>>> backend
             $table->bigInteger('status')->default(0);
             $table->timestamp('time_in')->nullable();
             $table->timestamp('time_out')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('estate_id');
+
             $table->string('qr_code', 10);
             $table->string('visiting_period', 15)->nullable();
             $table->string('description')->nullable();
+
+            $table->string('qr_code', 10)->nullable();
+            $table->string('visiting_period', 15)->nullable();
+            $table->string('description')->nullable();
+            $table->string('visit_count', 255)->default(1);
+
 			$table->timestamps();
 
             // table indexes
