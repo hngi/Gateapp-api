@@ -39,18 +39,22 @@
 }
 #singleEstateModal .modal-dialog {
     max-width: 100%;
+    min-height: 100%;
 }
 #singleEstateModal .modal-content {
-    height: 90vh;
+    min-height: 90vh;
+}
+#singleEstateModal .modal-body {
+    min-height: 100%;
 }
 .estate-image {
-    height: 40vh;
+    min-height: 40vh;
     background: url("../images/estate-example.png");
     background-size: cover;
     background-position: center;
 }
 .estate-details{
-    height: 30vh;
+    min-height: 30vh;
 }
 .address-header {
     font-size: 12px;
