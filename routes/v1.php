@@ -48,7 +48,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate')->middleware('superAdmin');
 
     //Admin only Update Estates by estate_id
-    Route::patch('/estate/{id}', 'EstateController@update')->middleware('superAdmin');
+    Route::post('/estate/{id}', 'EstateController@update')->middleware('superAdmin');
 
     //Admin only Create a service provider
     Route::post('/service-provider', 'ServiceProviderController@create')->middleware('superAdmin');

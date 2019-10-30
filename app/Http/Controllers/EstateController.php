@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Estate;
 use App\Home;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ImageController;
@@ -129,12 +130,12 @@ class EstateController extends Controller
     
 
 
-    public function store(Request $request)
+    public function store(Request $request, ImageController $image)
     {
         $this->validateRequest($request);
         //start temporay transaction
         DB::beginTransaction();
-
+        $estate = new Estate;
         $estate_name = ucfirst($request->input('estate_name'));
         $city        = ucfirst($request->input('city'));
         $country     = ucfirst($request->input('country'));
@@ -147,17 +148,30 @@ class EstateController extends Controller
                              ->where('country', $country)
                              ->where('address', $address)
                              ->first();
-           if(!$check) {
-                $estate = Estate::create([
-                    'estate_name'    => $estate_name,
-                    'city'           => $city,
-                    'country'        => $country,
-                    'address'        => $address,
-                ]);
 
+                             
+           if(!$check) {
+                $estate->estate_name   = $estate_name;
+                $estate->city          = $city;
+                $estate->country       = $country;
+                $estate->address       = $address;
+
+                if($request->hasFile('image')) {
+                    $data = $this->upload($request, $image);
+                    if($data['status_code'] !=  200) {
+                        return response()->json($data, $data['status_code']);
+                    }
+                    $estate->image = $data['image'];
+                }else {
+                    $data = null;
+                    $estate->image = 'noimage.jpg';
+                }
+
+                $estate->save();
                 $msg['status']  = true;
                 $msg['status_code'] = 201;
                 $msg['message'] = 'Estate created succesfully!';
+                $msg['image_info'] = $data;
                 $msg['estate'] = $estate;
            }else {         
 
@@ -184,7 +198,7 @@ class EstateController extends Controller
 
     }
 
-        public function update(Request $request, Estate $estate, $id) {
+        public function update(Request $request, Estate $estate, $id, ImageController $image) {
               $this->validateRequest($request);
              //start temporay transaction
              DB::beginTransaction();
@@ -192,15 +206,29 @@ class EstateController extends Controller
             try{
                $estate = Estate::where('id', $id)->first();
                if($estate) {
-                        $estate->estate_name  = ucfirst($request->input('estate_name'));
-                        $estate->city         = ucfirst($request->input('city'));
-                        $estate->country      = ucfirst($request->input('country'));
-                        $estate->address      = ucfirst($request->input('address'));
-                        $estate->save();
+                    $estate->estate_name  = ucfirst($request->input('estate_name'));
+                    $estate->city         = ucfirst($request->input('city'));
+                    $estate->country      = ucfirst($request->input('country'));
+                    $estate->address      = ucfirst($request->input('address'));
+
+                    //Upload image 
+                    if($request->hasFile('image')) {
+                        $data = $this->upload($request, $image, $estate);
+                        if($data['status_code'] !=  200) {
+                            return response()->json($data, $data['status_code']);
+                        }
+                        $estate->image = $data['image'];
+                    }else {
+                        $data = null;
+                        $estate->image = 'noimage.jpg';
+                    }
+                    
+                    $estate->save();
 
                     $msg['status_code'] = 201;
                     $msg['message'] = 'Estate updated succesfully!';
                     $msg['estate'] = $estate;
+                    $msg['image_info']   = $data;
                }else {         
                     $msg['status_code'] = 404;
                     $msg['message'] = 'Estated not found!';
@@ -291,6 +319,16 @@ class EstateController extends Controller
 
         }
 
+    }
+    public function upload($request, $image, $table=null) {
+        $user = Auth::user();
+
+        $this->validate($request, [
+         'image' => "image|max:4000",
+        ]);
+        //Image Engine
+        $res = $image->imageUpload($request, $table);
+        return $res;
     }
 
 }
