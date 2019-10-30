@@ -291,10 +291,10 @@ class ServiceProviderController extends Controller
                 if($data['status_code'] !=  200) {
                     return response()->json($data, $data['status_code']);
                 }
-                $visitor->image = $data['image'];
+                $service->image = $data['image'];
             }else {
                 $data = null;
-                $visitor->image = 'noimage.jpg';
+                $service->image = 'noimage.jpg';
             }
 
              $service->save();
