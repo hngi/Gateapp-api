@@ -253,6 +253,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Show signed in user visitor
     Route::get('visitor', 'VisitorController@residentVisitor')->middleware('checkResident');
+   
+    // Show signed in user visitor history
+    Route::get('visitorHistory', 'VisitorController@residentHistory')->middleware('checkResident');
 
     // Show single visitor
     Route::get('visitor/{id}', 'VisitorController@show')->middleware('checkResident');
