@@ -507,4 +507,62 @@ class GatemanController extends Controller
             }
         }
     }
+
+    /**
+     * Deletes a gateman record for an estate
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteEstateGateman(
+        $estate_id,
+        $id,
+        Request $request
+    ){
+        // Verifies that the logged-in user is assigned to the requested estate
+        $user_estate = Home::whereUserIdAndEstateId($this->user->id, $estate_id)->first();
+
+        if (is_null($user_estate)) {
+            return response()->json([
+                'status' => false,
+                'message'=> "Access denied",
+            ], 403);
+        }
+        else
+        {
+            $gateman = User::join('homes', 'homes.user_id', 'users.id')
+                ->where('users.id', $id)
+                ->where('users.user_type', 'gateman')
+                ->where('homes.estate_id', $estate_id)
+                ->get();
+
+            // Check if such user exists as a gateman for the estate
+            if (!$gateman->isEmpty()) {
+                // Delete the record
+                $update = User::find($id)->delete();
+
+                if ($update) {
+                    return response()->json([
+                        'status' => true,
+                        'message' => 'Gateman has been deleted successfully!',
+                    ], 200);
+                }
+                else
+                {
+                    // if delete action fails, send a response
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Sorry, this gateman could not be deleted!',
+                    ], 500);
+                }
+            }
+            else
+            {
+                return response()->json([
+                    'status' => false,
+                    'message'=> "The user is not recognised as a gateman",
+                ], 400);
+            }
+        }
+
+    }
 }
