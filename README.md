@@ -62,7 +62,3 @@ configurations. **For testing purposes, you may keep the .env file provided in t
 * Run ```php artisan migrate``` to set up the DB
 * Run ```php artisan key:generate``` to  generate the application key
 * For testing and development purposes, run ```php artisan serve```. You can then access the app at http://localhost:8000 on your browser
-
-
-## Please Note 
-##### A new middleware has been crated for the estate admin checke the app/Http/Kernel.php file

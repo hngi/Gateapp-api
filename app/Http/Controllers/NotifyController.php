@@ -94,5 +94,24 @@ class NotifyController extends Controller
         return Str::snake($typ);
     }
 
+    /**
+     * Get a list oof all possible notification types
+     * @return \Illuminate\Support\Collection
+     */
+    public function types()
+    {
+        // We get all the files on the Notifications dir - that end with "Notifications"
+        // which are all possibly notifications classes and use them as notifications types
+        $types = collect(glob(app_path('Notifications/*Notification.php')));
+
+        $types->transform(function ($item, $key) {
+            $rp = [app_path('Notifications') => '', '.php' => '', '/' => ''];
+            $type = strtr($item, $rp);
+            return $this->snakeCasedType($type);
+        });
+
+        return $types;
+    }
+
 
 }

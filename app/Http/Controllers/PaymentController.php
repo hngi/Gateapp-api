@@ -102,7 +102,7 @@ class PaymentController extends Controller
 			$data['message'] = "Home not found";
 			$status = 404;
 		}
-
+		
 	}
 
 }

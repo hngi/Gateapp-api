@@ -13,7 +13,6 @@
         "benwilkins/laravel-fcm-notification": "^4.0",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
-        "fzaninotto/faker": "^1.8",
         "guzzlehttp/guzzle": "^6.3",
         "illuminate/mail": "^6.1",
         "jrm2k6/cloudder": "^0.6.0",
@@ -26,6 +25,7 @@
     },
     "require-dev": {
         "facade/ignition": "^1.4",
+        "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^3.0",
         "phpunit/phpunit": "^8.0"

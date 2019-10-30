@@ -59,7 +59,8 @@ class GatemanInvitationNotification extends Notification
                 'body' => $this->body,
             ])
             ->data([
-                'resident_id' => $this->resident->id,
+                'resident' => $this->resident,
+                'click_action' => 'FLUTTER_NOTIFICATION_ACTION'
             ])
             ->priority(FcmMessage::PRIORITY_HIGH);
 
@@ -103,7 +104,7 @@ class GatemanInvitationNotification extends Notification
         return [
             'title' => $this->title,
             'body' => $this->body,
-            'resident_id' => $this->resident->id,
+            'resident' => $this->resident,
         ];
     }
 }

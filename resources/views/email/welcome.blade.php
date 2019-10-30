@@ -50,10 +50,5 @@
     			 <p class="note">Use this verification token to confirm account</p>
     			 <p class="verifycode">{{ $user->verifycode}}</p>
     		</div>
-
-			<div>
-                 <p class="team">if this mail is not authourize by you please discard</p>
-                 <p class="team" style="font-style: italic;">GateGuard Team</p>
-            </div>
     	</body>
     </html>

@@ -42,6 +42,7 @@ class ImageController extends Controller
     public function saveImages(Request $request, $onCurrent)
     {
 
+
         DB::beginTransaction();
         try{
               //Error hadling to control file size
