@@ -75,7 +75,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Service provider information based on id
     Route::get('/service-provider/info/{id}', 'ServiceProviderController@search')->middleware('superAdmin');
-    
+
     // Admin only delete a specific service provider
     Route::delete('/service-provider/delete/{id}', 'ServiceProviderController@destroy')->middleware('superAdmin');
 
@@ -115,7 +115,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Show  Total Number of Estates added that week
     Route::get('statistics/weeklyEstate', 'Statistics\EstateStatsController@showWeek')->middleware('superAdmin');
 
-    // Show Total Number of Estates added that month 
+    // Show Total Number of Estates added that month
     Route::get('statistics/monthlyEstate', 'Statistics\EstateStatsController@showMonth')->middleware('superAdmin');
 
     // Show Total Number of Service Providers on the system
@@ -130,7 +130,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Show Total Number of Visits scheduled on the Application
     Route::get('statistics/visits', 'Statistics\VisitorStatsController@index')->middleware('superAdmin');
 
-    //Show Total Number of Visits Scheduled for that week on the application 
+    //Show Total Number of Visits Scheduled for that week on the application
     Route::get('statistics/weeklyVisits', 'Statistics\VisitorStatsController@weeklyVisits')->middleware('superAdmin');
 
     //Show Total Number of Visits Scheduled for that month on the application
@@ -147,7 +147,20 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //Show total number of pending service providers in the estate of logged in Estate Admin
     Route::get('statistics/pendingEstateService/', 'Statistics\ServiceStatsController@pendingEstateRequests')->middleware('estateAdmin');
+
+    //Estate Admin approves Service Providers request
+    Route::post('/service-provider/approve/{id}', 'ServiceProviderController@approve')->middleware('estateAdmin');
+
+    //Estate Admin rejects Service Providers request
+    Route::post('/service-provider/reject/{id}', 'ServiceProviderController@reject')->middleware('estateAdmin');
+
+
 });
+
+
+
+
+
 
 // General Users Routes *******************************************************
 Route::group(['middleware' => ['jwt.verify']], function () {
@@ -389,3 +402,6 @@ Route::post("service_provider/create_request", "ServiceProviderController@create
 //     event(new App\Events\notify('Someone'));
 //     return "Notification sent";
 // });
+
+// test admin accept and reject service provider
+
