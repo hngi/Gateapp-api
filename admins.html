@@ -12,6 +12,7 @@
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="styles/global.css">
     <link rel="stylesheet" href="styles/dashboard-sidebar.css">
+    <link rel="stylesheet" type="text/css" href="styles/estates.css">
     <link rel="stylesheet" type="text/css" href="styles/seunogunyemi.css">
     <title>Admin List</title>
 </head>
@@ -107,13 +108,13 @@
 												<div class="container-fluid">
 												<a href="#" style="color: black;"><i class="fa fa-bell"></i></a>
 												<br>
-												<table class="search" style="width: 80%;">
+												<table class="search" style="width: 100%;">
 													<tr>
 														<td><h1>Admins</h1></td>
-												<td><input type="tablesearch" name="search" placeholder=" search admin users"></td>
+												<td><input type="tablesearch" name="search" placeholder=" search admin users" id="myInput" onkeyup="myFunction()"></td>
 													</tr>
 												</table>
-													<table class="admins">
+													<table class="admins" id="myTable">
 															<thead>
 																<tr style="border-top: 1px solid black; border-bottom: 1px solid black;">
 																	<td>Name <i class="fa fa-filter"></i></td>
@@ -126,97 +127,97 @@
 																<td>Sarah Anderson</td>
 																<td>*super</td>
 																<td>admin@gatepass.com</td>
-																<td><a href="#" class="green">View Details</a></td>
+																<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a></td>
 															</tr>
 															<tr>
 																<td>Tomiwa Adeleke</td>
 																<td>Lekki Gardens Phase 3</td>
 																<td>otheremail@example.com</td>
-																<td><a href="#"  class="green">View Details</a></td>
+																<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a></td>
 															</tr>
 															<tr>
 																<td>Shodipe Bolanle</td>
 																<td>M.K.O Abiola Gardens</td>
 																<td>sam@rectify.org</td>
-																<td><a href="#" class="green">View Details</a></td>
+																<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a></td>
 															</tr>
 															<tr>
 																<td>Chukuwdi Ubong</td>
 																<td>Otedola Estate</td>
 																<td>admin@gatepass.com</td>
-																<td><a href="#" class="green">View Details</a></td>
+																<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a></td>
 															</tr>
 															<tr>
 																<td>Sarah Anderson</td>
 																<td>*super</td>
 																<td>admin@gatepass.com</td>
-																<td><a href="#" class="green">View Details</a></td>
+																<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a></td>
 															</tr>
 															<tr>
 																<td>Tomiwa Adeleke</td>
 																<td>Lekki Gardens Phase 3</td>
 																<td>otheremail@example.com</td>
-																<td><a href="#"  class="green">View Details</a></td>
+																<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a></td>
 															</tr>
 															<tr>
 																<td>Shodipe Bolanle</td>
 																<td>M.K.O Abiola Gardens</td>
 																<td>sam@rectify.org</td>
-																<td><a href="#" class="green">View Details</a></td>
+																<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a></td>
 															</tr>
 															<tr>
 																<td>Chukuwdi Ubong</td>
 																<td>Otedola Estate</td>
 																<td>admin@gatepass.com</td>
-																<td><a href="#" class="green">View Details</a></td>
+																<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a></td>
 															</tr>
 															<tr>
 																<td>Sarah Anderson</td>
 																<td>*super</td>
 																<td>admin@gatepass.com</td>
-																<td><a href="#" class="green">View Details</a></td>
+																<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a></td>
 															</tr>
 															<tr>
 																<td>Tomiwa Adeleke</td>
 																<td>Lekki Gardens Phase 3</td>
 																<td>otheremail@example.com</td>
-																<td><a href="#"  class="green">View Details</a></td>
+																<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a></td>
 															</tr>
 															<tr>
 																<td>Shodipe Bolanle</td>
 																<td>M.K.O Abiola Gardens</td>
 																<td>sam@rectify.org</td>
-																<td><a href="#" class="green">View Details</a></td>
+																<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a></td>
 															</tr>
 															<tr>
 																<td>Chukuwdi Ubong</td>
 																<td>Otedola Estate</td>
 																<td>admin@gatepass.com</td>
-																<td><a href="#" class="green">View Details</a></td>
+																<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a></td>
 															</tr>
 															<tr>
 																<td>Sarah Anderson</td>
 																<td>*super</td>
 																<td>admin@gatepass.com</td>
-																<td><a href="#" class="green">View Details</a></td>
+																<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a></td>
 															</tr>
 															<tr>
 																<td>Tomiwa Adeleke</td>
 																<td>Lekki Gardens Phase 3</td>
 																<td>otheremail@example.com</td>
-																<td><a href="#"  class="green">View Details</a></td>
+																<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a></td>
 															</tr>
 															<tr>
 																<td>Shodipe Bolanle</td>
 																<td>M.K.O Abiola Gardens</td>
 																<td>sam@rectify.org</td>
-																<td><a href="#" class="green">View Details</a></td>
+																<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a></td>
 															</tr>
 															<tr>
 																<td>Chukuwdi Ubong</td>
 																<td>Otedola Estate</td>
 																<td>admin@gatepass.com</td>
-																<td><a href="#" class="green">View Details</a></td>
+																<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a></td>
 															</tr>
 															
 													</table>
@@ -224,6 +225,24 @@
 											</div>
 											</div>
 										</div>
+<!-- Modal inserted here -->
+    <div class="modal fade" id="singleEstateModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog col-12 px-1 mx-0" role="document">
+            <div class="modal-content col-11 col-md-9 px-0 ml-auto">
+                <div class="modal-body">
+                   <h1>Chukwudi Ubong</h1>
+                   <h3>Otedola Estate</h3>
+                   <p>admin@gatepass.com</p>
+                   <br>
+                   <center>
+                   <button class="btn btn-danger" style="background-color: #EB5757; width: 300px; margin-bottom: 30px;">Revoke Access</button>
+                   <br>
+                   <button class="btn btn-warning" style="background-color: #56CCF2; width: 300px;">Reset Password</button>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
 				
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -243,11 +262,54 @@
 </script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#sidebarCollapse').on('click', function () {
-            $('#tablecontent').toggleClass('active');
-        });
-    });
+	// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+<script>
+	function myFunction() {
+		// Declare variables
+		var input, filter, table, tr, td, i, txtValue;
+		input = document.getElementById("myInput");
+		filter = input.value.toUpperCase();
+		table = document.getElementById("myTable");
+		tr = table.getElementsByTagName("tr");
+
+		// Loop through all table rows, and hide those who don't match the search query
+		for (i = 0; i < tr.length; i++) {
+			td = tr[i].getElementsByTagName("td")[0];
+			if (td) {
+				txtValue = td.textContent || td.innerText;
+				if (txtValue.toUpperCase().indexOf(filter) > -1) {
+					tr[i].style.display = "";
+				} else {
+					tr[i].style.display = "none";
+				}
+			}
+		}
+	}
 </script>
 
 </html>
