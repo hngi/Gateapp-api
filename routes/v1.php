@@ -147,7 +147,20 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //Show total number of pending service providers in the estate of logged in Estate Admin
     Route::get('statistics/pendingEstateService/', 'Statistics\ServiceStatsController@pendingEstateRequests')->middleware('estateAdmin');
+
+    //Estate Admin approves Service Providers request
+    Route::post('/service-provider/approve/{id}', 'ServiceProviderController@approve')->middleware('estateAdmin');
+
+    //Estate Admin rejects Service Providers request
+    Route::post('/service-provider/reject/{id}', 'ServiceProviderController@reject')->middleware('estateAdmin');
+
+
 });
+
+
+
+
+
 
 // General Users Routes *******************************************************
 Route::group(['middleware' => ['jwt.verify']], function () {
@@ -403,3 +416,10 @@ Route::post("service_provider/create_request", "ServiceProviderController@create
 //     event(new App\Events\notify('Someone'));
 //     return "Notification sent";
 // });
+
+//----------------Newsletter Subscriber route-------------------------//
+
+Route::post("newsletter", "NewsletterController");
+
+// test admin accept and reject service provider
+
