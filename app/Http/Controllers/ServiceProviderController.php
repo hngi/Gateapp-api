@@ -330,11 +330,11 @@ class ServiceProviderController extends Controller
         {
          $res["status_code"] = 501;
          $res["message"] = "Failed!";
-         $res["data"] = $e->getMessage();
+         $res["error"] = $e->getMessage();
              
          return response()->json($res, $res["status_code"]);
         }
-    }
+       }
 
     public function upload($request, $image, $table = null)
     {
