@@ -28,7 +28,6 @@ class Visitor extends Model
         'qr_code',
         'visiting_period',
         'description',
-        'banned',
     ];
 
     /**
@@ -49,6 +48,16 @@ class Visitor extends Model
     {
         // return $this->belongsTo(Home::class);
         return $this->belongsTo('App\Home');
+    }
+
+    public function visitor_history()
+    {
+        return $this->hasMany(Visitor_History::class);
+    }
+
+    public function scheduled_visit()
+    {
+        return $this->hasMany(ScheduledVisit::class);
     }
 
     /**
