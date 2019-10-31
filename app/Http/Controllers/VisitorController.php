@@ -388,7 +388,6 @@ class VisitorController extends Controller
             return response()->json($res, 404);
         }
     }
-}
 
     public function schedule($id, Request $request, QrCodeGenerator $qr)
     {
