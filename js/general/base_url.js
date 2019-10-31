@@ -4,12 +4,8 @@ Import Note: The base_url.js hold every every third party base url origin and ap
     this url can been use in the application as a variable
 */
 
-const api_origin = '';
-
+const api_origin = 'https://gateappapi.herokuapp.com/';
 
 //Authentication Paths
-const signup            = '';
-const signin            = '';
-const verify            = '';
-const forget_password   = '';
-const reset_password    = '';
+const signin              = 'api/v1/login/admin';
+const create_estate_admin   = '';
