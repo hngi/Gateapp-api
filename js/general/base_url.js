@@ -3,7 +3,7 @@ Import Note: The base_url.js hold every every third party base url origin and ap
     for example: the api origin or any api origin
     this url can been use in the application as a variable
 */
-
+// const api_origin = 'http://52.40.191.249/';
 const api_origin = 'https://gateappapi.herokuapp.com/';
 
 //Authentication Paths

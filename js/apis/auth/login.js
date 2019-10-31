@@ -30,12 +30,12 @@ const loginApi = (event, loginForm) => {
                 flashAlert(title,result);
             }
             if(status == 404) {
-                title  = 'Login failed';
-                result = JSON.stringify(data.message).split('"').join('');
+                title  = 'Route not found';
+                result = 'This route does not exist';
                 flashAlert(title,result);
             }
             if(status == 500) {
-                title  = 'Login failed';
+                title  = 'Unexpected Error';
                 result = 'An error occured due to broken, please try again or contact website owner!';
                 flashAlert(title,result);
             }
@@ -61,7 +61,6 @@ const loginApi = (event, loginForm) => {
          .then(response => errorHandling(response))
          .then(data => {
              if(data) {
-                 sunmitBtn.innerHTML = 'Login';
                  console.log(data);
                  getResponse(data);
              }
