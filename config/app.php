@@ -177,6 +177,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        //Benwilkins FCM Service Provider
+        Benwilkins\FCM\FcmNotificationServiceProvider::class,
+
     ],
 
     /*

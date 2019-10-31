@@ -32,7 +32,7 @@ class NotifyController extends Controller
                 'type' => $this->snakeCasedType($item->type),
                 'data' => $item->data,
                 'read_at' => $item->read_at,
-                'created_at' => $item->created_at,
+                'created_at' => date('Y-m-d hh:m:s' ,strtotime($item->created_at)),
             ];
         });
 
