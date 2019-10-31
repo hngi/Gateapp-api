@@ -74,7 +74,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::patch('/service-provider/unsuspend/{id}','ServiceProviderController@restore')->middleware('superAdmin');
 
     // Service provider information based on id
-    Route::delete('/service-provider/info/{id}', 'ServiceProviderController@search')->middleware('superAdmin');
+    Route::get('/service-provider/info/{id}', 'ServiceProviderController@search')->middleware('superAdmin');
 
     //Admin only Update a service provider
     Route::post('/service-provider/{id}', 'ServiceProviderController@update')->middleware('superAdmin');
