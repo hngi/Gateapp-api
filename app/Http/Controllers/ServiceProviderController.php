@@ -455,7 +455,6 @@ class ServiceProviderController extends Controller
         $res = $image->imageUpload($request, $table);
         return $res;
     }
-
     public function create_request(Request $request, ImageController $image)
     {
         $validator = Validator::make($request->all(), [
@@ -515,5 +514,19 @@ class ServiceProviderController extends Controller
         }
 
     }
+    public function approve($id)
+    {
+        $application = Service_Provider::findOrFail($id);
+        $application->status = 1;
+        $application->save();
 
+        return response()->json(['status' => true, 'message' => 'Service provider accepted'], 200);
+    }
+    public function reject($id)
+    {
+        $application = Service_Provider::findOrFail($id);
+        $application->delete($id);
+
+        return response()->json(['status' => true, 'message' => 'Service provider rejected'], 200);
+    }
 }
