@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Gateman;
 use App\Estate;
 use App\Notifications\GatemanAcceptanceNotification;
+use App\Notifications\VisitorArrivalNotification;
 use App\User;
 use App\Home;
 use App\Visitor;
@@ -102,8 +103,9 @@ class GatemanController extends Controller
         		if ($gateman->save()) {
                         // Send the resident a notification informing them
                         //  of the acceptance
-        		        $resident = User::find($gateman['user_id']);
-        		        $resident->notify(new GatemanAcceptanceNotification($resident, $this->user));
+                        $resident = User::find($gateman['user_id']);
+                        $user = User::find($gateman_id);
+        		        $resident->notify(new GatemanAcceptanceNotification($resident, $user));
 			        return response()->json([
 			        	'message' => 'The request has been accepted successfully',
 			        	'status' => true,
@@ -305,6 +307,12 @@ class GatemanController extends Controller
                 $visitor = Visitor::where('id', $visitor_id)->with('user')->get();
                 $res ['Message'] = "Visitor Has been checked out succesfully";
                 $res ['Visitor details'] = $visitor;
+                $resident_notifiable = User::find($resident_id);
+                $gateman_forNotificaton = User::find(Auth::user()->id);
+                $resident_notifiable.notify(new VisitorArrivalNotification($resident_notifiable,
+                $gateman_forNotificaton,
+                $visitor
+            ));
             	return response()->json($res, 202);
             }
             else {
