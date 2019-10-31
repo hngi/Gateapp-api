@@ -94,7 +94,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Show all visitor
 
-    Route::get('visitors/all', 'VisitorController@index')->middleware('superAdminadmin');
+    Route::get('visitors/all', 'VisitorController@index')->middleware('superAdmin');
 
     //create faq
     Route::post('faq', 'FaqController@store')->middleware('superAdmin');
@@ -108,8 +108,6 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/support/{id}', 'SupportController@show')->middleware('superAdmin');
     //delete support message
     Route::delete('/support/{id}', 'SupportController@destroy')->middleware('superAdmin');
-
-    Route::get('visitors/all', 'VisitorController@index')->middleware('superAdmin');
 
     // Show Total Number of Estates on the system
     Route::get('statistics/estate', 'Statistics\EstateStatsController@index')->middleware('superAdmin');
@@ -221,7 +219,17 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //Select Estate
     Route::post('/estate/choose/{id}', 'EstateController@estateMemeber');
 
+    // Get a single gateman or all gatemen for an estate
+    Route::get('estate/{estate_id}/gateman/{id?}', 'GatemanController@estateGatemen')->middleware('estateAdmin');
 
+    // Add gateman to an estate
+    Route::post('estate/{id}/gateman', 'GatemanController@addEstateGateman')->middleware('estateAdmin');
+
+    // Edit a gateman for an estate
+    Route::put('estate/{estate_id}/gateman/{id}', 'GatemanController@updateEstateGateman')->middleware('estateAdmin');
+
+    // Delete a single gateman for an estate
+    Route::delete('estate/{estate_id}/gateman/{id}', 'GatemanController@deleteEstateGateman')->middleware('estateAdmin');
 
     //(Users Messging)
     //Get message
