@@ -253,12 +253,9 @@ class UserProfileController extends Controller
             return response()->json(['message' => $e->getMessage()], 501);
         }
     }
-    
      //revoke selected admin access
     public function revokeAdmin($id) 
     {
-        // $data = (['block', 1]);
-        try{
             $user = User::find($id);
             if(!$user){
             $res['message'] = 'user not found!';
@@ -272,21 +269,13 @@ class UserProfileController extends Controller
             $res['message'] = 'user you are trying to block is not an Admin or an error occured, please try again!';
             return response()->json($res, 402);
         }
-        } catch(\Exception $e) {
-            User::rollBack();
-            $res['status'] = 501;
-            $res['message'] = "An error occured trying to ban admin";            
-        }
         
         return response()->json($res, $res['status']);
     }
 
     //unblock selected admin access
-    public function unrevokeAdmin(Request $request, $id) 
+    public function unrevokeAdmin($id) 
     {
-        
-        // $data = (['block', 1]);
-        try{
             $user = User::find($id);
             if(!$user){
             $res['message'] = 'user not found!';
@@ -300,12 +289,7 @@ class UserProfileController extends Controller
             $res['message'] = 'user you are trying to unblock is not an Admin or an error occured, please try again!';
             return response()->json($res, 402);
         }
-        } catch(\Exception $e) {
-            User::rollBack();
-            $res['status'] = 501;
-            $res['message'] = "An error occured trying to ban admin";            
-        }
         
         return response()->json($res, $res['status']);
-    }
+    }  
 }
