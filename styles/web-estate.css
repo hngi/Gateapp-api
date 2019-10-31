@@ -1,0 +1,118 @@
+.welcome-image {
+    min-height: 60vh;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("../images/estate-example.png");
+    background-position: center;
+    background-size: cover;
+}
+.green-underline {
+    width: 3vw;
+    border-top: 4px solid #49a347;
+  }
+.estate-header {
+    min-height: 55vh;
+}
+.header-image {
+    height: 25vh;
+}
+.header-image img{
+    height: 100%;
+    width: 100%;
+}
+.estate-header h3 {
+    color: white;
+}
+.usual-btn {
+    color: white;
+    background: #49a347;
+    border-radius: 0px;
+    font-size: 10px;
+    font-weight: bold;
+}
+.usual-btn-opposite {
+    color: #49a347;
+    background: white;
+    border-radius: 0px;
+    font-size: 10px;
+    font-weight: bold;
+}
+.home-is-windemere{
+    min-height: 80vh;
+}
+.windemere-desc h2 {
+    font-weight: bold;
+}
+.windemere-desc p {
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 5vh;
+}
+.windemere-desc-image{
+    min-height: 60vh;
+}
+.amenities {
+    min-height: 100vh;
+}
+.amenities h2 {
+    font-weight: bold;
+}
+.amenities .nav{
+    border-bottom: 2px solid lightgrey;
+}
+.amenities .nav-link {
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+}
+.amenities .nav-link.active {
+    border-bottom: 5px solid #49a347;
+}
+#homeFeaturesCarousel .carousel-inner {
+    height: 70vh;
+}
+#homeFeaturesCarousel .carousel-inner .carousel-item{
+    height: 100%;
+    background: url("../images/kitchen.png");
+    background-size: cover;
+    background-position: center;
+}
+.view-all-gallery{
+    position: absolute;
+    bottom: 3vh;
+    right: 3vw;
+}
+.descriptor{
+    position: absolute;
+    bottom: 3vh;
+    left: 3vw;
+}
+.features {
+}
+.features .feature-listed p{
+    font-size: 12px;
+    font-weight: bold;
+    border-bottom: 2px solid lightgrey;
+    color: #49a347;
+}
+.resident-reviews{
+    min-height: 50vh;
+}
+.resident-reviews h3{
+    font-weight: bold;
+}
+.review-message p {
+    font-size: 12px;
+    font-weight: bold;
+}
+.review-details {
+    line-height: 3vh;
+}
+.review-details p, span{
+    font-weight: bold;
+    color: #49a347;
+}
+.review-details p {
+    font-size: 14px;
+}
+.review-details span {
+    font-size: 12px;
+}

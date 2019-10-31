@@ -1,0 +1,17 @@
+#singleVisitorModal .modal-dialog {
+    max-width: 100%;
+    min-height: 100%;
+}
+#singleVisitorModal .modal-content {
+    min-height: 90vh;
+}
+#singleVisitorModal .modal-body {
+    min-height: 100%;
+}
+.single-visit span {
+    font-size: 12px;
+    font-weight: bold;
+}
+.unban-link {
+    color: red !important;
+}
