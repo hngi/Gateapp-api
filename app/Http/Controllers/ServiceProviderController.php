@@ -256,16 +256,83 @@ class ServiceProviderController extends Controller
 
     public function destroy($id)
     {
-        $service = Service_Provider::destroy($id);
+      $service = Service_Provider::destroy($id);
 
-        if ($service) {
-            $res['status'] = 200;
-            $res["message"] = "Service Provider Deleted!";
-            return response()->json($res, 200);
-        } else {
-            $res['status'] = 404;
-            $res["message"] = "No service found";
-            return response()->json($res, $res['status']);
+      if ($service) {
+        $res['status'] = 200;
+        $res["message"] = "Service Provider Deleted!";
+        
+        return response()->json($res, 200);
+      } else {
+          $res['status'] = 404;
+          $res["message"] = "No service found";
+        
+          return response()->json($res, $res['status']);
+        }
+      }
+    
+    public function softDelete($id)
+    {
+     $service = Service_Provider::destroy($id);
+     if($service)
+     {
+      $res["status"] = 200;
+      $res["message"] = "Service Provider Suspended!";
+      $res["data"] = $service;
+         
+      return response()->json($res, $res["status"]);
+     }
+      else
+     {
+      $res["status"] = 501;
+      $res["message"] = "Unable To Suspend Service Provider!";
+         
+      return response()->json($res, $res["status"]);
+     }
+    }
+
+    public function search($id)
+    {
+     try {
+          $db = Service_Provider::find($id);
+          $name = $db->name ?? 'null';
+          $phone = $db->phone ?? 'null';
+          $cat_id = $db->category_id ?? 'null';
+          $des = $db->description ?? 'null';
+          $status = $db->status;
+          $created = $db->created_at ?? 'null';
+          $updated = $db->updated_at ?? 'null';
+     
+          if($status == 1)
+          {
+           $res["status"] = "Active";
+          }
+           else
+          {
+           $res["status"] = "Inactive";
+          }
+     
+         $cat = Category::find($cat_id);
+         $cat_name = $cat->title;
+         
+         $res["status_code"] = 200;
+         $res["message"] = "Success!";
+         $res["name"] = $name;
+         $res["phone"] = $phone;
+         $res["description"] = $des;
+         $res["created"] = $created;
+         $res["updated"] = $updated;
+         $res["category"] = $cat_name;
+         
+         return response()->json($res, $res["status_code"]);
+        }
+         catch (\Exception $e)
+        {
+         $res["status_code"] = 501;
+         $res["message"] = "Failed!";
+         $res["data"] = $e->getMessage();
+             
+         return response()->json($res, $res["status_code"]);
         }
     }
 
