@@ -325,6 +325,12 @@ class VisitorController extends Controller
         return $res;
     }
 
+        /**
+     * get the visit history of an estate
+     *
+     * @param  int $id the visitor id
+     * @return JSON
+     */
     public function fetchEstateVisitHistory($id)
     {
         $visitors = DB::table('visitors_history')->get()->where('user_id',$id);
@@ -340,6 +346,12 @@ class VisitorController extends Controller
         }
     }
 
+        /**
+     * Delete a single visitor
+     *
+     * @param  none
+     * @return JSON
+     */
     public function fetchAllVisitHistory()
     {
         $visitors = DB::table('visitors_history')->orderBy('user_id')->get();
@@ -356,8 +368,12 @@ class VisitorController extends Controller
     }
 
 
-    // fetch all visitors to an estate
-    public function fetchEstateVisitors($id)
+    /**
+     * fetch visitors to an estate
+     *
+     * @param  int $id the visitor id
+     * @return JSON
+     */    public function fetchEstateVisitors($id)
     {
         $visitors = DB::table('visitors')->get()->where('user_id',$id);
         if($visitors) {
@@ -372,8 +388,12 @@ class VisitorController extends Controller
         }
     }
 
-    // fetch all visitors, requires super admin privileges
-    public function fetchSuperAdminVisitors()
+    /**
+     * fetch all visitors
+     *
+     * @param  none
+     * @return JSON
+     */    public function fetchSuperAdminVisitors()
     {
         // $visitors = \App\Visitor::all();
         $visitors = DB::table('visitors')->orderBy('user_id')->get();
