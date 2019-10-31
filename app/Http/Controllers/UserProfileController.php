@@ -244,12 +244,19 @@ class UserProfileController extends Controller
         $request->validate([
             'fcm_token' => ['required', 'string']
         ]);
+        
 
         try {
-            auth()->user()->update(['fcm_token' => $request->fcm_token]);
-
+            $user = Auth::user();
+            DB::beginTransaction();
+            // auth()->user()->update(['fcm_token' => $request->fcm_token]);
+            $user->fcm_token = $request->fcm_token;
+            $user->save();
+            //if operation was successful save commit save to database
+            DB::commit();
             return response()->json(['message' => 'Firebase token updated']);
         } catch (Exception $e) {
+            DB::rollback();
             return response()->json(['message' => $e->getMessage()], 501);
         }
     }
