@@ -30,7 +30,7 @@ class NewsletterController extends Controller
         NewsletterSubscriber::create($validatedData);
 
         return response()->json([
-            'message' => "Subscription invite sent. Please check your inbox."
+            'message' => "Thank you for subscribing."
         ]);
 
     }
