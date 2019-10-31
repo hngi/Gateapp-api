@@ -9,7 +9,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Benwilkins\FCM\FcmMessage;
 
-class GatemanAcceptanceNotification extends Notification
+class GatemanAcceptanceNotification extends Notification implements ShouldQueue
 {
     use Queueable, ResolveChannelsTrait;
 
@@ -28,8 +28,8 @@ class GatemanAcceptanceNotification extends Notification
         $this->resident = $resident;
         $this->gateman = $gateman;
 
-        $this->title = "{$this->gateman->name} has accepted to be your gateman";
-        $this->body = null;
+        $this->title = "Acceptance";
+        $this->body = "{$this->gateman->name} has accepted to be your gateman";
     }
 
     /**
@@ -60,12 +60,13 @@ class GatemanAcceptanceNotification extends Notification
             ])
             ->data([
                 'gateman_id' => $this->gateman->id,
-                'click_action' => 'FLUTTER_NOTIFICATION_ACTION'
+                'click_action' => 'FLUTTER_NOTIFICATION_ACTION',
+                'type' => 'gateman_acceptance_notification'
             ])
             ->priority(FcmMessage::PRIORITY_HIGH);
 
         return $message;
-    }
+            }
 
     /**
      * Route notifications for the FCM channel.
