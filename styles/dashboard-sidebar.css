@@ -123,15 +123,16 @@ ul ul a {
     #sidebarCollapse span {
         display: none;
     }
+    
 }
-@media (min-width: 768px) {
+@media (min-width: 769px) {
     /* #sidebar {
         margin-left: -250px;
     } */
-    #sidebar.active {
+    /* #sidebar.active {
         margin-left: 0;
-    }
+    } */
     #sidebarCollapse {
         display: none;
-    }
+    } 
 }
