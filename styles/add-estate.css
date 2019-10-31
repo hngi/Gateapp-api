@@ -1,0 +1,18 @@
+.tab-full{
+    height: 80vh;
+}
+.estate-submit-btn {
+    background: #49a347;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+.add-estate-form input {
+    border-radius: 5px;
+}
+.add-estate-form label {
+    font-size: 12px;
+}
+.add-estate-form input::placeholder {
+    font-size: 12px;
+}
