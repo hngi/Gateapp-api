@@ -10,7 +10,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Benwilkins\FCM\FcmMessage;
 
-class VisitorArrivalNotification extends Notification
+class VisitorArrivalNotification extends Notification implements ShouldQueue
 {
     use Queueable, ResolveChannelsTrait;
 
@@ -32,8 +32,9 @@ class VisitorArrivalNotification extends Notification
         $this->visitor = $visitor;
         $this->gateman = $gateman;
 
-        $this->title = $this->visitor->name .  "has arrived to see you";
-        $this->body = "They were are being checked in by {$this->gateman->name}";
+        $this->title = 'Visitor Arrival';
+        $this->body = $this->visitor->name .  'has arrived to see you \n They are being checked in by {$this->gateman->name}';
+        
     }
 
 
@@ -67,7 +68,8 @@ class VisitorArrivalNotification extends Notification
             ->data([
                 'visitor_details' => $this->visitor->toArray(),
                 'gateman_details' => $this->gateman->toArray(),
-                'click_action' => 'FLUTTER_NOTIFICATION_ACTION'
+                'click_action' => 'FLUTTER_NOTIFICATION_ACTION',
+                'type' => 'visitor_arrival_notification'
             ])
             ->priority(FcmMessage::PRIORITY_HIGH);
 
