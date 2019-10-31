@@ -52,19 +52,19 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //Admin only Create a service provider
     Route::post('/service-provider', 'ServiceProviderController@create')->middleware('superAdmin');
-    
+
     // Service provider suspension route
     Route::delete('/service-provider/suspend/{id}', 'ServiceProviderController@softDelete')->middleware('superAdmin');
-    
+
     // Route to get all suspended service providers
-    Route::get('/service-provider/suspended','ServiceProviderController@softDeleted')->middleware('superAdmin');
-    
+    Route::get('/service-provider/suspended', 'ServiceProviderController@softDeleted')->middleware('superAdmin');
+
     // Route to unsuspend service providers (added bonus)
-    Route::patch('/service-provider/unsuspend/{id}','ServiceProviderController@restore')->middleware('superAdmin');
+    Route::patch('/service-provider/unsuspend/{id}', 'ServiceProviderController@restore')->middleware('superAdmin');
 
     // Service provider information based on id
     Route::delete('/service-provider/info/{id}', 'ServiceProviderController@search')->middleware('superAdmin');
-    
+
     //Admin only Update a service provider
     Route::post('/service-provider/{id}', 'ServiceProviderController@update')->middleware('superAdmin');
 
@@ -105,7 +105,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Show  Total Number of Estates added that week 
     Route::get('statistics/weeklyEstate', 'Statistics\EstateStatsController@showWeek')->middleware('superAdmin');
-    
+
     // Show Total Number of Estates added that month 
     Route::get('statistics/monthlyEstate', 'Statistics\EstateStatsController@showMonth')->middleware('superAdmin');
 
@@ -117,10 +117,10 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Show Total Number of Service Providers added that month 
     Route::get('statistics/monthlyService', 'Statistics\ServiceStatsController@monthlyService')->middleware('superAdmin');
-    
+
     // Show Total Number of Visits scheduled on the Application
     Route::get('statistics/visits', 'Statistics\VisitorStatsController@index')->middleware('superAdmin');
-    
+
     //Show Total Number of Visits Scheduled for that week on the application 
     Route::get('statistics/weeklyVisits', 'Statistics\VisitorStatsController@weeklyVisits')->middleware('superAdmin');
 
@@ -138,14 +138,10 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //Show total number of pending service providers in the estate of logged in Estate Admin 
     Route::get('statistics/pendingEstateService/', 'Statistics\ServiceStatsController@pendingEstateRequests')->middleware('estateAdmin');
-
-
-
-
 });
-    
 
-    
+
+
 
 
 
@@ -253,9 +249,13 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Show signed in user visitor
     Route::get('visitor', 'VisitorController@residentVisitor')->middleware('checkResident');
-   
+
     // Show signed in user visitor history
     Route::get('visitorHistory', 'VisitorController@residentHistory')->middleware('checkResident');
+    //Get all scheduled visits by a user
+    Route::get('visitor/allScheduled', 'VisitorController@getScheduled')->middleware('checkResident');
+    Route::delete('visitor/deleteScheduled/{id}', 'VisitorController@deleteScheduled')->middleware('checkResident');
+
 
     // Show single visitor
     Route::get('visitor/{id}', 'VisitorController@show')->middleware('checkResident');
@@ -268,6 +268,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //Create a visitor
     Route::post('visitor', 'VisitorController@store')->middleware('checkResident');
+
+    //reschedule a visitor
+    Route::post('visitor/{id}', 'VisitorController@schedule')->middleware('checkResident');
 
     //(Residents and Gateman)
 

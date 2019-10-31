@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Visitor_History;
 use App\Visitor;
+use App\ScheduledVisit;
 use Exeception;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -34,20 +36,19 @@ class VisitorController extends Controller
     {
         $visitors = Visitor::where('user_id', $this->user->id)->get();
 
-        if ($visitors->isEmpty()){
+        if ($visitors->isEmpty()) {
             return response()->json([
                 'Message'   => "No Visitors found for this user",
                 'status' => false
             ], 404);
-        }
-        else{
-              // send response with the visitors' details
+        } else {
+            // send response with the visitors' details
             return response()->json([
                 'visitors' => $visitors->count(),
                 'visitor'   => $visitors,
-            	'status' => true
+                'status' => true
             ], 200);
-        }        
+        }
     }
 
     /**
@@ -58,50 +59,49 @@ class VisitorController extends Controller
      */
     public function index(Request $request)
     {
-    	// get number of visitors to be fetched
-    	$per_page = $request->query('per_page');
+        // get number of visitors to be fetched
+        $per_page = $request->query('per_page');
 
-    	// return the requested number of visitors.
-    	// if there was no pagination set by the query,
-    	// limit the response to 15 data set
+        // return the requested number of visitors.
+        // if there was no pagination set by the query,
+        // limit the response to 15 data set
         $visitors = Visitor::paginate($per_page);
 
         // send response with the visitors' details
         return response()->json([
-            'visitors' => $visitors,    
-        	'status' => true
+            'visitors' => $visitors,
+            'status' => true
         ], 200);
     }
 
     public function residentHistory(Request $request)
     {
-    	$visitors = Visitor_History::where('user_id', $this->user->id)->with('user')->with('visitor')->get();
+        $visitors = Visitor_History::where('user_id', $this->user->id)->with('user')->with('visitor')->get();
 
-        if ($visitors->isEmpty()){
+        if ($visitors->isEmpty()) {
             return response()->json([
                 'Message'   => "No Visitors found for this user",
                 'status' => false
             ], 404);
-        }
-        else{
-              // send response with the visitors' details
+        } else {
+            // send response with the visitors' details
             return response()->json([
                 'visitors' => $visitors->count(),
                 'visitor_details'   => $visitors,
-            	'status' => true
+                'status' => true
             ], 200);
-        }        
+        }
     }
 
-	/**
-	 * Get a single visitor
-	 *
-	 * @param  int $id the visitor id
-	 * @return JSON
-	 */
+    /**
+     * Get a single visitor
+     *
+     * @param  int $id the visitor id
+     * @return JSON
+     */
     public function show($id)
     {
-    	// retrieve the visitor's detials with the id
+        // retrieve the visitor's detials with the id
         $res = $this->user->visitors()->find($id);
 
         // output an error if the id is not found
@@ -119,26 +119,26 @@ class VisitorController extends Controller
         ], 200);
     }
 
-	/**
-	 * Create a new visitor
-	 *
-	 * @param  obj $request an instance of the Request::class
-	 * @return JSON
-	 */
+    /**
+     * Create a new visitor
+     *
+     * @param  obj $request an instance of the Request::class
+     * @return JSON
+     */
     public function store(
         Request $request,
         QrCodeGenerator $qr,
         ImageController $image
-    ){
-    	// validate the posted data
-    	$this->validate($request, [
+    ) {
+        // validate the posted data
+        $this->validate($request, [
             'name'              => ['required', 'regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
             'arrival_date'      => 'required|date_format:Y-m-d',
             'car_plate_no'      => 'string|nullable',
-            'purpose'           => 'string', 
+            'purpose'           => 'string',
             'visitor_group'     => 'string',
-            'visiting_period' 	=> 'required|string',
-            'phone_no'      	=> 'string',
+            'visiting_period'     => 'required|string',
+            'phone_no'          => 'string',
             'description'       => 'string|nullable',
         ]);
 
@@ -146,7 +146,7 @@ class VisitorController extends Controller
 
         DB::beginTransaction();
 
-        try{
+        try {
             $visitor = new Visitor();
             $visitor->name = $request->name;
             $visitor->arrival_date = $request->arrival_date;
@@ -165,13 +165,13 @@ class VisitorController extends Controller
             $qr_code = $qr->generateCode($randomToken);
 
             //Upload image 
-            if($request->hasFile('image')) {
+            if ($request->hasFile('image')) {
                 $data = $this->upload($request, $image);
-                if($data['status_code'] !=  200) {
+                if ($data['status_code'] !=  200) {
                     return response()->json($data, $data['status_code']);
                 }
                 $visitor->image = $data['image'];
-            }else {
+            } else {
                 $data = null;
                 $visitor->image = 'noimage.jpg';
             }
@@ -190,9 +190,9 @@ class VisitorController extends Controller
                 'message'     => 'Visitor successfully added',
                 'visitor'     => $visitor,
                 'image_info'  => $data,
-                'qr_image_src'=> $qr_code
+                'qr_image_src' => $qr_code
             ], 200);
-        }catch(Exeception $e) {
+        } catch (Exeception $e) {
             //if any operation fails, Thanos snaps finger - user was not created rollback what is saved
             DB::rollBack();
             $res['status']   = false;
@@ -202,21 +202,21 @@ class VisitorController extends Controller
         }
     }
 
-	/**
-	 * Update a single visitor
-	 *
-	 * @param  obj $request an instance of Request::class
-	 * @param  int $id      the visitor id
-	 * @return JSON
-	 */
-	public function update(
+    /**
+     * Update a single visitor
+     *
+     * @param  obj $request an instance of Request::class
+     * @param  int $id      the visitor id
+     * @return JSON
+     */
+    public function update(
         $id,
         Request $request,
         ImageController $image
-    ){
+    ) {
         // gets the visitor's record from the database
         $visitor = $this->user->visitors()->find($id);
-   
+
         // output an error if the id is not found
         if (!$visitor) {
             return response()->json([
@@ -231,13 +231,13 @@ class VisitorController extends Controller
             'car_plate_no'      => 'string',
             'phone_no'          => 'string',
             'purpose'           => 'string',
-            'visiting_period'   => 'string', 
-            'description'       => 'string', 
+            'visiting_period'   => 'string',
+            'description'       => 'string',
         ]);
 
         DB::beginTransaction();
 
-        try{
+        try {
             $visitor->name = $request->name ?? $visitor->name;
             $visitor->arrival_date = $request->arrival_date ?? $visitor->arrival_date;
             $visitor->car_plate_no = $request->car_plate_no ?? $visitor->car_plate_no;
@@ -248,14 +248,14 @@ class VisitorController extends Controller
             $visitor->description = $request->description ?? $visitor->description;
 
             // Upload updated image 
-             //Upload image 
-             if($request->hasFile('image')) {
+            //Upload image 
+            if ($request->hasFile('image')) {
                 $data = $this->upload($request, $image, $visitor);
-                if($data['status_code'] !=  200) {
+                if ($data['status_code'] !=  200) {
                     return response()->json($data, $data['status_code']);
                 }
                 $visitor->image = $data['image'];
-            }else {
+            } else {
                 $data = null;
                 $visitor->image = 'noimage.jpg';
             }
@@ -272,8 +272,8 @@ class VisitorController extends Controller
                 'message'     => "Visitor's data has been updated successfully!",
                 'visitor'     => $visitor,
                 'image_info'  => $data
-            ], 200);      
-        }catch(Exeception $e) {
+            ], 200);
+        } catch (Exeception $e) {
             //if any operation fails, rollback what is saved
             DB::rollBack();
             $res['status']   = false;
@@ -281,48 +281,120 @@ class VisitorController extends Controller
             $res['hint']     = $e->getMessage();
             return response()->json($msg, 501);
         }
-	}
+    }
 
-	/**
-	 * Delete a single visitor
-	 *
-	 * @param  int $id the visitor id
-	 * @return JSON
-	 */
-	public function destroy($id)
-	{
-    	// retrieve the visitor's detials with the id
-		$visitor = $this->user->visitors()->find($id);
+    /**
+     * Delete a single visitor
+     *
+     * @param  int $id the visitor id
+     * @return JSON
+     */
+    public function destroy($id)
+    {
+        // retrieve the visitor's detials with the id
+        $visitor = $this->user->visitors()->find($id);
 
         // output an error if the visitor id is not found
         if (!$visitor) {
             return response()->json(['message' => 'This visitor could not be found!'], 400);
         }
-		
-		// delete the requested visitor and send a response
-		elseif($visitor->delete()) {
+
+        // delete the requested visitor and send a response
+        elseif ($visitor->delete()) {
             return response()->json([
                 'status' => true,
                 'message' => 'Visitor has been deleted successfully!',
             ], 200);
-		} else {
+        } else {
             // if delete action fails, send a response
             return response()->json([
                 'status' => false,
                 'message' => 'Sorry, this visitor could not be deleted!',
             ], 500);
-		}
+        }
     }
-    public function upload($request, $image, $table=null) {
+    public function upload($request, $image, $table = null)
+    {
         $user = Auth::user();
 
-            $this->validate($request, [
-              'image' => "image|max:4000",
-            ]);
-            //Image Engine
-            $res = $image->imageUpload($request, $table);
-            return $res;
+        $this->validate($request, [
+            'image' => "image|max:4000",
+        ]);
+        //Image Engine
+        $res = $image->imageUpload($request, $table);
+        return $res;
+    }
+
+    public function schedule($id, Request $request, QrCodeGenerator $qr)
+    {
+        $visitor = $this->user->visitors()->find($id);
+        if ($visitor->status == 1) {
+            return response()->json([
+                'message' => 'Visitor have not checked out, you cannot schedule a visit.'
+            ], 404);
+        }
+        $this->validate($request, [
+            'arrival_date'      => 'required|date_format:Y-m-d',
+            'car_plate_no'      => 'string|nullable',
+            'purpose'           => 'string',
+            'visiting_period'     => 'required|string',
+            'phone_no'          => 'string',
+            'description'       => 'string|nullable',
+        ]);
+        $randomToken = Str::random(6);
+        DB::beginTransaction();
+        try {
+            $scheduled = new ScheduledVisit;
+            $scheduled->visitor_id = $visitor->id;
+            $scheduled->user_id = $visitor->user_id;
+            $visitor->arrival_date = $request->arrival_date;
+            $visitor->car_plate_no = $request->car_plate_no ?? $visitor->car_plate_no;
+            $visitor->phone_no = $request->phone_no ?? $visitor->phone_no;
+            $visitor->purpose = $request->purpose ?? $visitor->purpose;
+            $visitor->status  = 1;
+            $visitor->visit_count++;
+            $visitor->user_id = $this->user->id;
+            $visitor->visiting_period = $request->visiting_period ?? $visitor->visiting_period;
+            $visitor->description = $visitor->description ?? $request->description;
+            $visitor->qr_code = $randomToken;
+            $visitor->image =  $visitor->image;
+            $qr_code = $qr->generateCode($randomToken);
+            $scheduled->save();
+            $this->user->visitors()->save($visitor);
+
+            DB::commit();
+            return response()->json([
+                'status'      => true,
+                'message'     => 'You have successfully scheduled a visit for ' . $visitor->name,
+                'visitor'     => $visitor,
+                'qr_image_src' => $qr_code
+            ], 200);
+        } catch (Exeception $e) {
+            DB::rollBack();
+            $res['status']   = false;
+            $res['message']  = 'Something went wrong, please try again';
+            $res['hint']     = $e->getMessage();
+            return response()->json($res, 501);
+        }
+    }
+    public function getScheduled()
+    {
+        $scheduled = ScheduledVisit::where('user_id', $this->user->id)->with('visitor')->get();
+        if (!$scheduled) {
+            return response()->json(['message' => 'You have no scheduled visits'], 400);
+        }
+        return response()->json(['message' => 'All scheduled visits for a user', $scheduled]);
+    }
+    public function deleteScheduled($id)
+    {
+        $scheduled = ScheduledVisit::where('visitor_id',  $id)
+            ->where('user_id', $this->user->id)->with('visitor')->first();
+        $scheduled->visitor->status = 0;
+        $scheduled->visitor->visit_count--;
+        $scheduled->visitor->save();
+        $scheduled->delete();
+
+        $res['message']    = "Scheduled visit deleted";
+        return response()->json($res, 200);
     }
 }
-
-
