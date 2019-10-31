@@ -167,3 +167,6 @@ th, td{
     height: auto;
     }
 }
+.res-table th, td {
+    font-size: 12px;
+}
