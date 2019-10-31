@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Http\Controllers\ImageController;
 use App\Setting;
 use App\User;
@@ -16,28 +17,30 @@ use Exception;
 
 class UserProfileController extends Controller
 {
-    public function index() {
-    	$user_id = Auth::user()->id; //this is you active user logged in
+    public function index()
+    {
+        $user_id = Auth::user()->id; //this is you active user logged in
         $user = User::where('id', $user_id)
-                      ->with(['home' => function($query){
-                            $query->with('estate');
-                         }])
-                      ->first();
+            ->with(['home' => function ($query) {
+                $query->with('estate');
+            }])
+            ->first();
         return response()->json($user, 200);
     }
 
-    public function all() {
+    public function all()
+    {
         $admins = [];
         $residents = [];
         $gatemans = [];
 
         $users = User::all();
         foreach ($users as $user) {
-            if($user->role == 0) {
+            if ($user->role == 0) {
                 array_push($admins, $user);
-            }else if($user->role == 1){
+            } else if ($user->role == 1) {
                 array_push($residents, $user);
-            }else if($user->role == 2) {
+            } else if ($user->role == 2) {
                 array_push($gatemans, $user);
             }
         }
@@ -48,28 +51,51 @@ class UserProfileController extends Controller
         return response()->json($res, 200);
     }
 
-    public function showOneAdmin($id) {
+    public function showOneAdmin($id)
+    {
         $user = User::find($id);
-        if($user->role == 0) {
+        if ($user->role == 0 || $user->role == 3) {
             $res['status'] = true;
             $res['message'] = 'Admin found';
             $res['admin'] = $user;
             return response()->json($res, 200);
-        }else {
+        } else {
             $res['status'] = false;
             $res['message'] = 'Admin not found';
             return response()->json($res, 404);
         }
     }
 
-    public function show($id) {
+    public function showAllAdmin()
+    {
+        $admins = [];
+        $users = User::all();
+        foreach ($users as $user) {
+            if ($user->role == 0 || $user->role == 3) {
+                array_push($admins, $user);
+            }
+        }
+        if ($admins == []) {
+            $res['status']    = false;
+            $res['message']    = "No Admin Found";
+            return response()->json($res, 404);
+        } else {
+
+            $res['status']    = true;
+            $res['admins']    = $admins;
+            return response()->json($res, 200);
+        }
+    }
+
+    public function show($id)
+    {
         $user = User::find($id);
-        if($user->role == 1 || $user->role == 2) { // condition statements shows specific resident or gate man users except admin by id
+        if ($user->role == 1 || $user->role == 2) {
             $res['status'] = true;
             $res['message'] = 'User found';
             $res['user'] = $user;
             return response()->json($res, 200);
-        }else {
+        } else {
             $res['status'] = false;
             $res['message'] = 'User not found';
             return response()->json($res, 404);
@@ -77,45 +103,46 @@ class UserProfileController extends Controller
     }
 
 
-    public function role($role_id) {
+    public function role($role_id)
+    {
         $users = User::where('role', $role_id)->get();
         return response()->json($users);
-
     }
 
-    public function update(Request $request, ImageController $image) {  // update user information
+    public function update(Request $request, ImageController $image)
+    {  // update user information
         $user = Auth::user();
         $this->validate($request, [
             'name' => 'string',
-            'phone' => 'unique:users,phone,'.$user->id,
-            'username' => 'unique:users,username,'.$user->id,
-            'email'    => 'unique:users,email,'.$user->id,
+            'phone' => 'unique:users,phone,' . $user->id,
+            'username' => 'unique:users,username,' . $user->id,
+            'email'    => 'unique:users,email,' . $user->id,
         ]);
 
         //start temporay transaction
         DB::beginTransaction();
-        try{
+        try {
             $user->name      = $request->input('name');
             $user->username  = $request->input('username');
             $user->email     = $user->phone != $request->input('email') ? $request->input('email') : $user->phone;
 
-            if($user->phone != $request->input('phone')){
+            if ($user->phone != $request->input('phone')) {
                 $user->email_verified_at = null;
                 $user->verifycode = Str::random(6);
                 $user->phone     = $request->input('phone');
-                 //We use mail for now untill sms is implemented
-                 Mail::to($user->email)->send(new VerifyToken($user));
+                //We use mail for now untill sms is implemented
+                Mail::to($user->email)->send(new VerifyToken($user));
                 $res['important'] = 'A six digit OTP token has ben sent to you email or phone because this phone number is new!';
-             }
+            }
             //Upload image
-             //Upload image
-             if($request->hasFile('image')) {
+            //Upload image
+            if ($request->hasFile('image')) {
                 $data = $this->upload($request, $image, $user);
-                if($data['status_code'] !=  200) {
+                if ($data['status_code'] !=  200) {
                     return response()->json($data, $data['status_code']);
                 }
                 $user->image = $data['image'];
-            }else {
+            } else {
                 $data = null;
                 $user->image = 'noimage.jpg';
             }
@@ -131,8 +158,7 @@ class UserProfileController extends Controller
             $res['message'] = 'Your Account Was Successfully Updated';
 
             return response()->json($res, 200);
-
-        }catch(\Exception $e) {
+        } catch (\Exception $e) {
             //rollback what is saved
             DB::rollBack();
 
@@ -141,27 +167,28 @@ class UserProfileController extends Controller
             $res['hint'] = $e->getMessage();
 
             return response()->json($res, 501);
-
         }
-   }
+    }
 
-    public function destroy() {
+    public function destroy()
+    {
         $user = Auth::user();
-        if($user) {         // removes user account
+        if ($user) {         // removes user account
             $user->delete();
             $res['message'] = 'User deleted successfully';
             return response()->json($res, 200);
-        }else {
+        } else {
             $res['message'] = 'User unsuccessfully, user not found or an error occured, please try again!';
             return response()->json($res, 501);
         }
     }
 
-    public function upload($request, $image) {
+    public function upload($request, $image)
+    {
         $user = Auth::user();
 
         $this->validate($request, [
-         'image' => "image|max:4000",
+            'image' => "image|max:4000",
         ]);
         //Image Engine
         $res = $image->imageUpload($request, $user);
@@ -185,20 +212,20 @@ class UserProfileController extends Controller
 
         try {
 
-           $user = \auth()->user();
+            $user = \auth()->user();
 
-           if ($user->settings) {
+            if ($user->settings) {
                 // remove items not filled in the request
-               array_walk($data, function ($item, $key) use (&$data) {
-                   if ($item == false) unset($data[$key]);
-               });
+                array_walk($data, function ($item, $key) use (&$data) {
+                    if ($item == false) unset($data[$key]);
+                });
 
-               $user->settings()->update($data);
-           } else {
-               $user->settings()->create($data);
-           }
+                $user->settings()->update($data);
+            } else {
+                $user->settings()->create($data);
+            }
 
-           $data['user_id'] = $user->id;
+            $data['user_id'] = $user->id;
 
             DB::commit();
 
@@ -217,12 +244,19 @@ class UserProfileController extends Controller
         $request->validate([
             'fcm_token' => ['required', 'string']
         ]);
+        
 
         try {
-            auth()->user()->update(['fcm_token' => $request->fcm_token]);
-
+            $user = Auth::user();
+            DB::beginTransaction();
+            // auth()->user()->update(['fcm_token' => $request->fcm_token]);
+            $user->fcm_token = $request->fcm_token;
+            $user->save();
+            //if operation was successful save commit save to database
+            DB::commit();
             return response()->json(['message' => 'Firebase token updated']);
         } catch (Exception $e) {
+            DB::rollback();
             return response()->json(['message' => $e->getMessage()], 501);
         }
     }

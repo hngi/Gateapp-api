@@ -9,7 +9,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Benwilkins\FCM\FcmMessage;
 
-class GatemanInvitationNotification extends Notification
+class GatemanInvitationNotification extends Notification implements ShouldQueue
 {
     use Queueable, ResolveChannelsTrait;
 
@@ -28,8 +28,8 @@ class GatemanInvitationNotification extends Notification
         $this->resident = $resident;
         $this->gateman = $gateman;
 
-        $this->title = "{$this->resident->name}  has invited you as a gateman to his home";
-        $this->body = null;
+        $this->title = "Invite";
+        $this->body = "{$this->resident->name}  has invited you as a gateman to his home";
     }
 
     /**
@@ -59,7 +59,9 @@ class GatemanInvitationNotification extends Notification
                 'body' => $this->body,
             ])
             ->data([
-                'resident_id' => $this->resident->id,
+                'resident' => $this->resident,
+                'click_action' => 'FLUTTER_NOTIFICATION_ACTION',
+                'type' => 'gateman_invitation_notification'
             ])
             ->priority(FcmMessage::PRIORITY_HIGH);
 
@@ -103,7 +105,7 @@ class GatemanInvitationNotification extends Notification
         return [
             'title' => $this->title,
             'body' => $this->body,
-            'resident_id' => $this->resident->id,
+            'resident' => $this->resident,
         ];
     }
 }

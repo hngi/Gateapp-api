@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Estate;
+use App\Home;
 use App\Visitor;
 use Exeception;
 use App\Http\Controllers\Controller;
@@ -47,13 +49,13 @@ class VisitorController extends Controller
                 'visitor'   => $visitors,
             	'status' => true
             ], 200);
-        }        
+        }
     }
 
     /**
      * Admin gets all visitors
      *
-     * @param  int $page number of pages for pagination 
+     * @param  int $page number of pages for pagination
      * @return JSON
      */
     public function index(Request $request)
@@ -68,7 +70,7 @@ class VisitorController extends Controller
 
         // send response with the visitors' details
         return response()->json([
-            'visitors' => $visitors,    
+            'visitors' => $visitors,
         	'status' => true
         ], 200);
     }
@@ -115,7 +117,7 @@ class VisitorController extends Controller
             'name'              => ['required', 'regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
             'arrival_date'      => 'required|date_format:Y-m-d',
             'car_plate_no'      => 'string|nullable',
-            'purpose'           => 'string', 
+            'purpose'           => 'string',
             'visiting_period' 	=> 'required|string',
             'phone_no'      	=> 'string',
             'description'       => 'string|nullable',
@@ -141,7 +143,7 @@ class VisitorController extends Controller
             //Generate qr image
             $qr_code = $qr->generateCode($randomToken);
 
-            //Upload image 
+            //Upload image
             if($request->hasFile('image')) {
                 $data = $this->upload($request, $image);
                 if($data['status_code'] !=  200) {
@@ -193,7 +195,7 @@ class VisitorController extends Controller
     ){
         // gets the visitor's record from the database
         $visitor = $this->user->visitors()->find($id);
-   
+
         // output an error if the id is not found
         if (!$visitor) {
             return response()->json([
@@ -208,8 +210,8 @@ class VisitorController extends Controller
             'car_plate_no'      => 'string',
             'phone_no'          => 'string',
             'purpose'           => 'string',
-            'visiting_period'   => 'string', 
-            'description'       => 'string', 
+            'visiting_period'   => 'string',
+            'description'       => 'string',
         ]);
 
         DB::beginTransaction();
@@ -223,15 +225,15 @@ class VisitorController extends Controller
             $visitor->visiting_period = $request->visiting_period ?? $visitor->visiting_period;
             $visitor->description = $request->description ?? $visitor->description;
 
-            // Upload updated image 
-             //Upload image 
-             if($request->hasFile('image')) {
+            // Upload updated image
+            //Upload image
+            if ($request->hasFile('image')) {
                 $data = $this->upload($request, $image, $visitor);
                 if($data['status_code'] !=  200) {
                     return response()->json($data, $data['status_code']);
                 }
                 $visitor->image = $data['image'];
-            }else {
+            } else {
                 $data = null;
                 $visitor->image = 'noimage.jpg';
             }
@@ -248,8 +250,8 @@ class VisitorController extends Controller
                 'message'     => "Visitor's data has been updated successfully!",
                 'visitor'     => $visitor,
                 'image_info'  => $data
-            ], 200);      
-        }catch(Exeception $e) {
+            ], 200);
+        } catch (Exception $e) {
             //if any operation fails, rollback what is saved
             DB::rollBack();
             $res['status']   = false;
@@ -274,7 +276,7 @@ class VisitorController extends Controller
         if (!$visitor) {
             return response()->json(['message' => 'This visitor could not be found!'], 400);
         }
-		
+
 		// delete the requested visitor and send a response
 		elseif($visitor->delete()) {
             return response()->json([
@@ -298,6 +300,79 @@ class VisitorController extends Controller
             //Image Engine
             $res = $image->imageUpload($request, $table);
             return $res;
+    }
+
+    /**
+     * Ban a visitor
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function ban($id)
+    {
+        $this->middleware('admin');
+
+        $visitor = Visitor::query()->findOrFail($id);
+
+        try {
+            $update = $visitor->update(['banned' => true]);
+
+            if (! $update) {
+                return response()->json(['message' => 'An error was encountered.'], 501);
+            }
+
+            return response()->json(['message' => 'Visitor has been banned']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 501);
+        }
+    }
+
+    /**
+     * Remove ban placed on a visitor
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function removeBan($id)
+    {
+        $visitor = Visitor::query()->findOrFail($id);
+
+        try {
+            $update = $visitor->update(['banned' => false]);
+
+            if (! $update) {
+                return response()->json(['message' => 'An error was encountered.'], 501);
+            }
+
+            return response()->json(['message' => "Visitor's  ban gas been lifted."]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 501);
+        }
+    }
+
+    /**
+     * Gat all banned visitors
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAllBannedVisitors()
+    {
+        $visitors = Visitor::query()->where('banned', true)->get();
+
+        return response()->json(['data' => $visitors]);
+    }
+
+    /**
+     * Get banned visitors in an estate
+     * @param $estate
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getBannedVisitorsForAnEstate($estate)
+    {
+        $users_in_state = Home::query()->where('estate_id', $estate)->distinct('user_id')
+            ->pluck('user_id')->toArray();
+
+        $banned_visitors = Visitor::query()->where('banned', true)
+            ->whereIn('user_id', $users_in_state)->get();
+
+        return response()->json(['data' => $banned_visitors]);
     }
 }
 

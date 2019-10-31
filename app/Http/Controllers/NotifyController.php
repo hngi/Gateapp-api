@@ -32,7 +32,7 @@ class NotifyController extends Controller
                 'type' => $this->snakeCasedType($item->type),
                 'data' => $item->data,
                 'read_at' => $item->read_at,
-                'created_at' => $item->created_at,
+                'created_at' => date('Y-m-d hh:m:s' ,strtotime($item->created_at)),
             ];
         });
 
@@ -92,6 +92,25 @@ class NotifyController extends Controller
         $typ = str_replace("App\Notifications\\", '', $typ);
 
         return Str::snake($typ);
+    }
+
+    /**
+     * Get a list oof all possible notification types
+     * @return \Illuminate\Support\Collection
+     */
+    public function types()
+    {
+        // We get all the files on the Notifications dir - that end with "Notifications"
+        // which are all possibly notifications classes and use them as notifications types
+        $types = collect(glob(app_path('Notifications/*Notification.php')));
+
+        $types->transform(function ($item, $key) {
+            $rp = [app_path('Notifications') => '', '.php' => '', '/' => ''];
+            $type = strtr($item, $rp);
+            return $this->snakeCasedType($type);
+        });
+
+        return $types;
     }
 
 
