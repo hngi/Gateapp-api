@@ -190,6 +190,20 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //Delete user account
     Route::delete('/user/delete', 'UserProfileController@destroy');
 
+
+    // Ban a visitor
+    Route::post('visitor/{id}/ban', 'VisitorController@ban');
+
+    // Remove ban on a visitor
+    Route::post('visitor/{id}/remove-ban/', 'VisitorController@removeBan');
+
+    // Get banned visitors
+    Route::prefix('visitors/banned')->group( function () {
+        Route::get('/all', 'VisitorController@getAllBannedVisitors');
+        Route::get('/for-estate/{estate}', 'VisitorController@getBannedVisitorsForAnEstate');
+    });
+
+
     //User Image upload api
     // Route::post('user/image', 'UserProfileController@upload');
 

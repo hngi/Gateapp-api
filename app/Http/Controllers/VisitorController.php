@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Home;
 use App\Visitor_History;
 use App\Visitor;
 use App\ScheduledVisit;
@@ -54,7 +55,7 @@ class VisitorController extends Controller
     /**
      * Admin gets all visitors
      *
-     * @param  int $page number of pages for pagination 
+     * @param  int $page number of pages for pagination
      * @return JSON
      */
     public function index(Request $request)
@@ -164,7 +165,7 @@ class VisitorController extends Controller
             //Generate qr image
             $qr_code = $qr->generateCode($randomToken);
 
-            //Upload image 
+            //Upload image
             if ($request->hasFile('image')) {
                 $data = $this->upload($request, $image);
                 if ($data['status_code'] !=  200) {
@@ -247,8 +248,8 @@ class VisitorController extends Controller
             $visitor->visiting_period = $request->visiting_period ?? $visitor->visiting_period;
             $visitor->description = $request->description ?? $visitor->description;
 
-            // Upload updated image 
-            //Upload image 
+            // Upload updated image
+            //Upload image
             if ($request->hasFile('image')) {
                 $data = $this->upload($request, $image, $visitor);
                 if ($data['status_code'] !=  200) {
@@ -396,5 +397,79 @@ class VisitorController extends Controller
 
         $res['message']    = "Scheduled visit deleted";
         return response()->json($res, 200);
+    }
+
+
+    /**
+     * Ban a visitor
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function ban($id)
+    {
+        $this->middleware('admin');
+
+        $visitor = Visitor::query()->findOrFail($id);
+
+        try {
+            $update = $visitor->update(['banned' => true]);
+
+            if (! $update) {
+                return response()->json(['message' => 'An error was encountered.'], 501);
+            }
+
+            return response()->json(['message' => 'Visitor has been banned']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 501);
+        }
+    }
+
+    /**
+     * Remove ban placed on a visitor
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function removeBan($id)
+    {
+        $visitor = Visitor::query()->findOrFail($id);
+
+        try {
+            $update = $visitor->update(['banned' => false]);
+
+            if (! $update) {
+                return response()->json(['message' => 'An error was encountered.'], 501);
+            }
+
+            return response()->json(['message' => "Visitor's  ban gas been lifted."]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 501);
+        }
+    }
+
+    /**
+     * Gat all banned visitors
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAllBannedVisitors()
+    {
+        $visitors = Visitor::query()->where('banned', true)->get();
+
+        return response()->json(['data' => $visitors]);
+    }
+
+    /**
+     * Get banned visitors in an estate
+     * @param $estate
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getBannedVisitorsForAnEstate($estate)
+    {
+        $users_in_state = Home::query()->where('estate_id', $estate)->distinct('user_id')
+            ->pluck('user_id')->toArray();
+
+        $banned_visitors = Visitor::query()->where('banned', true)
+            ->whereIn('user_id', $users_in_state)->get();
+
+        return response()->json(['data' => $banned_visitors]);
     }
 }
