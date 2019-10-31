@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ImageController;
 use App\Estate;
 
+
 class ServiceProviderController extends Controller
 {
     public function showAll()
@@ -19,15 +20,63 @@ class ServiceProviderController extends Controller
         $res = array();
 
         if (Auth::check()) {
-            $user = Auth::user();
-            $role = $user->role;
+           $user = Auth::user();
+           $role = $user->role;
 
-            if ($role === "1" || $role === "2") {
-                $service = Service_Provider::all();
+           if ($role === "1" || $role === "2" ) {
+                // $service = Service_Provider::all();
+                $query = DB::table('service_providers')
+                                ->join('estates', 'service_providers.estate_id', '=', 'estates.id')
+                                ->join('sp_category', 'service_providers.category_id', '=', 'sp_category.id')
+                                ->select('service_providers.id as id', 'service_providers.name as name', 'service_providers.phone as phone', 'service_providers.description as description', 'estates.estate_name as estate', 'sp_category.title as categroy');
+
+                $service = $query->get();
+
                 if (!$service->isEmpty()) {
                     $res["status"] = 200;
                     $res["message"] = "All service providers.";
+                    $res["count"] = $service->count();
                     $res["data"] = $service;
+                } else {
+                    $res["status"] = 200;
+                    $res["message"] = "No service providers registered";
+                }
+           } else {
+               $res['status'] = 401;
+               $res['message'] = "You must login as a resident or admin.";
+           }
+       } else {
+        $res['status'] = 401;
+        $res['message'] = "You are not logged in.";
+       }
+        return response()->json($res, $res['status']);
+    }
+
+    public function groupByEstate() {
+        $res = array();
+        $uniqueEstate = array();
+
+        if (Auth::check()) {
+           $user = Auth::user();
+           $role = $user->role;
+
+           if ($role === "1" || $role === "2") {
+                $query = DB::table('service_providers')
+                                ->join('estates', 'service_providers.estate_id', '=', 'estates.id')
+                                ->join('sp_category', 'service_providers.category_id', '=', 'sp_category.id')
+                                ->select('service_providers.id as id', 'service_providers.name as name', 'service_providers.phone as phone', 'service_providers.description as description', 'estates.estate_name as estate', 'sp_category.title as categroy');
+
+                $service = $query->get();
+                foreach($service as $key => $serv) {
+                    $uniqueEstate[$serv->estate][] = $serv;
+                }
+
+                if (!$service->isEmpty()) {
+                    $res["status"] = 200;
+                    $res["message"] = "All service providers grouped by estate";
+                    $res["count"] = $service->count();
+                    $res["data"] = $uniqueEstate;
+
                 } else {
                     $res["status"] = 200;
                     $res["message"] = "No service providers registered";
@@ -80,11 +129,18 @@ class ServiceProviderController extends Controller
         $res = array();
 
         if (Auth::check()) {
-            $user = Auth::user();
-            $role = $user->role;
+           $user = Auth::user();
+           $role = $user->role;
 
-            if ($role === "1" || $role === "2") {
-                $service = Service_Provider::find($id);
+           if ($role === "1" || $role === "2" ) {
+                $query = DB::table('service_providers')
+                ->join('estates', 'service_providers.estate_id', '=', 'estates.id')
+                ->join('sp_category', 'service_providers.category_id', '=', 'sp_category.id')
+                ->where('service_providers.id', '=', $id)
+                ->select('service_providers.id as id', 'service_providers.name as name', 'service_providers.phone as phone', 'service_providers.description as description', 'estates.estate_name as estate', 'sp_category.title as categroy');
+
+                $service = $query->get();
+
                 if (!is_null($service)) {
                     $res["status"] = 200;
                     $res["message"] = "Service provider found.";
@@ -254,21 +310,140 @@ class ServiceProviderController extends Controller
         }
     }
 
+  
     public function destroy($id)
     {
-        $service = Service_Provider::destroy($id);
-
-        if ($service) {
-            $res['status'] = 200;
-            $res["message"] = "Service Provider Deleted!";
-            return response()->json($res, 200);
-        } else {
-            $res['status'] = 404;
-            $res["message"] = "No service found";
-            return response()->json($res, $res['status']);
-        }
+     $service = Service_Provider::destroy($id);
+     if($service)
+     {
+      // Am sure the service provider is still in db so lets actually delete the person
+      $trash = Service_Provider::onlyTrashed()->find($id);
+      if(!is_null($trash))
+      {
+       $trash->forceDelete();
+       $res['status'] = 200;
+       $res["message"] = "Service Provider Deleted!";
+       
+       return response()->json($res, $res['status']);
+      }
+     }
+      else
+     {
+      $res['status'] = 404;
+      $res["message"] = "Unable To Delete Service Provider!";
+           
+      return response()->json($res, $res['status']);
+     }
     }
+    
+    public function softDeleted()
+    {
+     $service = Service_Provider::onlyTrashed()->get();
+     
+     if($service)
+     {
+      $res['status'] = 200;
+      $res["message"] = "Suspended service providers!";
+      $res["count"] = $service->count();
+      $res["data"] = $service;
+         
+      return response()->json($res, $res["status"]);
+     }
+      else
+     {
+      $res['status'] = 501;
+      $res["message"] = "Error Getting Suspended Service Providers!";
+         
+      return response()->json($res, $res["status"]);
+     }
+    }
+    
+    public function softDelete($id)
+    {
+     $service = Service_Provider::destroy($id);
+     if($service)
+     {
+      $res["status"] = 200;
+      $res["message"] = "Service Provider Suspended!";
+      $res["data"] = $service;
+         
+      return response()->json($res, $res["status"]);
+     }
+      else
+     {
+      $res["status"] = 501;
+      $res["message"] = "Unable To Suspend Service Provider!";
+         
+      return response()->json($res, $res["status"]);
+     }
+    }
+    
+    public function search($id)
+    {
+     try {
+          $db = Service_Provider::find($id);
+          $name = $db->name ?? 'null';
+          $phone = $db->phone ?? 'null';
+          $cat_id = $db->category_id ?? 'null';
+          $des = $db->description ?? 'null';
+          $status = $db->status;
+          $created = $db->created_at ?? 'null';
+          $updated = $db->updated_at ?? 'null';
 
+          if($status == 1)
+          {
+           $res["status"] = "Active";
+          }
+           else
+          {
+           $res["status"] = "Inactive";
+          }
+
+         $cat = Category::find($cat_id);
+         $cat_name = $cat->title;
+
+         $res["status_code"] = 200;
+         $res["message"] = "Success!";
+         $res["name"] = $name;
+         $res["phone"] = $phone;
+         $res["description"] = $des;
+         $res["created"] = $created;
+         $res["updated"] = $updated;
+         $res["category"] = $cat_name;
+
+         return response()->json($res, $res["status_code"]);
+        }
+         catch (\Exception $e)
+        {
+         $res["status_code"] = 501;
+         $res["message"] = "Failed!";
+
+         $res["error"] = $e->getMessage();
+
+         return response()->json($res, $res["status_code"]);
+        }
+       }
+
+    public function restore($id)
+    {
+     $service = Service_Provider::onlyTrashed()->find($id)->restore();
+     if($service)
+     {
+      $res["status"] = 200;
+      $res["message"] = "Service Provider Was Unsuspended!";
+      $res["data"] = $service;
+         
+      return response()->json($res, $res["status"]);
+    }
+     else
+    {
+     $res["status"] = 501;
+     $res["message"] = "Unable To Unsuspend Service Provider!";
+         
+     return response()->json($res, $res["status"]);
+    }
+   }
+    
     public function upload($request, $image, $table = null)
     {
         $user = Auth::user();

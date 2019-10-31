@@ -68,19 +68,19 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::delete('/service-provider/suspend/{id}', 'ServiceProviderController@softDelete')->middleware('superAdmin');
 
     // Route to get all suspended service providers
-    Route::get('/service-provider/suspended','ServiceProviderController@softDeleted')->middleware('superAdmin');
+    Route::get('/service-provider/suspended', 'ServiceProviderController@softDeleted')->middleware('superAdmin');
 
     // Route to unsuspend service providers (added bonus)
-    Route::patch('/service-provider/unsuspend/{id}','ServiceProviderController@restore')->middleware('superAdmin');
+    Route::patch('/service-provider/unsuspend/{id}', 'ServiceProviderController@restore')->middleware('superAdmin');
 
     // Service provider information based on id
-    Route::delete('/service-provider/info/{id}', 'ServiceProviderController@search')->middleware('superAdmin');
+    Route::get('/service-provider/info/{id}', 'ServiceProviderController@search')->middleware('superAdmin');
+
+    // Admin only delete a specific service provider
+    Route::delete('/service-provider/delete/{id}', 'ServiceProviderController@destroy')->middleware('superAdmin');
 
     //Admin only Update a service provider
     Route::post('/service-provider/{id}', 'ServiceProviderController@update')->middleware('superAdmin');
-
-    //Admin only delete a specific service provider
-    Route::delete('/service-provider/{id}', 'ServiceProviderController@destroy')->middleware('superAdmin');
 
     // Create a new Service Provider category
     Route::post('/sp-category', 'SPCategoryController@newCategory')->middleware('superAdmin');
@@ -270,7 +270,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/payment/{id}', 'PaymentController@oneUniquePayment')->middleware('checkResident');
 
     //Service Directory by estate
-    Route::get('/serviceProvider/estate/', 'ServiceProviderController@byEstate')->middleware('checkResident');
+    Route::get('/serviceProvider/estate/', 'ServiceProviderController@groupByEstate')->middleware('checkResident');
 
     //(Users Visitors)
     // Show signed in user visitor
@@ -278,6 +278,10 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Show signed in user visitor history
     Route::get('visitorHistory', 'VisitorController@residentHistory')->middleware('checkResident');
+    //Get all scheduled visits by a user
+    Route::get('visitor/allScheduled', 'VisitorController@getScheduled')->middleware('checkResident');
+    Route::delete('visitor/deleteScheduled/{id}', 'VisitorController@deleteScheduled')->middleware('checkResident');
+
 
     // Show single visitor
     Route::get('visitor/{id}', 'VisitorController@show')->middleware('checkResident');
@@ -290,6 +294,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //Create a visitor
     Route::post('visitor', 'VisitorController@store')->middleware('checkResident');
+
+    //reschedule a visitor
+    Route::post('visitor/{id}', 'VisitorController@schedule')->middleware('checkResident');
 
     //(Residents and Gateman)
 
@@ -378,9 +385,6 @@ Route::get('/test-notification-2', function () {
     $gateman = \App\User::query()->where('role', 2)->inRandomOrder()->first();
     $gateman->notify(new \App\Notifications\GatemanInvitationNotification($user, $gateman));
 });
-
-
-
 
 Route::get('/test-notification2', function () {
 
