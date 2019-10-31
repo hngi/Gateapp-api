@@ -15,11 +15,16 @@ class CreateHomesTable extends Migration
     {
         Schema::create('homes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id')->unsigned();
-            $table->integer('estate_id')->unsigned();
-            $table->integer('house_no')->unsigned();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('estate_id');
+            $table->string('house_block')->nullable();
             $table->string('qr_code')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('estate_id')->references('id')->on('estates')->onDelete('cascade');
+
+
         });
     }
 

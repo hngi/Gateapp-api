@@ -14,10 +14,11 @@ class CreateEstatesTable extends Migration
     public function up()
     {
         Schema::create('estates', function (Blueprint $table) {
-            $table->bigIncrements('estate_id');
-            $table->string('estate_name');
-            $table->string('city');
-            $table->string('country');
+            $table->bigIncrements('id');
+            $table->string('estate_name')->nullable();
+            $table->string('address')->unique()->nullable();
+            $table->string('city')->nullable();
+            $table->string('country')->nullable();
             $table->timestamps();
         });
     }

@@ -18,8 +18,10 @@ class CreateSettingsTable extends Migration
             $table->string('app_notification');
             $table->string('push_notification');
             $table->string('location_tracking');
-            $table->integer('user_id')->unsigned();
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class NewPassword extends Mailable
+class VerifyToken extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -30,6 +30,6 @@ class NewPassword extends Mailable
      */
     public function build()
     {
-        return $this->view('recovery.new_password');
+        return $this->view('recovery.new_verify');
     }
 }
