@@ -189,7 +189,7 @@ class ResidentController extends Controller
         }else{
             $msg['message'] = 'No Gateman added';
             $msg['status'] = 404;
-            return response()->json($mag, 404);
+            return response()->json($msg, 404);
         }
     }
 
