@@ -261,16 +261,16 @@ class ServiceProviderController extends Controller
       if ($service) {
         $res['status'] = 200;
         $res["message"] = "Service Provider Deleted!";
-        
+
         return response()->json($res, 200);
       } else {
           $res['status'] = 404;
           $res["message"] = "No service found";
-        
+
           return response()->json($res, $res['status']);
         }
       }
-    
+
     public function softDelete($id)
     {
      $service = Service_Provider::destroy($id);
@@ -279,14 +279,14 @@ class ServiceProviderController extends Controller
       $res["status"] = 200;
       $res["message"] = "Service Provider Suspended!";
       $res["data"] = $service;
-         
+
       return response()->json($res, $res["status"]);
      }
       else
      {
       $res["status"] = 501;
       $res["message"] = "Unable To Suspend Service Provider!";
-         
+
       return response()->json($res, $res["status"]);
      }
     }
@@ -302,7 +302,7 @@ class ServiceProviderController extends Controller
           $status = $db->status;
           $created = $db->created_at ?? 'null';
           $updated = $db->updated_at ?? 'null';
-     
+
           if($status == 1)
           {
            $res["status"] = "Active";
@@ -311,10 +311,10 @@ class ServiceProviderController extends Controller
           {
            $res["status"] = "Inactive";
           }
-     
+
          $cat = Category::find($cat_id);
          $cat_name = $cat->title;
-         
+
          $res["status_code"] = 200;
          $res["message"] = "Success!";
          $res["name"] = $name;
@@ -323,7 +323,7 @@ class ServiceProviderController extends Controller
          $res["created"] = $created;
          $res["updated"] = $updated;
          $res["category"] = $cat_name;
-         
+
          return response()->json($res, $res["status_code"]);
         }
          catch (\Exception $e)
@@ -331,7 +331,7 @@ class ServiceProviderController extends Controller
          $res["status_code"] = 501;
          $res["message"] = "Failed!";
          $res["data"] = $e->getMessage();
-             
+
          return response()->json($res, $res["status_code"]);
         }
     }

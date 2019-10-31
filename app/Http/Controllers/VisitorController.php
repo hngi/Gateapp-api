@@ -47,13 +47,13 @@ class VisitorController extends Controller
                 'visitor'   => $visitors,
             	'status' => true
             ], 200);
-        }        
+        }
     }
 
     /**
      * Admin gets all visitors
      *
-     * @param  int $page number of pages for pagination 
+     * @param  int $page number of pages for pagination
      * @return JSON
      */
     public function index(Request $request)
@@ -68,7 +68,7 @@ class VisitorController extends Controller
 
         // send response with the visitors' details
         return response()->json([
-            'visitors' => $visitors,    
+            'visitors' => $visitors,
         	'status' => true
         ], 200);
     }
@@ -90,7 +90,7 @@ class VisitorController extends Controller
                 'visitor_details'   => $visitors,
             	'status' => true
             ], 200);
-        }        
+        }
     }
 
 	/**
@@ -135,7 +135,7 @@ class VisitorController extends Controller
             'name'              => ['required', 'regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
             'arrival_date'      => 'required|date_format:Y-m-d',
             'car_plate_no'      => 'string|nullable',
-            'purpose'           => 'string', 
+            'purpose'           => 'string',
             'visitor_group'     => 'string',
             'visiting_period' 	=> 'required|string',
             'phone_no'      	=> 'string',
@@ -164,7 +164,7 @@ class VisitorController extends Controller
             //Generate qr image
             $qr_code = $qr->generateCode($randomToken);
 
-            //Upload image 
+            //Upload image
             if($request->hasFile('image')) {
                 $data = $this->upload($request, $image);
                 if($data['status_code'] !=  200) {
@@ -216,7 +216,7 @@ class VisitorController extends Controller
     ){
         // gets the visitor's record from the database
         $visitor = $this->user->visitors()->find($id);
-   
+
         // output an error if the id is not found
         if (!$visitor) {
             return response()->json([
@@ -231,8 +231,8 @@ class VisitorController extends Controller
             'car_plate_no'      => 'string',
             'phone_no'          => 'string',
             'purpose'           => 'string',
-            'visiting_period'   => 'string', 
-            'description'       => 'string', 
+            'visiting_period'   => 'string',
+            'description'       => 'string',
         ]);
 
         DB::beginTransaction();
@@ -247,8 +247,8 @@ class VisitorController extends Controller
             $visitor->visiting_period = $request->visiting_period ?? $visitor->visiting_period;
             $visitor->description = $request->description ?? $visitor->description;
 
-            // Upload updated image 
-             //Upload image 
+            // Upload updated image
+             //Upload image
              if($request->hasFile('image')) {
                 $data = $this->upload($request, $image, $visitor);
                 if($data['status_code'] !=  200) {
@@ -272,7 +272,7 @@ class VisitorController extends Controller
                 'message'     => "Visitor's data has been updated successfully!",
                 'visitor'     => $visitor,
                 'image_info'  => $data
-            ], 200);      
+            ], 200);
         }catch(Exception $e) {
             //if any operation fails, rollback what is saved
             DB::rollBack();
@@ -298,7 +298,7 @@ class VisitorController extends Controller
         if (!$visitor) {
             return response()->json(['message' => 'This visitor could not be found!'], 400);
         }
-		
+
 		// delete the requested visitor and send a response
 		elseif($visitor->delete()) {
             return response()->json([
@@ -322,6 +322,70 @@ class VisitorController extends Controller
             //Image Engine
             $res = $image->imageUpload($request, $table);
             return $res;
+    }
+
+    public function fetchEstateVisitHistory($id)
+    {
+        $visitors = DB::table('visitors_history')->get()->where('user_id',$id);
+        if($visitors && $visitors != []) {
+            $res['status']  = true;
+            $res['message'] = 'Estate visit history';
+            $res['visitors'] = $visitors;
+            return response()->json($res, 200);
+        }else {
+            $res['status']  = false;
+            $res['message'] = 'No Record found';
+            return response()->json($res, 404);
+        }
+    }
+
+    public function fetchAllVisitHistory()
+    {
+        $visitors = DB::table('visitors_history')->orderBy('user_id')->get();
+        if($visitors) {
+            $res['status']  = true;
+            $res['message'] = 'Estate visitors';
+            $res['visitors'] = $visitors;
+            return response()->json($res, 200);
+        }else {
+            $res['status']  = false;
+            $res['message'] = 'No Record found';
+            return response()->json($res, 404);
+        }
+    }
+
+
+    // fetch all visitors to an estate
+    public function fetchEstateVisitors($id)
+    {
+        $visitors = DB::table('visitors')->get()->where('user_id',$id);
+        if($visitors) {
+            $res['status']  = true;
+            $res['message'] = 'Estate visitors';
+            $res['visitors'] = $visitors;
+            return response()->json($res, 200);
+        }else {
+            $res['status']  = false;
+            $res['message'] = 'No Record found';
+            return response()->json($res, 404);
+        }
+    }
+
+    // fetch all visitors, requires super admin privileges
+    public function fetchSuperAdminVisitors()
+    {
+        // $visitors = \App\Visitor::all();
+        $visitors = DB::table('visitors')->orderBy('user_id')->get();
+        if($visitors) {
+            $res['status']  = true;
+            $res['message'] = 'All visitors (All)';
+            $res['visitors'] = $visitors;
+            return response()->json($res, 200);
+        }else {
+            $res['status']  = false;
+            $res['message'] = 'No Record found';
+            return response()->json($res, 404);
+        }
     }
 }
 

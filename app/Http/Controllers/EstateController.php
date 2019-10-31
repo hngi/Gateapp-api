@@ -29,10 +29,10 @@ class EstateController extends Controller
             $res['status']  = fasle;
             $res['message'] = 'No Record found';
             return response()->json($res, 404);
-        }   
+        }
     }
-   
-     // Display Estates by name 
+
+     // Display Estates by name
     public function name($name)
     {
          $country = ucfirst($name);
@@ -41,13 +41,13 @@ class EstateController extends Controller
             //Error Handling
              $res['status']  = false;
              $res['message'] = 'No Estates found';
-             return response()->json($res, 404);  
-             
+             return response()->json($res, 404);
+
          }else{
              $res['status']  = true;
              $res['message'] = 'Data Found (By Name)';
              $res['estates']  = $estates;
-             return response()->json($res, 200);  
+             return response()->json($res, 200);
         }
      }
 
@@ -62,36 +62,36 @@ class EstateController extends Controller
             //Error Handling
              $res['status']  = false;
              $res['message'] = 'No Estates found';
-             return response()->json($res, 404);  
-             
+             return response()->json($res, 404);
+
          }else{
              $res['status']  = true;
              $res['message'] = 'Data Found (By Name)';
              $res['estates']  = $estates;
-             return response()->json($res, 200);  
+             return response()->json($res, 200);
         }
      }
-    // Display Estates by Id 
+    // Display Estates by Id
 
      public function show($id)
      {
-         
+
          $estate = Estate::where('id', $id)->first();
          if (!$estate){
             //Error Handling
              $res['status']  = false;
              $res['message'] = 'No Estate found';
-             return response()->json($res, 404);  
-             
+             return response()->json($res, 404);
+
          }else{
              $res['status']  = true;
              $res['message'] = 'Data Found (By Name)';
-             $res['estate']  = $estate; 
-             return response()->json($res, 200);   
+             $res['estate']  = $estate;
+             return response()->json($res, 200);
          }
      }
 
-    // Display Estates by City 
+    // Display Estates by City
 
     public function showCity($city)
     {
@@ -102,32 +102,32 @@ class EstateController extends Controller
              $res['status']  = false;
              $res['message'] = 'No Estates found';
              return response()->json($res, 404);
-            
+
         }else{
              $res['status']  = true;
              $res['message'] = 'Data Found (By City)';
-             $res['estate']  = $estates; 
+             $res['estate']  = $estates;
              return response()->json($res, 200);
-        }  
+        }
     }
 
-    // Display Estates by Country 
+    // Display Estates by Country
 
     public function showCountry($country)
-    {   
+    {
         $country = ucfirst($country);
         $estates = Estate::where('country', 'LIKE', "%{$country}%")->get();
         if (!$estates){
            // Error Handling
             $res['Error']    = "No Estates found";
-            return response()->json($res, 404);  
+            return response()->json($res, 404);
         }else
             $res['status']  = true;
             $res['message'] = 'Data Found (By Country)';
-            $res['estate']  = $estates; 
+            $res['estate']  = $estates;
             return response()->json($res, 200);
     }
-    
+
 
 
     public function store(Request $request, ImageController $image)
@@ -149,7 +149,7 @@ class EstateController extends Controller
                              ->where('address', $address)
                              ->first();
 
-                             
+
            if(!$check) {
                 $estate->estate_name   = $estate_name;
                 $estate->city          = $city;
@@ -173,7 +173,7 @@ class EstateController extends Controller
                 $msg['message'] = 'Estate created succesfully!';
                 $msg['image_info'] = $data;
                 $msg['estate'] = $estate;
-           }else {         
+           }else {
 
                 $msg['status']  = false;
                 $msg['status_code'] = 402;
@@ -211,7 +211,7 @@ class EstateController extends Controller
                     $estate->country      = ucfirst($request->input('country'));
                     $estate->address      = ucfirst($request->input('address'));
 
-                    //Upload image 
+                    //Upload image
                     if($request->hasFile('image')) {
                         $data = $this->upload($request, $image, $estate);
                         if($data['status_code'] !=  200) {
@@ -222,20 +222,20 @@ class EstateController extends Controller
                         $data = null;
                         $estate->image = 'noimage.jpg';
                     }
-                    
+
                     $estate->save();
 
                     $msg['status_code'] = 201;
                     $msg['message'] = 'Estate updated succesfully!';
                     $msg['estate'] = $estate;
                     $msg['image_info']   = $data;
-               }else {         
+               }else {
                     $msg['status_code'] = 404;
                     $msg['message'] = 'Estated not found!';
                }
 
                 DB::commit();
-                 return response()->json($msg, $msg['status_code']); 
+                 return response()->json($msg, $msg['status_code']);
 
             }catch(\Exception $e) {
                 //if any operation fails, Thanos snaps finger - user was not created rollback what is saved
@@ -244,21 +244,21 @@ class EstateController extends Controller
                 $msg['status'] = false;
                 $msg['message'] = "Error: Estate not updated, please try again!";
                 $msg['hint'] = $e->getMessage();
-                return response()->json($msg, 501); 
+                return response()->json($msg, 501);
             }
     }
-    
 
-    // Delete Estates by id 
-        
-    public function deleteEstate($id) { 
+
+    // Delete Estates by id
+
+    public function deleteEstate($id) {
 
         $estates = Estate::where('id', $id)->first();
         $estates->delete();
-        
+
         // Success message
         $res['message']    = "Estate deleted";
-        return response()->json($res, 200);  
+        return response()->json($res, 200);
     }
 
 
@@ -282,10 +282,10 @@ class EstateController extends Controller
         $this->validate($request, [
             'house_block' => 'min:2',
         ]);
-        
+
         DB::beginTransaction();
         try{
-            if(!$check_if) {   
+            if(!$check_if) {
                 $msg['message'] = 'Your estate has beed selected succesfully!';
                 $home->user_id   = $user->id;
                 $home->estate_id = $id;
@@ -306,7 +306,7 @@ class EstateController extends Controller
 
             $msg['status'] = true;
             $msg['user_details'] =  $home;
-            return response()->json($msg, 200); 
+            return response()->json($msg, 200);
 
         }catch(\Exeception $e) {
             //if any operation fails, Thanos snaps finger - user was not created rollback what is saved
@@ -315,7 +315,7 @@ class EstateController extends Controller
             $msg['status'] = false;
             $msg['message'] = "Error: Estate Selection failed, please try again!";
             $msg['hint'] = $e->getMessage();
-            return response()->json($msg, 501); 
+            return response()->json($msg, 501);
 
         }
 

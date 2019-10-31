@@ -4,11 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
-    "content-hash": "4d8570e2158dc5a1914a3470225a3b4a",
-=======
     "content-hash": "8a331ba581cc0767766b53cfef0ec8b8",
->>>>>>> 1d2e3ef884a3c56f0b8b0bae35579d29572aa838
     "packages": [
         {
             "name": "africastalking/africastalking",
@@ -109,38 +105,6 @@
             "time": "2017-10-17T09:59:25+00:00"
         },
         {
-<<<<<<< HEAD
-            "name": "brozot/laravel-fcm",
-            "version": "v1.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/brozot/Laravel-FCM.git",
-                "reference": "112152af74d32304e74b96bd1afc7cbd99e2bc5c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/brozot/Laravel-FCM/zipball/112152af74d32304e74b96bd1afc7cbd99e2bc5c",
-                "reference": "112152af74d32304e74b96bd1afc7cbd99e2bc5c",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "~6.0",
-                "illuminate/support": ">=5.0.0",
-                "monolog/monolog": "^1.19",
-                "php": ">=5.5.9"
-            },
-            "require-dev": {
-                "laravel/laravel": "5.2.*",
-                "mockery/mockery": "0.9.*",
-                "phpunit/phpunit": "4.7.*",
-                "satooshi/php-coveralls": "dev-master"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "LaravelFCM\\": "src/",
-                    "LaravelFCM\\Mocks\\": "tests/mocks"
-=======
             "name": "benwilkins/laravel-fcm-notification",
             "version": "v4.0.0",
             "source": {
@@ -177,7 +141,6 @@
             "autoload": {
                 "psr-4": {
                     "Benwilkins\\FCM\\": "src"
->>>>>>> 1d2e3ef884a3c56f0b8b0bae35579d29572aa838
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -186,23 +149,6 @@
             ],
             "authors": [
                 {
-<<<<<<< HEAD
-                    "name": "Nicolas Brosy",
-                    "email": "nicolas.brosy@gmail.com"
-                }
-            ],
-            "description": "Laravel / Lumen package for Firebase Cloud Messaging ",
-            "keywords": [
-                "FCM",
-                "Firebase Cloud Messaging",
-                "firebase",
-                "laravel",
-                "lumen",
-                "notification",
-                "push"
-            ],
-            "time": "2016-08-08T19:43:05+00:00"
-=======
                     "name": "Ben Wilkins",
                     "email": "bentwilkins@gmail.com"
                 }
@@ -215,7 +161,6 @@
                 "notifications"
             ],
             "time": "2019-09-18T13:59:28+00:00"
->>>>>>> 1d2e3ef884a3c56f0b8b0bae35579d29572aa838
         },
         {
             "name": "cloudinary/cloudinary_php",
@@ -1267,18 +1212,6 @@
         },
         {
             "name": "laravel/framework",
-<<<<<<< HEAD
-            "version": "v6.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel/framework.git",
-                "reference": "372e0add8a58e0e3deb78f87cbb2dc40d3e0ff08"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/372e0add8a58e0e3deb78f87cbb2dc40d3e0ff08",
-                "reference": "372e0add8a58e0e3deb78f87cbb2dc40d3e0ff08",
-=======
             "version": "v6.3.0",
             "source": {
                 "type": "git",
@@ -1289,7 +1222,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/framework/zipball/80914c430fb5e49f492812d704ba6aeec03d80a2",
                 "reference": "80914c430fb5e49f492812d704ba6aeec03d80a2",
->>>>>>> 1d2e3ef884a3c56f0b8b0bae35579d29572aa838
                 "shasum": ""
             },
             "require": {
@@ -1421,11 +1353,7 @@
                 "framework",
                 "laravel"
             ],
-<<<<<<< HEAD
-            "time": "2019-09-24T13:40:36+00:00"
-=======
             "time": "2019-10-15T13:38:24+00:00"
->>>>>>> 1d2e3ef884a3c56f0b8b0bae35579d29572aa838
         },
         {
             "name": "laravel/tinker",
