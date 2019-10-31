@@ -13,7 +13,7 @@ class NewsletterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function add(Request $request)
+    public function __invoke(Request $request)
     {
         $validatedData = $request->validate([
             'name' => 'required|string|min:4',

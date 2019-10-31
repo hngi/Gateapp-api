@@ -389,3 +389,8 @@ Route::post("service_provider/create_request", "ServiceProviderController@create
 //     event(new App\Events\notify('Someone'));
 //     return "Notification sent";
 // });
+
+
+//----------------Newsletter Subscriber route-------------------------//
+
+Route::post("newsletter", "NewsletterController");
