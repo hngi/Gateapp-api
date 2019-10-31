@@ -41,7 +41,7 @@ const createResidentRow = (props) => {
 
     tableRow.classList.add('mobile-table-row');
     tableRow.innerHTML = `
-        <td class="table-data"><span class="mobile-header">name <i class="plus">+</i></span>${name}</td>
+        <td class="table-data"><span class="mobile-header">name <i class="plus">--</i></span>${name}</td>
         <td class="table-data"><span class="mobile-header">estate</span>${estate}</td>
         <td class="table-data"><span class="mobile-header">phone no.</span>${phoneNumber}</td>
         <td class="view-stats table-data">view stats</td>                           
