@@ -403,5 +403,9 @@ Route::post("service_provider/create_request", "ServiceProviderController@create
 //     return "Notification sent";
 // });
 
+//----------------Newsletter Subscriber route-------------------------//
+
+Route::post("newsletter", "NewsletterController");
+
 // test admin accept and reject service provider
 
