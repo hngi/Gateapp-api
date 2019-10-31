@@ -15,17 +15,29 @@
 }
 .login-btn{
     font-size: 12px;
-    width: 7vw;
+    width: 9vw;
 }
 .signup-btn{
     font-size: 12px;
-    width: 7vw;
+    width: 9vw;
 }
 @media screen and (max-width: 992px) {
-    .login-btn{
-        width: 15vw;
-    }
-    .signup-btn{
+    .login-btn,  .signup-btn{
         width: 15vw;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .login-btn , .signup-btn{
+        width: 100px;
+        margin-left: 0rem !important;
+    }
+    .app-logo img {
+        width: 20vw;
+    }
+    .app-logo {
+        margin-left: 0vw;
+    }
+    
+}
+

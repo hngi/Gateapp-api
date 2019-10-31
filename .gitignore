@@ -1,0 +1,5 @@
+node_modules
+.idea
+bootstrap
+vendor
+todo.md

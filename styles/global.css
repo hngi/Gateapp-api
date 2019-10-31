@@ -1,3 +1,52 @@
 body {
     font-family: 'Open Sans', sans-serif;
 }
+.scroller{
+  overflow-y: scroll;
+}
+.scroller::-webkit-scrollbar {
+  width: 4px;
+}
+.scroller::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+  border-radius: 10px;
+  display: none;
+}
+
+.scroller::-webkit-scrollbar-thumb {
+  color: black;
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px #343a40;
+}
+/* Slick JS CSS */
+.slider {
+    width: 50%;
+    margin: 100px auto;
+}
+
+.slick-slide {
+  margin: 0px 20px;
+}
+
+.slick-slide img {
+  width: 100%;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: black;
+}
+
+
+.slick-slide {
+  transition: all ease-in-out .3s;
+  opacity: .2;
+}
+
+.slick-active {
+  opacity: .5;
+}
+
+.slick-current {
+  opacity: 1;
+}
