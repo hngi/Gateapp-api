@@ -350,9 +350,6 @@ Route::get('faq/{id}', 'FaqController@show');
 //send support message
 Route::post('/support/send', 'SupportController@send');
 
-// Notification types
-Route::get('notifications/types', 'NotifyController@types');
-
 //This our testing api routes
 Route::get('test', 'TestController@test');
 Route::get('generate-code', 'TestController@qrCode');
