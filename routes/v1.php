@@ -75,7 +75,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Service provider information based on id
     Route::get('/service-provider/info/{id}', 'ServiceProviderController@search')->middleware('superAdmin');
-    
+
     // Admin only delete a specific service provider
     Route::delete('/service-provider/delete/{id}', 'ServiceProviderController@destroy')->middleware('superAdmin');
 
@@ -115,7 +115,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Show  Total Number of Estates added that week
     Route::get('statistics/weeklyEstate', 'Statistics\EstateStatsController@showWeek')->middleware('superAdmin');
 
-    // Show Total Number of Estates added that month 
+    // Show Total Number of Estates added that month
     Route::get('statistics/monthlyEstate', 'Statistics\EstateStatsController@showMonth')->middleware('superAdmin');
 
     // Show Total Number of Service Providers on the system
@@ -130,7 +130,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Show Total Number of Visits scheduled on the Application
     Route::get('statistics/visits', 'Statistics\VisitorStatsController@index')->middleware('superAdmin');
 
-    //Show Total Number of Visits Scheduled for that week on the application 
+    //Show Total Number of Visits Scheduled for that week on the application
     Route::get('statistics/weeklyVisits', 'Statistics\VisitorStatsController@weeklyVisits')->middleware('superAdmin');
 
     //Show Total Number of Visits Scheduled for that month on the application
@@ -284,6 +284,18 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //reschedule a visitor
     Route::post('visitor/{id}', 'VisitorController@schedule')->middleware('checkResident');
+
+    // Ban a visitor
+    Route::post('visitor/{id}/ban', 'VisitorController@ban');
+
+    // Remove ban on a visitor
+    Route::post('visitor/{id}/remove-ban/', 'VisitorController@removeBan');
+
+    // Get banned visitors
+    Route::prefix('visitors/banned')->group( function () {
+        Route::get('/all', 'VisitorController@getAllBannedVisitors');
+        Route::get('/for-estate/{estate}', 'VisitorController@getBannedVisitorsForAnEstate');
+    });
 
     //(Residents and Gateman)
 
