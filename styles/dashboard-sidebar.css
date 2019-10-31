@@ -6,7 +6,6 @@
     background: #49a347;
 }
 .dash-logo img{
-    height: 25%;
     width: 50%;
 }
 a,
@@ -34,7 +33,7 @@ a:focus {
     transition: all 0.3s;
 }
 
-#sidebar.active {
+#sidebar .active {
     margin-left: -250px;
 }
 
@@ -49,13 +48,14 @@ a:focus {
 
 #sidebar ul p {
     color: #fff;
-    padding: 10px;
+    padding: 10px 10px 10px 1.8rem;
 }
 
 #sidebar ul li a {
     padding: 10px;
     font-size: .9em;
     display: block;
+    padding-left: 1.8rem;
 }
 
 #sidebar ul li a:hover {
@@ -85,6 +85,7 @@ ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
     background: #49a347;
+    text-indent: 1rem;
 }
 .sidebar-btn{
     border-radius: 50%;
@@ -122,15 +123,16 @@ ul ul a {
     #sidebarCollapse span {
         display: none;
     }
+    
 }
-@media (min-width: 768px) {
-    #sidebar {
+@media (min-width: 769px) {
+    /* #sidebar {
         margin-left: -250px;
-    }
-    #sidebar.active {
+    } */
+    /* #sidebar.active {
         margin-left: 0;
-    }
+    } */
     #sidebarCollapse {
         display: none;
-    }
+    } 
 }
