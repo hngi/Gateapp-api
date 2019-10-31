@@ -17,3 +17,4 @@ document.write(`<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/
 /**********************************Slick.js CDN ********************************************************/
 document.write(`<script src="slick/slick.js"></script>`);
 
+console.clear();
