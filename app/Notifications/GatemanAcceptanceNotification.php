@@ -60,6 +60,7 @@ class GatemanAcceptanceNotification extends Notification
             ])
             ->data([
                 'gateman_id' => $this->gateman->id,
+                'click_action' => 'FLUTTER_NOTIFICATION_ACTION'
             ])
             ->priority(FcmMessage::PRIORITY_HIGH);
 
