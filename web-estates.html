@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="slick/slick.css">
+    <link rel="stylesheet" href="slick/slick-theme.css">
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/navbar.css">
+    <link rel="stylesheet" href="styles/download-footer.css">
+    <link rel="stylesheet" href="styles/web-estate.css">
+    <title>GateGuard</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="navbar navbar-expand-lg navbar-light our-nav col-12 border-bottom">
+                <a class="navbar-brand app-logo" href="index.html">
+                    <img src="images/Logo.png" alt="">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse nav-utilities" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Products
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="web-providers.html">Service Directory</a>
+                                <a class="dropdown-item" href="#">Visitor Management</a>
+                            </div>
+                        </li>
+                        <li class="nav-item mx-1">
+                            <a class="nav-link" href="partners.html">Partners</a>
+                        </li>
+                        <li class="nav-item mx-1">
+                            <a class="nav-link" href="#">About Us</a>
+                        </li>
+                        <li class="nav-item mx-1">
+                            <a class="nav-link" href="#">Contact Us</a>
+                        </li>
+
+                    </ul>
+                    <button class="btn btn-success login-btn mx-2" onclick="location.href='login.html'">LOGIN</button>
+                    <button class="btn btn-outline-success signup-btn mx-2"
+                        onclick="location.href='https://drive.google.com/open?id=1bMnK1u4ysAiKAHuIgwCX7y4faExcUj7E'">DOWNLOAD</button>
+                </div>
+            </nav>
+            <div class="col-12 welcome-image">
+                <div class="col-12 col-md-6 estate-header mx-auto mt-5 text-center">
+                    <div class="col-9 mx-auto header-image mt-3">
+                        <img src="images/windemere-group.png" alt="">
+                    </div>
+                    <h3 class="mt-4">Where Home Defines Comfort</h3 class="text-center mt-4">
+                    <button class="btn usual-btn mt-3">SCHEDULE A TOUR</button>
+                </div>
+            </div>
+            <div class="col-12 home-is-windemere row mx-0">
+                <div class="col-12 col-md-6 windemere-desc">
+                    <div class="col-12 col-md-10 ml-auto">
+                        <h2 class="mt-5">Home is Windemere</h2>
+                        <p>With Gate Guard, you can manage your vistors. On the app,
+                            you can determine. Our Cortland community offers a world
+                            of opportunity to luxury. Great features like granite
+                            countertops and crown molding will make you proud to call
+                            any of our spacious one, two, and three-bedroom
+                            apartments home. With convenience to Chapel Hills Mall and
+                            Whole Foods, our location makes your everyday errands a
+                            breeze. And when you’re considering your weekend plans,
+                            you have plenty of options nearby.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-10 mt-4 border mx-auto windemere-desc-image">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 amenities mt-4">
+                <h2 class="text-center">AMENITIES</h2>
+                <hr class="green-underline mt-2">
+                <div class="col-12">
+                    <nav>
+                        <div class="nav col-12" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-home-features-tab" data-toggle="tab"
+                                href="#nav-home-features" role="tab" aria-controls="nav-home-features"
+                                aria-selected="true">Home Features</a>
+                            <a class="nav-item nav-link" id="nav-profile-features-tab" data-toggle="tab"
+                                href="#nav-community-features" role="tab" aria-controls="nav-profile-features"
+                                aria-selected="false">Community Features</a>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active mt-3" id="nav-home-features" role="tabpanel"
+                            aria-labelledby="nav-home-features-tab">
+                            <div id="homeFeaturesCarousel" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <button class="btn usual-btn-opposite descriptor">RESIDENT KITCHEN</button>
+                                        <button class="btn usual-btn view-all-gallery">VIEW ALL GALLERY</button>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <button class="btn usual-btn-opposite descriptor">RESIDENT KITCHEN</button>
+                                        <button class="btn usual-btn view-all-gallery">VIEW ALL GALLERY</button>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <button class="btn usual-btn-opposite descriptor">RESIDENT KITCHEN</button>
+                                        <button class="btn usual-btn view-all-gallery">VIEW ALL GALLERY</button>
+                                    </div>
+                                </div>
+                                <!-- <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
+                                    data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExampleControls" role="button"
+                                    data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a> -->
+                            </div>
+                            <div class="features col-12 col-md-10 mx-auto row mx-0 my-5">
+                                <div class="col-12 col-md-6 feature-listed">
+                                    <p class="pb-4">Energy-Efficient, Stainless Steel Appliances</p>
+                                </div>
+                                <div class="col-12 col-md-6 feature-listed">
+                                    <p class="pb-4">Modern Lighting</p>
+                                </div>
+                                <div class="col-12 col-md-6 feature-listed">
+                                    <p class="pb-4">Modern Cabinetry with Designer Hardware and Tile Backsplash</p>
+                                </div>
+                                <div class="col-12 col-md-6 feature-listed">
+                                    <p class="pb-4">Living Room and Bedroom Ceiling Fans</p>
+                                </div>
+                                <div class="col-12 col-md-6 feature-listed">
+                                    <p class="pb-4">In-Home, Full-Size Washer and Dryer Sets</p>
+                                </div>
+                                <div class="col-12 col-md-6 feature-listed">
+                                    <p class="pb-4">Personal Patios and Balconies</p>
+                                </div>
+                                <div class="col-12 col-md-6 feature-listed">
+                                    <p class="pb-4">Spacious Walk-In Closets</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-community-features" role="tabpanel"
+                            aria-labelledby="nav-profile-tab">
+                            <div id="homeFeaturesCarousel" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <button class="btn usual-btn-opposite descriptor">RESIDENT KITCHEN</button>
+                                        <button class="btn usual-btn view-all-gallery">VIEW ALL GALLERY</button>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <button class="btn usual-btn-opposite descriptor">RESIDENT KITCHEN</button>
+                                        <button class="btn usual-btn view-all-gallery">VIEW ALL GALLERY</button>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <button class="btn usual-btn-opposite descriptor">RESIDENT KITCHEN</button>
+                                        <button class="btn usual-btn view-all-gallery">VIEW ALL GALLERY</button>
+                                    </div>
+                                </div>
+                                <!-- <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
+                                            data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#carouselExampleControls" role="button"
+                                            data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a> -->
+                            </div>
+                            <div class="features col-12 col-md-10 mx-auto row mx-0 my-5">
+                                <div class="col-12 col-md-6 feature-listed">
+                                    <p class="pb-4">Energy-Efficient, Stainless Steel Appliances</p>
+                                </div>
+                                <div class="col-12 col-md-6 feature-listed">
+                                    <p class="pb-4">Modern Lighting</p>
+                                </div>
+                                <div class="col-12 col-md-6 feature-listed">
+                                    <p class="pb-4">Modern Cabinetry with Designer Hardware and Tile Backsplash</p>
+                                </div>
+                                <div class="col-12 col-md-6 feature-listed">
+                                    <p class="pb-4">Living Room and Bedroom Ceiling Fans</p>
+                                </div>
+                                <div class="col-12 col-md-6 feature-listed">
+                                    <p class="pb-4">In-Home, Full-Size Washer and Dryer Sets</p>
+                                </div>
+                                <div class="col-12 col-md-6 feature-listed">
+                                    <p class="pb-4">Personal Patios and Balconies</p>
+                                </div>
+                                <div class="col-12 col-md-6 feature-listed">
+                                    <p class="pb-4">Spacious Walk-In Closets</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="resident-reviews col-12 mt-4">
+                <h3 class="text-center">WHAT OUR RESIDENTS SAY</h3>
+                <hr class="green-underline mt-2">
+                <div class="col-12 col-md-7 review-carousel mx-auto mt-5">
+                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" interval="false">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="col-12 review-message">
+                                    <p>
+                                        Service to my apartment was finished within an hour of me submitting the
+                                        request.
+                                        Seriously
+                                        the best and fastest service I've experienced yet from any complex I've lived
+                                        in!
+                                        The staff are
+                                        extremely polite and know my face when I walk into the office. I couldn't be
+                                        happier
+                                        with living here.
+                                    </p>
+                                </div>
+                                <div class="review-details mt-3">
+                                    <p class="review-author mb-0">- Anonymous Resident</p>
+                                    <span class="review-date pl-4">Oct 17, 2019</span>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="col-12 review-message">
+                                    <p>
+                                        Service to my apartment was finished within an hour of me submitting the
+                                        request.
+                                        Seriously
+                                        the best and fastest service I've experienced yet from any complex I've lived
+                                        in!
+                                        The staff are
+                                        extremely polite and know my face when I walk into the office. I couldn't be
+                                        happier
+                                        with living here.
+                                    </p>
+                                </div>
+                                <div class="review-details mt-3">
+                                    <p class="review-author mb-0">- Anonymous Resident</p>
+                                    <span class="review-date pl-4">Oct 17, 2019</span>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="col-12 review-message">
+                                    <p>
+                                        Service to my apartment was finished within an hour of me submitting the
+                                        request.
+                                        Seriously
+                                        the best and fastest service I've experienced yet from any complex I've lived
+                                        in!
+                                        The staff are
+                                        extremely polite and know my face when I walk into the office. I couldn't be
+                                        happier
+                                        with living here.
+                                    </p>
+                                </div>
+                                <div class="review-details mt-3">
+                                    <p class="review-author mb-0">- Anonymous Resident</p>
+                                    <span class="review-date pl-4">Oct 17, 2019</span>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button class="btn usual-btn">VIEW MORE</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- DOWNLOAD APP AND FOOTER SECTIONS -->
+            <div class="col-12 download-footer px-0">
+                <div class="col-12 download-app row mx-0">
+                    <div class="col-12 col-md-5">
+                        <div class="col-9 download-image-con mt-5 mx-auto">
+                            <img src="images/download-app-image.png" alt="">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-7 mb-2">
+                        <div class="col-10 details-con mx-auto">
+                            <h2>DOWNLOAD THE APP</h2>
+                            <hr class="green-underline mt-2 ml-0">
+                            <p>Worry less abot security saying goodbye to the old scary security <br>
+                                system. Monitor every activity at your residence with just one click. <br>
+                                GateGUARD is the perfect App that solves every of your security <br> worries.</p>
+                            <div class="col-12 download-links row mx-0 px-0 mt-5">
+                                <div class="col-12 col-sm-8 mt-2 col-md-5 store-link px-0">
+                                    <img src="images/playstore.png" style="cursor: pointer" alt=""
+                                        onclick="location.href='https://drive.google.com/open?id=1bMnK1u4ysAiKAHuIgwCX7y4faExcUj7E'">
+                                </div>
+                                <div class="col-12 col-sm-8 mt-2 col-md-5 store-link px-0">
+                                    <img src="images/appstore.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--                 <div class="col-12 subscribe row mx-0">
+                    <div class="col-12 col-sm-8 col-md-6 subscribe-words mx-auto">
+                        <div class="col-12 col-md-8 mt-5 mx-auto">
+                            <h2>SUBSCRIBE TO OUR <br> NEWSLETTER</h2>
+                            <hr class="green-underline mt-2 ml-0">
+                            <div class="col-12 row mx-0 px-0 breakdown-feature">
+                                <div class="pt-2 col-2">
+                                    <img class="" src="images/star.png" alt="">
+                                </div>
+                                <div class="pt-2 col-10">
+                                    <p class="">Guards real time notifications on visitors coming <br> to to visit.</p>
+                                </div>
+                            </div>
+                            <div class="col-12 row mx-0 px-0 breakdown-feature">
+                                <div class="pt-2 col-2">
+                                    <img class="" src="images/star.png" alt="">
+                                </div>
+                                <div class="pt-2 col-10">
+                                    <p class="">Guards real time notifications on visitors coming <br> to to visit.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 subscribe-form mb-5">
+                        <div class="col-12 col-sm-8 col-md-10 mx-auto">
+                            <form>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Name">
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" placeholder="Email">
+                                </div>
+                                <button type="submit" class="btn col-12">Submit</button>
+                            </form>
+                        </div>
+                    </div> 
+                </div> -->
+                <footer class="border col-12 app-footer">
+                    <div class="col-11 mx-auto row mx-0 mt-5">
+                        <div class="col-12 col-md">
+                            <ul class="list-group footer-list">
+                                <li class="list-group-item pb-2 list-header">Features</li>
+                                <li class="list-group-item py-1 footer-links ">Visitor Management</li>
+                                <li class="list-group-item py-1 footer-links ">Delivery Management</li>
+                                <li class="list-group-item py-1 footer-links ">Communication Management</li>
+                            </ul>
+                        </div>
+                        <div class="col-12 col-md">
+                            <ul class="list-group footer-list">
+                                <li class="list-group-item pb-2 list-header">Company</li>
+                                <li class="list-group-item py-1 footer-links ">About Us</li>
+                                <li class="list-group-item py-1 footer-links ">Contact Us</li>
+                                <li class="list-group-item py-1 footer-links ">Frequently Asked Questions</li>
+                                <li class="list-group-item py-1 footer-links ">Terms and Conditions</li>
+                            </ul>
+                        </div>
+                        <div class="col-12 col-md">
+                            <ul class="list-group footer-list">
+                                <li class="list-group-item pb-2 list-header">Contact</li>
+                                <li class="list-group-item py-1 footer-links">3 Birrel Avenue, Sabo. <br>
+                                    Yaba, Lagos State, <br>
+                                    Nigeria</li>
+                                <li class="list-group-item py-1 footer-links">+234 705 784 3748</li>
+                                <li class="list-group-item py-1 footer-links">contact@gateguard.co</li>
+                            </ul>
+                        </div>
+                        <div class="col-8 col-sm-6 col-md">
+                            <div class="col-12 col-md-8 mt-3 footer-logo">
+                                <img src="images/gateguard-white.png" alt="">
+                            </div>
+                            <div class="col-12 col-md-8 mt-3 social-links">
+                                <img class="mx-2" src="images/instagram.png" alt="">
+                                <img class="mx-2" src="images/twitter.png" alt="">
+                                <img class="mx-2" src="images/facebook.png" alt="">
+                            </div>
+                            <div class="col-12 mt-2 footer-download">
+                                <p class="mb-1">Download App</p>
+                                <div class="col-12 row mx-0 px-0">
+                                    <div class="col px-0 app-cons mr-2">
+                                        <img src="images/playstore.png" style="cursor: pointer" alt="playstore"
+                                            onclick="location.href='https://drive.google.com/open?id=1bMnK1u4ysAiKAHuIgwCX7y4faExcUj7E'">
+                                    </div>
+                                    <div class="col px-0 app-cons">
+                                        <img src="images/appstore.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+</body>
+<!--Import third party cdn-->
+<script src="js/general/third_party_cdn.js"></script>
+
+</html>
