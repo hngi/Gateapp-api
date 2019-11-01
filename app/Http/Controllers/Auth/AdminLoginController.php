@@ -36,6 +36,7 @@ class AdminLoginController extends Controller
         // Do a validation for the input
         $this->validateRequest($request);
         $credentials = $request->only('email', 'password');
+
         try {
             if (!$token = $this->jwt->attempt($credentials)) {
                 return response()->json(['message' => 'Invalid Credential'], 404);

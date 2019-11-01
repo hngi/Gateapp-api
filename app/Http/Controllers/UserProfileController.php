@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
+use App\Http\Controllers\SmsOtpController;
 use App\Mail\VerifyToken;
 use Exception;
 
@@ -124,15 +125,23 @@ class UserProfileController extends Controller
         try {
             $user->name      = $request->input('name');
             $user->username  = $request->input('username');
-            $user->email     = $user->phone != $request->input('email') ? $request->input('email') : $user->phone;
+            if($request->input('email')) {
+                $user->email = $request->input('email');
+            }
 
             if ($user->phone != $request->input('phone')) {
                 $user->email_verified_at = null;
-                $user->verifycode = Str::random(6);
-                $user->phone     = $request->input('phone');
+                $user->verifycode = mt_rand(1000,9999);
+                $user->phone      = $request->input('phone');
+
+                 //Send sms otp to user
+                 $phone     = $user->phone;
+                 $message   = 'Use this 4 digit otp token to verify your new phone number '. $user->verifycode;
+                 $smsOtpController = new SmsOtpController; 
+                 $smsOtpController->bulkSmsNigeria($phone, $message);
                 //We use mail for now untill sms is implemented
                 Mail::to($user->email)->send(new VerifyToken($user));
-                $res['important'] = 'A six digit OTP token has ben sent to you email or phone because this phone number is new!';
+                $res['important'] = 'An otp token has ben sent to you phone because you changed your phone number!';
             }
             //Upload image
             //Upload image

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Home;
 use App\Visitor_History;
 use App\Visitor;
 use App\ScheduledVisit;
@@ -54,7 +55,7 @@ class VisitorController extends Controller
     /**
      * Admin gets all visitors
      *
-     * @param  int $page number of pages for pagination 
+     * @param  int $page number of pages for pagination
      * @return JSON
      */
     public function index(Request $request)
@@ -133,7 +134,7 @@ class VisitorController extends Controller
         // validate the posted data
         $this->validate($request, [
             'name'              => ['required', 'regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
-            'arrival_date'      => 'required|date_format:Y-m-d',
+            'arrival_date'      => 'required|date|regex:/\d{4}\/\d{1,2}\/\d{1,2}/',
             'car_plate_no'      => 'string|nullable',
             'purpose'           => 'string',
             'visitor_group'     => 'string',
@@ -145,7 +146,7 @@ class VisitorController extends Controller
         $randomToken = Str::random(6);
 
         DB::beginTransaction();
-
+        $estate_id = Home::where('user_id', $this->user->id)->value('estate_id');
         try {
             $visitor = new Visitor();
             $visitor->name = $request->name;
@@ -157,14 +158,17 @@ class VisitorController extends Controller
             $visitor->status  = 1;
             $visitor->visit_count  = 1;
             $visitor->user_id = $this->user->id;
+            $visitor->estate_id  = $estate_id;
             $visitor->visiting_period = $request->visiting_period;
             $visitor->description = $request->description ?? '';
             $visitor->qr_code = $randomToken;
+           
+           
 
             //Generate qr image
             $qr_code = $qr->generateCode($randomToken);
 
-            //Upload image 
+            //Upload image
             if ($request->hasFile('image')) {
                 $data = $this->upload($request, $image);
                 if ($data['status_code'] !=  200) {
@@ -179,6 +183,13 @@ class VisitorController extends Controller
 
             //Save Visitor
             $this->user->visitors()->save($visitor);
+
+
+            //Save Visit Schedule 
+            $scheduled = new ScheduledVisit;
+            $scheduled->visitor_id = $visitor->id;
+            $scheduled->user_id = $visitor->user_id;
+            $scheduled->save();
 
             //if operation was successful save commit save to database
             DB::commit();
@@ -227,7 +238,7 @@ class VisitorController extends Controller
         // validate the posted data
         $this->validate($request, [
             'name'              => ['regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
-            'arrival_date'      => 'date_format:Y-m-d',
+            'arrival_date'      => 'required|date|regex:/\d{4}\/\d{1,2}\/\d{1,2}/',
             'car_plate_no'      => 'string',
             'phone_no'          => 'string',
             'purpose'           => 'string',
@@ -247,8 +258,8 @@ class VisitorController extends Controller
             $visitor->visiting_period = $request->visiting_period ?? $visitor->visiting_period;
             $visitor->description = $request->description ?? $visitor->description;
 
-            // Upload updated image 
-            //Upload image 
+            // Upload updated image
+            //Upload image
             if ($request->hasFile('image')) {
                 $data = $this->upload($request, $image, $visitor);
                 if ($data['status_code'] !=  200) {
@@ -330,7 +341,7 @@ class VisitorController extends Controller
         $visitor = $this->user->visitors()->find($id);
         if ($visitor->status == 1) {
             return response()->json([
-                'message' => 'Visitor have not checked out, you cannot schedule a visit.'
+                'message' => 'Visitor has not checked out, you cannot schedule a visit.'
             ], 404);
         }
         $this->validate($request, [
@@ -358,6 +369,8 @@ class VisitorController extends Controller
             $visitor->description = $visitor->description ?? $request->description;
             $visitor->qr_code = $randomToken;
             $visitor->image =  $visitor->image;
+            $visitor->time_in =null;
+            $visitor->time_out =null;
             $qr_code = $qr->generateCode($randomToken);
             $scheduled->save();
             $this->user->visitors()->save($visitor);
@@ -396,5 +409,79 @@ class VisitorController extends Controller
 
         $res['message']    = "Scheduled visit deleted";
         return response()->json($res, 200);
+    }
+
+
+    /**
+     * Ban a visitor
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function ban($id)
+    {
+        $this->middleware('admin');
+
+        $visitor = Visitor::query()->findOrFail($id);
+
+        try {
+            $update = $visitor->update(['banned' => true]);
+
+            if (! $update) {
+                return response()->json(['message' => 'An error was encountered.'], 501);
+            }
+
+            return response()->json(['message' => 'Visitor has been banned']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 501);
+        }
+    }
+
+    /**
+     * Remove ban placed on a visitor
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function removeBan($id)
+    {
+        $visitor = Visitor::query()->findOrFail($id);
+
+        try {
+            $update = $visitor->update(['banned' => false]);
+
+            if (! $update) {
+                return response()->json(['message' => 'An error was encountered.'], 501);
+            }
+
+            return response()->json(['message' => "Visitor's  ban gas been lifted."]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 501);
+        }
+    }
+
+    /**
+     * Gat all banned visitors
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAllBannedVisitors()
+    {
+        $visitors = Visitor::query()->where('banned', true)->get();
+
+        return response()->json(['data' => $visitors]);
+    }
+
+    /**
+     * Get banned visitors in an estate
+     * @param $estate
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getBannedVisitorsForAnEstate($estate)
+    {
+        $users_in_state = Home::query()->where('estate_id', $estate)->distinct('user_id')
+            ->pluck('user_id')->toArray();
+
+        $banned_visitors = Visitor::query()->where('banned', true)
+            ->whereIn('user_id', $users_in_state)->get();
+
+        return response()->json(['data' => $banned_visitors]);
     }
 }

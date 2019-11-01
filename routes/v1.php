@@ -137,7 +137,20 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //Show total number of pending service providers in the estate of logged in Estate Admin
     Route::get('statistics/pendingEstateService/', 'Statistics\ServiceStatsController@pendingEstateRequests')->middleware('estateAdmin');
+
+    //Estate Admin approves Service Providers request
+    Route::post('/service-provider/approve/{id}', 'ServiceProviderController@approve')->middleware('estateAdmin');
+
+    //Estate Admin rejects Service Providers request
+    Route::post('/service-provider/reject/{id}', 'ServiceProviderController@reject')->middleware('estateAdmin');
+
+
 });
+
+
+
+
+
 
 // General Users Routes *******************************************************
 Route::group(['middleware' => ['jwt.verify']], function () {
@@ -166,6 +179,20 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //Delete user account
     Route::delete('/user/delete', 'UserProfileController@destroy');
+
+
+    // Ban a visitor
+    Route::post('visitor/{id}/ban', 'VisitorController@ban');
+
+    // Remove ban on a visitor
+    Route::post('visitor/{id}/remove-ban/', 'VisitorController@removeBan');
+
+    // Get banned visitors
+    Route::prefix('visitors/banned')->group( function () {
+        Route::get('/all', 'VisitorController@getAllBannedVisitors');
+        Route::get('/for-estate/{estate}', 'VisitorController@getBannedVisitorsForAnEstate');
+    });
+
 
     //User Image upload api
     // Route::post('user/image', 'UserProfileController@upload');
@@ -360,7 +387,7 @@ Route::get('test', 'TestController@test');
 Route::get('generate-code', 'TestController@qrCode');
 Route::post('test_image', 'TestController@upload');
 Route::post('african_talking', 'SmsOtpController@africasTalkingTest');
-Route::post('msg91', 'SmsOtpController@send');
+Route::post('otp', 'SmsOtpController@otp');
 
 //test notification
 Route::get('/test-notification', function () {
@@ -391,3 +418,10 @@ Route::post("service_provider/create_request", "ServiceProviderController@create
 //     event(new App\Events\notify('Someone'));
 //     return "Notification sent";
 // });
+
+//----------------Newsletter Subscriber route-------------------------//
+
+Route::post("newsletter", "NewsletterController");
+
+// test admin accept and reject service provider
+
