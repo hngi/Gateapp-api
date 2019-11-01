@@ -123,6 +123,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Show Total Number of Estates on the system
     Route::get('statistics/estate', 'Statistics\EstateStatsController@index')->middleware('superAdmin');
 
+    // General SStatistics
+    Route::get('statistics/estate/{id}', 'Statistics\EstateStatsController@generalStats')->middleware('superAdmin');
+
     // Show  Total Number of Estates added that week
     Route::get('statistics/weeklyEstate', 'Statistics\EstateStatsController@showWeek')->middleware('superAdmin');
 
