@@ -185,12 +185,12 @@ class GatemanController extends Controller
         	['gateman_id', $this->user->id],
         	['request_status', 1],
         ])->pluck('user_id');
-        
+
         // get visitors with the user_id
         $visitors = Visitor::whereIn('user_id', $user_id)
         	->with('user')
         	->get();
-        
+
         // list out visitors details
         if ($visitors){
             return response()->json([
@@ -210,7 +210,7 @@ class GatemanController extends Controller
     public function admitVisitor(Request $request)
     {
         $resident = Visitor::where('qr_code', $request->input('qr_code'))->first();
-        
+
         if ($resident){
             //Error Handling
             $resident_id = $resident->user_id;
@@ -277,7 +277,7 @@ class GatemanController extends Controller
     public function visitor_out(Request $request)
     {
         $resident = Visitor::where('qr_code', $request->input('qr_code'))->where('time_in', '!=', null)->first();
-        
+
         if ($resident){
             //Error Handling
             $resident_id = $resident->user_id;
@@ -331,7 +331,7 @@ class GatemanController extends Controller
     ){
         // Verifies that the logged-in user is assigned to the requested estate
         $user_estate = Home::whereUserIdAndEstateId($this->user->id, $id)->first();
-        
+
         if (is_null($user_estate)) {
             return response()->json([
                 'status' => false,
@@ -403,7 +403,7 @@ class GatemanController extends Controller
     ){
         // Verifies that the logged-in user is assigned to the requested estate
         $user_estate = Home::whereUserIdAndEstateId($this->user->id, $estate_id)->first();
-        
+
         if (is_null($user_estate)) {
             return response()->json([
                 'status' => false,
@@ -414,7 +414,7 @@ class GatemanController extends Controller
         {
             // Check if requests is for a single gateman
             if (is_null($id)) {
-                // Request is for all gatemen associated with the estate 
+                // Request is for all gatemen associated with the estate
                 // Get all gatemen users type associated with the estate
                 $gatemen = User::join('homes', 'homes.user_id', 'users.id')
                     ->where('users.user_type', 'gateman')
@@ -468,7 +468,7 @@ class GatemanController extends Controller
     ){
         // Verifies that the logged-in user is assigned to the requested estate
         $user_estate = Home::whereUserIdAndEstateId($this->user->id, $estate_id)->first();
-        
+
         if (is_null($user_estate)) {
             return response()->json([
                 'status' => false,
@@ -496,6 +496,7 @@ class GatemanController extends Controller
                 // Update user's details
                 $updatedUser->name  = $request->name ?? $updatedUser->name;
                 $updatedUser->phone = $request->phone ?? $updatedUser->phone;
+                $updatedUser->duty_time = $request->duty_time ?? $updatedUser->duty_time;
 
                 // Save the update
                 $updatedUser->save();
