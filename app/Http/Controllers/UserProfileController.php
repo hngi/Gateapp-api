@@ -263,14 +263,15 @@ class UserProfileController extends Controller
      //revoke selected admin access
     public function revokeAdmin($id) 
     {
-            $user = User::find($id);
+            $user = User::where('id', $id)->where('access', 1)->first();
             if(!$user){
-            $res['message'] = 'user not found!';
+            $res['message'] = 'User not found or users access is already revoked';
             return response()->json($res, 401);
             }else
-            if($user->role == 0){
+            if($user->role == 0 || $user->role == 3){
             User::where('id', $id)->update(['access' => 0]);
             $res['status'] = 200;
+            $res['user'] = $user;
             $res['message'] = "Successfully block admin from access";  
         }else {
             $res['message'] = 'user you are trying to block is not an Admin or an error occured, please try again!';
@@ -283,14 +284,15 @@ class UserProfileController extends Controller
     //unblock selected admin access
     public function unrevokeAdmin($id) 
     {
-            $user = User::find($id);
+            $user = User::where('id', $id)->where('access', 0)->first();
             if(!$user){
-            $res['message'] = 'user not found!';
+            $res['message'] = 'User not found or User is has full access!';
             return response()->json($res, 401);
             }else
-            if($user->role == 0){
+            if($user->role == 0 || $user->role == 3){
             User::where('id', $id)->update(['access' => 1]);
             $res['status'] = 200;
+            $res['admin'] = $user;
             $res['message'] = "Successfully unblock admin";  
         }else {
             $res['message'] = 'user you are trying to unblock is not an Admin or an error occured, please try again!';
@@ -310,7 +312,7 @@ class UserProfileController extends Controller
         try {    
             $adminId = User::find($id);
 
-            if ($adminId && $adminId->role == 0) {
+            if ($adminId && ($adminId->role == 0  || $adminId->role == 3)) {
                 $adminId->password = md5($request->input('password'));
                 $adminId->save();
 
