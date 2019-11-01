@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\DB;
 class UserStatsController extends Controller
 {
 
+	//fetches scheduled visits for a resident
+
 	 public function fetchScheduledVisit($resident_id){
 
 
@@ -26,9 +28,33 @@ class UserStatsController extends Controller
         }else{
            $res['status']  = true;
             $res['message'] = 'Number of Scheduled Visits';
-           $res['Number of Scheduled Stats'] = $visitor->count();
+           $res['Number of Scheduled Stats'] = $visitor;
            return response()->json($res, 200);
         }
+
+
+    }
+
+
+
+//fetches finished visits for a resident
+
+     public function finishedVisit($resident_id){
+
+
+     				$visitor = DB::table('visitors_history')->where('user_id', $resident_id)->get();
+        			/*$ScheduledVisit = ScheduledVisit::where('user_id', $visitor_id )->value('visit_date');*/
+						if(!$visitor){
+								$res['status']  = false;
+								$res['message'] = 'No visits found for this resident';
+								           /*$res['Resident Id'] = $resident_id;*/
+								            return response()->json($res, 404); 
+				        }else{
+				           $res['status']  = true;
+				            $res['message'] = 'Number of finished Visits';
+				           $res['Number of Finished Visits'] = $visitor;
+				           return response()->json($res, 200);
+				        }
 
 
     }
