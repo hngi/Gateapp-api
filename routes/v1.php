@@ -59,7 +59,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate')->middleware('superAdmin');
 
     //Admin only Update Estates by estate_id
-    Route::post('/estate/{id}', 'EstateController@update')->middleware('superAdmin');
+    Route::patch('/estate/{id}', 'EstateController@update')->middleware('superAdmin');
 
     //Admin only Create a service provider
     Route::post('/service-provider', 'ServiceProviderController@create')->middleware('superAdmin');
@@ -387,6 +387,16 @@ Route::get('faq', 'FaqController@index');
 Route::get('faq/{id}', 'FaqController@show');
 //send support message
 Route::post('/support/send', 'SupportController@send');
+
+//Block selectd admin access
+Route::put('revokeadminaccess/{user_id}', 'UserProfileController@revokeAdmin')->middleware('superAdmin');
+
+//Unblock selected admin
+Route::put('unrevokeadminaccess/{user_id}', 'UserProfileController@unrevokeAdmin')->middleware('superAdmin');
+
+//Reset admin password
+Route::post('resetadminpass/reset/{admin_id}', 'UserProfileController@resetAdmin')->middleware('superAdmin');
+
 
 // Notification types
 Route::get('notifications/types', 'NotifyController@types');

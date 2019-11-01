@@ -284,11 +284,9 @@ class ServiceProviderController extends Controller
                     return response()->json($data, $data['status_code']);
                 }
                 $service->image = $data['image'];
-<<<<<<< HEAD
+
             }else {
-=======
-            } else {
->>>>>>> 4405599b7d7597357c3ad174c1cf68c564dbc9e4
+=
                 $data = null;
                 $service->image = 'noimage.jpg';
             }
@@ -524,12 +522,14 @@ class ServiceProviderController extends Controller
         $application->status = 1;
         $application->save();
 
+
         return response()->json(['status' => true, 'message' => 'Service provider accepted'], 200);
     }
     public function reject($id)
     {
         $application = Service_Provider::findOrFail($id);
         $application->delete($id);
+
 
         return response()->json(['status' => true, 'message' => 'Service provider rejected'], 200);
     }

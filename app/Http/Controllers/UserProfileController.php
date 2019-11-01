@@ -260,4 +260,84 @@ class UserProfileController extends Controller
             return response()->json(['message' => $e->getMessage()], 501);
         }
     }
+     //revoke selected admin access
+    public function revokeAdmin($id) 
+    {
+            $user = User::find($id);
+            if(!$user){
+            $res['message'] = 'user not found!';
+            return response()->json($res, 401);
+            }else
+            if($user->role == 0){
+            User::where('id', $id)->update(['access' => 0]);
+            $res['status'] = 200;
+            $res['message'] = "Successfully block admin from access";  
+        }else {
+            $res['message'] = 'user you are trying to block is not an Admin or an error occured, please try again!';
+            return response()->json($res, 402);
+        }
+        
+        return response()->json($res, $res['status']);
+    }
+
+    //unblock selected admin access
+    public function unrevokeAdmin($id) 
+    {
+            $user = User::find($id);
+            if(!$user){
+            $res['message'] = 'user not found!';
+            return response()->json($res, 401);
+            }else
+            if($user->role == 0){
+            User::where('id', $id)->update(['access' => 1]);
+            $res['status'] = 200;
+            $res['message'] = "Successfully unblock admin";  
+        }else {
+            $res['message'] = 'user you are trying to unblock is not an Admin or an error occured, please try again!';
+            return response()->json($res, 402);
+        }
+        
+        return response()->json($res, $res['status']);
+    }  
+
+    public function resetAdmin(Request $request, $id)
+    {
+        $res = array();
+        $this->validateRequest($request);
+
+        DB::beginTransaction();
+        
+        try {    
+            $adminId = User::find($id);
+
+            if ($adminId && $adminId->role == 0) {
+                $adminId->password = md5($request->input('password'));
+                $adminId->save();
+
+                DB::commit();
+                $res['status'] = 200;
+                $res['message'] = "Successfully updated Admin password";
+                $res['data'] = $adminId;
+            } else {
+                $res['status'] = 404;
+                $res['message'] = "Admin not found";
+            }
+        } catch(\Exception $e) {
+            DB::rollBack();
+
+            $res['status'] = 501;
+            $res['message'] = "An error occured trying to reset admin password";            
+        }
+        
+        return response()->json($res, $res['status']);
+    }
+    public function validateRequest(Request $request){
+        $rules = [
+            'password'  => 'required|min:8'
+        ];
+        $messages = [
+            'required' => ':attribute is required and most be a min of 8'
+        ];
+    $this->validate($request, $rules, $messages);
+  }
 }
