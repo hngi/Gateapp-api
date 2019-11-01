@@ -91,6 +91,17 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Delete a Service Provider category
     Route::delete('sp-category/{id}', 'SPCategoryController@deleteCategory')->middleware('superAdmin');
 
+    // super Admin only fetch all visit history
+    Route::get('/history','VisitorController@fetchAllVisitHistory')->middleware('superAdmin');
+
+    // Estate Admin only fetch visit history
+    Route::get('/history/{id}','VisitorController@fetchEstateVisitHistory')->middleware('estateAdmin');
+
+    // super admin Admin only fetch all visitors
+    Route::get('/visitors','VisitorController@fetchSuperAdminVisitors')->middleware('superAdmin');
+
+    // Estate Admin only fetch estate visitors
+    Route::get('/visitors/{id}','VisitorController@fetchEstateVisitors')->middleware('estateAdmin');
 
     // Show all visitor
 
