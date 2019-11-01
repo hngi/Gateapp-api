@@ -307,11 +307,8 @@ class GatemanController extends Controller
                 $res ['Message'] = "Visitor Has been checked out succesfully";
                 $res ['Visitor details'] = $visitor;
                 $resident_notifiable = User::find($resident_id);
-                $gateman_forNotificaton = User::find(Auth::user()->id);
-                $resident_notifiable.notify(new VisitorArrivalNotification($resident_notifiable,
-                $gateman_forNotificaton,
-                $visitor
-            ));
+                $gateman_notifiable  = User::find($this->user->id);
+                $resident_notifiable->notify(new VisitorArrivalNotification($resident_notifiable, $gateman_notifiable, $visitor));
             	return response()->json($res, 202);
             }
             else {
