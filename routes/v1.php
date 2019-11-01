@@ -127,6 +127,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Show Total Number of Estates on the system
     Route::get('statistics/estate', 'Statistics\EstateStatsController@index')->middleware('superAdmin');
 
+    // General SStatistics
+    Route::get('statistics/estate/{id}', 'Statistics\EstateStatsController@generalStats')->middleware('superAdmin');
+
     // Show  Total Number of Estates added that week
     Route::get('statistics/weeklyEstate', 'Statistics\EstateStatsController@showWeek')->middleware('superAdmin');
 
@@ -255,7 +258,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('estate/{id}/gateman', 'GatemanController@addEstateGateman')->middleware('estateAdmin');
 
     // Edit a gateman for an estate
-    Route::put('estate/{estate_id}/gateman/{id}', 'GatemanController@updateEstateGateman')->middleware('estateAdmin');
+    Route::put('estate/{estate_id}/gateman/{id}', 'GatemanController@updateEstateGateman');
 
     // Delete a single gateman for an estate
     Route::delete('estate/{estate_id}/gateman/{id}', 'GatemanController@deleteEstateGateman')->middleware('estateAdmin');
