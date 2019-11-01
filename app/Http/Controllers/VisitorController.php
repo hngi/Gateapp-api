@@ -209,7 +209,7 @@ class VisitorController extends Controller
             $res['status']   = false;
             $res['message']  = 'Error, Visitor not created, please try again';
             $res['hint']     = $e->getMessage();
-            return response()->json($msg, 501);
+            return response()->json($res, 501);
         }
     }
 
@@ -290,7 +290,7 @@ class VisitorController extends Controller
             $res['status']   = false;
             $res['message']  = "Error, Visitor's data could not be updated, please try again.";
             $res['hint']     = $e->getMessage();
-            return response()->json($msg, 501);
+            return response()->json($res, 501);
         }
     }
 
@@ -344,11 +344,13 @@ class VisitorController extends Controller
      */
     public function fetchEstateVisitHistory($id)
     {
-        $visitors = DB::table('visitors_history')->get()->where('user_id',$id);
-        if($visitors && $visitors != []) {
+        $visitors = Visitor::where('estate_id', $id)->pluck('id');
+        $visitors_history = Visitor_History::whereIn('visitor_id', $visitors)->with('visitor')->get();
+       
+        if($visitors_history) {
             $res['status']  = true;
             $res['message'] = 'Estate visit history';
-            $res['visitors'] = $visitors;
+            $res['visitors'] = $visitors_history;
             return response()->json($res, 200);
         }else {
             $res['status']  = false;
@@ -386,16 +388,16 @@ class VisitorController extends Controller
      * @return JSON
      */    public function fetchEstateVisitors($id)
     {
-        $visitors = DB::table('visitors')->get()->where('user_id',$id);
-        if($visitors) {
+        $visitors = DB::table('visitors')->where('estate_id', $id)->get();
+        if(!$visitors) {
+            $res['status']  = false;
+            $res['message'] = 'No Record found';
+            return response()->json($res, 404);           
+        }else {
             $res['status']  = true;
             $res['message'] = 'Estate visitors';
             $res['visitors'] = $visitors;
             return response()->json($res, 200);
-        }else {
-            $res['status']  = false;
-            $res['message'] = 'No Record found';
-            return response()->json($res, 404);
         }
     }
 
@@ -480,7 +482,10 @@ class VisitorController extends Controller
         if (!$scheduled) {
             return response()->json(['message' => 'You have no scheduled visits'], 400);
         }
-        return response()->json(['message' => 'All scheduled visits for a user', $scheduled]);
+        return response()->json([
+            'message' => 'All scheduled visits for a user', 
+            'scheduled' => $scheduled
+            ]);
     }
     public function deleteScheduled($id)
     {

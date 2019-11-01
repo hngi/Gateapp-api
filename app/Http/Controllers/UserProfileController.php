@@ -268,7 +268,7 @@ class UserProfileController extends Controller
             $res['message'] = 'User not found or users access is already revoked';
             return response()->json($res, 401);
             }else
-            if($user->role == 0 || $user->role == 3){
+            if($user->role == 3){
             User::where('id', $id)->update(['access' => 0]);
             $res['status'] = 200;
             $res['user'] = $user;
@@ -289,7 +289,7 @@ class UserProfileController extends Controller
             $res['message'] = 'User not found or User is has full access!';
             return response()->json($res, 401);
             }else
-            if($user->role == 0 || $user->role == 3){
+            if($user->role == 3){
             User::where('id', $id)->update(['access' => 1]);
             $res['status'] = 200;
             $res['admin'] = $user;
@@ -312,7 +312,7 @@ class UserProfileController extends Controller
         try {    
             $adminId = User::find($id);
 
-            if ($adminId && ($adminId->role == 0  || $adminId->role == 3)) {
+            if ($adminId && $adminId->role == 3) {
                 $adminId->password = md5($request->input('password'));
                 $adminId->save();
 
