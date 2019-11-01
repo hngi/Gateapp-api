@@ -34,7 +34,8 @@ class CreateVisitorsTable extends Migration
 			$table->timestamps();
 
             // table indexes
-			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('estate_id')->references('estate_id')->on('homes')->onDelete('cascade');
 			
 			// table meta
             $table->engine = 'InnoDB';
