@@ -385,7 +385,7 @@ Route::get('test', 'TestController@test');
 Route::get('generate-code', 'TestController@qrCode');
 Route::post('test_image', 'TestController@upload');
 Route::post('african_talking', 'SmsOtpController@africasTalkingTest');
-Route::post('msg91', 'SmsOtpController@send');
+Route::post('otp', 'SmsOtpController@otp');
 
 //test notification
 Route::get('/test-notification', function () {

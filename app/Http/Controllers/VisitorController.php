@@ -134,7 +134,7 @@ class VisitorController extends Controller
         // validate the posted data
         $this->validate($request, [
             'name'              => ['required', 'regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
-            'arrival_date'      => 'required|date_format:Y-m-d',
+            'arrival_date'      => 'required|date|regex:/\d{4}\/\d{1,2}\/\d{1,2}/',
             'car_plate_no'      => 'string|nullable',
             'purpose'           => 'string',
             'visitor_group'     => 'string',
@@ -238,7 +238,7 @@ class VisitorController extends Controller
         // validate the posted data
         $this->validate($request, [
             'name'              => ['regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
-            'arrival_date'      => 'date_format:Y-m-d',
+            'arrival_date'      => 'required|date|regex:/\d{4}\/\d{1,2}\/\d{1,2}/',
             'car_plate_no'      => 'string',
             'phone_no'          => 'string',
             'purpose'           => 'string',
