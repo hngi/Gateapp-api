@@ -118,16 +118,17 @@ class UserProfileController extends Controller
             'phone' => 'unique:users,phone,' . $user->id,
             'username' => 'unique:users,username,' . $user->id,
             'email'    => 'unique:users,email,' . $user->id,
+            'duty_time'    => 'string'
         ]);
+
 
         //start temporay transaction
         DB::beginTransaction();
         try {
-            $user->name      = $request->input('name');
-            $user->username  = $request->input('username');
-            if($request->input('email')) {
-                $user->email = $request->input('email');
-            }
+            $user->name      = $request->input('name') ?? $user->name;
+            $user->username  = $request->input('username') ?? $user->username;
+            $user->email     = $request->input('email') ??  $user->email;
+            $user->duty_time  = $request->input('duty_time') ?? $user->duty_time;
 
             if ($user->phone != $request->input('phone')) {
                 $user->email_verified_at = null;
@@ -253,7 +254,7 @@ class UserProfileController extends Controller
         $request->validate([
             'fcm_token' => ['required', 'string']
         ]);
-        
+
 
         try {
             $user = Auth::user();
@@ -269,4 +270,86 @@ class UserProfileController extends Controller
             return response()->json(['message' => $e->getMessage()], 501);
         }
     }
+     //revoke selected admin access
+    public function revokeAdmin($id) 
+    {
+            $user = User::where('id', $id)->where('access', 1)->first();
+            if(!$user){
+            $res['message'] = 'User not found or users access is already revoked';
+            return response()->json($res, 401);
+            }else
+            if($user->role == 3){
+            User::where('id', $id)->update(['access' => 0]);
+            $res['status'] = 200;
+            $res['user'] = $user;
+            $res['message'] = "Successfully block admin from access";  
+        }else {
+            $res['message'] = 'user you are trying to block is not an Admin or an error occured, please try again!';
+            return response()->json($res, 402);
+        }
+        
+        return response()->json($res, $res['status']);
+    }
+
+    //unblock selected admin access
+    public function unrevokeAdmin($id) 
+    {
+            $user = User::where('id', $id)->where('access', 0)->first();
+            if(!$user){
+            $res['message'] = 'User not found or User is has full access!';
+            return response()->json($res, 401);
+            }else
+            if($user->role == 3){
+            User::where('id', $id)->update(['access' => 1]);
+            $res['status'] = 200;
+            $res['admin'] = $user;
+            $res['message'] = "Successfully unblock admin";  
+        }else {
+            $res['message'] = 'user you are trying to unblock is not an Admin or an error occured, please try again!';
+            return response()->json($res, 402);
+        }
+        
+        return response()->json($res, $res['status']);
+    }  
+
+    public function resetAdmin(Request $request, $id)
+    {
+        $res = array();
+        $this->validateRequest($request);
+
+        DB::beginTransaction();
+        
+        try {    
+            $adminId = User::find($id);
+
+            if ($adminId && $adminId->role == 3) {
+                $adminId->password = md5($request->input('password'));
+                $adminId->save();
+
+                DB::commit();
+                $res['status'] = 200;
+                $res['message'] = "Successfully updated Admin password";
+                $res['data'] = $adminId;
+            } else {
+                $res['status'] = 404;
+                $res['message'] = "Admin not found";
+            }
+        } catch(\Exception $e) {
+            DB::rollBack();
+
+            $res['status'] = 501;
+            $res['message'] = "An error occured trying to reset admin password";            
+        }
+        
+        return response()->json($res, $res['status']);
+    }
+    public function validateRequest(Request $request){
+        $rules = [
+            'password'  => 'required|min:8'
+        ];
+        $messages = [
+            'required' => ':attribute is required and most be a min of 8'
+        ];
+    $this->validate($request, $rules, $messages);
+  }
 }

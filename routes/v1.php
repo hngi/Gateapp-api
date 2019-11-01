@@ -59,7 +59,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate')->middleware('superAdmin');
 
     //Admin only Update Estates by estate_id
-    Route::post('/estate/{id}', 'EstateController@update')->middleware('superAdmin');
+    Route::patch('/estate/{id}', 'EstateController@update')->middleware('superAdmin');
 
     //Admin only Create a service provider
     Route::post('/service-provider', 'ServiceProviderController@create')->middleware('superAdmin');
@@ -91,6 +91,17 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Delete a Service Provider category
     Route::delete('sp-category/{id}', 'SPCategoryController@deleteCategory')->middleware('superAdmin');
 
+    // super Admin only fetch all visit history
+    Route::get('/history','VisitorController@fetchAllVisitHistory')->middleware('superAdmin');
+
+    // Estate Admin only fetch visit history
+    Route::get('/history/{id}','VisitorController@fetchEstateVisitHistory')->middleware('estateAdmin');
+
+    // super admin Admin only fetch all visitors
+    Route::get('/visitors','VisitorController@fetchSuperAdminVisitors')->middleware('superAdmin');
+
+    // Estate Admin only fetch estate visitors
+    Route::get('/visitors/{id}','VisitorController@fetchEstateVisitors')->middleware('estateAdmin');
 
     // Show all visitor
 
@@ -111,6 +122,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Show Total Number of Estates on the system
     Route::get('statistics/estate', 'Statistics\EstateStatsController@index')->middleware('superAdmin');
+
+    // General SStatistics
+    Route::get('statistics/estate/{id}', 'Statistics\EstateStatsController@generalStats')->middleware('superAdmin');
 
     // Show  Total Number of Estates added that week
     Route::get('statistics/weeklyEstate', 'Statistics\EstateStatsController@showWeek')->middleware('superAdmin');
@@ -240,7 +254,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('estate/{id}/gateman', 'GatemanController@addEstateGateman')->middleware('estateAdmin');
 
     // Edit a gateman for an estate
-    Route::put('estate/{estate_id}/gateman/{id}', 'GatemanController@updateEstateGateman')->middleware('estateAdmin');
+    Route::put('estate/{estate_id}/gateman/{id}', 'GatemanController@updateEstateGateman');
 
     // Delete a single gateman for an estate
     Route::delete('estate/{estate_id}/gateman/{id}', 'GatemanController@deleteEstateGateman')->middleware('estateAdmin');
@@ -376,6 +390,16 @@ Route::get('faq', 'FaqController@index');
 Route::get('faq/{id}', 'FaqController@show');
 //send support message
 Route::post('/support/send', 'SupportController@send');
+
+//Block selectd admin access
+Route::put('revokeadminaccess/{user_id}', 'UserProfileController@revokeAdmin')->middleware('superAdmin');
+
+//Unblock selected admin
+Route::put('unrevokeadminaccess/{user_id}', 'UserProfileController@unrevokeAdmin')->middleware('superAdmin');
+
+//Reset admin password
+Route::post('resetadminpass/reset/{admin_id}', 'UserProfileController@resetAdmin')->middleware('superAdmin');
+
 
 // Notification types
 Route::get('notifications/types', 'NotifyController@types');
