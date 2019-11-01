@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-              integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
-              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="styles/global.css">
-        <link rel="stylesheet" href="styles/navbar.css">
-        <link rel="stylesheet" href="styles/download-footer.css">
-        <link rel="stylesheet" href="styles/index.css">
-        <title>Gate App</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/navbar.css">
+    <link rel="stylesheet" href="styles/download-footer.css">
+    <link rel="stylesheet" href="styles/index.css">
+    <title>Gate App</title>
 
-        <style>
-            .login{
-                background: #fff;
-            }
-        </style>
-    </head>
+    <style>
+        .login {
+            background: #fff;
+        }
+    </style>
+</head>
 
-    <body>
-        <div class="container-fluid">
-            <div class="row">
-                <nav class="navbar navbar-expand-lg navbar-light our-nav col-12 border-bottom">
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="navbar navbar-expand-lg navbar-light our-nav col-12 border-bottom">
                 <a class="navbar-brand app-logo" href="index.html">
                     <img src="images/Logo.png" alt="">
                 </a>
@@ -40,8 +40,15 @@
 
                 <div class="collapse navbar-collapse nav-utilities" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item mx-1">
-                            <a class="nav-link" href="web-estates.html">Estates</a>
+                        <li class="nav-item dropdown mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Products
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="web-providers.html">Service Directory</a>
+                                <a class="dropdown-item" href="#">Visitor Management</a>
+                            </div>
                         </li>
                         <li class="nav-item mx-1">
                             <a class="nav-link" href="partners.html">Partners</a>
@@ -59,95 +66,98 @@
                         onclick="location.href='https://drive.google.com/open?id=1bMnK1u4ysAiKAHuIgwCX7y4faExcUj7E'">DOWNLOAD</button>
                 </div>
             </nav>
-                <!-- DOWNLOAD APP AND FOOTER SECTIONS -->
-                <div class="col-12 download-footer px-0">
-                    <div class="col-12 download-app row mx-0">
+            <!-- DOWNLOAD APP AND FOOTER SECTIONS -->
+            <div class="col-12 download-footer px-0">
+                <div class="col-12 download-app row mx-0">
 
-                        <div class="login col-md-5 offset-md-3">
-                            <h3>Login</h3>
-                            <form role="form" data-login-form>
-                                <div class="form-group mb-0">
-                                    <input type="email" name="email" style="border: 1px solid #000;" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                                    <p class="error-fields" id="emailError"></p>
-                                </div>
-                               
-                                <div class="form-group">
-                                    <input type="password" name="password"  style="border: 1px solid #000;" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                                </div>
-                                <button type="submit" class="btn btn-success form-control">
-                                    Login
-                                </button>
-                            </form>
-                        </div>
+                    <div class="login col-md-5 offset-md-3">
+                        <h3>Login</h3>
+                        <form role="form" data-login-form>
+                            <div class="form-group mb-0">
+                                <input type="email" name="email" style="border: 1px solid #000;" class="form-control"
+                                    id="exampleInputEmail1" placeholder="Enter email">
+                                <p class="error-fields" id="emailError"></p>
+                            </div>
 
+                            <div class="form-group">
+                                <input type="password" name="password" style="border: 1px solid #000;"
+                                    class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            </div>
+                            <button type="submit" class="btn btn-success form-control">
+                                Login
+                            </button>
+                        </form>
                     </div>
 
-                    <footer class="border col-12 app-footer">
-                        <div class="col-11 mx-auto row mx-0 mt-5">
-                            <div class="col-12 col-md">
-                                <ul class="list-group footer-list">
-                                    <li class="list-group-item pb-2 list-header">Features</li>
-                                    <li class="list-group-item py-1 footer-links ">Visitor Management</li>
-                                    <li class="list-group-item py-1 footer-links ">Delivery Management</li>
-                                    <li class="list-group-item py-1 footer-links ">Communication Management</li>
-                                </ul>
+                </div>
+
+                <footer class="border col-12 app-footer">
+                    <div class="col-11 mx-auto row mx-0 mt-5">
+                        <div class="col-12 col-md">
+                            <ul class="list-group footer-list">
+                                <li class="list-group-item pb-2 list-header">Features</li>
+                                <li class="list-group-item py-1 footer-links ">Visitor Management</li>
+                                <li class="list-group-item py-1 footer-links ">Delivery Management</li>
+                                <li class="list-group-item py-1 footer-links ">Communication Management</li>
+                            </ul>
+                        </div>
+                        <div class="col-12 col-md">
+                            <ul class="list-group footer-list">
+                                <li class="list-group-item pb-2 list-header">Company</li>
+                                <li class="list-group-item py-1 footer-links ">About Us</li>
+                                <li class="list-group-item py-1 footer-links ">Contact Us</li>
+                                <li class="list-group-item py-1 footer-links ">Frequently Asked Questions</li>
+                                <li class="list-group-item py-1 footer-links ">Terms and Conditions</li>
+                            </ul>
+                        </div>
+                        <div class="col-12 col-md">
+                            <ul class="list-group footer-list">
+                                <li class="list-group-item pb-2 list-header">Contact</li>
+                                <li class="list-group-item py-1 footer-links">Plot 6, Gibbert Avenue, Flutter
+                                    estate, <br>
+                                    Agidingbi, Ikeja, Lagos state.</li>
+                                <li class="list-group-item py-1 footer-links">+234 705 784 3748</li>
+                                <li class="list-group-item py-1 footer-links">contact@gateguard.org</li>
+                            </ul>
+                        </div>
+                        <div class="col-8 col-sm-6 col-md">
+                            <div class="col-12 col-md-8 mt-3 footer-logo">
+                                <img src="images/gateguard-white.png" alt="">
                             </div>
-                            <div class="col-12 col-md">
-                                <ul class="list-group footer-list">
-                                    <li class="list-group-item pb-2 list-header">Company</li>
-                                    <li class="list-group-item py-1 footer-links ">About Us</li>
-                                    <li class="list-group-item py-1 footer-links ">Contact Us</li>
-                                    <li class="list-group-item py-1 footer-links ">Frequently Asked Questions</li>
-                                    <li class="list-group-item py-1 footer-links ">Terms and Conditions</li>
-                                </ul>
+                            <div class="col-12 col-md-8 mt-3 social-links">
+                                <img class="mx-2" src="images/instagram.png" alt="">
+                                <img class="mx-2" src="images/twitter.png" alt="">
+                                <img class="mx-2" src="images/facebook.png" alt="">
                             </div>
-                            <div class="col-12 col-md">
-                                <ul class="list-group footer-list">
-                                    <li class="list-group-item pb-2 list-header">Contact</li>
-                                    <li class="list-group-item py-1 footer-links">Plot 6, Gibbert Avenue, Flutter
-                                        estate, <br>
-                                        Agidingbi, Ikeja, Lagos state.</li>
-                                    <li class="list-group-item py-1 footer-links">+234 705 784 3748</li>
-                                    <li class="list-group-item py-1 footer-links">contact@gateguard.org</li>
-                                </ul>
-                            </div>
-                            <div class="col-8 col-sm-6 col-md">
-                                <div class="col-12 col-md-8 mt-3 footer-logo">
-                                    <img src="images/gateguard-white.png" alt="">
-                                </div>
-                                <div class="col-12 col-md-8 mt-3 social-links">
-                                    <img class="mx-2" src="images/instagram.png" alt="">
-                                    <img class="mx-2" src="images/twitter.png" alt="">
-                                    <img class="mx-2" src="images/facebook.png" alt="">
-                                </div>
-                                <div class="col-12 mt-2 footer-download">
-                                    <p class="mb-1">Download App</p>
-                                    <div class="col-12 row mx-0 px-0">
-                                        <div class="col px-0 app-cons mr-2">
-                                            <img src="images/playstore.png" alt="">
-                                        </div>
-                                        <div class="col px-0 app-cons">
-                                            <img src="images/appstore.png" alt="">
-                                        </div>
+                            <div class="col-12 mt-2 footer-download">
+                                <p class="mb-1">Download App</p>
+                                <div class="col-12 row mx-0 px-0">
+                                    <div class="col px-0 app-cons mr-2">
+                                        <img src="images/playstore.png" alt="">
+                                    </div>
+                                    <div class="col px-0 app-cons">
+                                        <img src="images/appstore.png" alt="">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </footer>
-                </div>
+                    </div>
+                </footer>
             </div>
         </div>
+    </div>
 
-    </body>
+</body>
 
-    <!--Import third party cdn-->
-    <script src="js/general/third_party_cdn.js"></script>
-    <!--Import Placholder variables-->
-    <script src="js/general/placeholder.js"></script>
-    <!--Import the base url for the project-->
-    <script src="js/general/base_url.js"></script>
-    <!--Import the login validation-->
-    <script src="js/validation/auth/login.js"></script>
-    <!--Import the api reqeust srcipt-->
-    <script src="js/apis/auth/login.js"></script>
+<!--Import third party cdn-->
+<script src="js/general/third_party_cdn.js"></script>
+<!--Import Placholder variables-->
+<script src="js/general/placeholder.js"></script>
+<!--Import the base url for the project-->
+<script src="js/general/base_url.js"></script>
+<!--Import the login validation-->
+<script src="js/validation/auth/login.js"></script>
+<!--Import the api reqeust srcipt-->
+<script src="js/apis/auth/login.js"></script>
+
 </html>

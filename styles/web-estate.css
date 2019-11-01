@@ -21,20 +21,6 @@
 .estate-header h3 {
     color: white;
 }
-.usual-btn {
-    color: white;
-    background: #49a347;
-    border-radius: 0px;
-    font-size: 10px;
-    font-weight: bold;
-}
-.usual-btn-opposite {
-    color: #49a347;
-    background: white;
-    border-radius: 0px;
-    font-size: 10px;
-    font-weight: bold;
-}
 .home-is-windemere{
     min-height: 80vh;
 }
