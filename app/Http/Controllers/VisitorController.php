@@ -146,7 +146,7 @@ class VisitorController extends Controller
         $randomToken = Str::random(6);
 
         DB::beginTransaction();
-
+        $estate_id = Home::where('user_id', $this->user->id)->value('estate_id');
         try {
             $visitor = new Visitor();
             $visitor->name = $request->name;
@@ -158,9 +158,12 @@ class VisitorController extends Controller
             $visitor->status  = 1;
             $visitor->visit_count  = 1;
             $visitor->user_id = $this->user->id;
+            $visitor->estate_id  = $estate_id;
             $visitor->visiting_period = $request->visiting_period;
             $visitor->description = $request->description ?? '';
             $visitor->qr_code = $randomToken;
+           
+           
 
             //Generate qr image
             $qr_code = $qr->generateCode($randomToken);
@@ -180,6 +183,13 @@ class VisitorController extends Controller
 
             //Save Visitor
             $this->user->visitors()->save($visitor);
+
+
+            //Save Visit Schedule 
+            $scheduled = new ScheduledVisit;
+            $scheduled->visitor_id = $visitor->id;
+            $scheduled->user_id = $visitor->user_id;
+            $scheduled->save();
 
             //if operation was successful save commit save to database
             DB::commit();
@@ -331,7 +341,7 @@ class VisitorController extends Controller
         $visitor = $this->user->visitors()->find($id);
         if ($visitor->status == 1) {
             return response()->json([
-                'message' => 'Visitor have not checked out, you cannot schedule a visit.'
+                'message' => 'Visitor has not checked out, you cannot schedule a visit.'
             ], 404);
         }
         $this->validate($request, [
@@ -359,6 +369,8 @@ class VisitorController extends Controller
             $visitor->description = $visitor->description ?? $request->description;
             $visitor->qr_code = $randomToken;
             $visitor->image =  $visitor->image;
+            $visitor->time_in =null;
+            $visitor->time_out =null;
             $qr_code = $qr->generateCode($randomToken);
             $scheduled->save();
             $this->user->visitors()->save($visitor);
