@@ -11,11 +11,13 @@ use App\User;
 // Create a sms otp class
 class SmsOtpController extends Controller
 {
-	
-  private $SMS_SENDER = "GateGuardOTP";
+	// private $USERNAME   = 'sandbox';
+  // private $FROM       = "GateGuard";
+  // private $API_TOKEN  = "120901657ad012358be654f7a69b2a8cba8647ce95312f77b52ec3ceeb04928e";
   private $USERNAME   = 'gateguard';
-  private $FROM       = "GateGuardOTP";
+  private $FROM       = "AFRICASTKNG";
   private $API_TOKEN  = "07ae042d925e7632d8f6bf10b9a37ee892ae59d689b866bf43b4ace6eb5cb841";
+
   private $from = "GateGuard OTP";
   private $api_token   = 'QLTtEV2m4u2xDoQJLCR5t98UwXG9X2RJDil8aaG3XcGMxjqshFeVBO2bDciI';
   //This otp method need the phone number and message as parameter
@@ -65,7 +67,7 @@ class SmsOtpController extends Controller
     // Set your app credentials
 
     // Initialize the SDK
-    $AT = new AfricasTalking($this->USERNAME , $this->API_TOKEN);
+    $AT = new AfricasTalking($this->USERNAME, $this->API_TOKEN);
 
     // Get the SMS service
     $sms = $AT->sms();
@@ -82,10 +84,9 @@ class SmsOtpController extends Controller
       
       $res['status'] = true;
       $res['result'] = $result;
-      $res['status_code'] = 200;
 
       return $res;
-    } catch (\Exception $e) {
+    } catch (Exception $e) {
       $res['status'] = true;
       $res['result'] = $result;
       $res['status_code'] = 501;

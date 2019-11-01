@@ -284,11 +284,7 @@ class ServiceProviderController extends Controller
                     return response()->json($data, $data['status_code']);
                 }
                 $service->image = $data['image'];
-<<<<<<< HEAD
-            }else {
-=======
             } else {
->>>>>>> 4405599b7d7597357c3ad174c1cf68c564dbc9e4
                 $data = null;
                 $service->image = 'noimage.jpg';
             }
