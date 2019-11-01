@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Home;
 use App\Visitor_History;
 use App\Visitor;
 use App\ScheduledVisit;
@@ -54,7 +55,7 @@ class VisitorController extends Controller
     /**
      * Admin gets all visitors
      *
-     * @param  int $page number of pages for pagination 
+     * @param  int $page number of pages for pagination
      * @return JSON
      */
     public function index(Request $request)
@@ -145,7 +146,7 @@ class VisitorController extends Controller
         $randomToken = Str::random(6);
 
         DB::beginTransaction();
-
+        $estate_id = Home::where('user_id', $this->user->id)->value('estate_id');
         try {
             $visitor = new Visitor();
             $visitor->name = $request->name;
@@ -157,14 +158,17 @@ class VisitorController extends Controller
             $visitor->status  = 1;
             $visitor->visit_count  = 1;
             $visitor->user_id = $this->user->id;
+            $visitor->estate_id  = $estate_id;
             $visitor->visiting_period = $request->visiting_period;
             $visitor->description = $request->description ?? '';
             $visitor->qr_code = $randomToken;
+           
+           
 
             //Generate qr image
             $qr_code = $qr->generateCode($randomToken);
 
-            //Upload image 
+            //Upload image
             if ($request->hasFile('image')) {
                 $data = $this->upload($request, $image);
                 if ($data['status_code'] !=  200) {
@@ -179,6 +183,13 @@ class VisitorController extends Controller
 
             //Save Visitor
             $this->user->visitors()->save($visitor);
+
+
+            //Save Visit Schedule 
+            $scheduled = new ScheduledVisit;
+            $scheduled->visitor_id = $visitor->id;
+            $scheduled->user_id = $visitor->user_id;
+            $scheduled->save();
 
             //if operation was successful save commit save to database
             DB::commit();
@@ -198,7 +209,7 @@ class VisitorController extends Controller
             $res['status']   = false;
             $res['message']  = 'Error, Visitor not created, please try again';
             $res['hint']     = $e->getMessage();
-            return response()->json($msg, 501);
+            return response()->json($res, 501);
         }
     }
 
@@ -247,8 +258,8 @@ class VisitorController extends Controller
             $visitor->visiting_period = $request->visiting_period ?? $visitor->visiting_period;
             $visitor->description = $request->description ?? $visitor->description;
 
-            // Upload updated image 
-            //Upload image 
+            // Upload updated image
+            //Upload image
             if ($request->hasFile('image')) {
                 $data = $this->upload($request, $image, $visitor);
                 if ($data['status_code'] !=  200) {
@@ -279,7 +290,7 @@ class VisitorController extends Controller
             $res['status']   = false;
             $res['message']  = "Error, Visitor's data could not be updated, please try again.";
             $res['hint']     = $e->getMessage();
-            return response()->json($msg, 501);
+            return response()->json($res, 501);
         }
     }
 
@@ -325,12 +336,98 @@ class VisitorController extends Controller
         return $res;
     }
 
+        /**
+     * get the visit history of an estate
+     *
+     * @param  int $id the visitor id
+     * @return JSON
+     */
+    public function fetchEstateVisitHistory($id)
+    {
+        $visitors = Visitor::where('estate_id', $id)->pluck('id');
+        $visitors_history = Visitor_History::whereIn('visitor_id', $visitors)->with('visitor')->get();
+       
+        if($visitors_history) {
+            $res['status']  = true;
+            $res['message'] = 'Estate visit history';
+            $res['visitors'] = $visitors_history;
+            return response()->json($res, 200);
+        }else {
+            $res['status']  = false;
+            $res['message'] = 'No Record found';
+            return response()->json($res, 404);
+        }
+    }
+
+        /**
+     * Delete a single visitor
+     *
+     * @param  none
+     * @return JSON
+     */
+    public function fetchAllVisitHistory()
+    {
+        $visitors = DB::table('visitors_history')->orderBy('user_id')->get();
+        if($visitors) {
+            $res['status']  = true;
+            $res['message'] = 'Estate visitors';
+            $res['visitors'] = $visitors;
+            return response()->json($res, 200);
+        }else {
+            $res['status']  = false;
+            $res['message'] = 'No Record found';
+            return response()->json($res, 404);
+        }
+    }
+
+
+    /**
+     * fetch visitors to an estate
+     *
+     * @param  int $id the visitor id
+     * @return JSON
+     */    public function fetchEstateVisitors($id)
+    {
+        $visitors = DB::table('visitors')->where('estate_id', $id)->get();
+        if(!$visitors) {
+            $res['status']  = false;
+            $res['message'] = 'No Record found';
+            return response()->json($res, 404);           
+        }else {
+            $res['status']  = true;
+            $res['message'] = 'Estate visitors';
+            $res['visitors'] = $visitors;
+            return response()->json($res, 200);
+        }
+    }
+
+    /**
+     * fetch all visitors
+     *
+     * @param  none
+     * @return JSON
+     */    public function fetchSuperAdminVisitors()
+    {
+        // $visitors = \App\Visitor::all();
+        $visitors = DB::table('visitors')->orderBy('user_id')->get();
+        if($visitors) {
+            $res['status']  = true;
+            $res['message'] = 'All visitors (All)';
+            $res['visitors'] = $visitors;
+            return response()->json($res, 200);
+        }else {
+            $res['status']  = false;
+            $res['message'] = 'No Record found';
+            return response()->json($res, 404);
+        }
+    }
+
     public function schedule($id, Request $request, QrCodeGenerator $qr)
     {
         $visitor = $this->user->visitors()->find($id);
         if ($visitor->status == 1) {
             return response()->json([
-                'message' => 'Visitor have not checked out, you cannot schedule a visit.'
+                'message' => 'Visitor has not checked out, you cannot schedule a visit.'
             ], 404);
         }
         $this->validate($request, [
@@ -358,6 +455,8 @@ class VisitorController extends Controller
             $visitor->description = $visitor->description ?? $request->description;
             $visitor->qr_code = $randomToken;
             $visitor->image =  $visitor->image;
+            $visitor->time_in =null;
+            $visitor->time_out =null;
             $qr_code = $qr->generateCode($randomToken);
             $scheduled->save();
             $this->user->visitors()->save($visitor);
@@ -383,7 +482,10 @@ class VisitorController extends Controller
         if (!$scheduled) {
             return response()->json(['message' => 'You have no scheduled visits'], 400);
         }
-        return response()->json(['message' => 'All scheduled visits for a user', $scheduled]);
+        return response()->json([
+            'message' => 'All scheduled visits for a user', 
+            'scheduled' => $scheduled
+            ]);
     }
     public function deleteScheduled($id)
     {
@@ -396,5 +498,79 @@ class VisitorController extends Controller
 
         $res['message']    = "Scheduled visit deleted";
         return response()->json($res, 200);
+    }
+
+
+    /**
+     * Ban a visitor
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function ban($id)
+    {
+        $this->middleware('admin');
+
+        $visitor = Visitor::query()->findOrFail($id);
+
+        try {
+            $update = $visitor->update(['banned' => true]);
+
+            if (! $update) {
+                return response()->json(['message' => 'An error was encountered.'], 501);
+            }
+
+            return response()->json(['message' => 'Visitor has been banned']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 501);
+        }
+    }
+
+    /**
+     * Remove ban placed on a visitor
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function removeBan($id)
+    {
+        $visitor = Visitor::query()->findOrFail($id);
+
+        try {
+            $update = $visitor->update(['banned' => false]);
+
+            if (! $update) {
+                return response()->json(['message' => 'An error was encountered.'], 501);
+            }
+
+            return response()->json(['message' => "Visitor's  ban gas been lifted."]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 501);
+        }
+    }
+
+    /**
+     * Gat all banned visitors
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAllBannedVisitors()
+    {
+        $visitors = Visitor::query()->where('banned', true)->get();
+
+        return response()->json(['data' => $visitors]);
+    }
+
+    /**
+     * Get banned visitors in an estate
+     * @param $estate
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getBannedVisitorsForAnEstate($estate)
+    {
+        $users_in_state = Home::query()->where('estate_id', $estate)->distinct('user_id')
+            ->pluck('user_id')->toArray();
+
+        $banned_visitors = Visitor::query()->where('banned', true)
+            ->whereIn('user_id', $users_in_state)->get();
+
+        return response()->json(['data' => $banned_visitors]);
     }
 }
