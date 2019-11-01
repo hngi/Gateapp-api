@@ -251,7 +251,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('estate/{id}/gateman', 'GatemanController@addEstateGateman')->middleware('estateAdmin');
 
     // Edit a gateman for an estate
-    Route::put('estate/{estate_id}/gateman/{id}', 'GatemanController@updateEstateGateman')->middleware('estateAdmin');
+    Route::put('estate/{estate_id}/gateman/{id}', 'GatemanController@updateEstateGateman');
 
     // Delete a single gateman for an estate
     Route::delete('estate/{estate_id}/gateman/{id}', 'GatemanController@deleteEstateGateman')->middleware('estateAdmin');
