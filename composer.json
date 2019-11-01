@@ -20,6 +20,7 @@
         "laravel/tinker": "^1.0",
         "pusher/pusher-php-server": "^4.0",
         "simplesoftwareio/simple-qrcode": "^2.0",
+        "propaganistas/laravel-phone": "^4.1",
         "spatie/laravel-newsletter": "^4.7",
         "tymon/jwt-auth": "^1.0@dev",
         "vlucas/phpdotenv": "^3.3"
