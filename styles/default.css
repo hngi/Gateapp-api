@@ -1,0 +1,13 @@
+.tab-full {
+    min-height: 80vh;
+}
+.stat{
+    height: 20vh;
+}
+.stat h2{
+    color: #49a347;
+}
+.toast-body {
+    background: #56CCF2;
+    font-weight: bold;
+}
