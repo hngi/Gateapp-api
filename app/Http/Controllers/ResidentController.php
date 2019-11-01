@@ -8,10 +8,12 @@ use App\ResidentGateman;
 use App\Service_Provider;
 use App\User;
 use App\Home;
+use App\Resident;
 use App\Http\Resources\Resident as ResidentResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+
 
 class ResidentController extends Controller
 {
@@ -209,4 +211,33 @@ class ResidentController extends Controller
             return response()->json($msg, 404);
         }
     }
+
+    //Estate Admin search resident by name
+
+    public function searchResidentByName (Request $request) {
+        $resident = Resident::where('name', 'like', "%{$data}")->get();
+
+        if (!$resident) {
+            return response()->json([
+                'total' => 0,
+                'status' => true,
+                'message' => 'There are no resident by that name',
+            ], 200);
+        }
+
+        else {
+            return response()->json([
+                'residents' => $resident->count(),
+                'resident' => $resident,
+                'status' => true,
+                'message' => 'Resident found',
+                'data' => $resident
+            ], 200);
+        }
+    }
+
+
+    //Super Admin search resident by name
+
+
 }
