@@ -286,7 +286,7 @@ class ServiceProviderController extends Controller
                 $service->image = $data['image'];
 
             }else {
-=
+
                 $data = null;
                 $service->image = 'noimage.jpg';
             }
