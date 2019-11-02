@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\SmsOtpController;
 use App\Mail\VerifyToken;
 
 use App\User;
@@ -48,17 +49,21 @@ class ForgotPhoneController extends Controller
             if ($user->device_id != $request->input('new_device_id')) {
                   $user->device_id = $request->input('new_device_id');
              }
-            $user->verifycode     = $this->generatedCode();
+            $user->verifycode = $this->generatedCode();
             $user->save();
 
-            //Send Sms to new phone number
-            //We use mail for now untill sms is implemented
-            Mail::to($user->email)->send(new VerifyToken($user));
+            $phone        = $user->phone;
+            $current_user = !$user->name->isEmpty() ? $user->name : 'member';
+            $message      = 'Hello'.$current_user.' user this 4 digit otp to verify new phone '. $user->verifycode;
+            $smsOtpController = new SmsOtpController; 
+            $smsOtpController->bulkSmsNigeria($phone, $message);
+            // //We use mail for now untill sms is implemented
+            // Mail::to($user->email)->send(new VerifyToken($user));
             //Commit changes 
             DB::commit();
 
             $res['success'] = true;
-            $res['message'] = 'OTP token has been sent. Please check your phone to verify account!';
+            $res['message'] = 'An otp token has ben sent to you phone because you requested for a change of phone number';
             return response()->json($res, 200);
           } catch (\Exception $e) {
 
@@ -86,9 +91,11 @@ class ForgotPhoneController extends Controller
              //start temporay transaction
                 DB::beginTransaction();
                 try{
-                    //Send Sms to new phone number
-                    //We use mail for now untill sms is implemented
-                    Mail::to($user->email)->send(new VerifyToken($user));
+                    $message   = 'Use this verification otp to verify your account '. $user->verifycode;
+                    $smsOtpController = new SmsOtpController; 
+                    $smsOtpController->bulkSmsNigeria($phone, $message);
+                    // //We use mail for now untill sms is implemented
+                    // Mail::to($user->email)->send(new VerifyToken($user));
                     //Commit changes 
                     DB::commit();
 
