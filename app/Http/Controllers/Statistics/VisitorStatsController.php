@@ -14,12 +14,7 @@ class VisitorStatsController extends Controller
 
     public function index(){
         $totalVisits = Visitor::sum('visit_count');
-        if (!$totalVisits){
-            $res['status']  = false;
-            $res['message'] = 'No Visits found';
-            return response()->json($res, 404); 
-        }
-        else{
+        if ($totalVisits){
             $res['status']  = true;
             $res['message'] = 'Total Number of Visits';
             $res['Service Providers'] = $totalVisits;
@@ -32,12 +27,7 @@ class VisitorStatsController extends Controller
 
         $totalVisits = ScheduledVisit::whereBetween('created_at', 
         [Carbon::now()->startOfWeek(),Carbon::now()->endOfWeek()])->count();
-        if (!$totalVisits){
-            $res['status']  = false;
-            $res['message'] = 'No Visits Scheduled for this week';
-            return response()->json($res, 404); 
-        }
-        else{
+        if ($totalVisits){
             $res['status']  = true;
             $res['message'] = 'Total Number of Visits Scheduled for this week';
             $res['Visits'] = $totalVisits;
@@ -50,12 +40,7 @@ class VisitorStatsController extends Controller
 
         $totalVisits = ScheduledVisit::whereBetween('created_at', 
         [Carbon::now()->startOfMonth(),Carbon::now()->endOfMonth()])->count();
-        if (!$totalVisits){
-            $res['status']  = false;
-            $res['message'] = 'No Visits Scheduled for this Month';
-            return response()->json($res, 404); 
-        }
-        else{
+        if ($totalVisits){
             $res['status']  = true;
             $res['message'] = 'Total Number of Visits Scheduled for this Month';
             $res['Visits'] = $totalVisits;
@@ -68,18 +53,12 @@ class VisitorStatsController extends Controller
 
         $totalVisits = ScheduledVisit::whereBetween('created_at', 
         [Carbon::now()->startOfYear(),Carbon::now()->endOfYear()])->count();
-        if (!$totalVisits){
-            $res['status']  = false;
-            $res['message'] = 'No Visits Scheduled for this Year';
-            return response()->json($res, 404); 
-        }
-        else{
+        if ($totalVisits){
             $res['status']  = true;
             $res['message'] = 'Total Number of Visits Scheduled for this Year';
             $res['Visits'] = $totalVisits;
             return response()->json($res, 200);
         }
-
     }
 /* 
 Get total number of Visits scheduled in a specific estate */
