@@ -134,7 +134,7 @@ class VisitorController extends Controller
         // validate the posted data
         $this->validate($request, [
             'name'              => ['required', 'regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
-            'arrival_date'      => 'required|date|regex:/\d{4}\/\d{1,2}\/\d{1,2}/',
+            'arrival_date'      => 'required|date',
             'car_plate_no'      => 'string|nullable',
             'purpose'           => 'string',
             'visitor_group'     => 'string',
@@ -238,10 +238,10 @@ class VisitorController extends Controller
         // validate the posted data
         $this->validate($request, [
             'name'              => ['regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
-            'arrival_date'      => 'required|date|regex:/\d{4}\/\d{1,2}\/\d{1,2}/',
-            'car_plate_no'      => 'string',
-            'phone_no'          => 'string',
-            'purpose'           => 'string',
+            'arrival_date'      => 'required|date',
+            'car_plate_no'      => 'string|nullable',
+            'phone_no'          => 'string|nullable',
+            'purpose'           => 'string|nullable',
             'visiting_period'   => 'string',
             'description'       => 'string',
         ]);
@@ -431,7 +431,7 @@ class VisitorController extends Controller
             ], 404);
         }
         $this->validate($request, [
-            'arrival_date'      => 'required|date_format:Y-m-d',
+            'arrival_date'      => 'required|date',
             'car_plate_no'      => 'string|nullable',
             'purpose'           => 'string',
             'visiting_period'     => 'required|string',
@@ -575,8 +575,8 @@ class VisitorController extends Controller
     }
 
 
-    public function getQrImage(Request $request, QrCodeGenerator $qr){
-        $qr_code = Visitor::where('id', $request->id)->value('qr_code');
+    public function getQrImage(Request $request, QrCodeGenerator $qr, $id){
+        $qr_code = Visitor::where('id', $id)->value('qr_code');
        
         if ($qr_code){
             $qr_image = $qr->generateCode($qr_code);

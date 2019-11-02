@@ -17,9 +17,9 @@ class CreateVisitorsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 50);
             $table->date('arrival_date')->nullable();
-            $table->string('car_plate_no', 20);
-            $table->string('phone_no', 25);
-            $table->string('purpose', 40);
+            $table->string('car_plate_no', 20)->nullable();
+            $table->string('phone_no', 25)->nullable();
+            $table->string('purpose', 40)->nullable();
             $table->string('image', 100)->default('noimage.jpg');
             $table->string('visitor_group', 50);
             $table->bigInteger('status')->default(0);
