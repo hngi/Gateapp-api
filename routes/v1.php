@@ -48,6 +48,14 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Show all visitor
     Route::get('allVisitors', 'VisitorController@index')->middleware('admin');
 
+    
+    //Fetch residents  scheduled visits stats
+   Route::get('ScheduledVisit/{resident_id}', 'Statistics\UserStatsController@fetchScheduledVisit')->middleware('superAdmin');
+
+   //Fetch residents  finished visits stats
+   Route::get('finishedVisit/{resident_id}', 'Statistics\UserStatsController@finishedVisit')->middleware('superAdmin');
+
+
 
     //(Admin interactions with Estates)
 
