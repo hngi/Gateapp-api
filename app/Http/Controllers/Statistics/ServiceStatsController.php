@@ -15,34 +15,28 @@ class ServiceStatsController extends Controller
     // Total number of service provider in the system 
     public function index(){
         $totalServices = Service_Provider::where('status','1')->count(); 
-        if ($totalServices){
             $res['status']  = true;
             $res['message'] = 'Total Number of Service providers ';
             $res['Service Providers'] = $totalServices;
             return response()->json($res, 200);
-        }
     }
 
     public function weeklyService(){
         $totalServices = Service_Provider::where('status','1')->whereBetween('created_at', 
         [Carbon::now()->startOfWeek(),Carbon::now()->endOfWeek()])->count(); 
-        if ($totalServices){
             $res['status']  = true;
             $res['message'] = 'Total Number of Service providers added this week';
             $res['Service Providers'] = $totalServices;
             return response()->json($res, 200);
-        }
     }
 
     public function monthlyService(){
         $totalServices = Service_Provider::where('status','1')->whereBetween('created_at', 
         [Carbon::now()->startOfMonth(),Carbon::now()->endOfMonth()])->count(); 
-        if ($totalServices){
             $res['status']  = true;
             $res['message'] = 'Total Number of Service providers added this month';
             $res['Service Providers'] = $totalServices;
             return response()->json($res, 200);
-        }
     }
 
 

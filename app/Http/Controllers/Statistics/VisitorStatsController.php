@@ -27,12 +27,10 @@ class VisitorStatsController extends Controller
 
         $totalVisits = ScheduledVisit::whereBetween('created_at', 
         [Carbon::now()->startOfWeek(),Carbon::now()->endOfWeek()])->count();
-        if ($totalVisits){
             $res['status']  = true;
             $res['message'] = 'Total Number of Visits Scheduled for this week';
             $res['Visits'] = $totalVisits;
             return response()->json($res, 200);
-        }
 
     }
 
@@ -40,12 +38,10 @@ class VisitorStatsController extends Controller
 
         $totalVisits = ScheduledVisit::whereBetween('created_at', 
         [Carbon::now()->startOfMonth(),Carbon::now()->endOfMonth()])->count();
-        if ($totalVisits){
             $res['status']  = true;
             $res['message'] = 'Total Number of Visits Scheduled for this Month';
             $res['Visits'] = $totalVisits;
             return response()->json($res, 200);
-        }
 
     }
 
@@ -53,12 +49,10 @@ class VisitorStatsController extends Controller
 
         $totalVisits = ScheduledVisit::whereBetween('created_at', 
         [Carbon::now()->startOfYear(),Carbon::now()->endOfYear()])->count();
-        if ($totalVisits){
             $res['status']  = true;
             $res['message'] = 'Total Number of Visits Scheduled for this Year';
             $res['Visits'] = $totalVisits;
             return response()->json($res, 200);
-        }
     }
 /* 
 Get total number of Visits scheduled in a specific estate */
