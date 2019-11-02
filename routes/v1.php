@@ -100,6 +100,16 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // super admin Admin only fetch all visitors
     Route::get('/visitors','VisitorController@fetchSuperAdminVisitors')->middleware('superAdmin');
 
+    //Block selectd admin access
+    Route::put('revokeadminaccess/{user_id}', 'UserProfileController@revokeAdmin')->middleware('superAdmin');
+
+    //Unblock selected admin
+    Route::put('unrevokeadminaccess/{user_id}', 'UserProfileController@unrevokeAdmin')->middleware('superAdmin');
+
+    //Reset admin password
+    Route::post('resetadminpass/reset/{admin_id}', 'UserProfileController@resetAdmin')->middleware('superAdmin');
+
+
     // Estate Admin only fetch estate visitors
     Route::get('/visitors/{id}','VisitorController@fetchEstateVisitors')->middleware('estateAdmin');
 
@@ -390,16 +400,6 @@ Route::get('faq', 'FaqController@index');
 Route::get('faq/{id}', 'FaqController@show');
 //send support message
 Route::post('/support/send', 'SupportController@send');
-
-//Block selectd admin access
-Route::put('revokeadminaccess/{user_id}', 'UserProfileController@revokeAdmin')->middleware('superAdmin');
-
-//Unblock selected admin
-Route::put('unrevokeadminaccess/{user_id}', 'UserProfileController@unrevokeAdmin')->middleware('superAdmin');
-
-//Reset admin password
-Route::post('resetadminpass/reset/{admin_id}', 'UserProfileController@resetAdmin')->middleware('superAdmin');
-
 
 // Notification types
 Route::get('notifications/types', 'NotifyController@types');
