@@ -478,7 +478,9 @@ class VisitorController extends Controller
     }
     public function getScheduled()
     {
-        $scheduled = ScheduledVisit::where('user_id', $this->user->id)->with('visitor')->get();
+        $scheduled = ScheduledVisit::where('user_id', $this->user->id)->with(['visitor' => function ($query) {
+            $query->where('status', 1); }])->get();;
+        
         if (!$scheduled) {
             return response()->json(['message' => 'You have no scheduled visits'], 400);
         }

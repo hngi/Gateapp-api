@@ -44,6 +44,19 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //show all admin
     Route::get('/admin', 'UserProfileController@showAllAdmin')->middleware('superAdmin');
 
+    
+    //Fetch residents  scheduled visits stats
+   Route::get('ScheduledVisit/{resident_id}', 'Statistics\UserStatsController@fetchScheduledVisit')->middleware('superAdmin');
+
+   //Fetch residents  finished visits stats
+   Route::get('finishedVisit/{resident_id}', 'Statistics\UserStatsController@finishedVisit')->middleware('superAdmin');
+
+
+    //(Admin interactions with Estates)
+
+    //Admin only Update Estates by estate_id
+    Route::put('/estate/edit/{id}', 'EstateController@update')->middleware('admin');
+
 
     //Delete Estates by estate_id
     Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate')->middleware('superAdmin');
@@ -89,6 +102,17 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // super admin Admin only fetch all visitors
     Route::get('/visitors','VisitorController@fetchSuperAdminVisitors')->middleware('superAdmin');
+    //Block selectd admin access
+    Route::put('revokeadminaccess/{user_id}', 'UserProfileController@revokeAdmin')->middleware('superAdmin');
+
+    //Unblock selected admin
+    Route::put('unrevokeadminaccess/{user_id}', 'UserProfileController@unrevokeAdmin')->middleware('superAdmin');
+
+    //Reset admin password
+    Route::post('resetadminpass/reset/{admin_id}', 'UserProfileController@resetAdmin')->middleware('superAdmin');
+
+
+
 
     // Estate Admin only fetch estate visitors
     Route::get('/visitors/{id}','VisitorController@fetchEstateVisitors')->middleware('estateAdmin');
@@ -395,16 +419,6 @@ Route::get('faq', 'FaqController@index');
 Route::get('faq/{id}', 'FaqController@show');
 //send support message
 Route::post('/support/send', 'SupportController@send');
-
-//Block selectd admin access
-Route::put('revokeadminaccess/{user_id}', 'UserProfileController@revokeAdmin')->middleware('superAdmin');
-
-//Unblock selected admin
-Route::put('unrevokeadminaccess/{user_id}', 'UserProfileController@unrevokeAdmin')->middleware('superAdmin');
-
-//Reset admin password
-Route::post('resetadminpass/reset/{admin_id}', 'UserProfileController@resetAdmin')->middleware('superAdmin');
-
 
 // Notification types
 Route::get('notifications/types', 'NotifyController@types');
