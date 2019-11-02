@@ -573,4 +573,25 @@ class VisitorController extends Controller
 
         return response()->json(['data' => $banned_visitors]);
     }
+
+
+    public function getQrImage(Request $request, QrCodeGenerator $qr){
+        $qr_code = Visitor::where('id', $request->id)->value('qr_code');
+       
+        if ($qr_code){
+            $qr_image = $qr->generateCode($qr_code);
+            return response()->json([
+                'status' => true, 
+                'qr_image' => $qr_image,
+                'qr_code' => $qr_code
+            ], 200);
+        }else{
+            return response()->json([
+                'message' => 'QR code is invalid'
+            ], 404);
+
+        }
+
+
+    }
 }
