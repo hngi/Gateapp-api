@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="styles/global.css">
     <link rel="stylesheet" href="styles/dashboard-sidebar.css">
     <link rel="stylesheet" href="styles/add-estate.css">
-    <title>Gate App</title>
+    <title data-title>Add Estate</title>
 </head>
 
 <body>
@@ -24,7 +24,7 @@
                 <img class="ml-3" src="images/GatePASS.png" alt="">
             </div>
             <ul class="list-unstyled components">
-                <p>Dashboard</p>
+                <p onclick="location.href='default-tab.html'">Dashboard</p>
                 <li class="">
                     <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false"
                         class="dropdown-toggle">Admins</a>
@@ -117,6 +117,7 @@
 </body>
 <!--Import third party cdn-->
 <script src="js/general/third_party_cdn.js"></script>
+<script src="js/general/placeholder.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {

@@ -1,0 +1,52 @@
+.welcome-image {
+  height: 60vh;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url("../images/providers-header.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.welcome-image-words {
+  height: 50vh;
+  margin-top: 13vh;
+}
+.welcome-image-words h1 {
+  color: white;
+  font-weight: bold;
+  font-size: 30px;
+}
+.welcome-image-words p {
+  font-size: 20px;
+  color: white;
+}
+.services-header {
+  font-weight: bold;
+}
+.services-desc p {
+  font-size: 16px;
+  line-height: 6vh;
+}
+.services-listed {
+  min-height: 100vh;
+}
+.service-desc {
+    min-height: 50vh;
+}
+.plumbing-image {
+    height: 50vh;
+    background: url("../images/plumbing-image.png");
+    background-size: cover;
+    background-position: center;
+}
+.carpentry-image {
+    height: 50vh;
+    background: url("../images/carpentry-image.png");
+    background-size: cover;
+    background-position: center;
+}
+.electricity-image {
+    height: 50vh;
+    background: url("../images/electricity-image.png");
+    background-size: cover;
+    background-position: center;
+}

@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="styles/navbar.css">
     <link rel="stylesheet" href="styles/download-footer.css">
     <link rel="stylesheet" href="styles/web-estate.css">
-    <title>GateGuard</title>
+    <title data-title>Estate</title>
 </head>
 
 <body>
@@ -34,8 +34,15 @@
 
                 <div class="collapse navbar-collapse nav-utilities" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item mx-1">
-                            <a class="nav-link" href="#">Estates</a>
+                        <li class="nav-item dropdown mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Products
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="web-providers.html">Service Directory</a>
+                                <a class="dropdown-item" href="#">Visitor Management</a>
+                            </div>
                         </li>
                         <li class="nav-item mx-1">
                             <a class="nav-link" href="partners.html">Partners</a>
@@ -89,10 +96,12 @@
                 <div class="col-12">
                     <nav>
                         <div class="nav col-12" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link active" id="nav-home-features-tab" data-toggle="tab" href="#nav-home-features"
-                                role="tab" aria-controls="nav-home-features" aria-selected="true">Home Features</a>
-                            <a class="nav-item nav-link" id="nav-profile-features-tab" data-toggle="tab" href="#nav-community-features"
-                                role="tab" aria-controls="nav-profile-features" aria-selected="false">Community Features</a>
+                            <a class="nav-item nav-link active" id="nav-home-features-tab" data-toggle="tab"
+                                href="#nav-home-features" role="tab" aria-controls="nav-home-features"
+                                aria-selected="true">Home Features</a>
+                            <a class="nav-item nav-link" id="nav-profile-features-tab" data-toggle="tab"
+                                href="#nav-community-features" role="tab" aria-controls="nav-profile-features"
+                                aria-selected="false">Community Features</a>
                         </div>
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
@@ -148,7 +157,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="nav-community-features" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <div class="tab-pane fade" id="nav-community-features" role="tabpanel"
+                            aria-labelledby="nav-profile-tab">
                             <div id="homeFeaturesCarousel" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
@@ -396,5 +406,5 @@
 </body>
 <!--Import third party cdn-->
 <script src="js/general/third_party_cdn.js"></script>
-
+<script src="js/general/placeholder.js"></script>
 </html>

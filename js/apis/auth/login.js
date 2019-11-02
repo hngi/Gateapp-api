@@ -13,41 +13,34 @@ const loginApi = (event, loginForm) => {
             console.log(status)
             return response.json();
          }
-         const getResponse = (data) => {
+         
+        const getResponse = (data) => {
             let title;
             let result;
             
             const flashAlert = (title, result) => {
+                sunmitBtn.innerHTML = 'Login';
                 Swal.fire({
                     title: `${title}`,
                     html:  `<p style="color:tomato; font-size:17px;">${result}</p>`,
                     confirmButtonText: 'Close'
                 })       
             }
-            if(status == 422) {
-                title = 'Login failed';
-                result = JSON.stringify(data.errors).split('"').join('').split('{').join('').split('}').join('');
-                flashAlert(title,result);
-            }
-            if(status == 404) {
-                title  = 'Route not found';
-                result = 'This route does not exist';
-                flashAlert(title,result);
-            }
-            if(status == 500) {
-                title  = 'Unexpected Error';
-                result = 'An error occured due to broken, please try again or contact website owner!';
-                flashAlert(title,result);
-            }
-            if(status == 501) {
-                title  = 'Process not implemented';
-                result = 'proceess was not implement, this could be to unavailable network coverage, please try again or contact support!!';
-                flashAlert(title,result);
-            }
-            if(status == 200) {
-                //insert the data into broswer localStorage
+            switch(status) {
+                case 422:
+                    title = 'Login failed';
+                    result = JSON.stringify(data.errors).split('"').join('').split('{').join('').split('}').join('');
+                    flashAlert(title,result);
+                break;
+                case 404:
+                    title  = 'Login error';
+                    result = 'Invalid credentials';
+                    flashAlert(title,result);
+                break;
+                default:
+                 //insert the data into broswer localStorage
                 localStorage.setItem('gateguard-admin', JSON.stringify(data));
-                location.replace('estates-tab.html');
+                location.replace('default-tab.html');
             }
          }
          fetch(url, {
@@ -69,7 +62,7 @@ const loginApi = (event, loginForm) => {
              if(err) {
                 sunmitBtn.innerHTML = 'Login';
                 Swal.fire({
-                    title: 'An Unexpected error occured',
+                    title: 'Unexpected Error',
                     html: `<p style="color:tomato; font-size:17px;">This may be due to internet connection not available, please turn on internet connection or contact website owner, Thank you!</p>`,
                     confirmButtonText: 'Close'            
                 })
