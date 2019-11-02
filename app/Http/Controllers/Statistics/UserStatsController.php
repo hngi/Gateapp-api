@@ -21,7 +21,8 @@ class UserStatsController extends Controller
 			$res['status']  = true;
             $res['message'] = 'Number of Scheduled Visits';
             $res['Number of Scheduled Stats'] = $visitor;
-            $res['All Residents Scheduled Visits'] = $visitor->count();
+			$res['All Residents Scheduled Visits'] = $visitor->count();
+			$res['code']   = 'schduled_vist';
            return response()->json($res, 200);
 
     }
@@ -33,7 +34,8 @@ class UserStatsController extends Controller
 			$res['status']  = true;
 			$res['message'] = 'Number of finished Visits';
 			$res['Number of Finished Visits'] = $visitor;
-				$res['All Finished Visits'] = $visitor->count();
+			$res['All Finished Visits'] = $visitor->count();
+			$res['code']   = 'finish_schdule_vist';
 			return response()->json($res, 200);
 
     }

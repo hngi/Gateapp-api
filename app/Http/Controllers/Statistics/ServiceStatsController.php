@@ -18,6 +18,7 @@ class ServiceStatsController extends Controller
             $res['status']  = true;
             $res['message'] = 'Total Number of Service providers ';
             $res['Service Providers'] = $totalServices;
+            $res['code']   = 'serv_all';
             return response()->json($res, 200);
     }
 
@@ -27,6 +28,7 @@ class ServiceStatsController extends Controller
             $res['status']  = true;
             $res['message'] = 'Total Number of Service providers added this week';
             $res['Service Providers'] = $totalServices;
+            $res['code']   = 'serv_wkly';
             return response()->json($res, 200);
     }
 
@@ -36,6 +38,7 @@ class ServiceStatsController extends Controller
             $res['status']  = true;
             $res['message'] = 'Total Number of Service providers added this month';
             $res['Service Providers'] = $totalServices;
+            $res['code']   = 'serv_mntly';
             return response()->json($res, 200);
     }
 

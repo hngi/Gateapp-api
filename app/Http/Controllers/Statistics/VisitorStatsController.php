@@ -18,6 +18,7 @@ class VisitorStatsController extends Controller
             $res['status']  = true;
             $res['message'] = 'Total Number of Visits';
             $res['Service Providers'] = $totalVisits;
+            $res['code']   = 'vist_all';
             return response()->json($res, 200);
         }
 
@@ -30,6 +31,7 @@ class VisitorStatsController extends Controller
             $res['status']  = true;
             $res['message'] = 'Total Number of Visits Scheduled for this week';
             $res['Visits'] = $totalVisits;
+            $res['code']   = 'vist_wkly';
             return response()->json($res, 200);
 
     }
@@ -41,6 +43,7 @@ class VisitorStatsController extends Controller
             $res['status']  = true;
             $res['message'] = 'Total Number of Visits Scheduled for this Month';
             $res['Visits'] = $totalVisits;
+            $res['code']   = 'vist_mntly';
             return response()->json($res, 200);
 
     }
