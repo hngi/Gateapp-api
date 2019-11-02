@@ -210,4 +210,82 @@ class ResidentController extends Controller
             return response()->json($msg, 404);
         }
     }
+
+
+    //Fetch all residents in the system
+
+    public function residents(Request $request){
+        $residents = Home::with([
+            'user',
+            'estates'
+        ])->where('users.user_type', 'residents')->get(); 
+        if (!$residents){
+            $res['status']  = false;
+            $res['message'] = 'No resident found';
+            return response()->json($res, 404); 
+        }else {
+            $res['status']  = true;
+            $res['message'] = 'Residents in the system';
+            $res['residents'] = $residents;
+            return response()->json($res, 200);
+        }
+    }
+
+    //Fetch residents in a particular estate
+    public function estateResidents(
+        $estate_id,
+        $id = null,
+        Request $request
+    ){
+        //Check if the logged-in user is assigned to the requested estate
+        $user_estate = Home::whereUserIdAndEstateId($this->user->id, $estate_id)->first();
+        
+        if (is_null($user_estate)) {
+            return response()->json([
+                'status' => false,
+                'message'=> "Access Denied!",
+            ], 401);
+        }
+        else
+        {
+            // Check if requests is for one resident
+            if (is_null($id)) {
+                // Request is for all resident in the estate 
+                // Get all resident users type in the estate
+                $residents = User::join('homes', 'homes.user_id', 'users.id')
+                    ->where('users.user_type', 'resident')
+                    ->where('homes.estate_id', $estate_id)
+                    ->get();
+                return response()->json([
+                    'count' => $residents->count(),
+                    'status' => true,
+                    'residents' => $residents,
+                ], 200);
+            }
+            else
+            {
+                // Request is for a single resident in the estate
+                // Get resident if only if it is a resident in the estate
+                $resident = User::join('homes', 'homes.user_id', 'users.id')
+                    ->where('users.id', $id)
+                    ->where('homes.estate_id', $estate_id)
+                    ->first([
+                        'users.name', 'users.estate', 'users.phone',
+                        'homes.id as home_id', 'users.id as user_id'
+                    ]);
+                if($resident) {
+                    return response()->json([
+                        'status' => true,
+                        'resident' => $resident
+                    ], 200);
+                }
+                else {
+                    return response()->json([
+                        'status' => false,
+                        'message' => "We cannot verify the user with id: {$id} as a resident user in ". Estate::find($estate_id)->estate_name,
+                    ], 406);
+                }
+            }
+        }
+    }
 }
