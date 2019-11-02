@@ -314,6 +314,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Show signed in user visitor
     Route::get('visitor', 'VisitorController@residentVisitor')->middleware('checkResident');
 
+    //Visitor QR
+    Route::get('visitor/getQrImage/{id}', 'VisitorController@getQrImage')->middleware('checkResident');
+
     // Show signed in user visitor history
     Route::get('visitorHistory', 'VisitorController@residentHistory')->middleware('checkResident');
     //Get all scheduled visits by a user
