@@ -101,7 +101,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('residents/{name}', 'ResidentController@searchResidentByName')->middleware('superAdmin');
 
     //Search residents (in the estate of logged in Estate Admin) by name
-    Route::get('residents/{name}', 'ResidentController@searchEstateResidentByName')->middleware('estateAdmin');
+    Route::get('estate_residents/{name}', 'ResidentController@searchEstateResidentByName')->middleware('estateAdmin');
 
 
     //create faq
