@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Gateman;
 use App\Estate;
 use App\Notifications\GatemanAcceptanceNotification;
+use App\Notifications\VisitorArrivalNotification;
 use App\User;
 use App\Home;
 use App\Visitor;
@@ -102,8 +103,9 @@ class GatemanController extends Controller
         		if ($gateman->save()) {
                         // Send the resident a notification informing them
                         //  of the acceptance
-        		        $resident = User::find($gateman['user_id']);
-        		        $resident->notify(new GatemanAcceptanceNotification($resident, $this->user));
+                        $resident = User::find($gateman['user_id']);
+                        $user = User::find($gateman_id);
+        		        $resident->notify(new GatemanAcceptanceNotification($resident, $user));
 			        return response()->json([
 			        	'message' => 'The request has been accepted successfully',
 			        	'status' => true,
@@ -185,12 +187,12 @@ class GatemanController extends Controller
         	['gateman_id', $this->user->id],
         	['request_status', 1],
         ])->pluck('user_id');
-        
+
         // get visitors with the user_id
         $visitors = Visitor::whereIn('user_id', $user_id)
         	->with('user')
         	->get();
-        
+
         // list out visitors details
         if ($visitors){
             return response()->json([
@@ -209,12 +211,12 @@ class GatemanController extends Controller
 
     public function admitVisitor(Request $request)
     {
-        $resident = Visitor::where('qr_code', $request->input('qr_code'))->first();
-        
-        if ($resident){
+        $visitor = Visitor::where('qr_code', $request->input('qr_code'))->first();
+
+        if ($visitor){
             //Error Handling
-            $resident_id = $resident->user_id;
-            $visitor_id = $resident->id;
+            $resident_id = $visitor->user_id;
+            $visitor_id = $visitor->id;
 
             // Check that Gateman works for user
             $residentGateman = Gateman::where([
@@ -234,9 +236,8 @@ class GatemanController extends Controller
             	return response()->json($res, 202);
             }
             else {
-                $res['Error'] = "Unauthorized - Access Denied!";
-                $res['gatema'] = $resident;
-            	return response()->json($res, 401);
+                $res['Error'] = "Permission Denied!- You can not admit this resident's visitors";
+            	return response()->json($res, 403);
             }
         }
         else {
@@ -276,12 +277,12 @@ class GatemanController extends Controller
 
     public function visitor_out(Request $request)
     {
-        $resident = Visitor::where('qr_code', $request->input('qr_code'))->where('time_in', '!=', null)->first();
-        
-        if ($resident){
+        $visitor = Visitor::where('qr_code', $request->input('qr_code'))->where('time_in', '!=', null)->first();
+
+        if ($visitor){
             //Error Handling
-            $resident_id = $resident->user_id;
-            $visitor_id = $resident->id;
+            $resident_id = $visitor->user_id;
+            $visitor_id = $visitor->id;
 
             // Check that Gateman works for user
             $residentGateman = Gateman::where([
@@ -293,7 +294,7 @@ class GatemanController extends Controller
             if ($residentGateman){
                 $visitor = Visitor::where('id', $visitor_id)
                             ->update(['time_out' => NOW(), 'status' => 0, 'qr_code' => null]);
-                $avisitor = Visitor::where('user_id', $resident_id);
+                $avisitor = Visitor::where('id', $visitor_id);
 
                 $history = new Visitor_History;
 
@@ -305,10 +306,13 @@ class GatemanController extends Controller
                 $visitor = Visitor::where('id', $visitor_id)->with('user')->get();
                 $res ['Message'] = "Visitor Has been checked out succesfully";
                 $res ['Visitor details'] = $visitor;
+                $resident_notifiable = User::find($resident_id);
+                $gateman_notifiable  = User::find($this->user->id);
+                $resident_notifiable->notify(new VisitorArrivalNotification($resident_notifiable, $gateman_notifiable, $visitor));
             	return response()->json($res, 202);
             }
             else {
-            	$res['Error'] = "Permission Denied!";
+            	$res['Error'] = "Permission Denied!-You cannot check this resident's visitors out";
             	return response()->json($res, 403);
             }
         }
@@ -331,7 +335,7 @@ class GatemanController extends Controller
     ){
         // Verifies that the logged-in user is assigned to the requested estate
         $user_estate = Home::whereUserIdAndEstateId($this->user->id, $id)->first();
-        
+
         if (is_null($user_estate)) {
             return response()->json([
                 'status' => false,
@@ -403,7 +407,7 @@ class GatemanController extends Controller
     ){
         // Verifies that the logged-in user is assigned to the requested estate
         $user_estate = Home::whereUserIdAndEstateId($this->user->id, $estate_id)->first();
-        
+
         if (is_null($user_estate)) {
             return response()->json([
                 'status' => false,
@@ -414,7 +418,7 @@ class GatemanController extends Controller
         {
             // Check if requests is for a single gateman
             if (is_null($id)) {
-                // Request is for all gatemen associated with the estate 
+                // Request is for all gatemen associated with the estate
                 // Get all gatemen users type associated with the estate
                 $gatemen = User::join('homes', 'homes.user_id', 'users.id')
                     ->where('users.user_type', 'gateman')
@@ -468,7 +472,7 @@ class GatemanController extends Controller
     ){
         // Verifies that the logged-in user is assigned to the requested estate
         $user_estate = Home::whereUserIdAndEstateId($this->user->id, $estate_id)->first();
-        
+
         if (is_null($user_estate)) {
             return response()->json([
                 'status' => false,
@@ -496,6 +500,7 @@ class GatemanController extends Controller
                 // Update user's details
                 $updatedUser->name  = $request->name ?? $updatedUser->name;
                 $updatedUser->phone = $request->phone ?? $updatedUser->phone;
+                $updatedUser->duty_time = $request->duty_time ?? $updatedUser->duty_time;
 
                 // Save the update
                 $updatedUser->save();

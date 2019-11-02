@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
+use App\Http\Controllers\SmsOtpController;
 use App\Mail\WelcomeMail;
 use App\Mail\VerifyToken;
 
@@ -36,8 +37,8 @@ class RegisterController extends Controller
         return response()->json($msg, $msg['status']);
     }
 
-    private function checkphone($phone, $email) {
-        $check_phone  = User::where('phone', $phone)->orWhere('email', $email)->exists();
+    private function checkphone($phone) {
+        $check_phone  = User::where('phone', $phone)->exists();
        if ($check_phone) {
            return true;
        }return false;
@@ -52,14 +53,14 @@ class RegisterController extends Controller
         DB::beginTransaction();
 
         try{
-
-           $check = $this->checkphone($request->input('phone'), $request->input('email'));
+           $smsOtpController = new SmsOtpController;
+           $check = $this->checkphone($request->input('phone'));
            if(!$check) {
                 $user = User::create([
                     'name'     => ucfirst($request->input('name')),
                     'image'    => 'noimage.jpg',
                     'phone'    => $request->input('phone'),
-                    'email'    => $request->input('email'),
+                    // 'email'    => $request->input('email'),
                     'user_type'=> $user_type,
                     'role'     => $role,
                     'duty_time' => $duty_time,
@@ -68,10 +69,14 @@ class RegisterController extends Controller
                 ]);
                 $msg['status'] = 201;
                 $msg['app-hint'] = 'This is a new user!';
-
-                Mail::to($user->email)->send(new WelcomeMail($user));
+                
+                //Send sms otp to user
+                $phone     = $user->phone;
+                $message   = 'Welcome to GateGuard, please this  4 digit otp token to verify your account '. $user->verifycode;
+                $result = $smsOtpController->bulkSmsNigeria($phone, $message);
+                // Mail::to($user->email)->send(new WelcomeMail($user));
            }else {
-                $user = User::where('phone', $request->input('phone'))->orWhere('email',  $request->input('email'))->first();
+                $user = User::where('phone', $request->input('phone'))->first();
 
                 $user->email_verified_at = null;
                 $user->device_id         = $request->input('device_id');
@@ -81,10 +86,16 @@ class RegisterController extends Controller
                 
                 $msg['status'] = 200;
                 $msg['app-hint'] = 'This is an existing user!';
-                Mail::to($user->email)->send(new VerifyToken($user));
+                //Send sms otp to user
+                $phone        = $user->phone;
+                $current_user = $user->name != '' ? $user->name : 'member';
+                $message  = 'Welcome back '.$current_user.' please use this 4 digit otp to re-verify your account '. $user->verifycode;
+                $result = $smsOtpController->bulkSmsNigeria($phone, $message);
+                // Mail::to($user->email)->send(new VerifyToken($user));
            }
-            $msg['message'] = 'A verification code has been sent to your phone number or email, please use to veriify your account!';
+            $msg['message'] = 'A verification otp has been sent to your phone, please use to veriify your account!';
             $msg['user']    = $user;
+            $msg['otp'] = $result;
             $msg['image_link'] = 'https://res.cloudinary.com/getfiledata/image/upload/';
             $msg['image_round_format']  = 'w_200,c_fill,ar_1:1,g_auto,r_max/';
             $msg['image_square_format'] = 'w_200,ar_1:1,c_fill,g_auto/';
@@ -109,13 +120,14 @@ class RegisterController extends Controller
     public function validateRequest(Request $request){
             $rules = [
                 'name'               => 'required|string',
-                'phone'              => 'required',
-                'email'              => 'required',
+                'phone'              => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+                // 'email'              => 'required',
                 'device_id'          => 'required',
             ];
             $messages = [
                 'required' => ':attribute is required',
                 'phone'    => ':attribute already exist',
+                'phone.regex'    => ':attribute phone number is invalid',
                 'device_id'    => ':attribute please give the uniqid device token',
             ];
         $this->validate($request, $rules, $messages);

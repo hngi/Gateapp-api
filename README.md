@@ -33,14 +33,18 @@
 * Run `php artisan serve`
 * visit localhost:8000 in your web browser
 
+## If laravel is installed 
+
+* clone this repo
+* cd into the project folder and run `php artisan serve`
+* visit localhost:8000 in your web browser
+
 ## Rules for sending PR
 
 * attach a brief and concise description of what you have done
 * outline the steps to be taken in order to test the feature you added
 * attach a screenshot or gif of what you did, if possible
 * do not send PR to the master branch
-
-
 
 ## Note 
 * if you want to manually delete form the database this is the link

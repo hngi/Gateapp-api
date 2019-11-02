@@ -40,11 +40,12 @@ class ResidentController extends Controller
                 ]);
                 // Confirm that the Id entered is for a gateman
                 $gateman = User::find($id);
+                $resident = User::find($this->user->id);
 
                 if($gateman->role == 2){
 
                         // Send the gateman a notifications
-                        $gateman->notify(new GatemanInvitationNotification($this->user, $gateman));
+                        $gateman->notify(new GatemanInvitationNotification($resident, $gateman));
 
                         DB::commit();
                         $msg['status'] = true;

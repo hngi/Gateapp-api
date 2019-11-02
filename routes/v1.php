@@ -59,28 +59,28 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::delete('/estate/delete/{estate}', 'EstateController@deleteEstate')->middleware('superAdmin');
 
     //Admin only Update Estates by estate_id
-    Route::post('/estate/{id}', 'EstateController@update')->middleware('superAdmin');
+    Route::patch('/estate/{id}', 'EstateController@update')->middleware('superAdmin');
 
     //Admin only Create a service provider
     Route::post('/service-provider', 'ServiceProviderController@create')->middleware('superAdmin');
-    
+
     // Service provider suspension route
     Route::delete('/service-provider/suspend/{id}', 'ServiceProviderController@softDelete')->middleware('superAdmin');
-    
+
     // Route to get all suspended service providers
-    Route::get('/service-provider/suspended','ServiceProviderController@softDeleted')->middleware('superAdmin');
-    
+    Route::get('/service-provider/suspended', 'ServiceProviderController@softDeleted')->middleware('superAdmin');
+
     // Route to unsuspend service providers (added bonus)
-    Route::patch('/service-provider/unsuspend/{id}','ServiceProviderController@restore')->middleware('superAdmin');
+    Route::patch('/service-provider/unsuspend/{id}', 'ServiceProviderController@restore')->middleware('superAdmin');
 
     // Service provider information based on id
-    Route::delete('/service-provider/info/{id}', 'ServiceProviderController@search')->middleware('superAdmin');
-    
+    Route::get('/service-provider/info/{id}', 'ServiceProviderController@search')->middleware('superAdmin');
+
+    // Admin only delete a specific service provider
+    Route::delete('/service-provider/delete/{id}', 'ServiceProviderController@destroy')->middleware('superAdmin');
+
     //Admin only Update a service provider
     Route::post('/service-provider/{id}', 'ServiceProviderController@update')->middleware('superAdmin');
-
-    //Admin only delete a specific service provider
-    Route::delete('/service-provider/{id}', 'ServiceProviderController@destroy')->middleware('superAdmin');
 
     // Create a new Service Provider category
     Route::post('/sp-category', 'SPCategoryController@newCategory')->middleware('superAdmin');
@@ -91,6 +91,17 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Delete a Service Provider category
     Route::delete('sp-category/{id}', 'SPCategoryController@deleteCategory')->middleware('superAdmin');
 
+    // super Admin only fetch all visit history
+    Route::get('/history','VisitorController@fetchAllVisitHistory')->middleware('superAdmin');
+
+    // Estate Admin only fetch visit history
+    Route::get('/history/{id}','VisitorController@fetchEstateVisitHistory')->middleware('estateAdmin');
+
+    // super admin Admin only fetch all visitors
+    Route::get('/visitors','VisitorController@fetchSuperAdminVisitors')->middleware('superAdmin');
+
+    // Estate Admin only fetch estate visitors
+    Route::get('/visitors/{id}','VisitorController@fetchEstateVisitors')->middleware('estateAdmin');
 
     // Show all visitor
 
@@ -117,45 +128,61 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //delete support message
     Route::delete('/support/{id}', 'SupportController@destroy')->middleware('superAdmin');
 
-    // Show Total Number of Estates on the system 
+    // Show Total Number of Estates on the system
     Route::get('statistics/estate', 'Statistics\EstateStatsController@index')->middleware('superAdmin');
 
-    // Show  Total Number of Estates added that week 
+    // General SStatistics
+    Route::get('statistics/estate/{id}', 'Statistics\EstateStatsController@generalStats')->middleware('superAdmin');
+
+    // Show  Total Number of Estates added that week
     Route::get('statistics/weeklyEstate', 'Statistics\EstateStatsController@showWeek')->middleware('superAdmin');
-    
-    // Show Total Number of Estates added that month 
+
+    // Show Total Number of Estates added that month
     Route::get('statistics/monthlyEstate', 'Statistics\EstateStatsController@showMonth')->middleware('superAdmin');
 
-    // Show Total Number of Service Providers on the system 
+    // Show Total Number of Service Providers on the system
     Route::get('statistics/service', 'Statistics\ServiceStatsController@index')->middleware('superAdmin');
 
-    // Show Total Number of Service Providers added that week 
+    // Show Total Number of Service Providers added that week
     Route::get('statistics/weeklyService', 'Statistics\ServiceStatsController@weeklyService')->middleware('superAdmin');
 
-    // Show Total Number of Service Providers added that month 
+    // Show Total Number of Service Providers added that month
     Route::get('statistics/monthlyService', 'Statistics\ServiceStatsController@monthlyService')->middleware('superAdmin');
-    
+
     // Show Total Number of Visits scheduled on the Application
     Route::get('statistics/visits', 'Statistics\VisitorStatsController@index')->middleware('superAdmin');
-    
-    //Show Total Number of Visits Scheduled for that week on the application 
+
+    //Show Total Number of Visits Scheduled for that week on the application
     Route::get('statistics/weeklyVisits', 'Statistics\VisitorStatsController@weeklyVisits')->middleware('superAdmin');
 
-    //Show Total Number of Visits Scheduled for that month on the application 
+    //Show Total Number of Visits Scheduled for that month on the application
     Route::get('statistics/monthlyVisits', 'Statistics\VisitorStatsController@monthlyVisits')->middleware('superAdmin');
 
-    //Show Total Number of Service Providers on the system 
+    //Show Total Number of Service Providers on the system
     Route::get('statistics/service', 'Statistics\ServiceStatsController@index')->middleware('superAdmin');
 
-    //Show Pending Service Provider Requests on the systen 
+    //Show Pending Service Provider Requests on the systen
     Route::get('statistics/pendingService', 'Statistics\ServiceStatsController@pendingRequests')->middleware('superAdmin');
 
-    //Show total Number of service Providers in the estate of logged in Estate Admin 
+    //Show total Number of service Providers in the estate of logged in Estate Admin
     Route::get('statistics/estateService/', 'Statistics\ServiceStatsController@show')->middleware('estateAdmin');
 
-    //Show total number of pending service providers in the estate of logged in Estate Admin 
+    //Show total number of pending service providers in the estate of logged in Estate Admin
     Route::get('statistics/pendingEstateService/', 'Statistics\ServiceStatsController@pendingEstateRequests')->middleware('estateAdmin');
+
+    //Estate Admin approves Service Providers request
+    Route::post('/service-provider/approve/{id}', 'ServiceProviderController@approve')->middleware('estateAdmin');
+
+    //Estate Admin rejects Service Providers request
+    Route::post('/service-provider/reject/{id}', 'ServiceProviderController@reject')->middleware('estateAdmin');
+
+
 });
+
+
+
+
+
 
 // General Users Routes *******************************************************
 Route::group(['middleware' => ['jwt.verify']], function () {
@@ -184,6 +211,20 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //Delete user account
     Route::delete('/user/delete', 'UserProfileController@destroy');
+
+
+    // Ban a visitor
+    Route::post('visitor/{id}/ban', 'VisitorController@ban');
+
+    // Remove ban on a visitor
+    Route::post('visitor/{id}/remove-ban/', 'VisitorController@removeBan');
+
+    // Get banned visitors
+    Route::prefix('visitors/banned')->group( function () {
+        Route::get('/all', 'VisitorController@getAllBannedVisitors');
+        Route::get('/for-estate/{estate}', 'VisitorController@getBannedVisitorsForAnEstate');
+    });
+
 
     //User Image upload api
     // Route::post('user/image', 'UserProfileController@upload');
@@ -221,7 +262,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('estate/{id}/gateman', 'GatemanController@addEstateGateman')->middleware('estateAdmin');
 
     // Edit a gateman for an estate
-    Route::put('estate/{estate_id}/gateman/{id}', 'GatemanController@updateEstateGateman')->middleware('estateAdmin');
+    Route::put('estate/{estate_id}/gateman/{id}', 'GatemanController@updateEstateGateman');
 
     // Delete a single gateman for an estate
     Route::delete('estate/{estate_id}/gateman/{id}', 'GatemanController@deleteEstateGateman')->middleware('estateAdmin');
@@ -264,15 +305,22 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //show payment
     Route::get('/payment/{id}', 'PaymentController@oneUniquePayment')->middleware('checkResident');
 
-    //Service Directory by estate 
-    Route::get('/serviceProvider/estate/', 'ServiceProviderController@byEstate')->middleware('checkResident');
+    //Service Directory by estate
+    Route::get('/serviceProvider/estate/', 'ServiceProviderController@groupByEstate')->middleware('checkResident');
 
     //(Users Visitors)
     // Show signed in user visitor
     Route::get('visitor', 'VisitorController@residentVisitor')->middleware('checkResident');
-   
+
+    //Visitor QR
+    Route::get('visitor/getQrImage', 'VisitorController@getQrImage')->middleware('checkResident');
+
     // Show signed in user visitor history
     Route::get('visitorHistory', 'VisitorController@residentHistory')->middleware('checkResident');
+    //Get all scheduled visits by a user
+    Route::get('visitor/allScheduled', 'VisitorController@getScheduled')->middleware('checkResident');
+    Route::delete('visitor/deleteScheduled/{id}', 'VisitorController@deleteScheduled')->middleware('checkResident');
+
 
     // Show single visitor
     Route::get('visitor/{id}', 'VisitorController@show')->middleware('checkResident');
@@ -285,6 +333,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //Create a visitor
     Route::post('visitor', 'VisitorController@store')->middleware('checkResident');
+
+    //reschedule a visitor
+    Route::post('visitor/{id}', 'VisitorController@schedule')->middleware('checkResident');
 
     //(Residents and Gateman)
 
@@ -351,6 +402,16 @@ Route::get('faq/{id}', 'FaqController@show');
 //send support message
 Route::post('/support/send', 'SupportController@send');
 
+//Block selectd admin access
+Route::put('revokeadminaccess/{user_id}', 'UserProfileController@revokeAdmin')->middleware('superAdmin');
+
+//Unblock selected admin
+Route::put('unrevokeadminaccess/{user_id}', 'UserProfileController@unrevokeAdmin')->middleware('superAdmin');
+
+//Reset admin password
+Route::post('resetadminpass/reset/{admin_id}', 'UserProfileController@resetAdmin')->middleware('superAdmin');
+
+
 // Notification types
 Route::get('notifications/types', 'NotifyController@types');
 
@@ -359,7 +420,7 @@ Route::get('test', 'TestController@test');
 Route::get('generate-code', 'TestController@qrCode');
 Route::post('test_image', 'TestController@upload');
 Route::post('african_talking', 'SmsOtpController@africasTalkingTest');
-Route::post('msg91', 'SmsOtpController@send');
+Route::post('otp', 'SmsOtpController@otp');
 
 //test notification
 Route::get('/test-notification', function () {
@@ -373,9 +434,6 @@ Route::get('/test-notification-2', function () {
     $gateman = \App\User::query()->where('role', 2)->inRandomOrder()->first();
     $gateman->notify(new \App\Notifications\GatemanInvitationNotification($user, $gateman));
 });
-
-
-
 
 Route::get('/test-notification2', function () {
 
@@ -393,3 +451,10 @@ Route::post("service_provider/create_request", "ServiceProviderController@create
 //     event(new App\Events\notify('Someone'));
 //     return "Notification sent";
 // });
+
+//----------------Newsletter Subscriber route-------------------------//
+
+Route::post("newsletter", "NewsletterController");
+
+// test admin accept and reject service provider
+
