@@ -231,5 +231,42 @@ class ResidentController extends Controller
             'status' => true
         ], 200);
     }
+    
+    //Fetch residents in a particular estate
+    public function estateResidents($id)
+    {
+     try {
+          $residents = [];
+          $homes = Home::all();
+          foreach($homes as $home)
+          {
+           $eid = $home->estate_id;
+           if($eid == $id)
+           {
+            $new = array();
+            $user = User::find($home->user_id);
+            if($user->user_type == "resident")
+            {
+             array_push($new, $user);
+             array_push($residents, $new);
+            }
+           }
+          }
+         
+          $res["status_code"] = 200;
+          $res["message"] = "Success!";
+          $res["residents"] = $residents;
+         
+          return response()->json($res, $res["status_code"]);
+         }
+          catch (\Exception $e)
+         {
+          $res["status_code"] = 501;
+          $res["message"] = "Failed!";
+          $res["error"] = $e->getMessage();
+              
+          return response()->json($res, $res["status_code"]);
+         }
+    }
    
 }
