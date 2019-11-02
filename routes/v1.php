@@ -123,6 +123,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Show Total Number of Estates on the system
     Route::get('statistics/estate', 'Statistics\EstateStatsController@index')->middleware('superAdmin');
 
+    // General SStatistics
+    Route::get('statistics/estate/{id}', 'Statistics\EstateStatsController@generalStats')->middleware('superAdmin');
+
     // Show  Total Number of Estates added that week
     Route::get('statistics/weeklyEstate', 'Statistics\EstateStatsController@showWeek')->middleware('superAdmin');
 
@@ -251,7 +254,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('estate/{id}/gateman', 'GatemanController@addEstateGateman')->middleware('estateAdmin');
 
     // Edit a gateman for an estate
-    Route::put('estate/{estate_id}/gateman/{id}', 'GatemanController@updateEstateGateman')->middleware('estateAdmin');
+    Route::put('estate/{estate_id}/gateman/{id}', 'GatemanController@updateEstateGateman');
 
     // Delete a single gateman for an estate
     Route::delete('estate/{estate_id}/gateman/{id}', 'GatemanController@deleteEstateGateman')->middleware('estateAdmin');
@@ -300,6 +303,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //(Users Visitors)
     // Show signed in user visitor
     Route::get('visitor', 'VisitorController@residentVisitor')->middleware('checkResident');
+
+    //Visitor QR
+    Route::get('visitor/getQrImage', 'VisitorController@getQrImage')->middleware('checkResident');
 
     // Show signed in user visitor history
     Route::get('visitorHistory', 'VisitorController@residentHistory')->middleware('checkResident');
@@ -406,7 +412,7 @@ Route::get('test', 'TestController@test');
 Route::get('generate-code', 'TestController@qrCode');
 Route::post('test_image', 'TestController@upload');
 Route::post('african_talking', 'SmsOtpController@africasTalkingTest');
-Route::post('msg91', 'SmsOtpController@send');
+Route::post('otp', 'SmsOtpController@otp');
 
 //test notification
 Route::get('/test-notification', function () {

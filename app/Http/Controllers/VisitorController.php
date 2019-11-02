@@ -134,7 +134,7 @@ class VisitorController extends Controller
         // validate the posted data
         $this->validate($request, [
             'name'              => ['required', 'regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
-            'arrival_date'      => 'required|date_format:Y-m-d',
+            'arrival_date'      => 'required|date|regex:/\d{4}\/\d{1,2}\/\d{1,2}/',
             'car_plate_no'      => 'string|nullable',
             'purpose'           => 'string',
             'visitor_group'     => 'string',
@@ -238,7 +238,7 @@ class VisitorController extends Controller
         // validate the posted data
         $this->validate($request, [
             'name'              => ['regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
-            'arrival_date'      => 'date_format:Y-m-d',
+            'arrival_date'      => 'required|date|regex:/\d{4}\/\d{1,2}\/\d{1,2}/',
             'car_plate_no'      => 'string',
             'phone_no'          => 'string',
             'purpose'           => 'string',
@@ -478,7 +478,9 @@ class VisitorController extends Controller
     }
     public function getScheduled()
     {
-        $scheduled = ScheduledVisit::where('user_id', $this->user->id)->with('visitor')->get();
+        $scheduled = ScheduledVisit::where('user_id', $this->user->id)->with(['visitor' => function ($query) {
+            $query->where('status', 1); }])->get();;
+        
         if (!$scheduled) {
             return response()->json(['message' => 'You have no scheduled visits'], 400);
         }
@@ -572,5 +574,26 @@ class VisitorController extends Controller
             ->whereIn('user_id', $users_in_state)->get();
 
         return response()->json(['data' => $banned_visitors]);
+    }
+
+
+    public function getQrImage(Request $request, QrCodeGenerator $qr){
+        $qr_code = Visitor::where('id', $request->id)->value('qr_code');
+       
+        if ($qr_code){
+            $qr_image = $qr->generateCode($qr_code);
+            return response()->json([
+                'status' => true, 
+                'qr_image' => $qr_image,
+                'qr_code' => $qr_code
+            ], 200);
+        }else{
+            return response()->json([
+                'message' => 'QR code is invalid'
+            ], 404);
+
+        }
+
+
     }
 }

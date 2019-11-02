@@ -4,89 +4,94 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use AfricasTalking\SDK\AfricasTalking;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\DB;
 use App\User;
 // Create a sms otp class
 class SmsOtpController extends Controller
 {
-	
-  public function smsOtp($phone="&to=07060959269")
-  {  
-     // $this->to = $phone;
-     $body="Your Otp token is ".mt_rand(1000,9999);
-   try {
+	// private $USERNAME   = 'sandbox';
+  // private $FROM       = "GateGuard";
+  // private $API_TOKEN  = "120901657ad012358be654f7a69b2a8cba8647ce95312f77b52ec3ceeb04928e";
+  private $USERNAME   = 'gateguard';
+  private $FROM       = "AFRICASTKNG";
+  private $API_TOKEN  = "07ae042d925e7632d8f6bf10b9a37ee892ae59d689b866bf43b4ace6eb5cb841";
+
+  private $from = "GateGuard OTP";
+  private $api_token   = 'QLTtEV2m4u2xDoQJLCR5t98UwXG9X2RJDil8aaG3XcGMxjqshFeVBO2bDciI';
+  //This otp method need the phone number and message as parameter
+  public function bulkSmsNigeria($phone, $message)
+  {   
+      $res = $this->initiateSmsGuzzle($phone, $message);
+      return $res;
+  }
   
-        // Account details
-  $apiKey = urlencode('WDRlRPJ6+Js-rm9JwdiHJatVEGfuGCIiMzv0goqmrM');
-  
-        // Message details
-        $numbers = array(2348111570173);
-        $sender = urlencode('GateGuard');
-        $message = rawurlencode($body);
-       
-        $numbers = implode(',', $numbers);
-       
-        // Prepare data for POST request
-        $data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
-       
-        // Send the POST request with cURL
-        $ch = curl_init('https://api.txtlocal.com/send/');
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($ch);
-        curl_close($ch);
+  public function initiateSmsGuzzle($phone, $message)
+  {
+
+    $client = new Client();
+    try{
+        $response = $client->post('https://www.bulksmsnigeria.com/api/v1/sms/create', [
+          'verify'    =>  false,
+          'form_params' => [
+            'api_token' => $this->api_token,
+            'from' => $this->from,
+            'to' => $phone,
+            'body' => $message,
+          ],
+          ]);
+          $response = json_decode($response->getBody(), true);
+          if($response) {
+            $res['status']   = true;
+            $res['message']  = 'OTP has been sent successfully';
+            $res['response'] = $response;
+            return $res;
+          }else {
+            $res['status']   = false;
+            $res['message']  = 'OTP not sent';
+            $res['response'] = $response;
+            return $res;
+          }
         
-        // Process your response here
-      // $res['status']        =  true;
-      // $res['data']          =  $response;
-      // $res['status_code']   =  200;
-      // return $res;
-      return response()->json($response, 200);
-     } catch(\Exception $e) {
+      } catch (Exception $e) {
 
-      // $res['status'] = false;
-      // $res['details'] = $e->getMessage();
-      // $res['data'] = "Error occured while sending OTP.";
-      // $res['status_code']   =  501;
-      // return $res;
-        return response()->json($e->getMessage(), 200);
-     }
- }
+          $res['status']   = false;
+          $res['message']  = '(Not Implemented) Otp not sent';
+          $res['response'] = $response;
+          return $res;
+      }
+    }
 
- public function africasTalkingTest() {
+ public function africasTalking($recipients, $message) {
     // Set your app credentials
-    $username   = "sandbox";
-    $apiKey     = "622aa1de1ec8132c2371d0c1c784b23fa20e822836bc50fa846ae618010b5f75";
 
     // Initialize the SDK
-    $AT         = new AfricasTalking($username, $apiKey);
+    $AT = new AfricasTalking($this->USERNAME, $this->API_TOKEN);
 
     // Get the SMS service
-    $sms        = $AT->sms();
-
-    // Set the numbers you want to send to in international format
-    $recipients = "+2347060959269";
-
-    // Set your message
-    $message    = "Your OTP Token is: 8979";
+    $sms = $AT->sms();
 
     // Set your shortCode or senderId
-    $from       = "GatePass01";
 
     try {
         // Thats it, hit send and we'll take care of the rest
         $result = $sms->send([
             'to'      => $recipients,
             'message' => $message,
-            'from'    => $from
+            'from'    => $this->FROM
         ]);
+      
+      $res['status'] = true;
+      $res['result'] = $result;
 
-      return response()->json($result, 200);
+      return $res;
     } catch (Exception $e) {
-        return response()->json($e->getMessage(), 200);
+      $res['status'] = true;
+      $res['result'] = $result;
+      $res['status_code'] = 501;
+      $res['hint']   = $e->getMessage();
+      return $res;
     }
  }
-
-
-
 }
