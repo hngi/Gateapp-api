@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="styles/global.css">
     <link rel="stylesheet" href="styles/dashboard-sidebar.css">
     <link rel="stylesheet" href="styles/estates.css">
-    <link rel="stylesheet" href="styles/visitors.css">
-    <title data-title>Banned Visitors</title>
+    <link rel="stylesheet" href="styles/providers.css">
+    <title data-title>Visitors</title>
 </head>
 
 <body>
@@ -110,7 +110,7 @@
             </div>
             <div class="col-12 tab-full scroller">
                 <div class="col-12 row mx-0 tab-header">
-                    <h4 class="col-12 col-md-6">Visitors</h4>
+                    <h4 class="col-12 col-md-6">Provider Requests</h4>
                     <div class="form-group col-12 col-md-6 ml-auto">
                         <input type="email" class="form-control col-12 col-md-8 ml-auto" placeholder="Search Estates">
                     </div>
@@ -118,97 +118,40 @@
                         <thead>
                             <tr>
                                 <th scope="col">Name</th>
-                                <th scope="col">Last Visited Estate</th>
-                                <th scope="col">Last Visited on</th>
+                                <th scope="col">Service Type</th>
+                                <th scope="col">Location</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" class="unban-link" data-toggle="modal">Unban</a>
+                                <td>Obonge Catering</td>
+                                <td>Food and Catering</td>
+                                <td>Park Avenue, Lekki o</td>
+                                <td><a href="" data-toggle="modal" data-target="#singleProviderModal">View Details</a>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" class="unban-link" data-toggle="modal">Unban</a>
+                                <td>Obonge Catering</td>
+                                <td>Food and Catering</td>
+                                <td>Park Avenue, Lekki o</td>
+                                <td><a href="" data-toggle="modal" data-target="#singleProviderModal">View Details</a>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" class="unban-link" data-toggle="modal">Unban</a>
+                                <td>Obonge Catering</td>
+                                <td>Food and Catering</td>
+                                <td>Park Avenue, Lekki o</td>
+                                <td><a href="" data-toggle="modal" data-target="#singleProviderModal">View Details</a>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" class="unban-link" data-toggle="modal">Unban</a>
+                                <td>Obonge Catering</td>
+                                <td>Food and Catering</td>
+                                <td>Park Avenue, Lekki o</td>
+                                <td><a href="" data-toggle="modal" data-target="#singleProviderModal">View Details</a>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" class="unban-link" data-toggle="modal">Unban</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" class="unban-link" data-toggle="modal">Unban</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" class="unban-link" data-toggle="modal">Unban</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" class="unban-link" data-toggle="modal">Unban</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" class="unban-link" data-toggle="modal">Unban</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" class="unban-link" data-toggle="modal">Unban</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" class="unban-link" data-toggle="modal">Unban</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" class="unban-link" data-toggle="modal">Unban</a>
-                                </td>
-                            </tr>
-
                         </tbody>
                     </table>
                 </div>
@@ -216,59 +159,31 @@
         </div>
     </div>
     <!-- Modals -->
-    <!-- <div class="modal fade" id="singleVisitorModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="singleProviderModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog col-12 px-1 mx-0" role="document">
             <div class="modal-content col-11 col-md-4 px-0 mx-auto">
                 <div class="modal-body">
-                    <h4 class="text-center">Sarah Anderson</h4>
-                    <div class="col-12 single-visit text-center row mx-0">
-                        <table class="table table-borderless">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Estate</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>10/10/2019</td>
-                                    <td>Otedola Estate</td>
-                                </tr>
-                                <tr>
-                                    <td>10/10/2019</td>
-                                    <td>Otedola Estate</td>
-                                </tr>
-                                <tr>
-                                    <td>10/10/2019</td>
-                                    <td>Otedola Estate</td>
-                                </tr>
-                                <tr>
-                                    <td>10/10/2019</td>
-                                    <td>Otedola Estate</td>
-                                </tr>
-                                <tr>
-                                    <td>10/10/2019</td>
-                                    <td>Otedola Estate</td>
-                                </tr>
-                                <tr>
-                                    <td>10/10/2019</td>
-                                    <td>Otedola Estate</td>
-                                </tr>
-                                <tr>
-                                    <td>10/10/2019</td>
-                                    <td>Otedola Estate</td>
-                                </tr>
-                                <tr>
-                                    <td>10/10/2019</td>
-                                    <td>Otedola Estate</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <h4 class="text-center">Obonge Catering</h4>
+                    <div class="col-12 single-provider-details row mx-0">
+                        <p class="provider-location col-12 mt-5">Park Avenue</p>
+                        <span class="provider-phone col-12">+234 907 834 9183</span>
+                        <div class="col-12 px-0 row mx-0">
+                            <div class="col-12 px-0">
+                                <span class="col-12 stat-name">Requested</span>
+                                <p class="col-12 stat-value">23rd May, 2018</p>
+                            </div>
+                            <div class="col-12 px-0">
+                                <span class="col-12 stat-name">Service Type</span>
+                                <p class="col-12 stat-value">Food and Catering</p>
+                            </div>
+                            <button class="btn btn-suspend col-12 mt-2">Approve</button>
+                            <button class="btn btn-remove col-12 mt-2">Reject</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
 </body>
 <!--Import third party cdn-->
 <script src="js/general/third_party_cdn.js"></script>
