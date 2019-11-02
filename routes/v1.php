@@ -180,6 +180,12 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //Estate Admin rejects Service Providers request
     Route::post('/service-provider/reject/{id}', 'ServiceProviderController@reject')->middleware('estateAdmin');
+    
+    //Show residents in the system
+    Route::get('residents/all', 'ResidentController@residents')->middleware('superAdmin');
+
+    //Show residents in the specific estate of logged in Estate Admin
+    Route::get('/estate/{id}/residents', 'ResidentController@estateResidents')->middleware('estateAdmin');
 
 
 });
