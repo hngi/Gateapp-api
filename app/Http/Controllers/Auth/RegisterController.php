@@ -54,12 +54,13 @@ class RegisterController extends Controller
 
         try{
            $smsOtpController = new SmsOtpController;
-           $check = $this->checkphone($request->input('phone'));
+           $phone = '+'.$request->input('phone');
+           $check = $this->checkphone();
            if(!$check) {
                 $user = User::create([
                     'name'     => ucfirst($request->input('name')),
                     'image'    => 'noimage.jpg',
-                    'phone'    => $request->input('phone'),
+                    'phone'    => $phone,
                     // 'email'    => $request->input('email'),
                     'user_type'=> $user_type,
                     'role'     => $role,
@@ -76,7 +77,8 @@ class RegisterController extends Controller
                 $result = $smsOtpController->bulkSmsNigeria($phone, $message);
                 // Mail::to($user->email)->send(new WelcomeMail($user));
            }else {
-                $user = User::where('phone', $request->input('phone'))->first();
+                
+                $user = User::where('phone', $phone)->first();
 
                 $user->email_verified_at = null;
                 $user->device_id         = $request->input('device_id');
@@ -121,12 +123,10 @@ class RegisterController extends Controller
             $rules = [
                 'name'               => 'required|string',
                 'phone'              => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-                // 'email'              => 'required',
                 'device_id'          => 'required',
             ];
             $messages = [
                 'required' => ':attribute is required',
-                'phone'    => ':attribute already exist',
                 'phone.regex'    => ':attribute phone number is invalid',
                 'device_id'    => ':attribute please give the uniqid device token',
             ];
