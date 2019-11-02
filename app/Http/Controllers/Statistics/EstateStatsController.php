@@ -53,13 +53,11 @@ class EstateStatsController extends Controller
 
             $totalEstates = Estate::whereBetween('created_at',
              [Carbon::now()->startOfMonth(),Carbon::now()->endOfMonth()])->count();
-
-            if ($totalEstates){
+            
                 $res['status']  = true;
                 $res['message'] = 'Total Number of Estates Added this month';
                 $res['Estates'] = $totalEstates;
                 return response()->json($res, 200);
-            }
     }
 
     // Week
@@ -69,12 +67,10 @@ class EstateStatsController extends Controller
      $totalEstates = Estate::whereBetween('created_at',
      [Carbon::now()->startOfWeek(),Carbon::now()->endOfWeek()])->count();
 
-            if ($totalEstates){
                 $res['status']  = true;
                 $res['message'] = 'Total Number of Estates added this week';
                 $res['Estates'] = $totalEstates;
                 return response()->json($res, 200);
-            }
 
     }
 
