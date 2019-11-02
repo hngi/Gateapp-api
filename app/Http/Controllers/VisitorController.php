@@ -260,6 +260,7 @@ class VisitorController extends Controller
 
             // Upload updated image
             //Upload image
+            $data = null;
             if ($request->hasFile('image')) {
                 $data = $this->upload($request, $image, $visitor);
                 if ($data['status_code'] !=  200) {
