@@ -303,7 +303,7 @@ class GatemanController extends Controller
                 $history->visit_date = $avisitor->value('time_out');
                 $history->save();
 
-                $visitor = Visitor::where('id', $visitor_id)->with('user')->get();
+                $visitor = Visitor::where('id', $visitor_id)->with('user')->first();
                 $res ['Message'] = "Visitor Has been checked out succesfully";
                 $res ['Visitor details'] = $visitor;
                 $resident_notifiable = User::find($resident_id);
