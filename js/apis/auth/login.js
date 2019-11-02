@@ -13,7 +13,8 @@ const loginApi = (event, loginForm) => {
             console.log(status)
             return response.json();
          }
-         const getResponse = (data) => {
+         
+        const getResponse = (data) => {
             let title;
             let result;
             
@@ -25,18 +26,19 @@ const loginApi = (event, loginForm) => {
                     confirmButtonText: 'Close'
                 })       
             }
-            if(status == 422) {
-                title = 'Login failed';
-                result = JSON.stringify(data.errors).split('"').join('').split('{').join('').split('}').join('');
-                flashAlert(title,result);
-            }
-            if(status == 404) {
-                title  = 'Login error';
-                result = 'Invalid credentials';
-                flashAlert(title,result);
-            }
-            if(status == 200) {
-                //insert the data into broswer localStorage
+            switch(status) {
+                case 422:
+                    title = 'Login failed';
+                    result = JSON.stringify(data.errors).split('"').join('').split('{').join('').split('}').join('');
+                    flashAlert(title,result);
+                break;
+                case 404:
+                    title  = 'Login error';
+                    result = 'Invalid credentials';
+                    flashAlert(title,result);
+                break;
+                default:
+                 //insert the data into broswer localStorage
                 localStorage.setItem('gateguard-admin', JSON.stringify(data));
                 location.replace('default-tab.html');
             }
