@@ -284,11 +284,7 @@ class ServiceProviderController extends Controller
                     return response()->json($data, $data['status_code']);
                 }
                 $service->image = $data['image'];
-<<<<<<< HEAD
-            }else {
-=======
             } else {
->>>>>>> 4405599b7d7597357c3ad174c1cf68c564dbc9e4
                 $data = null;
                 $service->image = 'noimage.jpg';
             }
@@ -314,7 +310,7 @@ class ServiceProviderController extends Controller
         }
     }
 
-  
+
     public function destroy($id)
     {
      $service = Service_Provider::destroy($id);
@@ -327,7 +323,7 @@ class ServiceProviderController extends Controller
        $trash->forceDelete();
        $res['status'] = 200;
        $res["message"] = "Service Provider Deleted!";
-       
+
        return response()->json($res, $res['status']);
       }
      }
@@ -335,33 +331,33 @@ class ServiceProviderController extends Controller
      {
       $res['status'] = 404;
       $res["message"] = "Unable To Delete Service Provider!";
-           
+
       return response()->json($res, $res['status']);
      }
     }
-    
+
     public function softDeleted()
     {
      $service = Service_Provider::onlyTrashed()->get();
-     
+
      if($service)
      {
       $res['status'] = 200;
       $res["message"] = "Suspended service providers!";
       $res["count"] = $service->count();
       $res["data"] = $service;
-         
+
       return response()->json($res, $res["status"]);
      }
       else
      {
       $res['status'] = 501;
       $res["message"] = "Error Getting Suspended Service Providers!";
-         
+
       return response()->json($res, $res["status"]);
      }
     }
-    
+
     public function softDelete($id)
     {
      $service = Service_Provider::destroy($id);
@@ -370,18 +366,18 @@ class ServiceProviderController extends Controller
       $res["status"] = 200;
       $res["message"] = "Service Provider Suspended!";
       $res["data"] = $service;
-         
+
       return response()->json($res, $res["status"]);
      }
       else
      {
       $res["status"] = 501;
       $res["message"] = "Unable To Suspend Service Provider!";
-         
+
       return response()->json($res, $res["status"]);
      }
     }
-    
+
     public function search($id)
     {
      try {
@@ -436,18 +432,18 @@ class ServiceProviderController extends Controller
       $res["status"] = 200;
       $res["message"] = "Service Provider Was Unsuspended!";
       $res["data"] = $service;
-         
+
       return response()->json($res, $res["status"]);
     }
      else
     {
      $res["status"] = 501;
      $res["message"] = "Unable To Unsuspend Service Provider!";
-         
+
      return response()->json($res, $res["status"]);
     }
    }
-    
+
     public function upload($request, $image, $table = null)
     {
         $user = Auth::user();
@@ -459,7 +455,6 @@ class ServiceProviderController extends Controller
         $res = $image->imageUpload($request, $table);
         return $res;
     }
-
     public function create_request(Request $request, ImageController $image)
     {
         $validator = Validator::make($request->all(), [
@@ -519,5 +514,21 @@ class ServiceProviderController extends Controller
         }
 
     }
+    public function approve($id)
+    {
+        $application = Service_Provider::findOrFail($id);
+        $application->status = 1;
+        $application->save();
 
+
+        return response()->json(['status' => true, 'message' => 'Service provider accepted'], 200);
+    }
+    public function reject($id)
+    {
+        $application = Service_Provider::findOrFail($id);
+        $application->delete($id);
+
+
+        return response()->json(['status' => true, 'message' => 'Service provider rejected'], 200);
+    }
 }

@@ -28,6 +28,7 @@ class Visitor extends Model
         'qr_code',
         'visiting_period',
         'description',
+        'banned',
     ];
 
     /**
