@@ -45,10 +45,6 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/admin', 'UserProfileController@showAllAdmin')->middleware('superAdmin');
 
 
-    // Show all visitor
-    Route::get('allVisitors', 'VisitorController@index')->middleware('admin');
-
-    
     //Fetch residents  scheduled visits stats
    Route::get('ScheduledVisit/{resident_id}', 'Statistics\UserStatsController@fetchScheduledVisit')->middleware('superAdmin');
 

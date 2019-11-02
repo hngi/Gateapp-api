@@ -266,9 +266,6 @@ class VisitorController extends Controller
                     return response()->json($data, $data['status_code']);
                 }
                 $visitor->image = $data['image'];
-            } else {
-                $data = null;
-                $visitor->image = 'noimage.jpg';
             }
 
             //Save Visitor
