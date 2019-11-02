@@ -210,4 +210,63 @@ class ResidentController extends Controller
             return response()->json($msg, 404);
         }
     }
+
+
+    //Fetch all residents in the system
+
+    public function residents()
+    {
+        //Query users db table seeking for users with user_type = resident
+        //Join the result set with homes db table based on homes.user_id
+        //and get the estate_id of the users
+        //Query estate db table for the estate name
+        $residents = User::join('homes', 'homes.user_id', 'users.id')
+            ->join('estates', 'estates.id', 'homes.estate_id')
+            ->where('users.user_type', 'resident')
+            ->get(['users.name', 'users.phone', 'homes.user_id', 'homes.id as home_id', 'users.user_type', 'estates.estate_name']);
+
+        return response()->json([
+            'count' => $residents->count(),
+            'residents' => $residents,
+            'status' => true
+        ], 200);
+    }
+    
+    //Fetch residents in a particular estate
+    public function estateResidents($id)
+    {
+     try {
+          $residents = [];
+          $homes = Home::all();
+          foreach($homes as $home)
+          {
+           $eid = $home->estate_id;
+           if($eid == $id)
+           {
+            $new = array();
+            $user = User::find($home->user_id);
+            if($user->user_type == "resident")
+            {
+             array_push($new, $user);
+             array_push($residents, $new);
+            }
+           }
+          }
+         
+          $res["status_code"] = 200;
+          $res["message"] = "Success!";
+          $res["residents"] = $residents;
+         
+          return response()->json($res, $res["status_code"]);
+         }
+          catch (\Exception $e)
+         {
+          $res["status_code"] = 501;
+          $res["message"] = "Failed!";
+          $res["error"] = $e->getMessage();
+              
+          return response()->json($res, $res["status_code"]);
+         }
+    }
+   
 }
