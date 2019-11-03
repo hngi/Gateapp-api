@@ -33,6 +33,7 @@ class AdminLoginController extends Controller
     public function authenticate(Request $request)
     {     
         $this->expireTime();
+
         // Do a validation for the input
         $this->validateRequest($request);
         $credentials = $request->only('email', 'password');
