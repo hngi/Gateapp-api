@@ -12,7 +12,7 @@
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="styles/global.css">
     <link rel="stylesheet" href="styles/dashboard-sidebar.css">
-    <title>Gate App</title>
+    <title data-title>Sidebar</title>
 </head>
 
 <body>
@@ -35,19 +35,19 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="active">
             <div class="col-12 dash-logo mt-3">
-                <img class="ml-3" src="images/GatePASS.png" alt="">
+                <img class="ml-3" src="images/gateguard-white.png" alt="">
             </div>
             <ul class="list-unstyled components">
-                <p>Dashboard</p>
+                <p onclick="location.href='default-tab.html'">Dashboard</p>
                 <li class="">
                     <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false"
                         class="dropdown-toggle">Admins</a>
                     <ul class="collapse list-unstyled" id="adminSubmenu">
                         <li>
-                            <a href="#">View all admins</a>
+                            <a href="admins.html">View all admins</a>
                         </li>
                         <li>
-                            <a href="#">Add an admin</a>
+                            <a href="add_admin.html">Add an admin</a>
                         </li>
                     </ul>
                 </li>
@@ -83,10 +83,10 @@
                         class="dropdown-toggle">Providers</a>
                     <ul class="collapse list-unstyled" id="providersSubmenu">
                         <li>
-                            <a href="#">All Providers</a>
+                            <a href="providers-tab.html">All Providers</a>
                         </li>
                         <li>
-                            <a href="#">Provider Requests</a>
+                            <a href="provider-request.html">Provider Requests</a>
                         </li>
                     </ul>
                 </li>
@@ -103,6 +103,7 @@
 </body>
 <!--Import third party cdn-->
 <script src="js/general/third_party_cdn.js"></script>
+<script src="js/general/placeholder.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {

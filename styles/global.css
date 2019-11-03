@@ -18,6 +18,27 @@ body {
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 6px #343a40;
 }
+.usual-btn {
+  color: white;
+  background: #49a347;
+  border-radius: 0px;
+  font-size: 10px;
+  font-weight: bold;
+}
+.usual-btn-opposite {
+  color: #49a347;
+  background: white;
+  border-radius: 0px;
+  font-size: 10px;
+  font-weight: bold;
+}
+.green-underline {
+  width: 3vw;
+  border-top: 4px solid #49a347;
+}
+.bold {
+  font-weight: bold;
+}
 /* Slick JS CSS */
 .slider {
     width: 50%;
@@ -49,4 +70,14 @@ body {
 
 .slick-current {
   opacity: 1;
+}
+.error-fields {
+  color: tomato;
+  font-size: 9px !important;
+  height: 3vh;
+  margin: 0;
+  padding: 0;
+}
+.swal2-confirm{
+  background: #49a347 !important; 
 }

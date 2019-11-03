@@ -13,6 +13,13 @@
     font-weight: bold;
     color: black !important;
 }
+.nav-item .dropdown-menu {
+    border-radius: 0px;
+}
+.nav-item .dropdown-menu .dropdown-item{
+    font-size: 12px;
+    font-weight: bold;
+}
 .login-btn{
     font-size: 12px;
     width: 9vw;

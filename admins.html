@@ -1,226 +1,331 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
 	<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="styles/estate.css">
-	<title>Admin List Table</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+		integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link rel="stylesheet" href="styles/global.css">
+	<link rel="stylesheet" href="styles/dashboard-sidebar.css">
+	<link rel="stylesheet" type="text/css" href="styles/estates.css">
+	<link rel="stylesheet" type="text/css" href="styles/seunogunyemi.css">
+	<title data-title>Admin List</title>
 </head>
+
 <body>
-			<div id="content">
-							
-								<div class="container">
+	<!-- <div class="container-fluid">
+        <div class="row">
+            <div class="dashboard-full col-12 row mx-0 px-0">
+                <div class="col-2 border-right our-sidebar">
+                    <div class="col-12 dash-logo mt-3">
+                        <img src="images/GatePASS.png" alt="">
+                    </div>
+                    div.col-12.sidebar
+                </div>
+                <div class="col-10">
 
-								</div>
-							
+                </div>
+            </div>
+        </div>
+    </div> -->
+	<div class="wrapper">
+		<!-- Sidebar  -->
+		<nav id="sidebar" class="active">
+			<div class="col-12 dash-logo mt-3">
+				<img class="ml-3" src="images/gateguard-white.png" alt="">
 			</div>
-				
-										<div class="wrapper">
-											<!-- @team-gateapp, side nav starts here... -->
-											<nav id="sidebar">
-			<div class="sidebar-header">
-				<img src="images/GatePass.png" style="margin-top: 20px; width: 80%;">
-			</div>
-			<br>
-			<br>
-
-			<h3 style="color: white;">Dashboard</h3>
-
-			<ul>
-
-				<li class="active">
-					<a href="#homesubmenu" data-toggle="collapse" aria-expanded="false"
+			<ul class="list-unstyled components">
+				<p onclick="location.href='default-tab.html'">Dashboard</p>
+				<li class="">
+					<a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false"
 						class="dropdown-toggle">Admins</a>
-					<ul class="collapse list-unstyled" id="homesubmenu">
-					<li>
-					<small><a href="admins.html">View all Admins</a></small>
-					</li>
-					<li>
-					<small><a href="add_admin.html">Add an Admin</a></small>
-					</li>
+					<ul class="collapse list-unstyled" id="adminSubmenu">
+						<li class="">
+							<a href="admins.html">View all admins</a>
+						</li>
+						<li>
+							<a href="add_admin.html">Add an admin</a>
+						</li>
 					</ul>
 				</li>
-
 				<li>
-					<a href="#">Residents</a>
+					<a href="residents.html">Residents</a>
 				</li>
-
 				<li>
-					<a href="#pageSubMenu" data-toggle="collapse" aria-expanded="false"
+					<a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false"
 						class="dropdown-toggle">Visitors</a>
-					<ul class="collapse list-unstyled" id="pageSubMenu">
+					<ul class="collapse list-unstyled" id="visitorsSubmenu">
 						<li>
-							<a href="#">Option 1</a>
+							<a href="visitors-tab.html">All Visitors</a>
 						</li>
 						<li>
-							<a href="#">Option 2</a>
+							<a href="banned-visitors-tab.html">Banned Visitors</a>
 						</li>
 					</ul>
 				</li>
-
-
 				<li>
-					<a href="#page1SubMenu" data-toggle="collapse" aria-expanded="false"
+					<a href="#estatesSubmenu" data-toggle="collapse" aria-expanded="false"
 						class="dropdown-toggle">Estates</a>
-					<ul class="collapse list-unstyled" id="page1SubMenu">
+					<ul class="collapse list-unstyled" id="estatesSubmenu">
+						<li class="">
+							<a href="estates-tab.html">All Estates</a>
+						</li>
 						<li>
-					<small><a href="estate_list.html">All Estates</a></small>
-				</li>
-
-				<li>
-					<small><a href="estate.html">Add an Estate</a></small>
-				</li>
+							<a href="add-estate.html">Add an Estate</a>
+						</li>
 					</ul>
 				</li>
-
-
-
 				<li>
-					<a href="#page2SubMenu" data-toggle="collapse" aria-expanded="false"
+					<a href="#providersSubmenu" data-toggle="collapse" aria-expanded="false"
 						class="dropdown-toggle">Providers</a>
-					<ul class="collapse list-unstyled" id="page2SubMenu">
+					<ul class="collapse list-unstyled" id="providersSubmenu">
 						<li>
-							<a href="#">Option 1</a>
+							<a href="providers-tab.html">All Providers</a>
 						</li>
 						<li>
-							<a href="#">Option 2</a>
+							<a href="provider-request.html">Provider Requests</a>
 						</li>
 					</ul>
 				</li>
-
-
 			</ul>
 		</nav>
-											<!-- @team-gateapp, side nav ends here -->
-											<!-- main page content begins here -->
-											<div id="content">
-												<div class="container-fluid">
-												<a href="#" style="color: black;"><i class="fa fa-bell"></i></a>
-												<br>
-												<table style="width: 80%; margin-top: 60px;">
-													<tr>
-														<td><h1 style="font-size: 2.2vw;">Estates</h1></td>
-												<td><input type="search" name="search" style="float: right;" placeholder=" search estates"></td>
-													</tr>
-												</table>
-													<table class="table-sm" style="width: 80%; text-align: center;">
-															<thead>
-																<tr style="border-top: 1px solid black; border-bottom: 1px solid black;">
-																	<td>Name <i class="fa fa-filter"></i></td>
-																	<td>Estate <i class="fa fa-filter"></i></td>
-																	<td>Email Address <i class="fa fa-filter"></i></td>
-																	<td></td>
-																</tr>
-															</thead>
-															<tr>
-																<td>Sarah Anderson</td>
-																<td>*super</td>
-																<td>admin@gatepass.com</td>
-																<td><a href="#" class="green">View Details</a></td>
-															</tr>
-															<tr>
-																<td>Tomiwa Adeleke</td>
-																<td>Lekki Gardens Phase 3</td>
-																<td>otheremail@example.com</td>
-																<td><a href="#"  class="green">View Details</a></td>
-															</tr>
-															<tr>
-																<td>Shodipe Bolanle</td>
-																<td>M.K.O Abiola Gardens</td>
-																<td>sam@rectify.org</td>
-																<td><a href="#" class="green">View Details</a></td>
-															</tr>
-															<tr>
-																<td>Chukuwdi Ubong</td>
-																<td>Otedola Estate</td>
-																<td>admin@gatepass.com</td>
-																<td><a href="#" class="green">View Details</a></td>
-															</tr>
-															<tr>
-																<td>Sarah Anderson</td>
-																<td>*super</td>
-																<td>admin@gatepass.com</td>
-																<td><a href="#" class="green">View Details</a></td>
-															</tr>
-															<tr>
-																<td>Tomiwa Adeleke</td>
-																<td>Lekki Gardens Phase 3</td>
-																<td>otheremail@example.com</td>
-																<td><a href="#"  class="green">View Details</a></td>
-															</tr>
-															<tr>
-																<td>Shodipe Bolanle</td>
-																<td>M.K.O Abiola Gardens</td>
-																<td>sam@rectify.org</td>
-																<td><a href="#" class="green">View Details</a></td>
-															</tr>
-															<tr>
-																<td>Chukuwdi Ubong</td>
-																<td>Otedola Estate</td>
-																<td>admin@gatepass.com</td>
-																<td><a href="#" class="green">View Details</a></td>
-															</tr>
-															<tr>
-																<td>Sarah Anderson</td>
-																<td>*super</td>
-																<td>admin@gatepass.com</td>
-																<td><a href="#" class="green">View Details</a></td>
-															</tr>
-															<tr>
-																<td>Tomiwa Adeleke</td>
-																<td>Lekki Gardens Phase 3</td>
-																<td>otheremail@example.com</td>
-																<td><a href="#"  class="green">View Details</a></td>
-															</tr>
-															<tr>
-																<td>Shodipe Bolanle</td>
-																<td>M.K.O Abiola Gardens</td>
-																<td>sam@rectify.org</td>
-																<td><a href="#" class="green">View Details</a></td>
-															</tr>
-															<tr>
-																<td>Chukuwdi Ubong</td>
-																<td>Otedola Estate</td>
-																<td>admin@gatepass.com</td>
-																<td><a href="#" class="green">View Details</a></td>
-															</tr>
-															<tr>
-																<td>Sarah Anderson</td>
-																<td>*super</td>
-																<td>admin@gatepass.com</td>
-																<td><a href="#" class="green">View Details</a></td>
-															</tr>
-															<tr>
-																<td>Tomiwa Adeleke</td>
-																<td>Lekki Gardens Phase 3</td>
-																<td>otheremail@example.com</td>
-																<td><a href="#"  class="green">View Details</a></td>
-															</tr>
-															<tr>
-																<td>Shodipe Bolanle</td>
-																<td>M.K.O Abiola Gardens</td>
-																<td>sam@rectify.org</td>
-																<td><a href="#" class="green">View Details</a></td>
-															</tr>
-															<tr>
-																<td>Chukuwdi Ubong</td>
-																<td>Otedola Estate</td>
-																<td>admin@gatepass.com</td>
-																<td><a href="#" class="green">View Details</a></td>
-															</tr>
-															
-													</table>
-													</div>
-											</div>
-											</div>
-										</div>
-				
+
+		<!-- Page Content  -->
+		<div id="content">
+			<button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1">
+				<i class="fas fa fa-align-left"></i>
+			</button>
+		</div>
+	</div>
+	<!-- @team-gateapp, side nav ends here -->
+	<!-- main page content begins here -->
+	<div id="tablecontent">
+		<div class="container-fluid">
+			<a href="#" style="color: black;"><i class="fa fa-bell"></i></a>
+			<br>
+			<table class="search" style="width: 100%;">
+				<tr>
+					<td>
+						<h1>Admins</h1>
+					</td>
+					<td><input type="tablesearch" name="search" placeholder=" search admin users" id="myInput"
+							onkeyup="myFunction()"></td>
+				</tr>
+			</table>
+			<table class="admins" id="myTable">
+				<thead>
+					<tr style="border-top: 1px solid black; border-bottom: 1px solid black;">
+						<td>Name <i class="fa fa-filter"></i></td>
+						<td>Estate <i class="fa fa-filter"></i></td>
+						<td>Email Address <i class="fa fa-filter"></i></td>
+						<td></td>
+					</tr>
+				</thead>
+				<tr>
+					<td>Sarah Anderson</td>
+					<td>*super</td>
+					<td>admin@gatepass.com</td>
+					<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
+					</td>
+				</tr>
+				<tr>
+					<td>Tomiwa Adeleke</td>
+					<td>Lekki Gardens Phase 3</td>
+					<td>otheremail@example.com</td>
+					<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
+					</td>
+				</tr>
+				<tr>
+					<td>Shodipe Bolanle</td>
+					<td>M.K.O Abiola Gardens</td>
+					<td>sam@rectify.org</td>
+					<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
+					</td>
+				</tr>
+				<tr>
+					<td>Chukuwdi Ubong</td>
+					<td>Otedola Estate</td>
+					<td>admin@gatepass.com</td>
+					<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
+					</td>
+				</tr>
+				<tr>
+					<td>Sarah Anderson</td>
+					<td>*super</td>
+					<td>admin@gatepass.com</td>
+					<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
+					</td>
+				</tr>
+				<tr>
+					<td>Tomiwa Adeleke</td>
+					<td>Lekki Gardens Phase 3</td>
+					<td>otheremail@example.com</td>
+					<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
+					</td>
+				</tr>
+				<tr>
+					<td>Shodipe Bolanle</td>
+					<td>M.K.O Abiola Gardens</td>
+					<td>sam@rectify.org</td>
+					<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
+					</td>
+				</tr>
+				<tr>
+					<td>Chukuwdi Ubong</td>
+					<td>Otedola Estate</td>
+					<td>admin@gatepass.com</td>
+					<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
+					</td>
+				</tr>
+				<tr>
+					<td>Sarah Anderson</td>
+					<td>*super</td>
+					<td>admin@gatepass.com</td>
+					<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
+					</td>
+				</tr>
+				<tr>
+					<td>Tomiwa Adeleke</td>
+					<td>Lekki Gardens Phase 3</td>
+					<td>otheremail@example.com</td>
+					<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
+					</td>
+				</tr>
+				<tr>
+					<td>Shodipe Bolanle</td>
+					<td>M.K.O Abiola Gardens</td>
+					<td>sam@rectify.org</td>
+					<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
+					</td>
+				</tr>
+				<tr>
+					<td>Chukuwdi Ubong</td>
+					<td>Otedola Estate</td>
+					<td>admin@gatepass.com</td>
+					<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
+					</td>
+				</tr>
+				<tr>
+					<td>Sarah Anderson</td>
+					<td>*super</td>
+					<td>admin@gatepass.com</td>
+					<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
+					</td>
+				</tr>
+				<tr>
+					<td>Tomiwa Adeleke</td>
+					<td>Lekki Gardens Phase 3</td>
+					<td>otheremail@example.com</td>
+					<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
+					</td>
+				</tr>
+				<tr>
+					<td>Shodipe Bolanle</td>
+					<td>M.K.O Abiola Gardens</td>
+					<td>sam@rectify.org</td>
+					<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
+					</td>
+				</tr>
+				<tr>
+					<td>Chukuwdi Ubong</td>
+					<td>Otedola Estate</td>
+					<td>admin@gatepass.com</td>
+					<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
+					</td>
+				</tr>
+
+			</table>
+		</div>
+	</div>
+	</div>
+	</div>
+	<!-- Modal inserted here -->
+	<div class="modal fade " id="singleEstateModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog col-12 px-1 mx-0" role="document">
+			<div class="modal-content col-11 col-md-9 px-0 ml-auto mr-auto">
+				<div class="modal-body small_modal">
+					<h1>Chukwudi Ubong</h1>
+					<h3>Otedola Estate</h3>
+					<p>admin@gatepass.com</p>
+					<br>
+
+					<button class="btn btn-danger"
+						style="background-color: #EB5757; width: 300px; margin-bottom: 30px;">Revoke Access</button>
+					<br>
+					<button class="btn btn-warning" style="background-color: #56CCF2; width: 300px;">Reset
+						Password</button>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
 </body>
 <!--Import third party cdn-->
 <script src="js/general/third_party_cdn.js"></script>
+<script src="js/general/placeholder.js"></script>
+<script type="text/javascript">
+	$(document).ready(function () {
+		$('#sidebarCollapse').on('click', function () {
+			$('#sidebar').toggleClass('active');
+		});
+	});
+</script>
+
+<script type="text/javascript">
+	// Get the modal
+	var modal = document.getElementById("myModal");
+
+	// Get the button that opens the modal
+	var btn = document.getElementById("myBtn");
+
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
+
+	// When the user clicks on the button, open the modal
+	btn.onclick = function () {
+		modal.style.display = "block";
+	}
+
+	// When the user clicks on <span> (x), close the modal
+	span.onclick = function () {
+		modal.style.display = "none";
+	}
+
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function (event) {
+		if (event.target == modal) {
+			modal.style.display = "none";
+		}
+	}
+</script>
+<script>
+	function myFunction() {
+		// Declare variables
+		var input, filter, table, tr, td, i, txtValue;
+		input = document.getElementById("myInput");
+		filter = input.value.toUpperCase();
+		table = document.getElementById("myTable");
+		tr = table.getElementsByTagName("tr");
+
+		// Loop through all table rows, and hide those who don't match the search query
+		for (i = 0; i < tr.length; i++) {
+			td = tr[i].getElementsByTagName("td")[0];
+			if (td) {
+				txtValue = td.textContent || td.innerText;
+				if (txtValue.toUpperCase().indexOf(filter) > -1) {
+					tr[i].style.display = "";
+				} else {
+					tr[i].style.display = "none";
+				}
+			}
+		}
+	}
+</script>
+
 </html>

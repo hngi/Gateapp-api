@@ -13,7 +13,9 @@
     <link rel="stylesheet" href="styles/global.css">
     <link rel="stylesheet" href="styles/dashboard-sidebar.css">
     <link rel="stylesheet" href="styles/estates.css">
-    <title>Gate App</title>
+    <title data-title>Estates</title>
+    <!--Current user on session-->
+    <script src="js/general/onSession.js"></script>
 </head>
 
 <body>
@@ -36,34 +38,34 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="active">
             <div class="col-12 dash-logo mt-3">
-                <img class="ml-3" src="images/GatePASS.png" alt="">
+                <img class="ml-3" src="images/gateguard-white.png" alt="">
             </div>
             <ul class="list-unstyled components">
-                <p>Dashboard</p>
+                <p onclick="location.href='default-tab.html'">Dashboard</p>
                 <li class="">
                     <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false"
                         class="dropdown-toggle">Admins</a>
                     <ul class="collapse list-unstyled" id="adminSubmenu">
                         <li>
-                            <a href="#">View all admins</a>
+                            <a href="admins.html">View all admins</a>
                         </li>
                         <li>
-                            <a href="#">Add an admin</a>
+                            <a href="add_admin.html">Add an admin</a>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#">Residents</a>
+                    <a href="residents.html">Residents</a>
                 </li>
                 <li>
                     <a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false"
                         class="dropdown-toggle">Visitors</a>
                     <ul class="collapse list-unstyled" id="visitorsSubmenu">
                         <li>
-                            <a href="#">All Visitors</a>
+                            <a href="visitors-tab.html">All Visitors</a>
                         </li>
                         <li>
-                            <a href="#">Banned Visitors</a>
+                            <a href="banned-visitors-tab.html">Banned Visitors</a>
                         </li>
                     </ul>
                 </li>
@@ -71,11 +73,11 @@
                     <a href="#estatesSubmenu" data-toggle="collapse" aria-expanded="false"
                         class="dropdown-toggle">Estates</a>
                     <ul class="collapse list-unstyled" id="estatesSubmenu">
-                        <li class="active">
-                            <a href="#">All Estates</a>
+                        <li class="">
+                            <a href="estates-tab.html">All Estates</a>
                         </li>
                         <li>
-                            <a href="#">Add an estates</a>
+                            <a href="add-estate.html">Add an Estate</a>
                         </li>
                     </ul>
                 </li>
@@ -84,10 +86,10 @@
                         class="dropdown-toggle">Providers</a>
                     <ul class="collapse list-unstyled" id="providersSubmenu">
                         <li>
-                            <a href="#">All Providers</a>
+                            <a href="providers-tab.html">All Providers</a>
                         </li>
                         <li>
-                            <a href="#">Provider Requests</a>
+                            <a href="provider-request.html">Provider Requests</a>
                         </li>
                     </ul>
                 </li>
@@ -100,8 +102,7 @@
                 <i class="fas fa fa-align-left"></i>
             </button>
             <div class="col-12 notif text-right mb-4 dropdown">
-                <button class="btn p-1" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
+                <button class="btn p-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa fa-bell"></i>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -128,73 +129,85 @@
                                 <td>Otedola Estate</td>
                                 <td>Park Avenue, Lekki o</td>
                                 <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a></td>
+                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Otedola Estate</td>
                                 <td>Park Avenue, Lekki o</td>
                                 <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a></td>
+                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Otedola Estate</td>
                                 <td>Park Avenue, Lekki o</td>
                                 <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a></td>
+                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Otedola Estate</td>
                                 <td>Park Avenue, Lekki o</td>
                                 <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a></td>
+                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Otedola Estate</td>
                                 <td>Park Avenue, Lekki o</td>
                                 <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a></td>
+                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Otedola Estate</td>
                                 <td>Park Avenue, Lekki o</td>
                                 <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a></td>
+                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Otedola Estate</td>
                                 <td>Park Avenue, Lekki o</td>
                                 <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a></td>
+                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Otedola Estate</td>
                                 <td>Park Avenue, Lekki o</td>
                                 <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a></td>
+                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Otedola Estate</td>
                                 <td>Park Avenue, Lekki o</td>
                                 <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a></td>
+                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Otedola Estate</td>
                                 <td>Park Avenue, Lekki o</td>
                                 <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a></td>
+                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Otedola Estate</td>
                                 <td>Park Avenue, Lekki o</td>
                                 <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a></td>
+                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Otedola Estate</td>
                                 <td>Park Avenue, Lekki o</td>
                                 <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a></td>
+                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a>
+                                </td>
                             </tr>
 
                         </tbody>
@@ -239,35 +252,45 @@
                             </div>
                         </div>
                         <div class="col-12 col-md gatemen scroller mb-3 px-0 mt-2">
-                            <h6 class="col-12 mt-2">Gatemen</h6>
+                            <div class="col-12 row mx-0 px-0">
+                                <h6 class="col-12 col-md-6 mt-2 px-0">Gatemen</h6>
+                                <h6 class="col-12 col-md-6 mt-2 text-right add-gateman-link" data-toggle="modal"
+                                    data-target="#addGatemanModal">Add +</h6>
+                            </div>
                             <div class="indiv-gateman col-12 row mx-0 px-0">
                                 <span class="col-6 mt-2 px-0">Tomiwa Adeleke</span>
-                                <button type="button" class="col-3 edit-gateman px-0 btn btn-link">Edit</button>
+                                <button type="button" class="col-3 edit-gateman px-0 btn btn-link" data-toggle="modal"
+                                    data-target="#editGatemanModal">Edit</button>
                                 <button type="button" class="col-3 delete-gateman px-0 btn btn-link">Delete</button>
                             </div>
                             <div class="indiv-gateman col-12 row mx-0 px-0">
                                 <span class="col-6 mt-2 px-0">Tomiwa Adeleke</span>
-                                <button type="button" class="col-3 edit-gateman px-0 btn btn-link">Edit</button>
+                                <button type="button" class="col-3 edit-gateman px-0 btn btn-link" data-toggle="modal"
+                                    data-target="#addGatemanModal">Edit</button>
                                 <button type="button" class="col-3 delete-gateman px-0 btn btn-link">Delete</button>
                             </div>
                             <div class="indiv-gateman col-12 row mx-0 px-0">
                                 <span class="col-6 mt-2 px-0">Tomiwa Adeleke</span>
-                                <button type="button" class="col-3 edit-gateman px-0 btn btn-link">Edit</button>
+                                <button type="button" class="col-3 edit-gateman px-0 btn btn-link" data-toggle="modal"
+                                    data-target="#addGatemanModal">Edit</button>
                                 <button type="button" class="col-3 delete-gateman px-0 btn btn-link">Delete</button>
                             </div>
                             <div class="indiv-gateman col-12 row mx-0 px-0">
                                 <span class="col-6 mt-2 px-0">Tomiwa Adeleke</span>
-                                <button type="button" class="col-3 edit-gateman px-0 btn btn-link">Edit</button>
+                                <button type="button" class="col-3 edit-gateman px-0 btn btn-link" data-toggle="modal"
+                                    data-target="#addGatemanModal">Edit</button>
                                 <button type="button" class="col-3 delete-gateman px-0 btn btn-link">Delete</button>
                             </div>
                             <div class="indiv-gateman col-12 row mx-0 px-0">
                                 <span class="col-6 mt-2 px-0">Tomiwa Adeleke</span>
-                                <button type="button" class="col-3 edit-gateman px-0 btn btn-link">Edit</button>
+                                <button type="button" class="col-3 edit-gateman px-0 btn btn-link" data-toggle="modal"
+                                    data-target="#addGatemanModal">Edit</button>
                                 <button type="button" class="col-3 delete-gateman px-0 btn btn-link">Delete</button>
                             </div>
                             <div class="indiv-gateman col-12 row mx-0 px-0">
                                 <span class="col-6 mt-2 px-0">Tomiwa Adeleke</span>
-                                <button type="button" class="col-3 edit-gateman px-0 btn btn-link">Edit</button>
+                                <button type="button" class="col-3 edit-gateman px-0 btn btn-link" data-toggle="modal"
+                                    data-target="#addGatemanModal">Edit</button>
                                 <button type="button" class="col-3 delete-gateman px-0 btn btn-link">Delete</button>
                             </div>
                         </div>
@@ -276,9 +299,57 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="addGatemanModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h4 class="">Add Gateman</h4>
+                    <form class="mt-2">
+                        <div class="form-group">
+                            <label for="">Name</label>
+                            <input type="text" class="form-control" id=""
+                                placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Number</label>
+                            <input type="password" class="form-control" id=""
+                                placeholder="">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editGatemanModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h4 class="">Edit Gateman</h4>
+                    <form class="mt-2">
+                        <div class="form-group">
+                            <label for="">Name</label>
+                            <input type="text" class="form-control" id=""
+                                placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Number</label>
+                            <input type="password" class="form-control" id=""
+                                placeholder="">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <!--Import third party cdn-->
 <script src="js/general/third_party_cdn.js"></script>
+<!--Import Placholder variables-->
+<script src="js/general/placeholder.js"></script>
+<!--Import the base url for the project-->
+<script src="js/general/routes.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
