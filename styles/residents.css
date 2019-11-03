@@ -34,6 +34,22 @@ top: 1064.48px;
     }
     .guards-image{
         height: 195vh;
+        /* width: 130px; */
+    }
+    .visitorphone-image{
+        margin-bottom:10em!important;
+    }
+    .app-footer{
+        height:230vh;
+    }
+}
+@media(max-width:320px){
+    .Residents-image{
+        height: 175vh;
+    }
+    .guards-image{
+        height: 195vh;
+        /* width: 130px; */
     }
     .visitorphone-image{
         margin-bottom:10em!important;
