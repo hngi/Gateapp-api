@@ -17,3 +17,8 @@ const weeklyServiceVisits         =    'api/v1/statistics/weeklyVisits';
 const monthlyEstate                 =    'api/v1/statistics/monthlyEstate';
 const monthlyServiceProvider        =    'api/v1/statistics/monthlyService';
 const monthlyServiceVisits        =    'api/v1/statistics/monthlyVisits';
+
+//Newsletter SUbscribe
+const newsletter = 'api/v1/newsletter';
+
+//Service Providers Submit Request on Website
