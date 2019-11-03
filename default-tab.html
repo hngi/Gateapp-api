@@ -110,30 +110,27 @@
                 </div>
             </div>
             <div class="col-12 tab-full scroller">
-                <div class="toast border" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false" style="max-width: 70vw;">
-                    <!-- <div class="toast-header">
+                <!-- <div class="toast border" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false" style="max-width: 70vw;">
+                    <div class="toast-header">
                         <small class="ml-auto">11 mins ago</small>
-                    </div> -->
+                    </div>
                     <div class="toast-body">
                             <button type="button" class="ml-auto mb-1 close" data-dismiss="toast" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                         <span>You can write your alert here! </span>
                     </div>
-                </div>
-                <div class="col-12 weekly-stats row mx-0 mt-5">
-                    <h6 class="col-12 stats-header">Weekly Statistics</h6>
-                    <div class="col-12 col-md-4 stat text-center">
-                        <h2 class="mb-0 mt-3">730</h2>
-                        <span>Visits Scheduled</span>
+                </div> -->
+                <div class="container-fluid">
+                    <div class="row stat-tab-box">
+                      <span data-wkly-btn class="all-stat-tabs stat_active"></span>
+                      <span data-mnthly-btn class="all-stat-tabs"></span>
+                      <span data-all-btn class="all-stat-tabs"></span>
                     </div>
-                    <div class="col-12 col-md-4 stat text-center">
-                        <h2 class="mb-0 mt-3">321</h2>
-                        <span>Services used</span>
-                    </div>
-                    <div class="col-12 col-md-4 stat text-center">
-                        <h2 class="mb-0 mt-3">2</h2>
-                        <span>New Estates</span>
+                <div class="col-12 weekly-stats row mx-0 mt-5" data-stat-view>
+                    <div class="text-center" style="position: absolute; left: 50%; margin-top:50px;">
+                        <div class="spinner-border" role="status" style="color: #49a347;">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -143,6 +140,9 @@
 <!--Import third party cdn-->
 <script src="js/general/third_party_cdn.js"></script>
 <script src="js/general/placeholder.js"></script>
+<script src="js/general/routes.js"></script>
+<script src="js/general/onSession.js"></script>
+<script src="js/apis/statistics/admin-dashboard.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {

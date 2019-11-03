@@ -39,8 +39,13 @@ const loginApi = (event, loginForm) => {
                 break;
                 default:
                  //insert the data into broswer localStorage
-                localStorage.setItem('gateguard-admin', JSON.stringify(data));
-                location.replace('default-tab.html');
+                 localStorage.setItem('gateguard-admin', JSON.stringify(data));
+                if(data.user.user_type === 'super_admin'){
+                    location.replace('default-tab.html');
+                }else {
+                    location.replace('estate-tab.html');
+                }
+
             }
          }
          fetch(url, {

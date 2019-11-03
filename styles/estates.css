@@ -1,115 +1,155 @@
-.tab-full{
+.tab-full {
     height: 80vh;
 }
-.tab-full h4{
+
+.tab-full h4 {
     font-weight: bold;
 }
-.tab-full .form-group input{
+
+.tab-full .form-group input {
     border: 1px solid black;
     border-radius: 5px;
 }
-.tab-full .form-group input::placeholder{
+
+.tab-full .form-group input::placeholder {
     font-size: 12px;
 }
-.tab-header{
+
+.tab-header {
     height: 10vh;
 }
-.estates-table thead tr {
+
+.estates-table thead {
     border-top: 1px solid black;
     border-bottom: 1px solid black;
 }
-.estates-table th, td {
-    font-size: 10px;
+
+.estates-table th,
+td {
+    font-size: 12px;
     font-weight: bold;
 }
+
+table#myTable tbody,
+tr {
+    height: 50px !important;
+}
+
 .estates-table a {
     color: #49a347;
 }
+
 .notif button {
     border: none;
     background: transparent;
 }
+
 .notif button:focus {
     border: none;
     background: transparent;
     box-shadow: none;
 }
+
 .notif .dropdown-menu {
     font-size: 12px;
 }
+
 #singleEstateModal .modal-dialog {
     max-width: 100%;
     min-height: 100%;
 }
+
 #singleEstateModal .modal-content {
     min-height: 90vh;
 }
+
 #singleEstateModal .modal-body {
     min-height: 100%;
 }
+
 .estate-image {
     min-height: 40vh;
     background: url("../images/estate-example.png");
     background-size: cover;
     background-position: center;
 }
-.estate-details{
+
+.estate-details {
     min-height: 30vh;
 }
+
 .address-header {
     font-size: 12px;
     font-weight: bold;
 }
+
 .address-listed {
     font-size: 12px;
 }
+
 .added-header {
     font-size: 12px;
     font-weight: bold;
 }
+
 .added-listed {
     font-size: 12px;
 }
+
 .stats h6 {
     font-weight: bold;
     font-size: 12px;
 }
-.stats span, .stats p{
+
+.stats span,
+.stats p {
     font-size: 10px;
 }
+
 .stats p {
     font-weight: bold;
 }
+
 .gatemen {
     max-height: 30vh;
 }
+
 .gatemen h6 {
     font-size: 12px;
     font-weight: bold;
 }
-.indiv-gateman span, .btn-link {
+
+.indiv-gateman span,
+.btn-link {
     font-size: 10px;
 }
+
 .edit-gateman {
     color: #2D9CDB;
 }
+
 .delete-gateman {
     color: #EB5757;
 }
-#addGatemanModal input{
+
+#addGatemanModal input {
     border-radius: 0px;
     border: 1px solid black;
 }
+
 #addGatemanModal label {
     font-size: 12px;
 }
-#editGatemanModal input{
+
+#editGatemanModal input {
     border-radius: 0px;
     border: 1px solid black;
 }
+
 #editGatemanModal label {
     font-size: 12px;
 }
+
 .add-gateman-link {
     cursor: pointer;
     color: #49a347;
