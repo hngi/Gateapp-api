@@ -1,60 +1,177 @@
-.Residents-image{
-    height: 60vh;
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("../images/image 4.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-.guards-image{
-    height: 60vh;
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("../images/Guards image.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-.visitorphone-image{
-    height: 70vh;
-}
-.visitorphone-image img{
-    width: 218.56px;
-height: 384.33px;
-left: 1072.51px;
-top: 1064.48px;
-}
-.residents-breakdown{
-    height: 60vh;
-    border: 1px solid black;
-}
-.clients{
+.wrapper{
     overflow: hidden;
 }
-@media(max-width:380px){
-    .Residents-image{
-        height: 175vh;
+
+#content {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+/* CONTENT HEADER */
+.content-header{
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+}
+
+.not-cont{
+    position: relative;
+}
+
+.notification{
+    position: absolute;
+    top: -10px;
+    left: 12px;
+    color: #fff;
+    background: #dc3545;
+    border-radius: 45%;
+    padding: 7px;
+    font-size: 10px;
+}
+
+
+
+/* TABLE CONTAINER */
+
+.view-port{
+    display: flex;
+    flex-direction: row;
+}
+
+.res-table-cont{
+    margin-top: 10px;
+    flex: 2;
+    margin-right: 20px;
+}
+
+.info-cont{
+    height: 250px;
+    flex: 1;
+    position: relative;
+    top: 80px;
+}
+#closeInfoBtn{
+    position: absolute;
+    right: 0%;
+    top: 10px;
+    background: #dc3545;
+    color: #fff;
+    border: none;
+}
+
+.hide{
+    transform: translateX(200px);
+    display: none;
+}
+.name-search{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.name-search input {
+    width: 200px;
+    height: 40px;
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+table{
+    width:100%;
+    margin-top: 15px;
+}
+.table-head{
+    border-bottom: 1px solid #000;
+    border-top: 1px solid #000;
+}
+th, td{
+    padding: 10px;
+}
+.view-stats{
+    color: #49A347;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+.view-stats:hover{
+    transform: scale(1.1);
+}
+
+#dataName{
+    font-size: 1.5em;
+    font-weight: 900;
+}
+
+#dataEstate{
+    font-size: 1.2em;
+    font-weight: 600;
+}
+.labels{
+    font-size: 12px;
+    margin-bottom: 0%;
+    color: #636363;
+}
+
+.flex{
+    display: flex;
+    justify-content: space-between;
+}
+
+/* --------------------- */
+.mobile-header{
+    display: none;
+    font-weight: bold;
+    border-bottom: 1px solid #000;
+}
+/* ----------------------------*/
+@media (max-width: 768px) {
+    .info-cont{
+        position: absolute;
+        left: 30%;
+        top: 20%;    
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 7px;
+        box-shadow: 0px 0px 5px 2px #575757;
+        height: auto;
+        }
+}
+@media (max-width: 500px) {
+    .table-head{
+        display: none;
     }
-    .guards-image{
-        height: 195vh;
-        /* width: 130px; */
+    .mobile-header{
+        display: flex;
+        justify-content: space-between;
     }
-    .visitorphone-image{
-        margin-bottom:10em!important;
+
+    .table-data, .mobile-table-row{
+        display: flex;
+        flex-direction: column; 
     }
-    .app-footer{
-        height:230vh;
+    .res-table-cont{
+        width: 100%;
+    }
+    .name-search{
+        display:block;
+    }
+    .res-table{
+        overflow-y: scroll;
+        height: 100vh;
+    }
+    .info-cont{
+    position: absolute;
+    left: 5%;
+    top: 25%;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 7px;
+    box-shadow: 0px 0px 5px 2px #575757;
+    height: auto;
     }
 }
-@media(max-width:320px){
-    .Residents-image{
-        height: 175vh;
-    }
-    .guards-image{
-        height: 195vh;
-        /* width: 130px; */
-    }
-    .visitorphone-image{
-        margin-bottom:10em!important;
-    }
-    .app-footer{
-        height:230vh;
-    }
+.res-table th, td {
+    font-size: 12px;
 }
