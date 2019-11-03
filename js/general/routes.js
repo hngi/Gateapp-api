@@ -28,3 +28,9 @@ const allVisits                     =    'api/v1/statistics/visits';
 const fetchAllEstateAdmin                = 'api/v1/admin';
 const revokeEstateAdminAccess            = 'api/v1/revokeadminaccess';
 const resetEstateAdminPassword           = 'api/v1/unrevokeadminaccess';
+
+//Newsletter SUbscribe
+const newsletter = 'api/v1/newsletter';
+
+//Service Providers Submit Request on Website
+const serviceProviderSubmit = 'api/v1/service_provider/create_request';
