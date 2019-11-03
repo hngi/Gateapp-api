@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
+
 class ResidentController extends Controller
 {
     /**
@@ -212,6 +213,120 @@ class ResidentController extends Controller
     }
 
 
+
+
+    //Super Admin search resident by name
+
+    public function searchResidentByName ($name) {
+        
+
+        if (Auth::check()) {
+            $user = Auth::user();
+            $role = $user->role;
+
+            // Check User role
+            if ($role === "0") {
+        
+                $resident = User::where('name', '=', "%{$name}%")->where('role', "=", "1")->get();
+
+                $resident = User::where([
+                    ['role', "1"],
+                ])->get();
+            }
+            else {
+                return response()->json([
+                    'total' => 0,
+                    'message' => 'Unauthorized User',
+                ], 404);
+            }
+
+            if (!$resident) {
+                return response()->json([
+                    'total' => 0,
+                    'status' => true,
+                    'message' => 'There is no resident by that name',
+                ], 200);
+            }
+
+            else {
+                return response()->json([
+                    'residents' => $resident->count(),
+                    'resident' => $resident,
+                    'status' => true,
+                    'message' => 'Resident found',
+                    'data' => $resident
+                ], 200);
+            }
+        }
+        else {
+            return response()->json([
+                'total' => 0,
+                'message' => 'Unauthorized',
+            ], 404);
+        }
+    }
+
+
+
+    //Estate Admin search resident by name
+
+    public function searchEstateResidentByName ($name) {
+
+        if (Auth::check()) {
+            $user = Auth::user();
+            $role = $user->role;
+
+            // Check User role
+            if ($role === "0" || $role === "3") {
+
+                $estateAdmin = Home::Where("user_id", $this->user->id)->pluck("estate_id");
+                $estateResident = Home::Where("user_id", $this->user->id)->pluck("estate_id");
+                if($estateResident = $estateAdmin) {
+                    return response()->json($estateResident);
+                }
+               
+
+                $resident = User::where('name', '=', "%{$name}%")->where('role', "=", "1")->get();
+
+                $resident = User::where([
+                    ['role', "1"],
+                ])->get();
+           
+            }
+            else {
+                return response()->json([
+                    'total' => 0,
+                    'message' => 'Unauthorized User',
+                ], 404);
+            }
+
+            if (!$estateResident) {
+                return response()->json([
+                    'total' => 0,
+                    'status' => true,
+                    'message' => 'There is no resident by that name',
+                ], 200);
+            } else {
+                return response()->json([
+                    'residents' => $resident->count(),
+                    'resident' => $resident,
+                    'status' => true,
+                    'message' => 'Resident found',
+                    'data' => $resident
+                ], 200);
+            }
+        } else {
+            return response()->json([
+                'total' => 0,
+                'message' => 'Unauthorized',
+            ], 404);
+        }
+
+    }
+
+        
+
+    
     //Fetch all residents in the system
 
     public function residents()
@@ -269,4 +384,5 @@ class ResidentController extends Controller
          }
     }
    
+
 }

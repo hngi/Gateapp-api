@@ -48,8 +48,8 @@ class RegisterController extends Controller
     {
         
         $this->validateRequest($request);
-        // $verifycode = mt_rand(1000,9999);
-        $verifycode = 1234;
+        $verifycode = mt_rand(1000,9999);
+
         //start temporay transaction
         DB::beginTransaction();
 
