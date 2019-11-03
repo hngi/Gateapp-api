@@ -74,7 +74,7 @@ class RegisterController extends Controller
                 //Send sms otp to user
                 $phone     = $user->phone;
                 $message   = 'Welcome to GateGuard, please this  4 digit otp token to verify your account '. $user->verifycode;
-                $result = $smsOtpController->bulkSmsNigeria($phone, $message);
+                // $result = $smsOtpController->bulkSmsNigeria($phone, $message);
            }else {
                 
                 $user = User::where('phone', $phone)->first();
