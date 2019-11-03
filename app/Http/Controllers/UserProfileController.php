@@ -130,18 +130,19 @@ class UserProfileController extends Controller
             $user->email     = $request->input('email') ??  $user->email;
             $user->duty_time  = $request->input('duty_time') ?? $user->duty_time;
 
-            if ($user->phone != $request->input('phone')) {
+            $phone = '+'.$request->input('phone');
+            if ($user->phone != $phone) {
                 $user->email_verified_at = null;
                 $user->verifycode = mt_rand(1000,9999);
-                $user->phone      = $request->input('phone');
+                $user->phone      = $phone;
 
                  //Send sms otp to user
                  $phone     = $user->phone;
                  $message   = 'Use this 4 digit otp token to verify your new phone number '. $user->verifycode;
                  $smsOtpController = new SmsOtpController; 
-                 $smsOtpController->bulkSmsNigeria($phone, $message);
+                //  $smsOtpController->bulkSmsNigeria($phone, $message);
                 //We use mail for now untill sms is implemented
-                Mail::to($user->email)->send(new VerifyToken($user));
+                // Mail::to($user->email)->send(new VerifyToken($user));
                 $res['important'] = 'An otp token has ben sent to you phone because you changed your phone number!';
             }
             //Upload image
@@ -252,7 +253,7 @@ class UserProfileController extends Controller
     public function updateFcmToken(Request $request)
     {
         $request->validate([
-            'fcm_token' => ['required', 'string']
+            'fcm_token' => ['string', 'nullable']
         ]);
 
 

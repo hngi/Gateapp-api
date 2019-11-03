@@ -44,13 +44,11 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //show all admin
     Route::get('/admin', 'UserProfileController@showAllAdmin')->middleware('superAdmin');
 
-
     //Fetch residents  scheduled visits stats
    Route::get('ScheduledVisit/{resident_id}', 'Statistics\UserStatsController@fetchScheduledVisit')->middleware('superAdmin');
 
    //Fetch residents  finished visits stats
    Route::get('finishedVisit/{resident_id}', 'Statistics\UserStatsController@finishedVisit')->middleware('superAdmin');
-
 
 
     //(Admin interactions with Estates)
@@ -357,6 +355,18 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //reschedule a visitor
     Route::post('visitor/{id}', 'VisitorController@schedule')->middleware('checkResident');
+
+    // Ban a visitor
+    Route::post('visitor/{id}/ban', 'VisitorController@ban');
+
+    // Remove ban on a visitor
+    Route::post('visitor/{id}/remove-ban/', 'VisitorController@removeBan');
+
+    // Get banned visitors
+    Route::prefix('visitors/banned')->group( function () {
+        Route::get('/all', 'VisitorController@getAllBannedVisitors');
+        Route::get('/for-estate/{estate}', 'VisitorController@getBannedVisitorsForAnEstate');
+    });
 
     //(Residents and Gateman)
 
