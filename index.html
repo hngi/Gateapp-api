@@ -40,8 +40,9 @@
                                 Products
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="web-providers.html">Service Directory</a>
-                                <a class="dropdown-item" href="#">Visitor Management</a>
+                                    <a class="dropdown-item" href="web-providers.html">Service Directory</a>
+                                    <a class="dropdown-item" href="#">Resident App</a>
+                                    <a class="dropdown-item" href="#">Guard App</a>
                             </div>
                         </li>
                         <li class="nav-item mx-1">
@@ -358,7 +359,7 @@
                         </div>
                     </div>
                 </div>
-                <!--                 <div class="col-12 subscribe row mx-0">
+                                <div class="col-12 subscribe row mx-0">
                     <div class="col-12 col-sm-8 col-md-6 subscribe-words mx-auto">
                         <div class="col-12 col-md-8 mt-5 mx-auto">
                             <h2>SUBSCRIBE TO OUR <br> NEWSLETTER</h2>
@@ -383,18 +384,18 @@
                     </div>
                     <div class="col-12 col-md-6 subscribe-form mb-5">
                         <div class="col-12 col-sm-8 col-md-10 mx-auto">
-                            <form>
+                            <form id="form-submit"> 
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Name">
+                                    <input type="text" id="name" class="form-control" placeholder="Name">
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control" placeholder="Email">
+                                    <input type="email" id="email" class="form-control" placeholder="Email">
                                 </div>
-                                <button type="submit" class="btn col-12">Submit</button>
+                                <button type="submit" id="submit" class="btn col-12">Submit</button>
                             </form>
                         </div>
                     </div> 
-                </div> -->
+                </div>
                 <footer class="border col-12 app-footer">
                     <div class="col-11 mx-auto row mx-0 mt-5">
                         <div class="col-12 col-md">
@@ -456,6 +457,8 @@
 <!--Import third party cdn-->
 <script src="js/general/third_party_cdn.js"></script>
 <script src="js/general/placeholder.js"></script>
+<script src="js/general/routes.js"></script>
+<script src="js/apis/newsletterSubscribe/newsletter.js"></script>
 <script type="text/javascript">
     $(".customers").slick({
         lazyLoad: 'ondemand', // ondemand progressive anticipated
