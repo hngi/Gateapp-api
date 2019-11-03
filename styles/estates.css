@@ -74,7 +74,7 @@
     font-weight: bold;
     font-size: 12px;
 }
-.stats span, p{
+.stats span, .stats p{
     font-size: 10px;
 }
 .stats p {
@@ -95,4 +95,22 @@
 }
 .delete-gateman {
     color: #EB5757;
+}
+#addGatemanModal input{
+    border-radius: 0px;
+    border: 1px solid black;
+}
+#addGatemanModal label {
+    font-size: 12px;
+}
+#editGatemanModal input{
+    border-radius: 0px;
+    border: 1px solid black;
+}
+#editGatemanModal label {
+    font-size: 12px;
+}
+.add-gateman-link {
+    cursor: pointer;
+    color: #49a347;
 }

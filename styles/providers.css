@@ -1,0 +1,33 @@
+#singleProviderModal .modal-dialog {
+    max-width: 100%;
+    min-height: 100%;
+}
+#singleProviderModal .modal-content {
+    min-height: 90vh;
+}
+#singleProviderModal .modal-body {
+    min-height: 100%;
+}
+.provider-location {
+    font-size: 10px;
+    font-weight: bold;
+}
+.provider-phone {
+    font-size: 10px;
+    font-weight: bold;
+}
+.stat-name {
+    font-size: 8px;
+    font-weight: bold;
+}
+.stat-value {
+    font-size: 12px;
+}
+.btn-suspend {
+    background: #56CCF2;
+    color: white;
+}
+.btn-remove {
+    background: #EB5757;
+    color: white;
+}
