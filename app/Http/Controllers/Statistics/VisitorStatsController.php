@@ -16,7 +16,7 @@ class VisitorStatsController extends Controller
         $totalVisits = Visitor::sum('visit_count');
             $res['status']  = 'all';
             $res['message'] = 'Total Number of Visits';
-            $res['Service Providers'] = $totalVisits;
+            $res['visitors_count'] = $totalVisits;
             $res['code']   = 'vist_all';
             return response()->json($res, 200);
     }
@@ -27,7 +27,7 @@ class VisitorStatsController extends Controller
         [Carbon::now()->startOfWeek(),Carbon::now()->endOfWeek()])->count();
            $res['status']  = 'wkly';
             $res['message'] = 'Total Number of Visits Scheduled for this week';
-            $res['Visits'] = $totalVisits;
+            $res['visitors_count'] = $totalVisits;
             $res['code']   = 'vist_wkly';
             return response()->json($res, 200);
 
@@ -39,7 +39,7 @@ class VisitorStatsController extends Controller
         [Carbon::now()->startOfMonth(),Carbon::now()->endOfMonth()])->count();
            $res['status']  = 'mnthly';
             $res['message'] = 'Total Number of Visits Scheduled for this Month';
-            $res['Visits'] = $totalVisits;
+            $res['visitors_count'] = $totalVisits;
             $res['code']   = 'vist_mnthly';
             return response()->json($res, 200);
 
@@ -51,7 +51,7 @@ class VisitorStatsController extends Controller
         [Carbon::now()->startOfYear(),Carbon::now()->endOfYear()])->count();
            $res['status']  = 'yrly';
             $res['message'] = 'Total Number of Visits Scheduled for this Year';
-            $res['Visits'] = $totalVisits;
+            $res['visitors_count'] = $totalVisits;
             $res['code']   = 'vist_yrly';
             return response()->json($res, 200);
     }
