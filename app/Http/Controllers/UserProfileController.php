@@ -69,14 +69,16 @@ class UserProfileController extends Controller
 
     public function showAllAdmin()
     {
-        $admins = [];
-        $users = User::all();
-        foreach ($users as $user) {
+       // $admins = [];
+        $admins = User::where('role', '3')->with(['home' => function ($query) {
+            $query->with('estate');
+        }])->get();
+       /* foreach ($users as $user) {
             if ($user->role == 0 || $user->role == 3) {
                 array_push($admins, $user);
             }
-        }
-        if ($admins == []) {
+        }*/
+        if (!$admins) {
             $res['status']    = false;
             $res['message']    = "No Admin Found";
             return response()->json($res, 404);
