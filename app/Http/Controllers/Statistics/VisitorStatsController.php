@@ -14,14 +14,11 @@ class VisitorStatsController extends Controller
 
     public function index(){
         $totalVisits = Visitor::sum('visit_count');
-        if ($totalVisits){
             $res['status']  = 'all';
             $res['message'] = 'Total Number of Visits';
             $res['Service Providers'] = $totalVisits;
             $res['code']   = 'vist_all';
             return response()->json($res, 200);
-        }
-
     }
 
     public function weeklyVisits(){
