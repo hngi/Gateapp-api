@@ -46,7 +46,7 @@
                         <a class="nav-link" href="#">Partners</a>
                     </li>
                     <li class="nav-item mx-1">
-                        <a class="nav-link" href="#">About Us</a>
+                        <a class="nav-link" href="aboutus.html">About Us</a>
                     </li>
                     <li class="nav-item mx-1">
                         <a class="nav-link" href="#">Contact Us</a>
