@@ -26,7 +26,7 @@ class EstateStatsController extends Controller
         $totalEstates = Estate::count();
 
             if ($totalEstates){
-                $res['status']  = true;
+                $res['status']  = 'all';
                 $res['message'] = 'Total Number of Estates ';
                 $res['Estates'] = $totalEstates;
                 $res['code']   = 'est_all';
@@ -42,7 +42,7 @@ class EstateStatsController extends Controller
             [Carbon::now()->startOfYear(),Carbon::now()->endOfYear()])->count();
 
             if ($totalEstates){
-                $res['status']  = true;
+                $res['status']  = 'yrly';
                 $res['message'] = 'Total Number of Estates added this year ';
                 $res['Estates'] = $totalEstates;
                 $res['code']   = 'est_yrly';
@@ -56,10 +56,10 @@ class EstateStatsController extends Controller
             $totalEstates = Estate::whereBetween('created_at',
              [Carbon::now()->startOfMonth(),Carbon::now()->endOfMonth()])->count();
             
-                $res['status']  = true;
+                $res['status']  = 'mnthly';
                 $res['message'] = 'Total Number of Estates Added this month';
                 $res['Estates'] = $totalEstates;
-                $res['code']   = 'est_mthly';
+                $res['code']   = 'est_mnthly';
                 return response()->json($res, 200);
     }
 
@@ -70,7 +70,7 @@ class EstateStatsController extends Controller
      $totalEstates = Estate::whereBetween('created_at',
      [Carbon::now()->startOfWeek(),Carbon::now()->endOfWeek()])->count();
 
-                $res['status']  = true;
+                $res['status']  = 'wkly';
                 $res['message'] = 'Total Number of Estates added this week';
                 $res['Estates'] = $totalEstates;
                 $res['code']   = 'est_wkly';

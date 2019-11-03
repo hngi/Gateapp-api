@@ -18,7 +18,7 @@ class UserStatsController extends Controller
 	 public function fetchScheduledVisit($resident_id){
 		$visitor = DB::table('scheduled_visits')->where('user_id', $resident_id)->get();
 		/*$ScheduledVisit = ScheduledVisit::where('user_id', $visitor_id )->value('visit_date');*/
-			$res['status']  = true;
+			 $res['status']  = 'scheduled';
             $res['message'] = 'Number of Scheduled Visits';
             $res['Number of Scheduled Stats'] = $visitor;
 			$res['All Residents Scheduled Visits'] = $visitor->count();
@@ -31,7 +31,7 @@ class UserStatsController extends Controller
      public function finishedVisit($resident_id){
 	    $visitor = DB::table('visitors_history')->where('user_id', $resident_id)->get();
 	    /*$ScheduledVisit = ScheduledVisit::where('user_id', $visitor_id )->value('visit_date');*/
-			$res['status']  = true;
+			 $res['status']  = 'finished';
 			$res['message'] = 'Number of finished Visits';
 			$res['Number of Finished Visits'] = $visitor;
 			$res['All Finished Visits'] = $visitor->count();
