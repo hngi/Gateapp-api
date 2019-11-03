@@ -106,19 +106,20 @@
             <table class="search" style="width: 100%;">
                 <tr>
                     <td>
-                        <h1>Admins</h1>
+                        <h1>Estate Adminstrators</h1>
                     </td>
-                    <td><input type="tablesearch" name="search" placeholder=" search admin users" id="myInput" onkeyup="myFunction()"></td>
+                    <td><input type="tablesearch" name="search" placeholder=" search admin users" id="myInput" onkeyup="myFunction()" hidden></td>
                 </tr>
             </table>
-            <table class="admins" id="myTable">
+            <table class="admins" id="myTable" class="table table-borderless estates-table">
                 <thead>
                     <tr style="border-top: 1px solid black; border-bottom: 1px solid black;">
-                        <td>Name <i class="fa fa-filter"></i></td>
-                        <td>Estate <i class="fa fa-filter"></i></td>
-                        <td>Email Address <i class="fa fa-filter"></i></td>
+                        <td scope="col">Name <i class="fa fa-filter"></i></td>
+                        <td scope="col">Estate <i class="fa fa-filter"></i></td>
+                        <td scope="col">Email Address <i class="fa fa-filter"></i></td>
                         <td></td>
                     </tr>
+                    <div class="spinner-border" role="status" style="color: #49a347;">
                 </thead>
                 <!-- <tr>
                     <td>Sarah Anderson</td>
@@ -234,8 +235,8 @@
                 </tr> -->
 
             </table>
+            </div>
         </div>
-    </div>
     </div>
     </div>
     <!-- Modal inserted here -->
@@ -244,15 +245,16 @@
             <div class="modal-content col-11 col-md-9 px-0 ml-auto mr-auto">
                 <div class="modal-body small_modal">
                     <img class="mx-auto d-block" src="" id="profileImage"></img>
-                    <h1 data-name>Chukwudi Ubong</h1>
-                    <h3 data-estate>Otedola Estate</h3>
-                    <p data-email>admin@gatepass.com</p>
+                    <h1 class="text-center" id="modalName"></h1>
+                    <h3 class="text-center" id="modalEstate"></h3>
+                    <h4 class="text-center" id="modalEmail"></h4>
+                    <p class="text-center" id="modalPhone"></p>
+                    <p class="text-center" id="modalAddress"></p>
                     <br>
 
-                    <button class="btn btn-danger" id="#revoke" style="background-color: #EB5757; width: 300px; margin-bottom: 30px;">Revoke Access</button>
+                    <button class="btn btn-danger" id="revoke" data-id="#" style="background-color: #EB5757; width: 300px; margin-bottom: 30px;" hidden>Revoke Access</button>
                     <br>
-                    <button class="btn btn-warning" id="#reset" style="background-color: #56CCF2; width: 300px;">Reset
-						Password</button>
+                    <button class="btn btn-warning" id="restore" data-id="#" style="background-color: #56CCF2; width: 300px;" hidden>Restore Access</button>
 
                 </div>
             </div>
@@ -265,8 +267,11 @@
 <script src="js/general/placeholder.js"></script>
 <!--Import the base url for the project-->
 <script src="js/general/routes.js"></script>
+<!--Import User Session information-->
+<script src="js/general/onSession.js"></script>
 <!--Import the api reqeust srcipt-->
-<script src="js/apis/admins.js"></script>
+<script src="js/apis/superAdmin/fetchEstateAdmins.js"></script>
+
 
 <script type="text/javascript">
     $(document).ready(function() {
