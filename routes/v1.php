@@ -50,7 +50,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     
     //Fetch residents  scheduled visits stats
-   Route::get('ScheduledVisit/{resident_id}', 'Statistics\UserStatsController@fetchScheduledVisit')->middleware('superAdmin');
+   Route::get('ScheduledVisits/{resident_id}', 'Statistics\UserStatsController@fetchScheduledVisit')->middleware('superAdmin');
 
    //Fetch residents  finished visits stats
    Route::get('finishedVisit/{resident_id}', 'Statistics\UserStatsController@finishedVisit')->middleware('superAdmin');

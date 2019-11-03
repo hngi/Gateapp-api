@@ -20,21 +20,21 @@ class UserStatsController extends Controller
 
      				$visitor = DB::table('scheduled_visits')->where('user_id', $resident_id)->get();
         			/*$ScheduledVisit = ScheduledVisit::where('user_id', $visitor_id )->value('visit_date');*/
-		if(!$visitor){
-			$res['status']  = false;
-			$res['message'] = 'No Scheduled visits found for this resident';
-           /*$res['Resident Id'] = $resident_id;*/
-            return response()->json($res, 404); 
-        }else{
-           $res['status']  = true;
-            $res['message'] = 'Number of Scheduled Visits';
-           $res['Number of Scheduled Stats'] = $visitor;
-            $res['All Residents Scheduled Visits'] = $visitor->count();
-           return response()->json($res, 200);
-        }
+					if(!$visitor){
+						$res['status']  = false;
+						$res['message'] = 'No Scheduled visits found for this resident';
+			           /*$res['Resident Id'] = $resident_id;*/
+			            return response()->json($res, 404); 
+			        }else{
+			           $res['status']  = true;
+			            $res['message'] = 'Number of Scheduled Visits';
+			          /* $res['Number of Scheduled Stats'] = $visitor;*/
+			            $res['ScheduledVisits'] = $visitor->count();
+			           return response()->json($res, 200);
+			        }
 
 
-    }
+    		}
 
 
 
@@ -52,9 +52,9 @@ class UserStatsController extends Controller
 								            return response()->json($res, 404); 
 				        }else{
 				           $res['status']  = true;
-				            $res['message'] = 'Number of finished Visits';
-				           $res['Number of Finished Visits'] = $visitor;
-				             $res['All Finished Visits'] = $visitor->count();
+				            $res['message'] = 'Number of Finished Visits';
+				        /*   $res['Number of Finished Visits'] = $visitor;*/
+				             $res['FinishedVisits'] = $visitor->count();
 				           return response()->json($res, 200);
 				        }
 
