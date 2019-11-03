@@ -3,9 +3,9 @@ Import Note: The base_url.js hold every every third party base url origin and ap
     for example: the api origin or any api origin
     this url can been use in the application as a variable
 */
-// const api_origin = 'http://127.0.0.1:8000/';
+ const api_origin = 'http://127.0.0.1:8000/';
 // const api_origin = 'http://52.40.191.249/';
-const api_origin = 'https://gateappapi.herokuapp.com/';
+//const api_origin = 'https://gateappapi.herokuapp.com/';
 
 //Authentication Paths
 const signin                        =    'api/v1/login/admin';
@@ -22,3 +22,9 @@ const monthlyServiceVisits          =    'api/v1/statistics/monthlyVisits';
 const allEstate                     =    'api/v1/statistics/estate';
 const allServiceProvider            =    'api/v1/statistics/service';
 const allVisits                     =    'api/v1/statistics/visits';
+
+//Super Admin - Admin Page 
+// Get All Estate Admin Information 
+const fetchAllEstateAdmin                = 'api/v1/admin';
+const revokeEstateAdminAccess            = 'api/v1/revokeadminaccess';
+const resetEstateAdminPassword           = 'api/v1/unrevokeadminaccess';
