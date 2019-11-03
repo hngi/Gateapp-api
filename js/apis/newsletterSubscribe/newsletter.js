@@ -1,7 +1,7 @@
 const url = `${api_origin}${newsletter}`;
 
 //Get input field values
-function subscribe(e) {
+const subscribe = (e) => {
     e.preventDefault();
     const name = document.querySelector('#name').value;
     const email = document.querySelector('#email').value;
@@ -25,12 +25,17 @@ function subscribe(e) {
         .then(resp => {
             Swal.fire({
                 title: 'Subscribed Successfully',
-                html:  `<p style="color:tomato; font-size:17px;">${resp.message}</p>`,
+                html:  `<p style="color:tomato; font-size:17px;">${resp.message} Check your email.</p>`,
                 confirmButtonText: 'Close'
             })       
             console.log(resp);
         })
         .catch(err => {
+            Swal.fire({
+                title: 'An Error Occured',
+                html: `<p style="color:tomato; font-size:17px;">This may be due to internet connection not available, please turn on internet connection, Thank you!</p>`,
+                confirmButtonText: 'Close'
+            })
             console.log(err);
         })
 
