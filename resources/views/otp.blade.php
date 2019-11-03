@@ -14,7 +14,7 @@
     <h2>OTP Dev Check</h2>
     <div class="col-12" style="background: brown; color: white;">
         @foreach($user as $user)
-        <div>{{$user->name}} | | {{$user->verifycode}}</div> <br>
+        <div>{{$user->name}} | {{$user->user_type}} | {{$user->verifycode}}</div> <br>
         @endforeach
     </div>
   </body>

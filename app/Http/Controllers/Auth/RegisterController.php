@@ -48,20 +48,20 @@ class RegisterController extends Controller
     {
         
         $this->validateRequest($request);
-        $verifycode = mt_rand(1000,9999);
+        // $verifycode = mt_rand(1000,9999);
+        $verifycode = 1234;
         //start temporay transaction
         DB::beginTransaction();
 
         try{
            $smsOtpController = new SmsOtpController;
-           $phone = '+'.$request->input('phone');
-           $check = $this->checkphone();
+           $phone = $request->input('phone');
+           $check = $this->checkphone($phone);
            if(!$check) {
                 $user = User::create([
                     'name'     => ucfirst($request->input('name')),
                     'image'    => 'noimage.jpg',
                     'phone'    => $phone,
-                    // 'email'    => $request->input('email'),
                     'user_type'=> $user_type,
                     'role'     => $role,
                     'duty_time' => $duty_time,
@@ -74,8 +74,7 @@ class RegisterController extends Controller
                 //Send sms otp to user
                 $phone     = $user->phone;
                 $message   = 'Welcome to GateGuard, please this  4 digit otp token to verify your account '. $user->verifycode;
-                $result = $smsOtpController->bulkSmsNigeria($phone, $message);
-                // Mail::to($user->email)->send(new WelcomeMail($user));
+                // $result = $smsOtpController->bulkSmsNigeria($phone, $message);
            }else {
                 
                 $user = User::where('phone', $phone)->first();
@@ -92,12 +91,11 @@ class RegisterController extends Controller
                 $phone        = $user->phone;
                 $current_user = $user->name != '' ? $user->name : 'member';
                 $message  = 'Welcome back '.$current_user.' please use this 4 digit otp to re-verify your account '. $user->verifycode;
-                $result = $smsOtpController->bulkSmsNigeria($phone, $message);
-                // Mail::to($user->email)->send(new VerifyToken($user));
+                // $result = $smsOtpController->bulkSmsNigeria($phone, $message);
            }
             $msg['message'] = 'A verification otp has been sent to your phone, please use to veriify your account!';
             $msg['user']    = $user;
-            $msg['otp'] = $result;
+            // $msg['otp'] = $result;
             $msg['image_link'] = 'https://res.cloudinary.com/getfiledata/image/upload/';
             $msg['image_round_format']  = 'w_200,c_fill,ar_1:1,g_auto,r_max/';
             $msg['image_square_format'] = 'w_200,ar_1:1,c_fill,g_auto/';
@@ -122,7 +120,7 @@ class RegisterController extends Controller
     public function validateRequest(Request $request){
             $rules = [
                 'name'               => 'required|string',
-                'phone'              => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+                'phone'              => 'required',
                 'device_id'          => 'required',
             ];
             $messages = [
