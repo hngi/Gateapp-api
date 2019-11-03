@@ -260,15 +260,13 @@ class VisitorController extends Controller
 
             // Upload updated image
             //Upload image
+            $data = null;
             if ($request->hasFile('image')) {
                 $data = $this->upload($request, $image, $visitor);
                 if ($data['status_code'] !=  200) {
                     return response()->json($data, $data['status_code']);
                 }
                 $visitor->image = $data['image'];
-            } else {
-                $data = null;
-                $visitor->image = 'noimage.jpg';
             }
 
             //Save Visitor
@@ -478,7 +476,9 @@ class VisitorController extends Controller
     }
     public function getScheduled()
     {
-        $scheduled = ScheduledVisit::where('user_id', $this->user->id)->with('visitor')->get();
+        $scheduled = ScheduledVisit::where('user_id', $this->user->id)->with(['visitor' => function ($query) {
+            $query->where('status', 1); }])->get();;
+        
         if (!$scheduled) {
             return response()->json(['message' => 'You have no scheduled visits'], 400);
         }

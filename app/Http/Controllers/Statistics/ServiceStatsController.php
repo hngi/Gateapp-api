@@ -15,49 +15,31 @@ class ServiceStatsController extends Controller
     // Total number of service provider in the system 
     public function index(){
         $totalServices = Service_Provider::where('status','1')->count(); 
-        if (!$totalServices){
-            $res['status']  = false;
-            $res['message'] = 'No Service provider found';
-            return response()->json($res, 404); 
-        }else {
-            $res['status']  = true;
+            $res['status']  = 'all';
             $res['message'] = 'Total Number of Service providers ';
             $res['Service Providers'] = $totalServices;
+            $res['code']   = 'serv_all';
             return response()->json($res, 200);
-        }
-
     }
 
     public function weeklyService(){
         $totalServices = Service_Provider::where('status','1')->whereBetween('created_at', 
         [Carbon::now()->startOfWeek(),Carbon::now()->endOfWeek()])->count(); 
-        if (!$totalServices){
-            $res['status']  = false;
-            $res['message'] = 'No Service provider has been added this week ';
-            return response()->json($res, 404); 
-        }else {
-            $res['status']  = true;
+            $res['status']  = 'wkly';
             $res['message'] = 'Total Number of Service providers added this week';
             $res['Service Providers'] = $totalServices;
+            $res['code']   = 'serv_wkly';
             return response()->json($res, 200);
-        }
-
     }
 
     public function monthlyService(){
         $totalServices = Service_Provider::where('status','1')->whereBetween('created_at', 
         [Carbon::now()->startOfMonth(),Carbon::now()->endOfMonth()])->count(); 
-        if (!$totalServices){
-            $res['status']  = false;
-            $res['message'] = 'No Service provider has been added this month';
-            return response()->json($res, 404); 
-        }else {
-            $res['status']  = true;
+            $res['status']  = 'mnthly';
             $res['message'] = 'Total Number of Service providers added this month';
             $res['Service Providers'] = $totalServices;
+            $res['code']   = 'serv_mntly';
             return response()->json($res, 200);
-        }
-
     }
 
 
@@ -71,12 +53,7 @@ class ServiceStatsController extends Controller
         $estateServiceProviders = Service_Provider::where([
             ['status', '1'],['estate_id', $estate_id]
             ])->count();
-        if (!$estateServiceProviders){
-            $res['status']  = false;
-            $res['message'] = 'No Service provider found in this estate';
-            $res['Estate Id'] = $estate_id;
-            return response()->json($res, 404); 
-        }else {
+        if ($estateServiceProviders){
             $res['status']  = true;
             $res['message'] = 'Total Number of Service providers  ';
             $res['Service Providers'] = $estateServiceProviders;
@@ -89,11 +66,7 @@ class ServiceStatsController extends Controller
     //Total number of Pending Service Provider requests on the system 
     public function pendingRequests(){
         $pendingServiceProviders = Service_Provider::where('status', '0')->count();
-        if (!$pendingServiceProviders){
-            $res['status']  = false;
-            $res['message'] = 'No pending Requests found';
-            return response()->json($res, 404); 
-        }else {
+        if ($pendingServiceProviders){
             $res['status']  = true;
             $res['message'] = 'Total Number of Pending Service providers  ';
             $res['Service Providers'] = $pendingServiceProviders;
@@ -109,11 +82,7 @@ class ServiceStatsController extends Controller
         $pendingServiceProviders = Service_Provider::where([
             ['status', '0'],['estate_id',$estate_id]
             ])->count();
-        if (!$pendingServiceProviders){
-            $res['status']  = false;
-            $res['message'] = 'No pending Requests found';
-            return response()->json($res, 404); 
-        }else {
+        if ($pendingServiceProviders){
             $res['status']  = true;
             $res['message'] = 'Total Number of Pending Service providers  ';
             $res['Service Providers'] = $pendingServiceProviders;
