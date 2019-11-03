@@ -94,7 +94,7 @@ class ForgotPhoneController extends Controller
                 try{
                     $message   = 'Use this verification otp to verify your account '. $user->verifycode;
                     $smsOtpController = new SmsOtpController; 
-                    // $smsOtpController->bulkSmsNigeria($phone, $message);
+                    $result = $smsOtpController->bulkSmsNigeria($phone, $message);
                     // //We use mail for now untill sms is implemented
                     // Mail::to($user->email)->send(new VerifyToken($user));
                     //Commit changes 
@@ -109,6 +109,7 @@ class ForgotPhoneController extends Controller
                     //Rollback if there is an erro
                     DB::rollBack();
                     $res['success'] = false;
+                    $msg['otp'] = $result;
                     $res['message'] = 'OTP Token not sent. Please try again!';
                     $res['hint']    = $e->getMessage();
                     return response()->json($res, 501);
