@@ -34,3 +34,7 @@ const newsletter = 'api/v1/newsletter';
 
 //Service Providers Submit Request on Website
 const serviceProviderSubmit = 'api/v1/service_provider/create_request';
+
+// Service Provider Request's approval/rejection
+const approveServiceProvider = 'api/v1/service-provider/approve/';
+const rejectServiceProvider  = 'api/v1/service-provider/reject/';
