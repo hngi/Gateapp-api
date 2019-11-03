@@ -142,7 +142,7 @@ class UserProfileController extends Controller
                  $phone     = $user->phone;
                  $message   = 'Use this 4 digit otp token to verify your new phone number '. $user->verifycode;
                  $smsOtpController = new SmsOtpController; 
-                //  $smsOtpController->bulkSmsNigeria($phone, $message);
+                 $result = $smsOtpController->bulkSmsNigeria($phone, $message);
                 //We use mail for now untill sms is implemented
                 // Mail::to($user->email)->send(new VerifyToken($user));
                 $res['important'] = 'An otp token has ben sent to you phone because you changed your phone number!';
@@ -168,6 +168,7 @@ class UserProfileController extends Controller
             $res['status']  = true;
             $res['user']    = $user;
             $res['image_info']   = $data;
+            $msg['otp'] = $result;
             $res['message'] = 'Your Account Was Successfully Updated';
 
             return response()->json($res, 200);
