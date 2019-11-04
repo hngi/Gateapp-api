@@ -44,8 +44,7 @@ class VerificationController extends Controller
             $user = User::where('verifycode', $verifycode)->first();
 
             $token = Auth::guard()->login($user);
-        
-            if ($user->email_verified_at == null){
+    
                 //generate a new verify code 
                 $user->verifycode  =  $this->generatedPassword();
                 $user->email_verified_at = date("Y-m-d H:i:s");
@@ -64,14 +63,7 @@ class VerificationController extends Controller
                 $msg['image_example_link']  = 'https://res.cloudinary.com/getfiledata/image/upload/w_200,c_fill,ar_1:1,g_auto,r_max/noimage.jpg';
 
                 return response()->json($msg, 200);
-                
-            } else {
-                $msg["message"] = "Account verified already. Please Login";
-                $msg['note'] = 'please redirect to login page';
-                $msg['verified'] = "Done";
 
-                return response()->json($msg, 208);
-             }
 
         } else{
 

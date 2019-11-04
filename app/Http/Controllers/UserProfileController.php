@@ -69,14 +69,16 @@ class UserProfileController extends Controller
 
     public function showAllAdmin()
     {
-        $admins = [];
-        $users = User::all();
-        foreach ($users as $user) {
+       // $admins = [];
+        $admins = User::where('role', '3')->with(['home' => function ($query) {
+            $query->with('estate');
+        }])->get();
+       /* foreach ($users as $user) {
             if ($user->role == 0 || $user->role == 3) {
                 array_push($admins, $user);
             }
-        }
-        if ($admins == []) {
+        }*/
+        if (!$admins) {
             $res['status']    = false;
             $res['message']    = "No Admin Found";
             return response()->json($res, 404);
@@ -130,31 +132,27 @@ class UserProfileController extends Controller
             $user->email     = $request->input('email') ??  $user->email;
             $user->duty_time  = $request->input('duty_time') ?? $user->duty_time;
 
-            if ($user->phone != $request->input('phone')) {
+            $phone = '+'.$request->input('phone');
+            if ($user->phone != $phone) {
                 $user->email_verified_at = null;
                 $user->verifycode = mt_rand(1000,9999);
-                $user->phone      = $request->input('phone');
+                $user->phone      = $phone;
 
                  //Send sms otp to user
                  $phone     = $user->phone;
                  $message   = 'Use this 4 digit otp token to verify your new phone number '. $user->verifycode;
                  $smsOtpController = new SmsOtpController; 
-                 $smsOtpController->bulkSmsNigeria($phone, $message);
-                //We use mail for now untill sms is implemented
-                Mail::to($user->email)->send(new VerifyToken($user));
+                //  $smsOtpController->africasTalking($phone, $message);
                 $res['important'] = 'An otp token has ben sent to you phone because you changed your phone number!';
             }
             //Upload image
-            //Upload image
+            $data = null;
             if ($request->hasFile('image')) {
                 $data = $this->upload($request, $image, $user);
                 if ($data['status_code'] !=  200) {
                     return response()->json($data, $data['status_code']);
                 }
                 $user->image = $data['image'];
-            } else {
-                $data = null;
-                $user->image = 'noimage.jpg';
             }
 
 
@@ -252,7 +250,7 @@ class UserProfileController extends Controller
     public function updateFcmToken(Request $request)
     {
         $request->validate([
-            'fcm_token' => ['required', 'string']
+            'fcm_token' => ['string', 'nullable']
         ]);
 
 
