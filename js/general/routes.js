@@ -22,3 +22,7 @@ const monthlyServiceVisits = "api/v1/statistics/monthlyVisits";
 const allEstate = "api/v1/statistics/estate";
 const allServiceProvider = "api/v1/statistics/service";
 const allVisits = "api/v1/statistics/visits";
+//Residents
+const allResidents = "api/v1/user/all/1";
+//Visitors
+const allVisitors = "api/v1/visitors";
