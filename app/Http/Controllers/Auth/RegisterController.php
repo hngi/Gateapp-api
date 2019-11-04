@@ -74,7 +74,7 @@ class RegisterController extends Controller
                 //Send sms otp to user
                 $phone     = $user->phone;
                 $message   = 'Welcome to GateGuard, please this  4 digit otp token to verify your account '. $user->verifycode;
-                $result = $smsOtpController->africasTalking($phone, $message);
+                // $result = $smsOtpController->africasTalking($phone, $message);
            }else {
                 
                 $user = User::where('phone', $phone)->first();
@@ -91,11 +91,11 @@ class RegisterController extends Controller
                 $phone        = $user->phone;
                 $current_user = $user->name != '' ? $user->name : 'member';
                 $message  = 'Welcome back '.$current_user.' please use this 4 digit otp to re-verify your account '. $user->verifycode;
-                $result = $smsOtpController->africasTalking($phone, $message);
+                // $result = $smsOtpController->africasTalking($phone, $message);
            }
             $msg['message'] = 'A verification otp has been sent to your phone, please use to veriify your account!';
             $msg['user']    = $user;
-            $msg['otp'] = $result;
+            // $msg['otp'] = $result;
             $msg['image_link'] = 'https://res.cloudinary.com/getfiledata/image/upload/';
             $msg['image_round_format']  = 'w_200,c_fill,ar_1:1,g_auto,r_max/';
             $msg['image_square_format'] = 'w_200,ar_1:1,c_fill,g_auto/';
