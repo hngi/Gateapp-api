@@ -43,9 +43,9 @@ class ForgotPhoneController extends Controller
         //start temporay transaction
         DB::beginTransaction();
         try{
-            $phone = '+'.$request->input('phone');
+            $phone = $request->input('phone');
             //generate a new verify code 
-            $user->email_verified_at    = null;
+            $user->email_verified_at  = null;
             $user->phone            = $phone;
             if ($user->device_id != $request->input('new_device_id')) {
                   $user->device_id = $request->input('new_device_id');
@@ -57,9 +57,7 @@ class ForgotPhoneController extends Controller
             $current_user = !$user->name->isEmpty() ? $user->name : 'member';
             $message      = 'Hello'.$current_user.' user this 4 digit otp to verify new phone '. $user->verifycode;
             $smsOtpController = new SmsOtpController; 
-            $smsOtpController->bulkSmsNigeria($phone, $message);
-            // //We use mail for now untill sms is implemented
-            // Mail::to($user->email)->send(new VerifyToken($user));
+            // $smsOtpController->africansTalking($phone, $message);
             //Commit changes 
             DB::commit();
 
@@ -82,7 +80,7 @@ class ForgotPhoneController extends Controller
         $this->validate($request, [
             'phone' => 'required',
         ]);
-           $phone = '+'.$request->input('phone');
+           $phone = $request->input('phone');
            $user = User::where('phone', $phone)->first();
            if ($user == null) {
                 $res['success'] = false;
@@ -94,9 +92,7 @@ class ForgotPhoneController extends Controller
                 try{
                     $message   = 'Use this verification otp to verify your account '. $user->verifycode;
                     $smsOtpController = new SmsOtpController; 
-                    $result = $smsOtpController->bulkSmsNigeria($phone, $message);
-                    // //We use mail for now untill sms is implemented
-                    // Mail::to($user->email)->send(new VerifyToken($user));
+                    // $result = $smsOtpController->africasTalking($phone, $message);
                     //Commit changes 
                     DB::commit();
 
@@ -109,7 +105,7 @@ class ForgotPhoneController extends Controller
                     //Rollback if there is an erro
                     DB::rollBack();
                     $res['success'] = false;
-                    $msg['otp'] = $result;
+                    // $msg['otp'] = $result;
                     $res['message'] = 'OTP Token not sent. Please try again!';
                     $res['hint']    = $e->getMessage();
                     return response()->json($res, 501);
