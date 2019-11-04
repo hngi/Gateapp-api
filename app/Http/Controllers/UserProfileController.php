@@ -31,24 +31,32 @@ class UserProfileController extends Controller
 
     public function all()
     {
-        $admins = [];
+        $super_admins = [];
         $residents = [];
         $gatemans = [];
+        $estate_admins = [];
 
-        $users = User::all();
+        $users = User::with(['home' => function ($query) {
+            $query->with('estate');
+        }])->get();
+
         foreach ($users as $user) {
             if ($user->role == 0) {
-                array_push($admins, $user);
+                array_push($super_admins, $user);
             } else if ($user->role == 1) {
                 array_push($residents, $user);
             } else if ($user->role == 2) {
                 array_push($gatemans, $user);
+            }else if ($user->role == 3) {
+                array_push($estate_admins, $user);
             }
         }
         $res['status']    = true;
-        $res['admins']    = $admins;
+
         $res['residents'] = $residents;
         $res['gatemans']  = $gatemans;
+        $res['estate_admins']  = $estate_admins;
+        $res['super_admins']    = $super_admins;
         return response()->json($res, 200);
     }
 
