@@ -35,9 +35,9 @@ const profileImage = document.querySelector('#profileImage');
         
         return admins.map((admin)=>{
             let {access, created_at, device_id, duty_time, email, home} = admin;
-            console.log(home);
+            // console.log(home);
             let { estate} = home;
-            console.log(estate);
+            // console.log(estate);
             
             // Create Entries placeholders on table 
             let row = table.insertRow(),

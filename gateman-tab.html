@@ -20,21 +20,7 @@
 </head>
 
 <body>
-	<!-- <div class="container-fluid">
-        <div class="row">
-            <div class="dashboard-full col-12 row mx-0 px-0">
-                <div class="col-2 border-right our-sidebar">
-                    <div class="col-12 dash-logo mt-3">
-                        <img src="images/GatePASS.png" alt="">
-                    </div>
-                    div.col-12.sidebar
-                </div>
-                <div class="col-10">
 
-                </div>
-            </div>
-        </div>
-    </div> -->
 	<div class="wrapper">
 		<!-- Sidebar  -->
 		<nav id="sidebar" class="active">
@@ -58,6 +44,9 @@
 				<li>
 					<a href="residents.html">Residents</a>
 				</li>
+				<li>
+                    <a href="#">Gatemen</a>
+                </li>
 				<li>
 					<a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false"
 						class="dropdown-toggle">Visitors</a>
@@ -164,18 +153,18 @@
 
 <!--Import third party cdn-->
 <script src="js/general/third_party_cdn.js"></script>
-<script src="js/general/placeholder.js"></script>
+
 
 <!--Import third party cdn-->
 <script src="js/general/third_party_cdn.js"></script>
-<!--Import Placholder variables-->
-<script src="js/general/placeholder.js"></script>
+
 <!--Import the base url for the project-->
 <script src="js/general/routes.js"></script>
-<!--Import the login validation-->
-<script src="js/validation/auth/login.js"></script>
-<!--Import the api reqeust srcipt-->
-<script src="js/apis/auth/login.js"></script>
+
+
+
+<!-- Import the Gateman Request script  -->
+<script src="js/general/gateman.js"></script>
 
 
 <script type="text/javascript">
@@ -190,22 +179,6 @@
 	// Get the modal
 	var modal = document.getElementById("myModal");
 
-	// Get the button that opens the modal
-	var btn = document.getElementById("myBtn");
-
-	// Get the <span> element that closes the modal
-	var span = document.getElementsByClassName("close")[0];
-
-	// When the user clicks on the button, open the modal
-	btn.onclick = function () {
-		modal.style.display = "block";
-	}
-
-	// When the user clicks on <span> (x), close the modal
-	span.onclick = function () {
-		modal.style.display = "none";
-	}
-
 	// When the user clicks anywhere outside of the modal, close it
 	window.onclick = function (event) {
 		if (event.target == modal) {
@@ -213,78 +186,5 @@
 		}
 	}
 </script>
-<script>
-	
-	filterList = () => {
-           let searchInput, filter, tr, i, td, txtValue;
-           
-           searchInput = document.getElementById('myInput');
-           filter = searchInput.value.toUpperCase();
-           trs = document.querySelectorAll('.js--gatemanRow');
-           trs.forEach(tr => tr.style.display = [...tr.children].find(td => td.innerHTML.toUpperCase().includes(filter)) ? '' : 'none');
-	   };
-	   
-
-	let endpoint = `${api_origin}${allUsers}`;
-	rowElement = document.getElementById('gatemanTable');
-
-	fetch(endpoint, {
-	method: 'GET', 
-	mode: 'cors', 
-	redirect: 'follow',
-	headers: new Headers({
-		"Accept": "application/json",
-		"Content-Type": "application/json",
-		"Authorization": token
-	})
-	}).then( response => response.json())
-	.then( data => { 
-		displayGatemen(data.gatemans);
-		// console.log(data.gatemans);
-		});
-	
-	 html = `
-	 			<tr class="js--gatemanRow">
-					<td>%SN%</td>
-					<td>%NAME%</td>
-					<td>%ESTATE%</td>
-					<td>%EMAIL%</td>
-					<td>%PHONE%</td>
-					<td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
-					</td>
-				</tr>
-		` ; 
-	
-		
-
-	const displayGatemen = (results) => {
-		let count = 0;
-    
-		results.forEach(el => {
-	 //   console.log(el);
-		 count += 1;
-		//Replace the placeholder text with some actual data
-		newHtml = html.replace('%SN%', count);
-		newHtml = newHtml.replace('%NAME%', el.name);
-		newHtml = newHtml.replace('%ESTATE%', 'Estate Here');
-		newHtml = newHtml.replace('%EMAIL%', el.email);
-		newHtml = newHtml.replace('%PHONE%', el.phone);
- 
-		//Insert the HTML into the DOM
-		rowElement.insertAdjacentHTML('beforeend', newHtml);
-		});
-
-	}
-
-
-
-
-
-</script>
-
-
-
-
-
 
 </html>
