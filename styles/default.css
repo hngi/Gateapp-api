@@ -36,6 +36,10 @@
 .all-stat-tabs:nth-of-type(3)::before {
     content: 'All';
 }
+.stat_active {
+    background: #49a347;
+    color: white;
+}
 @media(max-width: 768px) {
     .stat-tab-box {
         max-width: 70vw; 

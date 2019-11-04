@@ -124,91 +124,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" class="unban-link" data-toggle="modal">Unban</a>
-                                </td>
+                            <tr id="loading_wait">
+                                <td colspan="4"> Loading... </td>
                             </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" class="unban-link" data-toggle="modal">Unban</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" class="unban-link" data-toggle="modal">Unban</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" class="unban-link" data-toggle="modal">Unban</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" class="unban-link" data-toggle="modal">Unban</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" class="unban-link" data-toggle="modal">Unban</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" class="unban-link" data-toggle="modal">Unban</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" class="unban-link" data-toggle="modal">Unban</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" class="unban-link" data-toggle="modal">Unban</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" class="unban-link" data-toggle="modal">Unban</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" class="unban-link" data-toggle="modal">Unban</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" class="unban-link" data-toggle="modal">Unban</a>
-                                </td>
-                            </tr>
-
                         </tbody>
                     </table>
                 </div>
@@ -273,12 +191,18 @@
 <!--Import third party cdn-->
 <script src="js/general/third_party_cdn.js"></script>
 <script src="js/general/placeholder.js"></script>
+<script src="js/general/onSession.js"></script>
+<script src="js/general/routes.js"></script>
+<script src="js/apis/visitors/banned-visitors.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');
         });
+
+        getBannedVisitors();
     });
+
 </script>
 
 </html>
