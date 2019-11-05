@@ -17,4 +17,7 @@ document.write(`<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/
 /**********************************Slick.js CDN ********************************************************/
 document.write(`<script src="slick/slick.js"></script>`);
 
+//*********************************Axios****************************************************************//
+document.write(`<script src="https://unpkg.com/axios/dist/axios.min.js"></script>`);
+
 console.clear();
