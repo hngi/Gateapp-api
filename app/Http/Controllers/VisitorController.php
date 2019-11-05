@@ -162,8 +162,8 @@ class VisitorController extends Controller
             $visitor->visiting_period = $request->visiting_period;
             $visitor->description = $request->description ?? '';
             $visitor->qr_code = $randomToken;
-           
-           
+
+
 
             //Generate qr image
             $qr_code = $qr->generateCode($randomToken);
@@ -185,7 +185,7 @@ class VisitorController extends Controller
             $this->user->visitors()->save($visitor);
 
 
-            //Save Visit Schedule 
+            //Save Visit Schedule
             $scheduled = new ScheduledVisit;
             $scheduled->visitor_id = $visitor->id;
             $scheduled->user_id = $visitor->user_id;
@@ -344,7 +344,7 @@ class VisitorController extends Controller
     {
         $visitors = Visitor::where('estate_id', $id)->pluck('id');
         $visitors_history = Visitor_History::whereIn('visitor_id', $visitors)->with('visitor')->get();
-       
+
         if($visitors_history) {
             $res['status']  = true;
             $res['message'] = 'Estate visit history';
@@ -358,14 +358,14 @@ class VisitorController extends Controller
     }
 
         /**
-     * Fetch all Visit History 
+     * Fetch all Visit History
      *
      * @param  none
      * @return JSON
      */
     public function fetchAllVisitHistory()
     {
-        $visitors = DB::table('visitors_history')->orderBy('user_id')->get();
+        $visitors = DB::table('visitors_history')->orderBy('estate_id')->get();
         if($visitors) {
             $res['status']  = true;
             $res['message'] = 'Estate visitors';
@@ -384,13 +384,14 @@ class VisitorController extends Controller
      *
      * @param  int $id the visitor id
      * @return JSON
-     */    public function fetchEstateVisitors($id)
+     */
+    public function fetchEstateVisitors($id)
     {
         $visitors = DB::table('visitors')->where('estate_id', $id)->get();
         if(!$visitors) {
             $res['status']  = false;
             $res['message'] = 'No Record found';
-            return response()->json($res, 404);           
+            return response()->json($res, 404);
         }else {
             $res['status']  = true;
             $res['message'] = 'Estate visitors';
@@ -405,14 +406,14 @@ class VisitorController extends Controller
      * @return JSON
      */    public function deleteVisitHistories($id)
      {
-       
+
         $ids = explode(",", $id);
         $visitors_history = Visitor_History::where('user_id', $this->user->id)->whereIn('id', $ids)->get();
-       
+
         if($visitors_history->isEmpty()) {
             $res['status']  = false;
             $res['message'] = 'No Record found for user';
-            return response()->json($res, 404);           
+            return response()->json($res, 404);
         }else {
             $visitors_history = Visitor_History::whereIn('id', $ids)->delete();
             $res['status']  = true;
@@ -502,12 +503,12 @@ class VisitorController extends Controller
     {
         $scheduled = ScheduledVisit::where('user_id', $this->user->id)->with(['visitor' => function ($query) {
             $query->where('status', 1); }])->get();;
-        
+
         if (!$scheduled) {
             return response()->json(['message' => 'You have no scheduled visits'], 400);
         }
         return response()->json([
-            'message' => 'All scheduled visits for a user', 
+            'message' => 'All scheduled visits for a user',
             'scheduled' => $scheduled
             ]);
     }
@@ -601,11 +602,11 @@ class VisitorController extends Controller
 
     public function getQrImage(Request $request, QrCodeGenerator $qr, $id){
         $qr_code = Visitor::where('id', $id)->value('qr_code');
-       
+
         if ($qr_code){
             $qr_image = $qr->generateCode($qr_code);
             return response()->json([
-                'status' => true, 
+                'status' => true,
                 'qr_image' => $qr_image,
                 'qr_code' => $qr_code
             ], 200);
