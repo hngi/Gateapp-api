@@ -1,8 +1,10 @@
+const routes = new Routes();
+
 const addEstateApi = (event, addEstateForm) => {
     event.preventDefault();
     const  submitBtn = event.target[3];
     console.log(submitBtn)
-    const url = `${api_origin}${addEstate}`;
+    const url = `${routes.api_origin}${routes.addEstate}`;
 
     if(permit == true) {//Condition that check if validation is true
           submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" style="width: 1.3em; height: 1.3em;" role="status" aria-hidden="true"></span> Processing...'

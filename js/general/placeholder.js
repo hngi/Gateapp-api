@@ -16,13 +16,3 @@ const website_logo = '';
 let status;
 //This permit placeholder is use to allow a button to work after the validation has been met
 let permit = false;
-
-//Api routes placeholder
-let id;
-let estate_id;
-let user_id;
-let resisdent_id;
-let security_id;
-let visitor_id;
-let admin_id;
-

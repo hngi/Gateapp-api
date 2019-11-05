@@ -1,6 +1,6 @@
 // JS Fetch to get all admin users
-
-const url = `${api_origin}${fetchAllEstateAdmin}`;
+const routes = new Routes();
+const url = `${routes.api_origin}${routes.fetchAllEstateAdmin}`;
 
 
 //Get Dom Elements 

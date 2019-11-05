@@ -1,7 +1,10 @@
+const routes = new Routes();
+
 const loginApi = (event, loginForm) => {
     event.preventDefault();
     const submitBtn = event.target[2];
-    const url = `${api_origin}${signin}`;
+    const url = `${ routes.api_origin }${ routes.signin }`;
+    console.log(url);
 
     if(permit == true) {//Condition that check if validation is true
          submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" style="width: 1.3em; height: 1.3em;" role="status" aria-hidden="true"></span>'

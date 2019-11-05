@@ -1,1 +1,1 @@
- 
+const routes = new Routes();
