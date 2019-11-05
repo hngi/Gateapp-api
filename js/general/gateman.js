@@ -22,9 +22,8 @@
      "Authorization": token
  })
  }).then( response => response.json())
- .then( data => { 
-     displayGatemen(data.gatemans);
-     // console.log(data.gatemans);
+ .then( data => {     
+    displayGatemen(data.gatemans);
      });
  
   html = `
@@ -43,15 +42,25 @@
 
  const displayGatemen = (results) => {
      let count = 0;
+     
  
      results.forEach(el => {
-  //   console.log(el);
+    
+    // console.log(el);
       count += 1;
      //Replace the placeholder text with some actual data
      newHtml = html.replace('%SN%', count);
      newHtml = newHtml.replace('%NAME%', el.name);
-     newHtml = newHtml.replace('%ESTATE%', 'Estate Here');
-     newHtml = newHtml.replace('%EMAIL%', el.email);
+     if(el.home != null) {
+        newHtml = newHtml.replace('%ESTATE%', el.home.estate.estate_name);
+     } else {
+        newHtml = newHtml.replace('%ESTATE%', '-');
+     }
+     if(el.email != null) {
+        newHtml = newHtml.replace('%EMAIL%', el.email);
+     }else {
+        newHtml = newHtml.replace('%EMAIL%', '-');
+     }
      newHtml = newHtml.replace('%PHONE%', el.phone);
 
      //Insert the HTML into the DOM
