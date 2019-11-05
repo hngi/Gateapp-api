@@ -340,7 +340,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('visitorHistory', 'VisitorController@residentHistory')->middleware('checkResident');
 
     //Delete Signed in user visitor histories 
-    Route::delete("visit_histories/delete/{id}", "VisitorController@deleteVisitHistories");
+    Route::delete("visit_histories/delete/{id}", "VisitorController@deleteVisitHistories")->middleware('checkResident');
     
     //Get all scheduled visits by a user
     Route::get('visitor/allScheduled', 'VisitorController@getScheduled')->middleware('checkResident');
