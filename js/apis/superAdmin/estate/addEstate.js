@@ -1,15 +1,21 @@
 const routes = new Routes();
 
-const loginApi = (event, loginForm) => {
+const addEstateApi = (event, addEstateForm) => {
     event.preventDefault();
-    const submitBtn = event.target[2];
-    const url = `${ routes.api_origin }${ routes.signin }`;
-    console.log(url);
+    const  submitBtn = event.target[3];
+    console.log(submitBtn)
+    const url = `${routes.api_origin}${routes.addEstate}`;
 
     if(permit == true) {//Condition that check if validation is true
-         submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" style="width: 1.3em; height: 1.3em;" role="status" aria-hidden="true"></span>'
+          submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" style="width: 1.3em; height: 1.3em;" role="status" aria-hidden="true"></span> Processing...'
          //Convert form to formData
-         const formData = new FormData(loginForm);
+         const formData = new FormData(addEstateForm);
+         //Add other important data to formData
+         formData.append('address', estateAddress);
+         formData.append('city', estateCity);
+         formData.append('country', estateCountry);
+         formData.delete(location);
+
          //Catch error status code
          const errorHandling = (response) => {
             status = response.status;
@@ -22,7 +28,7 @@ const loginApi = (event, loginForm) => {
             let result;
             
             const flashAlert = (title, result) => {
-                submitBtn.innerHTML = 'Login';
+                 submitBtn.innerHTML = 'Submit';
                 Swal.fire({
                     title: `${title}`,
                     html:  `<p style="color:tomato; font-size:17px;">${result}</p>`,
@@ -31,23 +37,23 @@ const loginApi = (event, loginForm) => {
             }
             switch(status) {
                 case 422:
-                    title = 'Login failed';
+                    title = 'Add Estate failed';
                     result = JSON.stringify(data.errors).split('"').join('').split('{').join('').split('}').join('');
                     flashAlert(title,result);
                 break;
                 case 404:
-                    title  = 'Login error';
+                    title  = 'Add Estate error';
                     result = 'Invalid credentials';
                     flashAlert(title,result);
                 break;
+                case 201:
+                    Swal.fire({
+                        title: `Successfull`,
+                        html:  `<p style="color:#49a347; font-size:17px;">Estate added successfully</p>`,
+                        confirmButtonText: 'Close'
+                    }) 
+                break;
                 default:
-                 //insert the data into broswer localStorage
-                 localStorage.setItem('gateguard-admin', JSON.stringify(data));
-                if(data.user.user_type === 'super_admin'){
-                    location.replace('default-tab.html');
-                }else {
-                    location.replace('estate-tab.html');
-                }
 
             }
          }
@@ -55,20 +61,22 @@ const loginApi = (event, loginForm) => {
             method: "POST",
             mode: "cors",
             headers: {
-                "Accept": "aplication/json"
+                "Accept": "application/json",
+                "Authorization": token
             },
             body: formData
          })
          .then(response => errorHandling(response))
          .then(data => {
              if(data) {
+                 submitBtn.innerHTML = 'Submit';
                  console.log(data);
                  getResponse(data);
              }
          })
          .catch(err => {
              if(err) {
-                submitBtn.innerHTML = 'Login';
+                 submitBtn.innerHTML = 'Submit';
                 Swal.fire({
                     title: 'Unexpected Error',
                     html: `<p style="color:tomato; font-size:17px;">This may be due to internet connection not available, please turn on internet connection or contact website owner, Thank you!</p>`,
@@ -81,4 +89,4 @@ const loginApi = (event, loginForm) => {
 
 }
 
-loginForm.addEventListener('submit', (event) => loginApi(event, loginForm))
+addEstateForm.addEventListener('submit', (event) => addEstateApi(event, addEstateForm))

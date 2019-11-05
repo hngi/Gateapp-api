@@ -1,4 +1,6 @@
-const url = `${api_origin}${newsletter}`;
+
+const routes = new Routes();
+const url = `${routes.api_origin}${routes.newsletter}`;
 
 //Get input field values
 const subscribe = (e) => {

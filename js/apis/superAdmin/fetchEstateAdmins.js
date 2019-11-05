@@ -1,6 +1,6 @@
 // JS Fetch to get all admin users
-
-const url = `${api_origin}${fetchAllEstateAdmin}`;
+const routes = new Routes();
+const url = `${routes.api_origin}${routes.fetchAllEstateAdmin}`;
 
 
 //Get Dom Elements 
@@ -26,9 +26,8 @@ const profileImage = document.querySelector('#profileImage');
     
    //\\ .then(response => errorHandling(response))
    
-    .then((resp) => resp.json())
-   
-    .then(function(data) {
+    .then(resp => resp.json())
+    .then(data => {
         
         let admins = data.admins;
         console.log(admins);

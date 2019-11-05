@@ -1,13 +1,10 @@
 // This script revokes admin access 
-
-
-
-
+const routes = new Routes();
 let revokeId = revokeButton.getAttribute('data-id');
-const apiUrl = `${api_origin}${revokeEstateAdminAccess}`;
-function revoke(id) {
+const apiUrl = `${ routes.api_origin}${ routes.revokeEstateAdminAccess(revokeId)}`;
+function revoke() {
     
-    fetch(apiUrl + "/"+ id ,{
+    fetch(apiUrl,{
        
       method: 'PUT',
       mode: "cors",
@@ -26,4 +23,4 @@ function revoke(id) {
     })
 }
 
-revokeButton.addEventListener('click',revoke(revokeId));
+revokeButton.addEventListener('click',revoke());
