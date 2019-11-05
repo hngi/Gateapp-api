@@ -1,0 +1,52 @@
+.Residents-image {
+    height: 60vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+      url("../images/image 4.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .guards-image{
+    height: 60vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+      url("../images/Guards image.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .contact-image{
+    height: 60vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+      url("../images/contact img.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .welcome-image-words {
+  height: 50vh;
+  margin-top: 13vh;
+}
+.welcome-image-words h1 {
+  color: white;
+  font-weight: bold;
+  font-size: 30px;
+}
+/* .images{
+    position: absolute;
+    width: 349.01px;
+    height: 447.01px;
+    left: 140px;
+    top: 1613px;
+} */
+.images img{   
+width: 349.01px;
+height: 447.01px;
+left: 140px;
+top: 1613px;
+}
+.timelist{
+    list-style-type: none;
+    margin-left: 110px;
+    text-align: justify;
+    
+}
