@@ -3,6 +3,8 @@
 
 //Authentication Routes ******************************************************
 
+use App\Http\Controllers\VisitorController;
+
 Route::post('register/resident', 'Auth\RegisterController@resident'); //has a role of 1
 
 Route::post('register/gateman', 'Auth\RegisterController@gateman'); //has a role 2
@@ -336,6 +338,10 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Show signed in user visitor history
     Route::get('visitorHistory', 'VisitorController@residentHistory')->middleware('checkResident');
+
+    //Delete Signed in user visitor histories 
+    Route::delete("visit_histories/delete/{id}", "VisitorController@deleteVisitHistories");
+    
     //Get all scheduled visits by a user
     Route::get('visitor/allScheduled', 'VisitorController@getScheduled')->middleware('checkResident');
     Route::delete('visitor/deleteScheduled/{id}', 'VisitorController@deleteScheduled')->middleware('checkResident');
@@ -467,6 +473,7 @@ Route::get('/test-notification2', function () {
 
 //----------- Service provider request route ---------------------------------//
 Route::post("service_provider/create_request", "ServiceProviderController@create_request");
+
 
 // Route::get('init', function () {
 //     event(new App\Events\notify('Someone'));

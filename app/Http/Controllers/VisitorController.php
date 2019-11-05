@@ -358,7 +358,7 @@ class VisitorController extends Controller
     }
 
         /**
-     * Delete a single visitor
+     * Fetsch all Visit History 
      *
      * @param  none
      * @return JSON
@@ -398,6 +398,30 @@ class VisitorController extends Controller
             return response()->json($res, 200);
         }
     }
+    /**
+     * Delete visit History (single or multiple)
+     *
+     * @param  int $id the visitor id
+     * @return JSON
+     */    public function deleteVisitHistories($id)
+     {
+       
+        $ids = explode(",", $id);
+        $visitors_history = Visitor_History::where('user_id', $this->user->id)->whereIn('id', $ids)->get();
+       
+        if($visitors_history->isEmpty()) {
+            $res['status']  = false;
+            $res['message'] = 'No Record found for user';
+            return response()->json($res, 404);           
+        }else {
+            $visitors_history = Visitor_History::whereIn('id', $ids)->delete();
+            $res['status']  = true;
+            $res['message'] = 'Selected Visit Histories have been deleted';
+            //$res['visitors'] = $visitors;
+            return response()->json($res, 200);
+        }
+    }
+
 
     /**
      * fetch all visitors
