@@ -358,7 +358,7 @@ class VisitorController extends Controller
     }
 
         /**
-     * Fetsch all Visit History 
+     * Fetch all Visit History 
      *
      * @param  none
      * @return JSON
