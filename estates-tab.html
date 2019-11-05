@@ -220,8 +220,10 @@
     <div class="modal fade" id="singleEstateModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog col-12 px-1 mx-0" role="document">
             <div class="modal-content col-11 col-md-9 px-0 ml-auto">
-                <div class="modal-body">
-                    <h4>Otedola Estate</h4>
+                <div class="modal-body row mx-0">
+                    <h4 class="col-10">Otedola Estate</h4>
+                    <h4 class="edit-estate-link ml-auto col-2" data-toggle="modal"
+                    data-target="#editEstateModal"><i class="fa fas fa-edit"></i></h4>
                     <div class="col-12 border estate-image">
 
                     </div>
@@ -337,7 +339,37 @@
                             <input type="password" class="form-control" id=""
                                 placeholder="">
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editEstateModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h4 class="pl-3 mb-4">Edit Estate</h4>
+                    <form class="col-12" data-add-estate-form>
+                        <div class="form-group mb-2">
+                            <label for="">Estate Name</label>
+                            <input type="text" name="estate_name" class="form-control" placeholder="Example Estate">
+                            <p class="error-fields" id="estateNameError"></p>
+                        </div>
+                        <div class="form-group mb-2">
+                            <label for="">Estate Location <small>(Address,City,Country)</small></label>
+                            <input type="text" name="location" class="form-control" placeholder="Park Avenue, Ikeja, Lagos">
+                            <p class="error-fields" id="locationError">Please seperate location format with a comma</p>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="custom-file">
+                                <input  type="file" name="image" class="custom-file-input">
+                                <label class="custom-file-label" for="inputGroupFile01" data-img-label>Choose file</label>
+                            </div>
+                        </div>
+                        <button data-add-esate-btn type="submit" class="btn btn-success estate-submit-btn col-12">
+                            Submit
+                        </button>
                     </form>
                 </div>
             </div>
