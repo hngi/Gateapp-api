@@ -26,9 +26,8 @@ const profileImage = document.querySelector('#profileImage');
     
    //\\ .then(response => errorHandling(response))
    
-    .then((resp) => resp.json())
-   
-    .then(function(data) {
+    .then(resp => resp.json())
+    .then(data => {
         
         let admins = data.admins;
         console.log(admins);
