@@ -1,6 +1,8 @@
 //Here we are going to use promise.all method to fetch 
 
 //Temporary storage for api response
+const routes = new Routes();
+
 let statHolder = {};
 statHolder['wkly'] = [];
 statHolder['mnthly'] = [];
@@ -24,21 +26,21 @@ const fetchAllStat = (requestkey = 'wkly') => {
     }
     //Weeekly route 
     if(requestkey == 'wkly'){
-        api_1  = triggerFetch(`${api_origin}${weeklyEstate}`);
-        api_2  = triggerFetch(`${api_origin}${weeklyServiceProvider}`)
-        api_3  = triggerFetch(`${api_origin}${weeklyServiceVisits}`)
+        api_1  = triggerFetch(`${routes.api_origin}${routes.weeklyEstate}`);
+        api_2  = triggerFetch(`${routes.api_origin}${routes.weeklyServiceProvider}`)
+        api_3  = triggerFetch(`${routes.api_origin}${routes.weeklyServiceVisits}`)
     }
     //Monthly route 
     if(requestkey == 'mnthly'){
-        api_1  = triggerFetch(`${api_origin}${monthlyEstate}`)
-        api_2  = triggerFetch(`${api_origin}${monthlyServiceProvider}`)
-        api_3  = triggerFetch(`${api_origin}${monthlyServiceVisits}`)
+        api_1  = triggerFetch(`${routes.api_origin}${routes.monthlyEstate}`)
+        api_2  = triggerFetch(`${routes.api_origin}${routes.monthlyServiceProvider}`)
+        api_3  = triggerFetch(`${routes.api_origin}${routes.monthlyServiceVisits}`)
     }
     //All Statistics route 
        if(requestkey == 'all'){
-        api_1  = triggerFetch(`${api_origin}${allEstate}`)
-        api_2  = triggerFetch(`${api_origin}${allServiceProvider}`)
-        api_3  = triggerFetch(`${api_origin}${allVisits}`)
+        api_1  = triggerFetch(`${routes.api_origin}${routes.allEstate}`)
+        api_2  = triggerFetch(`${routes.api_origin}${routes.allServiceProvider}`)
+        api_3  = triggerFetch(`${routes.api_origin}${routes.allVisits}`)
     }
     
     request = [api_1, api_2, api_3];

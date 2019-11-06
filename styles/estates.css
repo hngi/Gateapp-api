@@ -154,3 +154,6 @@ tr {
     cursor: pointer;
     color: #49a347;
 }
+.edit-estate-link {
+    cursor: pointer;
+}
