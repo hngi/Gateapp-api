@@ -19,7 +19,7 @@ class SmsOtpController extends Controller
   private $API_TOKEN  = "07ae042d925e7632d8f6bf10b9a37ee892ae59d689b866bf43b4ace6eb5cb841";
 
   private $from = "GateGuard OTP";
-  private $api_token   = 'QLTtEV2m4u2xDoQJLCR5t98UwXG9X2RJDil8aaG3XcGMxjqshFeVBO2bDciI';
+  private $api_token   = 'hjiiNtq7YkffuLsGJEtLQ3ZZj8q0kj04CT5zd63BKfo7MJqmNAAeHUuXlCU7';
   //This otp method need the phone number and message as parameter
   public function bulkSmsNigeria($phone, $message)
   {   
@@ -78,8 +78,8 @@ class SmsOtpController extends Controller
         // Thats it, hit send and we'll take care of the rest
         $result = $sms->send([
             'to'      => $recipients,
-            'message' => $message,
-            'from'    => $this->FROM
+            'message' => $message
+            // 'from'    => $this->FROM
         ]);
       
       $res['status'] = true;

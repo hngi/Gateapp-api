@@ -25,17 +25,13 @@ class EstateStatsController extends Controller
 
         $totalEstates = Estate::count();
 
-            if (!$totalEstates){
-                $res['status']  = false;
-                $res['message'] = 'No Estates found';
-                return response()->json($res, 404);
-            }else {
-                $res['status']  = true;
+            if ($totalEstates){
+                $res['status']  = 'all';
                 $res['message'] = 'Total Number of Estates ';
-                $res['Estates'] = $totalEstates;
+                $res['estates_count'] = $totalEstates;
+                $res['code']   = 'est_all';
                 return response()->json($res, 200);
             }
-
     }
 
 
@@ -45,17 +41,13 @@ class EstateStatsController extends Controller
             $totalEstates = Estate::whereBetween('created_at',
             [Carbon::now()->startOfYear(),Carbon::now()->endOfYear()])->count();
 
-            if (!$totalEstates){
-                $res['status']  = false;
-                $res['message'] = 'No Estates have been added this year';
-                return response()->json($res, 404);
-            }else {
-                $res['status']  = true;
+            if ($totalEstates){
+                $res['status']  = 'yrly';
                 $res['message'] = 'Total Number of Estates added this year ';
-                $res['Estates'] = $totalEstates;
+                $res['estates_count'] = $totalEstates;
+                $res['code']   = 'est_yrly';
                 return response()->json($res, 200);
             }
-
     }
 
     /** Show  total number of Estates Added this Month ***/
@@ -63,18 +55,12 @@ class EstateStatsController extends Controller
 
             $totalEstates = Estate::whereBetween('created_at',
              [Carbon::now()->startOfMonth(),Carbon::now()->endOfMonth()])->count();
-
-            if (!$totalEstates){
-                $res['status']  = false;
-                $res['message'] = 'No Estates have been added this month';
-
-                return response()->json($res, 404);
-            }else {
-                $res['status']  = true;
+            
+                $res['status']  = 'mnthly';
                 $res['message'] = 'Total Number of Estates Added this month';
-                $res['Estates'] = $totalEstates;
+                $res['estates_count'] = $totalEstates;
+                $res['code']   = 'est_mnthly';
                 return response()->json($res, 200);
-            }
     }
 
     // Week
@@ -84,16 +70,11 @@ class EstateStatsController extends Controller
      $totalEstates = Estate::whereBetween('created_at',
      [Carbon::now()->startOfWeek(),Carbon::now()->endOfWeek()])->count();
 
-            if (!$totalEstates){
-                $res['status']  = false;
-                $res['message'] = 'No Estates found';
-                return response()->json($res, 404);
-            }else {
-                $res['status']  = true;
+                $res['status']  = 'wkly';
                 $res['message'] = 'Total Number of Estates added this week';
-                $res['Estates'] = $totalEstates;
+                $res['estates_count'] = $totalEstates;
+                $res['code']   = 'est_wkly';
                 return response()->json($res, 200);
-            }
 
     }
 

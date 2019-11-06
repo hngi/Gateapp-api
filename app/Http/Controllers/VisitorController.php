@@ -134,7 +134,7 @@ class VisitorController extends Controller
         // validate the posted data
         $this->validate($request, [
             'name'              => ['required', 'regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
-            'arrival_date'      => 'required|date|regex:/\d{4}\/\d{1,2}\/\d{1,2}/',
+            'arrival_date'      => 'required|date',
             'car_plate_no'      => 'string|nullable',
             'purpose'           => 'string',
             'visitor_group'     => 'string',
@@ -238,12 +238,12 @@ class VisitorController extends Controller
         // validate the posted data
         $this->validate($request, [
             'name'              => ['regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
-            'arrival_date'      => 'required|date|regex:/\d{4}\/\d{1,2}\/\d{1,2}/',
-            'car_plate_no'      => 'string',
-            'phone_no'          => 'string',
-            'purpose'           => 'string',
+            'arrival_date'      => 'required|date',
+            'car_plate_no'      => 'string|nullable',
+            'phone_no'          => 'string|nullable',
+            'purpose'           => 'string|nullable',
             'visiting_period'   => 'string',
-            'description'       => 'string',
+            'description'       => 'string|nullable',
         ]);
 
         DB::beginTransaction();
@@ -260,15 +260,13 @@ class VisitorController extends Controller
 
             // Upload updated image
             //Upload image
+            $data = null;
             if ($request->hasFile('image')) {
                 $data = $this->upload($request, $image, $visitor);
                 if ($data['status_code'] !=  200) {
                     return response()->json($data, $data['status_code']);
                 }
                 $visitor->image = $data['image'];
-            } else {
-                $data = null;
-                $visitor->image = 'noimage.jpg';
             }
 
             //Save Visitor
@@ -360,7 +358,7 @@ class VisitorController extends Controller
     }
 
         /**
-     * Delete a single visitor
+     * Fetch all Visit History 
      *
      * @param  none
      * @return JSON
@@ -400,6 +398,30 @@ class VisitorController extends Controller
             return response()->json($res, 200);
         }
     }
+    /**
+     * Delete visit History (single or multiple)
+     *
+     * @param  int $id the visitor id
+     * @return JSON
+     */    public function deleteVisitHistories($id)
+     {
+       
+        $ids = explode(",", $id);
+        $visitors_history = Visitor_History::where('user_id', $this->user->id)->whereIn('id', $ids)->get();
+       
+        if($visitors_history->isEmpty()) {
+            $res['status']  = false;
+            $res['message'] = 'No Record found for user';
+            return response()->json($res, 404);           
+        }else {
+            $visitors_history = Visitor_History::whereIn('id', $ids)->delete();
+            $res['status']  = true;
+            $res['message'] = 'Selected Visit Histories have been deleted';
+            //$res['visitors'] = $visitors;
+            return response()->json($res, 200);
+        }
+    }
+
 
     /**
      * fetch all visitors
@@ -431,7 +453,7 @@ class VisitorController extends Controller
             ], 404);
         }
         $this->validate($request, [
-            'arrival_date'      => 'required|date_format:Y-m-d',
+            'arrival_date'      => 'required|date',
             'car_plate_no'      => 'string|nullable',
             'purpose'           => 'string',
             'visiting_period'     => 'required|string',
@@ -577,8 +599,8 @@ class VisitorController extends Controller
     }
 
 
-    public function getQrImage(Request $request, QrCodeGenerator $qr){
-        $qr_code = Visitor::where('id', $request->id)->value('qr_code');
+    public function getQrImage(Request $request, QrCodeGenerator $qr, $id){
+        $qr_code = Visitor::where('id', $id)->value('qr_code');
        
         if ($qr_code){
             $qr_image = $qr->generateCode($qr_code);
