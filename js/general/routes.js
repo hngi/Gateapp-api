@@ -56,9 +56,13 @@ class Routes {
     revokeEstateAdminAccess(id) {
         return `api/v1/revokeadminaccess/${id}`;
     }
-    resetEstateAdminPassword(id) {
+    restoreEstateAdminAccess(id) {
         return `api/v1/unrevokeadminaccess/${id}`;
     }
+    resetEstateAdminPassword(id) {
+        return `api/v1/resetadminpass/reset/${id}`;
+    }
+   
     //Visitor Banned
     get allBannedVisitor(){
         return `api/v1/visitors/banned/all`;
