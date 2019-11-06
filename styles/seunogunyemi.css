@@ -25,7 +25,7 @@
 input, select			{
 					width: 80%;
 					border-radius: 4px;
-					border: 1px solid black;
+					/*border: 1px solid black;*/
 					height: auto;
 }
 
@@ -74,6 +74,15 @@ input[type="search"]	{
 							left: 970px;
 							top: 120px;
 							margin: 0px;
+}
+
+.searchbar			{
+						position: absolute;
+						left: 434px;
+						top: 239px;
+						width: 40%;
+						box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+						border-radius: 46px;
 }
 
 @media (max-width: 400px){

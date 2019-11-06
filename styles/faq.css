@@ -1,0 +1,157 @@
+.searchbar			{
+						position: absolute;
+						left: 404px;
+						top: 239px;
+						width: 700px;
+						box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+						height: 40px;
+						border-radius: 46px;
+						background-color: white;
+					}
+input				{
+						margin-left: 8px;
+						border-color: transparent;
+						margin-top: 5px;
+						width: 650px;
+						
+}
+.fa-search			{
+						position: absolute;
+						background-color: green;
+						color: white;
+						font-size: 20px;
+						left: 665px;
+						border-radius: 30px;
+						width: 30px;
+						height: 30px;
+						top: 5px;
+						text-align: center;
+}
+.introduction		{
+						position: absolute;
+						margin-left: auto;
+						margin-right: auto;
+						top: 352px;
+						left: 610px;
+}
+.accordion		{
+					
+					background-color: #FFFFFF;
+					width: 100%;
+					text-align: left;
+					border: 1px solid white;
+					border-radius: 4px;
+					height: 45px;
+					color: green;
+}
+
+.faq				{
+						position: absolute;
+						top: 470px;
+						
+						width: 600px;
+						left: 450px;
+}
+
+
+.panel				{
+						display: none;
+						overflow: hidden;
+						padding: 0px 18px;
+						width: 600px;
+						margin-left: 15px;
+						background-color: white;
+						margin-top: -20px;
+}
+
+.plus				{
+						width: 15px;
+						display: block;
+						float: right;
+						-webkit-transition-duration: 1s;
+					    -moz-transition-duration: 1s;
+					    -o-transition-duration: 1s;
+					    transition-duration: 1s;
+					    -webkit-transition-property: -webkit-transform;
+					    -moz-transition-property: -moz-transform;
+					    -o-transition-property: -o-transform;
+					    transition-property: transform;
+}
+
+button				{
+						margin-bottom: 20px;
+						margin-top: 20px;
+}
+
+@media (max-width: 400px){
+								.container-fluid		{
+												width: 100%;
+												height: ;
+								}							
+								.searchbar			{
+														position: absolute;
+														left: 40px;
+														top: 269px;
+														width: 80%;
+														box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+														height: 40px;
+														border-radius: 46px;
+														background-color: white;
+					}
+					input						{
+														width: 70%;
+					}
+					h1						{
+												position: absolute;
+												left: 4px;
+					}
+					hr						{
+												position: absolute;
+												top: 230px;
+												left: 150px;
+					}
+					.fa-search			{
+												position: absolute;
+												background-color: green;
+												color: white;
+												font-size: 20px;
+												left: 255px;
+												border-radius: 30px;
+												width: 30px;
+												height: 30px;
+												top: 5px;
+												text-align: center;
+											}
+
+					.introduction		{
+												position: absolute;
+												margin-left: auto;
+												margin-right: auto;
+												top: 352px;
+												left: 37px;
+}
+					h5					{
+												position: absolute;
+												left: 40px;
+												top: 70px;
+												font-size: 15px;
+					}
+					.introduction		{
+											width: 320px;
+					}
+					.faq		{
+											position: absolute;
+											left: 10px;	
+											top: 430px;
+											width: 350px;
+											margin-bottom: 150px;					
+}
+					.accordion			{
+											width: 100%;
+					}
+					.panel				{
+											width: 85%;
+											margin-left: 20px;
+					}
+
+}
