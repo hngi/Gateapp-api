@@ -1,4 +1,5 @@
-axios.defaults.baseURL = api_origin;
+const routes = new Routes();
+axios.defaults.baseURL = routes.api_origin;
 axios.defaults.headers.common['Authorization'] = token;
 const container = document.querySelector(`table.estates-table tbody`);
 
@@ -18,7 +19,7 @@ const handleError = (error) => {
 };
 
 const removeBan = (visitor_id) => {
-    axios.post(`api/v1/visitor/${visitor_id}/remove-ban`)
+    axios.post(routes.removeBannedVisitor(visitor_id))
         .then((response => {
             let elem = document.getElementById(`baned_visitor_${visitor_id}`);
             elem.parentNode.removeChild(elem);
@@ -51,7 +52,7 @@ const confirmBanRemove = (visitor_id) => {
 };
 
 const getBannedVisitors = () => {
-    axios.get(`/api/v1/visitors/banned/all`)
+    axios.get(routes.allBannedVisitor)
         .then(response => {
             let banned = response.data.data;
             let data = ``;

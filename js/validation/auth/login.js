@@ -5,7 +5,6 @@ const loginForm   = document.querySelector('[data-login-form]');
 let emailError    = document.querySelector('#emailError');
 let passwordError    = document.querySelector('#passwordError');
 
-let permit = false;
 
 const validateForm = (loginForm) => {
     //Clear the error field 
