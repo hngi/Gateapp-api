@@ -28,7 +28,7 @@ class EstateStatsController extends Controller
             if ($totalEstates){
                 $res['status']  = 'all';
                 $res['message'] = 'Total Number of Estates ';
-                $res['Estates'] = $totalEstates;
+                $res['estates_count'] = $totalEstates;
                 $res['code']   = 'est_all';
                 return response()->json($res, 200);
             }
@@ -44,7 +44,7 @@ class EstateStatsController extends Controller
             if ($totalEstates){
                 $res['status']  = 'yrly';
                 $res['message'] = 'Total Number of Estates added this year ';
-                $res['Estates'] = $totalEstates;
+                $res['estates_count'] = $totalEstates;
                 $res['code']   = 'est_yrly';
                 return response()->json($res, 200);
             }
@@ -58,7 +58,7 @@ class EstateStatsController extends Controller
             
                 $res['status']  = 'mnthly';
                 $res['message'] = 'Total Number of Estates Added this month';
-                $res['Estates'] = $totalEstates;
+                $res['estates_count'] = $totalEstates;
                 $res['code']   = 'est_mnthly';
                 return response()->json($res, 200);
     }
@@ -72,7 +72,7 @@ class EstateStatsController extends Controller
 
                 $res['status']  = 'wkly';
                 $res['message'] = 'Total Number of Estates added this week';
-                $res['Estates'] = $totalEstates;
+                $res['estates_count'] = $totalEstates;
                 $res['code']   = 'est_wkly';
                 return response()->json($res, 200);
 

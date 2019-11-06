@@ -78,8 +78,8 @@ class SmsOtpController extends Controller
         // Thats it, hit send and we'll take care of the rest
         $result = $sms->send([
             'to'      => $recipients,
-            'message' => $message,
-            'from'    => $this->FROM
+            'message' => $message
+            // 'from'    => $this->FROM
         ]);
       
       $res['status'] = true;

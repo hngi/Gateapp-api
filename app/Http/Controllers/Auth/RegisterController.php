@@ -48,8 +48,8 @@ class RegisterController extends Controller
     {
         
         $this->validateRequest($request);
-        // $verifycode = mt_rand(1000,9999);
-        $verifycode = 1234;
+        $verifycode = mt_rand(1000,9999);
+
         //start temporay transaction
         DB::beginTransaction();
 
@@ -74,7 +74,7 @@ class RegisterController extends Controller
                 //Send sms otp to user
                 $phone     = $user->phone;
                 $message   = 'Welcome to GateGuard, please this  4 digit otp token to verify your account '. $user->verifycode;
-                // $result = $smsOtpController->bulkSmsNigeria($phone, $message);
+                // $result = $smsOtpController->africasTalking($phone, $message);
            }else {
                 
                 $user = User::where('phone', $phone)->first();
@@ -85,13 +85,13 @@ class RegisterController extends Controller
                 $user->name              = ucfirst($request->input('name'));
                 $user->save();
                 
-                $msg['status'] = 200;
+                $msg['status']   = 200;
                 $msg['app-hint'] = 'This is an existing user!';
                 //Send sms otp to user
                 $phone        = $user->phone;
                 $current_user = $user->name != '' ? $user->name : 'member';
                 $message  = 'Welcome back '.$current_user.' please use this 4 digit otp to re-verify your account '. $user->verifycode;
-                // $result = $smsOtpController->bulkSmsNigeria($phone, $message);
+                // $result = $smsOtpController->africasTalking($phone, $message);
            }
             $msg['message'] = 'A verification otp has been sent to your phone, please use to veriify your account!';
             $msg['user']    = $user;

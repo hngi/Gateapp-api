@@ -3,6 +3,8 @@
 
 //Authentication Routes ******************************************************
 
+use App\Http\Controllers\VisitorController;
+
 Route::post('register/resident', 'Auth\RegisterController@resident'); //has a role of 1
 
 Route::post('register/gateman', 'Auth\RegisterController@gateman'); //has a role 2
@@ -129,6 +131,14 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Show all visitor
 
     Route::get('visitors/all', 'VisitorController@index')->middleware('superAdmin');
+
+
+    //Search residents (system wide) by name
+    Route::get('residents/{name}', 'ResidentController@searchResidentByName')->middleware('superAdmin');
+
+    //Search residents (in the estate of logged in Estate Admin) by name
+    Route::get('estate_residents/{name}', 'ResidentController@searchEstateResidentByName')->middleware('estateAdmin');
+
 
     //create faq
     Route::post('faq', 'FaqController@store')->middleware('superAdmin');
@@ -338,6 +348,10 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Show signed in user visitor history
     Route::get('visitorHistory', 'VisitorController@residentHistory')->middleware('checkResident');
+
+    //Delete Signed in user visitor histories 
+    Route::delete("visit_histories/delete/{id}", "VisitorController@deleteVisitHistories")->middleware('checkResident');
+    
     //Get all scheduled visits by a user
     Route::get('visitor/allScheduled', 'VisitorController@getScheduled')->middleware('checkResident');
     Route::delete('visitor/deleteScheduled/{id}', 'VisitorController@deleteScheduled')->middleware('checkResident');
@@ -469,6 +483,7 @@ Route::get('/test-notification2', function () {
 
 //----------- Service provider request route ---------------------------------//
 Route::post("service_provider/create_request", "ServiceProviderController@create_request");
+
 
 // Route::get('init', function () {
 //     event(new App\Events\notify('Someone'));

@@ -20,8 +20,8 @@ class UserStatsController extends Controller
 		/*$ScheduledVisit = ScheduledVisit::where('user_id', $visitor_id )->value('visit_date');*/
 			 $res['status']  = 'scheduled';
             $res['message'] = 'Number of Scheduled Visits';
-            $res['Number of Scheduled Stats'] = $visitor;
-			$res['All Residents Scheduled Visits'] = $visitor->count();
+            $res['vistor_data'] = $visitor;
+			$res['visit_schedule'] = $visitor->count();
 			$res['code']   = 'schduled_vist';
            return response()->json($res, 200);
 
@@ -33,8 +33,8 @@ class UserStatsController extends Controller
 	    /*$ScheduledVisit = ScheduledVisit::where('user_id', $visitor_id )->value('visit_date');*/
 			 $res['status']  = 'finished';
 			$res['message'] = 'Number of finished Visits';
-			$res['Number of Finished Visits'] = $visitor;
-			$res['All Finished Visits'] = $visitor->count();
+			$res['visitor_data'] = $visitor;
+			$res['visit_schedule'] = $visitor->count();
 			$res['code']   = 'finish_schdule_vist';
 			return response()->json($res, 200);
 

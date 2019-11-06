@@ -15,6 +15,7 @@ use Illuminate\Validation\ValidationException;
 use App\Http\Controllers\SmsOtpController;
 use App\Mail\VerifyToken;
 use Exception;
+use App\Mail\EstateAdminPasswordRecovery;
 
 class UserProfileController extends Controller
 {
@@ -31,24 +32,32 @@ class UserProfileController extends Controller
 
     public function all()
     {
-        $admins = [];
+        $super_admins = [];
         $residents = [];
         $gatemans = [];
+        $estate_admins = [];
 
-        $users = User::all();
+        $users = User::with(['home' => function ($query) {
+            $query->with('estate');
+        }])->get();
+
         foreach ($users as $user) {
             if ($user->role == 0) {
-                array_push($admins, $user);
+                array_push($super_admins, $user);
             } else if ($user->role == 1) {
                 array_push($residents, $user);
             } else if ($user->role == 2) {
                 array_push($gatemans, $user);
+            }else if ($user->role == 3) {
+                array_push($estate_admins, $user);
             }
         }
         $res['status']    = true;
-        $res['admins']    = $admins;
+
         $res['residents'] = $residents;
         $res['gatemans']  = $gatemans;
+        $res['estate_admins']  = $estate_admins;
+        $res['super_admins']    = $super_admins;
         return response()->json($res, 200);
     }
 
@@ -69,14 +78,16 @@ class UserProfileController extends Controller
 
     public function showAllAdmin()
     {
-        $admins = [];
-        $users = User::all();
-        foreach ($users as $user) {
+       // $admins = [];
+        $admins = User::where('role', '3')->with(['home' => function ($query) {
+            $query->with('estate');
+        }])->get();
+       /* foreach ($users as $user) {
             if ($user->role == 0 || $user->role == 3) {
                 array_push($admins, $user);
             }
-        }
-        if ($admins == []) {
+        }*/
+        if (!$admins) {
             $res['status']    = false;
             $res['message']    = "No Admin Found";
             return response()->json($res, 404);
@@ -140,22 +151,17 @@ class UserProfileController extends Controller
                  $phone     = $user->phone;
                  $message   = 'Use this 4 digit otp token to verify your new phone number '. $user->verifycode;
                  $smsOtpController = new SmsOtpController; 
-                //  $smsOtpController->bulkSmsNigeria($phone, $message);
-                //We use mail for now untill sms is implemented
-                // Mail::to($user->email)->send(new VerifyToken($user));
+                //  $smsOtpController->africasTalking($phone, $message);
                 $res['important'] = 'An otp token has ben sent to you phone because you changed your phone number!';
             }
             //Upload image
-            //Upload image
+            $data = null;
             if ($request->hasFile('image')) {
                 $data = $this->upload($request, $image, $user);
                 if ($data['status_code'] !=  200) {
                     return response()->json($data, $data['status_code']);
                 }
                 $user->image = $data['image'];
-            } else {
-                $data = null;
-                $user->image = 'noimage.jpg';
             }
 
 
@@ -274,10 +280,11 @@ class UserProfileController extends Controller
      //revoke selected admin access
     public function revokeAdmin($id) 
     {
-            $user = User::where('id', $id)->where('access', 1)->first();
+        $user = User::where('id', $id)->where('access', 1)->first();
             if(!$user){
+            $res['status'] = 404;    
             $res['message'] = 'User not found or users access is already revoked';
-            return response()->json($res, 401);
+            //return response()->json($res, 401);
             }else
             if($user->role == 3){
             User::where('id', $id)->update(['access' => 0]);
@@ -285,8 +292,9 @@ class UserProfileController extends Controller
             $res['user'] = $user;
             $res['message'] = "Successfully block admin from access";  
         }else {
+            $res['status'] = 402;
             $res['message'] = 'user you are trying to block is not an Admin or an error occured, please try again!';
-            return response()->json($res, 402);
+            //return response()->json($res, 402);
         }
         
         return response()->json($res, $res['status']);
@@ -297,50 +305,62 @@ class UserProfileController extends Controller
     {
             $user = User::where('id', $id)->where('access', 0)->first();
             if(!$user){
-            $res['message'] = 'User not found or User is has full access!';
-            return response()->json($res, 401);
+            $res['status'] = 404;   
+            $res['message'] = 'User not found or User has full access!';
+           // return response()->json($res, $res['status']);
             }else
             if($user->role == 3){
             User::where('id', $id)->update(['access' => 1]);
+
             $res['status'] = 200;
             $res['admin'] = $user;
             $res['message'] = "Successfully unblock admin";  
         }else {
+            $res['status'] = 402;   
             $res['message'] = 'user you are trying to unblock is not an Admin or an error occured, please try again!';
-            return response()->json($res, 402);
+           // return response()->json($res, $res['status']);
         }
         
         return response()->json($res, $res['status']);
     }  
 
-    public function resetAdmin(Request $request, $id)
+    public function resetAdmin($id)
     {
-        $res = array();
-        $this->validateRequest($request);
-
+       // $res = array();
+      //  $this->validateRequest($request);
+    
         DB::beginTransaction();
         
-        try {    
-            $adminId = User::find($id);
+       //try {    
+            $EstateAdmin = User::where('id', $id)->where('role', '3')->with(['home' => function ($query) {
+                $query->with('estate');
+            }])->first();
+          
+            
 
-            if ($adminId && $adminId->role == 3) {
-                $adminId->password = md5($request->input('password'));
-                $adminId->save();
-
-                DB::commit();
+            if ($EstateAdmin) {
+                $estateName = $EstateAdmin->home->estate->estate_name;
+                $adminEmail = $EstateAdmin->email;
+                $password   = Str::random(10);
+                $EstateAdmin->password = Hash::make($password);
+                $EstateAdmin->save();
+                
+               DB::commit();
+                Mail::to($adminEmail)->send(new EstateAdminPasswordRecovery($EstateAdmin, $password, $estateName ));
                 $res['status'] = 200;
-                $res['message'] = "Successfully updated Admin password";
-                $res['data'] = $adminId;
+                $res['message'] = "Password reset successful! A mail with the admin's new password has been sent to thier email";
+                $res['data'] = $EstateAdmin;
+                
             } else {
                 $res['status'] = 404;
                 $res['message'] = "Admin not found";
             }
-        } catch(\Exception $e) {
+      /*  } catch(\Exception $e) {
             DB::rollBack();
 
             $res['status'] = 501;
             $res['message'] = "An error occured trying to reset admin password";            
-        }
+        }*/
         
         return response()->json($res, $res['status']);
     }
