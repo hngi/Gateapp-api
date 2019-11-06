@@ -14,7 +14,11 @@
     <link rel="stylesheet" href="styles/dashboard-sidebar.css">
     <link rel="stylesheet" href="styles/estates.css">
     <link rel="stylesheet" href="styles/providers.css">
-    <title data-title>Visitors</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <title data-title>Service Providers</title>
 </head>
 
 <body>
@@ -114,102 +118,17 @@
                     <div class="form-group col-12 col-md-6 ml-auto">
                         <input type="email" class="form-control col-12 col-md-8 ml-auto" placeholder="Search Estates">
                     </div>
-                    <table class="table table-borderless estates-table">
+                    <table class="table table-borderless estates-table" id="sp-tab">
                         <thead>
                             <tr>
                                 <th scope="col">Name</th>
-                                <th scope="col">Service Type</th>
                                 <th scope="col">Location</th>
-                                <th scope="col"></th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Service</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Obonge Catering</td>
-                                <td>Food and Catering</td>
-                                <td>Park Avenue, Lekki o</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleProviderModal">View Details</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Obonge Catering</td>
-                                <td>Food and Catering</td>
-                                <td>Park Avenue, Lekki o</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleProviderModal">View Details</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Obonge Catering</td>
-                                <td>Food and Catering</td>
-                                <td>Park Avenue, Lekki o</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleProviderModal">View Details</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Obonge Catering</td>
-                                <td>Food and Catering</td>
-                                <td>Park Avenue, Lekki o</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleProviderModal">View Details</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Obonge Catering</td>
-                                <td>Food and Catering</td>
-                                <td>Park Avenue, Lekki o</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleProviderModal">View Details</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Obonge Catering</td>
-                                <td>Food and Catering</td>
-                                <td>Park Avenue, Lekki o</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleProviderModal">View Details</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Obonge Catering</td>
-                                <td>Food and Catering</td>
-                                <td>Park Avenue, Lekki o</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleProviderModal">View Details</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Obonge Catering</td>
-                                <td>Food and Catering</td>
-                                <td>Park Avenue, Lekki o</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleProviderModal">View Details</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Obonge Catering</td>
-                                <td>Food and Catering</td>
-                                <td>Park Avenue, Lekki o</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleProviderModal">View Details</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Obonge Catering</td>
-                                <td>Food and Catering</td>
-                                <td>Park Avenue, Lekki o</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleProviderModal">View Details</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Obonge Catering</td>
-                                <td>Food and Catering</td>
-                                <td>Park Avenue, Lekki o</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleProviderModal">View Details</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Obonge Catering</td>
-                                <td>Food and Catering</td>
-                                <td>Park Avenue, Lekki o</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleProviderModal">View Details</a>
-                                </td>
-                            </tr>
-
-                        </tbody>
+                           
                     </table>
                 </div>
             </div>
@@ -220,37 +139,14 @@
         <div class="modal-dialog col-12 px-1 mx-0" role="document">
             <div class="modal-content col-11 col-md-4 px-0 mx-auto">
                 <div class="modal-body">
-                    <h4 class="text-center">Obonge Catering</h4>
-                    <div class="col-12 single-provider-details row mx-0">
-                        <p class="provider-location col-12 mt-5">Park Avenue</p>
-                        <span class="provider-phone col-12">+234 907 834 9183</span>
-                        <div class="col-12 px-0 row mx-0">
-                            <div class="col-12 col-md-6 px-0">
-                                <span class="col-12 stat-name">Joined</span>
-                                <p class="col-12 stat-value">23rd May, 2018</p>
-                            </div>
-                            <div class="col-12 col-md-6 px-0">
-                                <span class="col-12 stat-name">Service Type</span>
-                                <p class="col-12 stat-value">Food and Catering</p>
-                            </div>
-                            <div class="col-12 col-md-4 px-0">
-                                <span class="col-12 stat-name">Orders Received</span>
-                                <p class="col-12 stat-value">3012</p>
-                            </div>
-                            <div class="col-12 col-md-4 px-0">
-                                <span class="col-12 stat-name">Orders Delivered</span>
-                                <p class="col-12 stat-value">1932</p>
-                            </div>
-                            <div class="col-12 col-md-4 px-0">
-                                <span class="col-12 stat-name">Orders Canceled</span>
-                                <p class="col-12 stat-value">320</p>
-                            </div>
-                            <div class="col-12 col-md-4 px-0">
-                                <span class="col-12 stat-name">Rating</span>
-                                <p class="col-12 stat-value">4.5</p>
-                            </div>
-                            <button class="btn btn-suspend col-12 mt-2">Suspend</button>
-                            <button class="btn btn-remove col-12 mt-2">Remove</button>
+                <h1 class="text-center" id="modalName"></h1>
+                    <h3 class="text-center" id="modalPhone"></h3>
+                    <h4 class="text-center" id="modalEstate"></h4>
+                    <p class="text-center" id="modalCat"></p>
+                    <p class="text-center" id="modalDesc"></p>
+                    </div>
+                            <button class="btn btn-suspend col-12 mt-2" id="suspend">Suspend</button>
+                            <button class="btn btn-remove col-12 mt-2" id="remove">Remove</button>
                         </div>
                     </div>
                 </div>
