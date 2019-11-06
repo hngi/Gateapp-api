@@ -1,11 +1,12 @@
 // This script revokes admin access 
 
-function revoke() { 
-    revokeButton.innerHTML = '<span class="spinner-border spinner-border-sm" style="width: 1.3em; height: 1.3em;" role="status" aria-hidden="true"></span> Processing...'
-    let revokeId = revokeButton.getAttribute('data-id');  
-    const revokeUrl = `${routes.api_origin}${routes.revokeEstateAdminAccess(revokeId)}`;
+function restore() {
+  
+    restoreButton.innerHTML = '<span class="spinner-border spinner-border-sm" style="width: 1.3em; height: 1.3em;" role="status" aria-hidden="true"></span> Processing...'
+    let restoreId = restoreButton.getAttribute('data-id');  
+    const restoreUrl = `${routes.api_origin}${routes.restoreEstateAdminAccess(restoreId)}`;
     
-    fetch(revokeUrl,{
+    fetch(restoreUrl,{
        
       method: 'PUT',
       mode: "cors",
@@ -13,18 +14,27 @@ function revoke() {
             "Accept": "aplication/json",
             "Authorization": token
         }
+
       
      // body: JSON.stringify({data})
     }).then((response) => {
       response.json().then((response) => {
-        revokeButton.innerHTML = "Revoke Access"
-        getRevokeResponse(response);
+        restoreButton.innerHTML ="Restore Access"
+        getResponse(response);
         console.log(response);
       })
     }).catch(err => {
+      if(err) {
+        Swal.fire({
+            title: 'Unexpected Error',
+            html: `<p style="color:tomato; font-size:17px;">This may be due to internet connection not available, please turn on internet connection or contact website owner, Thank you!</p>`,
+            confirmButtonText: 'Close'            
+        })
+     }
       console.error(err)
     })
-    const getRevokeResponse = (data) => {
+
+    const getResponse = (data) => {
       let title;
       let result;
       
@@ -39,7 +49,7 @@ function revoke() {
       switch(data.status) {
           case 404:
               title = 'Operation Failed';
-              result = 'Admin access has already been revoked or admin user was not found'
+              result = 'Admin user already has full access or Admin user not found'
               flashAlert(title,result);
           break;
           case 402:
@@ -48,13 +58,15 @@ function revoke() {
               flashAlert(title,result);
           break;
           case 200:
-              title  = 'Access Revoked';
-              result = 'Admin access has been revoked Successfully';
+              title  = 'Access Restored';
+              result = 'Admin access has been restored Successfully';
               flashAlert(title,result);
           break;
 
       }
    }
-}
 
+  //})
+  
+}
 

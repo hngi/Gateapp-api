@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/dashboard-sidebar.css">
     <link rel="stylesheet" type="text/css" href="../styles/estates.css">
@@ -119,8 +120,17 @@
                         <td scope="col">Email Address <i class="fa fa-filter"></i></td>
                         <td></td>
                     </tr>
-                    <div class="spinner-border" role="status" style="color: #49a347;">
+
                 </thead>
+                <tbody data-admin-view>
+                    <tr>
+                        <td scope="col"></td>
+                        <td scope="col"> </td>
+                        <td scope="col"> <span class="spinner-border" role="status" style="color: #49a347;"> </span></td>
+                        <td></td>
+                    </tr>
+
+                </tbody>
                 <!-- <tr>
                     <td>Sarah Anderson</td>
                     <td>*super</td>
@@ -235,8 +245,8 @@
                 </tr> -->
 
             </table>
-            </div>
         </div>
+    </div>
     </div>
     </div>
     <!-- Modal inserted here -->
@@ -252,9 +262,11 @@
                     <p class="text-center" id="modalAddress"></p>
                     <br>
 
-                    <button class="btn btn-danger" id="revoke" data-id="#" style="background-color: #EB5757; width: 300px; margin-bottom: 30px;" hidden>Revoke Access</button>
+                    <button class="btn btn-danger" id="revoke" data-id="#" onclick="revoke()" style="background-color: #EB5757; width: 300px; margin-bottom: 30px;">Revoke Access</button>
                     <br>
-                    <button class="btn btn-warning" id="restore" data-id="#" style="background-color: #56CCF2; width: 300px;" hidden>Restore Access</button>
+                    <button class="btn btn-warning text-light" id="restore" data-id="#" onclick="restore()" style="background-color: #49a347; width: 300px; margin-bottom: 30px;">Restore Access</button>
+                    <br>
+                    <button class="btn btn-warning text-light" id="resetPassword" data-id="#" onclick="resetPassword()" style="background-color: #56CCF2; width: 300px;">Reset Password</button>
 
                 </div>
             </div>
@@ -271,6 +283,11 @@
 <script src="../js/general/onSession.js"></script>
 <!--Import the api reqeust srcipt-->
 <script src="../js/apis/superAdmin/fetchEstateAdmins.js"></script>
+<script src="../js/apis/superAdmin/restoreAdminAccess.js"></script>
+<script src="../js/apis/superAdmin/revokeAdminAccess.js"></script>
+<script src="../js/apis/superAdmin/resetAdminPassword.js"></script>
+
+
 
 
 <script type="text/javascript">
