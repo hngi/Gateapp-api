@@ -157,7 +157,7 @@
             </div>
             <table id="table" class="table table-borderless estates-table">
               <thead>
-                <tr>
+                <tr style="border-top: 1px solid black; border-bottom: 1px solid black;">
                   <th scope="col">Name</th>
                   <th scope="col">Last Visited Estate</th>
                   <th scope="col">Last Visited on</th>
@@ -267,7 +267,7 @@
       <div class="modal-dialog col-12 px-1 mx-0" role="document">
         <div class="modal-content col-11 col-md-4 px-0 mx-auto">
           <div class="modal-body">
-            <h4 class="text-center">Sarah Anderson</h4>
+            <h4 id="modalName" class="text-center">Sarah Anderson</h4>
             <div class="col-12 single-visit text-center row mx-0">
               <!-- <div class="col-6 border-right"><span>10/10/2019</span></div>
                         <div class="col-6"><span>Otedola Estate</span></div> -->
@@ -315,7 +315,7 @@
                             </tbody>
                             
                         </table>
-                        <button class="btn btn-danger col-10 mx-auto">Ban</button>
+                        <button id="ban" class="btn btn-danger col-10 mx-auto">Ban</button>
                     </div>
                 </div>
             </div>
@@ -328,6 +328,7 @@
   <script src="js/general/third_party_cdn.js"></script>
   <script src="js/general/placeholder.js"></script>
   <script src="js/general/routes.js"></script>
+  <script src="js/general/onSession.js"></script>
   <script src="js/apis/visitors/allVisitors.js"></script>
   <script type="text/javascript">
     $(document).ready(function() {
