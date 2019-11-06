@@ -81,6 +81,18 @@ class Routes {
     get serviceProviderSubmit() {
         return `api/v1/service_provider/create_request`;
     }
+    // All service providers
+    get allServiceProvider() {
+        return `api/v1/service_provider`;
+    }
+    // Suspend service provider
+    suspendServiceProvider(id) {
+        return `api/v1/service_provider/suspend/${id}`;
+    }
+    // Remove service provider
+    removeServiceProvider(id) {
+        return `api/v1/service_provider/delete/${id}`;
+    }
     path(path) {
         return path; 
     }
