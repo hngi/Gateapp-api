@@ -12,48 +12,56 @@ const convertDate = inputFormat => {
 };
 //fetch data
 const fetchData = async () => {
-  let response = await fetch(url, { Authorization: token });
-  let data = await response.json();
-  console.log(data);
-  const { residents } = data;
-  console.log(residents);
-  return residents.map(resident => {
-    const { name, phone, created_at } = resident;
-    //render
-    let tableRow = table.insertRow(),
-      residentName = tableRow.insertCell(),
-      residentEstate = tableRow.insertCell(),
-      residentPhone = tableRow.insertCell(),
-      viewStats = tableRow.insertCell();
+  try {
+    let response = await fetch(url, { Authorization: token });
+    let data = await response.json();
+    console.log(data);
+    const { residents } = data;
+    console.log(residents);
+    return residents.map(resident => {
+      const { name, phone, created_at } = resident;
+      //render
+      let tableRow = table.insertRow(),
+        residentName = tableRow.insertCell(),
+        residentEstate = tableRow.insertCell(),
+        residentPhone = tableRow.insertCell(),
+        viewStats = tableRow.insertCell();
 
-    residentName.innerHTML = `${name}`;
-    residentEstate.innerHTML = `${
-      resident.home === null ? "-" : resident.home.estate.estate_name
-    }`;
-    residentPhone.innerHTML = `${phone}`;
-    viewStats.innerHTML = `<td class="view-stats"><a href="#">view stats</a></td>`;
-    viewStats.querySelector(".view-stats");
-    viewStats.addEventListener("click", () => {
-      const dataName = document.getElementById("dataName");
-      const dataEstate = document.getElementById("dataEstate");
-      const dataNumber = document.getElementById("dataNumber");
-      const dataDate = document.getElementById("dataDate");
-
-      dataName.innerHTML = `${name}`;
-      dataEstate.innerHTML = `${
+      residentName.innerHTML = `${name}`;
+      residentEstate.innerHTML = `${
         resident.home === null ? "-" : resident.home.estate.estate_name
       }`;
-      dataNumber.innerHTML = `${phone}`;
-      dataDate.innerHTML = `${convertDate(created_at)}`;
+      residentPhone.innerHTML = `${phone}`;
+      viewStats.innerHTML = `<td class="view-stats"><a href="#">view stats</a></td>`;
+      viewStats.querySelector(".view-stats");
+      viewStats.addEventListener("click", () => {
+        const dataName = document.getElementById("dataName");
+        const dataEstate = document.getElementById("dataEstate");
+        const dataNumber = document.getElementById("dataNumber");
+        const dataDate = document.getElementById("dataDate");
 
-      const informationCont = document.getElementById("informationCont");
-      informationCont.classList.remove("hide");
+        dataName.innerHTML = `${name}`;
+        dataEstate.innerHTML = `${
+          resident.home === null ? "-" : resident.home.estate.estate_name
+        }`;
+        dataNumber.innerHTML = `${phone}`;
+        dataDate.innerHTML = `${convertDate(created_at)}`;
 
-      const closeBtn = document.getElementById("closeInfoBtn");
-      closeBtn.addEventListener("click", () => {
-        informationCont.classList.add("hide");
+        const informationCont = document.getElementById("informationCont");
+        informationCont.classList.remove("hide");
+
+        const closeBtn = document.getElementById("closeInfoBtn");
+        closeBtn.addEventListener("click", () => {
+          informationCont.classList.add("hide");
+        });
       });
     });
-  });
+  } catch (err) {
+    Swal.fire({
+      title: "Unexpected Error",
+      html: `<p style="color:tomato; font-size:17px;">${err}</p>`,
+      confirmButtonText: "Close"
+    });
+  }
 };
 fetchData();
