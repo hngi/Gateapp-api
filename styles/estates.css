@@ -69,7 +69,7 @@ tr {
 
 .estate-image {
     min-height: 40vh;
-    background: url("../../images/estate-example.png");
+    background: url("../images/estate-example.png");
     background-size: cover;
     background-position: center;
 }
