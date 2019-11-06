@@ -48,5 +48,28 @@ top: 1613px;
     list-style-type: none;
     margin-left: 110px;
     text-align: justify;
-    
+}
+@media screen and (max-width: 586px) {
+  body {
+    width: 100%;
+  }
+  img {
+    will-change: inherit;
+    width: 100%;
+    height: auto;
+  }
+  .get{
+    margin-bottom: 60px;
+  } 
+  .app{
+    text-align: justify;
+  }
+}
+@media screen and (max-width: 600px) {
+  /* .row {
+    flex-direction: column;
+  } */
+  .column {
+    flex: 50%;
+  }
 }
