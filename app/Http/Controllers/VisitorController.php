@@ -431,7 +431,9 @@ class VisitorController extends Controller
      */    public function fetchSuperAdminVisitors()
     {
         // $visitors = \App\Visitor::all();
-        $visitors = DB::table('visitors')->orderBy('user_id')->get();
+        $visitors = Visitors::with('estate')
+                    ->with('user')
+                    ->orderBy('user_id')->get();
         if($visitors) {
             $res['status']  = true;
             $res['message'] = 'All visitors (All)';
