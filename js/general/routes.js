@@ -79,6 +79,9 @@ class Routes {
     get addEstate() {
         return `api/v1/estate`;
     }
+    get fetchEstates() {
+        return `api/v1/estates`;
+    }
     editEstate(estate_id) {
         return `api/v1/estate/${estate_id}`;
     }
@@ -102,7 +105,25 @@ class Routes {
     removeServiceProvider(id) {
         return `api/v1/service_provider/delete/${id}`;
     }
+    //Users
+    get allUsers(){
+        return `api/v1/user/all`;
+    }
+    get editUser(){
+        return `api/v1/user/edit`;
+    }
+    showUser(id){
+        return `api/v1/user/${id}`;
+    }
     path(path) {
         return path; 
     }
+    //Service Providers Request
+    get serviceProviderRequestSearch () {
+        return `api/v1/service-provider/info/{id}`;
+    }
+    get serviceProviderRequest () {
+        return `api/v1/service-provider/info/{id}`;
+    }
+    
 }

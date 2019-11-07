@@ -2,7 +2,7 @@ const routes = new Routes();
 
 const addEstateApi = (event, addEstateForm) => {
     event.preventDefault();
-    const  submitBtn = event.target[3];
+    const  submitBtn = event.target[5];
     console.log(submitBtn)
     const url = `${routes.api_origin}${routes.addEstate}`;
 
@@ -10,11 +10,6 @@ const addEstateApi = (event, addEstateForm) => {
           submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" style="width: 1.3em; height: 1.3em;" role="status" aria-hidden="true"></span> Processing...'
          //Convert form to formData
          const formData = new FormData(addEstateForm);
-         //Add other important data to formData
-         formData.append('address', estateAddress);
-         formData.append('city', estateCity);
-         formData.append('country', estateCountry);
-         formData.delete(location);
 
          //Catch error status code
          const errorHandling = (response) => {
@@ -46,6 +41,14 @@ const addEstateApi = (event, addEstateForm) => {
                     result = 'Invalid credentials';
                     flashAlert(title,result);
                 break;
+                case 401:
+                        title = 'Token Invalid';
+                        result = 'Token is invalid or have expired';
+                        flashAlert(title,result);
+                        setTimeout(() => {
+                            location.replace('../login.html');
+                        }, 3000)
+                    break;
                 case 201:
                     Swal.fire({
                         title: `Successfull`,
