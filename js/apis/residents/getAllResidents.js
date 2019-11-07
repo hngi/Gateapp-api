@@ -17,7 +17,13 @@ const residentsArray = [];
 const fetchData = async () => {
   spinner.style.display = "block";
   try {
-    let response = await fetch(url, { Authorization: token });
+    let response = await fetch(url, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: token
+      }
+    });
     let data = await response.json();
     residentsArray.push(data.residents);
     //call render function
