@@ -35,10 +35,10 @@ const fetchData = async () => {
       viewStats.innerHTML = `<td class="view-stats"><a href="#">view stats</a></td>`;
       viewStats.querySelector(".view-stats");
       viewStats.addEventListener("click", () => {
-        const dataName = document.getElementById("dataName");
-        const dataEstate = document.getElementById("dataEstate");
-        const dataNumber = document.getElementById("dataNumber");
-        const dataDate = document.getElementById("dataDate");
+        const dataName = document.querySelector("#dataName");
+        const dataEstate = document.querySelector("#dataEstate");
+        const dataNumber = document.querySelector("#dataNumber");
+        const dataDate = document.querySelector("#dataDate");
 
         dataName.innerHTML = `${name}`;
         dataEstate.innerHTML = `${
@@ -47,10 +47,10 @@ const fetchData = async () => {
         dataNumber.innerHTML = `${phone}`;
         dataDate.innerHTML = `${convertDate(created_at)}`;
 
-        const informationCont = document.getElementById("informationCont");
+        const informationCont = document.querySelector("#informationCont");
         informationCont.classList.remove("hide");
 
-        const closeBtn = document.getElementById("closeInfoBtn");
+        const closeBtn = document.querySelector("#closeInfoBtn");
         closeBtn.addEventListener("click", () => {
           informationCont.classList.add("hide");
         });
