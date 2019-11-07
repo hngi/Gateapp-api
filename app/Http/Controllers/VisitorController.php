@@ -431,7 +431,7 @@ class VisitorController extends Controller
      */    public function fetchSuperAdminVisitors()
     {
         // $visitors = \App\Visitor::all();
-        $visitors = Visitors::with('estate')
+        $visitors = Visitor::with('estate')
                     ->with('user')
                     ->orderBy('user_id')->get();
         if($visitors) {
