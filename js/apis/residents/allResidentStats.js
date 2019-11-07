@@ -33,7 +33,6 @@ const getResidenceStats = id => {
 };
 //Render function
 const renderResponse = (scheduledVisits, finishedVisits) => {
-  console.log(scheduledVisits, finishedVisits);
   Array.from(loader).forEach(load => {
     load.style.display = "none";
   });
