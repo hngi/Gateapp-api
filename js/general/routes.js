@@ -103,6 +103,26 @@ class Routes {
   removeServiceProvider(id) {
     return `api/v1/service_provider/delete/${id}`;
   }
+  //Users
+  get allUsers() {
+    return `api/v1/user/all`;
+  }
+  get editUser() {
+    return `api/v1/user/edit`;
+  }
+  showUser(id) {
+    return `api/v1/user/${id}`;
+  }
+  path(path) {
+    return path;
+  }
+  //Service Providers Request
+  get serviceProviderRequestSearch() {
+    return `api/v1/service-provider/info/{id}`;
+  }
+  get serviceProviderRequest() {
+    return `api/v1/service-provider/info/{id}`;
+  }
   //All residents
   get allResidents() {
     return `api/v1/user/all`;
@@ -118,8 +138,5 @@ class Routes {
   //scheduled visits
   finishedVisits(id) {
     return `api/v1/finishedVisit/${id}`;
-  }
-  path(path) {
-    return path;
   }
 }
