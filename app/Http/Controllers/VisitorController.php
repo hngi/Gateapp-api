@@ -534,7 +534,7 @@ class VisitorController extends Controller
      */
     public function ban($id)
     {
-        $this->middleware('admin');
+        $this->middleware('superAdmin');
 
         $visitor = Visitor::query()->findOrFail($id);
 
