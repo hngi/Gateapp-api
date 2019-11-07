@@ -1,0 +1,69 @@
+.text-center	{
+					width: 100%;
+					/*border: 1px solid red;*/
+					text-align: center;
+
+}
+
+input[type="text"]{
+						box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+						height: 40px;
+						border-radius: 46px;
+						background-color: white;
+						width: 80%;
+						border: transparent;
+}
+.fa-search			{
+						background-color: #49A347;
+						color: white;
+						width: 40px;
+						height: 40px;
+						border-radius: 30px;
+						font-size: 20px;
+						position: absolute;
+						left: 1050px;
+}
+button					{
+							width: 80%;
+							margin-top: 10px;
+							text-align: left;
+							color: green;
+
+}
+.faq			{
+						/*border: 1px solid red;*/
+
+}
+.panel				{
+						display: none;
+						overflow: hidden;
+						padding: 0px 18px;
+						width: 80%;
+						margin-left: 9px;
+						text-align: left;
+						background-color: white;
+						
+}
+.getting_started		{
+							text-align: center;
+							width: 100%;
+							margin-top: 20px;
+							/*border: 1px solid blue;*/
+}
+.plus					{
+							width: 10px;
+							float: right;
+}
+@media(max-width: 400px){
+.fa-search			{
+						background-color: #49A347;
+						color: white;
+						width: 40px;
+						height: 40px;
+						border-radius: 30px;
+						font-size: 20px;
+						left: 250px;
+						
+}
+
+}
