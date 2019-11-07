@@ -111,6 +111,14 @@ class Routes {
   get allVisitors() {
     return `api/v1/visitors`;
   }
+  //scheduled visits
+  scheduledVisits(id) {
+    return `api/v1/ScheduledVisit/${id}`;
+  }
+  //scheduled visits
+  finishedVisits(id) {
+    return `api/v1/finishedVisit/${id}`;
+  }
   path(path) {
     return path;
   }

@@ -21,12 +21,6 @@ document.write(
   `<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>`
 );
 
-<<<<<<< HEAD
-/**********************************Slick.js CDN ********************************************************/
-document.write(`<script src="../slick/slick.js"></script>`);
-
-=======
->>>>>>> 4d7d1dc96049ce1763432d7a79d734403c2ac0ac
 //*********************************Axios****************************************************************//
 document.write(
   `<script src="https://unpkg.com/axios/dist/axios.min.js"></script>`
