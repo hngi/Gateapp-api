@@ -53,7 +53,7 @@ function resetPassword() {
           break;
           case 200:
               title  = 'Password Reset Successful';
-              result = 'Password reset successful! A mail with the new password has been sent to the Estate admin';
+              result = `<p style="color:green; font-size:20px;">Password reset successful! A mail with the new password has been sent to the Estate admin</p>`;
               flashAlert(title,result);
           break;
 

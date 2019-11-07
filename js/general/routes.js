@@ -48,6 +48,11 @@ class Routes {
     get allVisits() {
         return 'api/v1/statistics/visits';
     }
+    //Create an Estate Admin 
+    get addAdmin(){
+        return `api/v1/create/estate_admin`;
+    }
+   
     // Get All Estate Admin Information 
     get fetchAllEstateAdmin() {
         return 'api/v1/admin';
