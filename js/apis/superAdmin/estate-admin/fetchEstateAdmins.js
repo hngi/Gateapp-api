@@ -1,13 +1,13 @@
 // JS Fetch to get all admin users
-
-const url = `${api_origin}${fetchAllEstateAdmin}`;
-
+const routes = new Routes();
+const url = `${routes.api_origin}${routes.fetchAllEstateAdmin}`;
 
 //Get Dom Elements 
-const table = document.querySelector('#myTable');
+const table = document.querySelector('[data-admin-view]');
 const singlemodal = document.querySelector('#singleEstateModal');
 const revokeButton = document.querySelector('#revoke');
 const restoreButton = document.querySelector("#restore");
+const resetButton = document.querySelector("#resetPassword");
 const profileImage = document.querySelector('#profileImage');
 
 
@@ -26,10 +26,9 @@ const profileImage = document.querySelector('#profileImage');
     
    //\\ .then(response => errorHandling(response))
    
-    .then((resp) => resp.json())
-   
-    .then(function(data) {
-        
+    .then(resp => resp.json())
+    .then(data => {
+        table.innerHTML = "";
         let admins = data.admins;
         console.log(admins);
         
@@ -40,6 +39,7 @@ const profileImage = document.querySelector('#profileImage');
             console.log(estate);
             
             // Create Entries placeholders on table 
+            
             let row = table.insertRow(),
                 adminName = row.insertCell(),
                 adminEstate = row.insertCell(),
@@ -67,8 +67,16 @@ const profileImage = document.querySelector('#profileImage');
                 profileImage.setAttribute("src", myImage);
                 revokeButton.setAttribute('data-id', `${admin.id}`);
                 restoreButton.setAttribute('data-id', `${admin.id}`);
-        
+                resetButton.setAttribute('data-id', `${admin.id}`);
+                let revokeId = revokeButton.getAttribute('data-id');
+                console.log(revokeId)
+
+                
+                //revokeButton.addEventListener('click',revoke());
+                
+                
              })
+             
              
         })
         

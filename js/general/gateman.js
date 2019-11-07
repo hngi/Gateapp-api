@@ -33,7 +33,10 @@
                  <td>%ESTATE%</td>
                  <td>%EMAIL%</td>
                  <td>%PHONE%</td>
-                 <td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
+                 <td>
+                 <a href="#" data-id="%ID%" data-toggle="modal" data-target="#singleEstateModal" class='btn btn-default btn-xs' title="View Details"><i class="fa fa-eye"></i></a>
+                 <a href="#" data-id="%ID%" class='btn btn-default btn-xs' title="Edit"><i class="fa fa-edit"></i></a>                 
+                 <a href="#" data-id="%ID%" class='btn btn-default btn-xs' title="Delete"><i class="fa fa-trash"></i></a>
                  </td>
              </tr>
      ` ; 
@@ -62,6 +65,7 @@
         newHtml = newHtml.replace('%EMAIL%', '-');
      }
      newHtml = newHtml.replace('%PHONE%', el.phone);
+     newHtml = newHtml.replace(/%ID%/g, el.id);
 
      //Insert the HTML into the DOM
      rowElement.insertAdjacentHTML('beforeend', newHtml);

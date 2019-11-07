@@ -73,11 +73,15 @@ body {
 }
 .error-fields {
   color: tomato;
-  font-size: 9px !important;
+  font-size: 11px;
   height: 3vh;
   margin: 0;
   padding: 0;
 }
 .swal2-confirm{
   background: #49a347 !important; 
+}
+.image-error-sty {
+  color: tomato !important;
+  font-size: 13px;
 }
