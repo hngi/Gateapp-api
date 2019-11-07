@@ -13,7 +13,9 @@
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/dashboard-sidebar.css">
     <link rel="stylesheet" href="../styles/residents.css">
-    <title data-title>Residents</title>
+	<title data-title>Gatemen</title>
+	<!--Current user on session-->
+    <script src="../js/general/onSession.js"></script>
 </head>
 
 <body>
@@ -84,55 +86,42 @@
         </nav>
 
         <!-- Page Content  -->
-        <div id="content">
+        <div id="content" style="height: auto; width: 80%; margin: 0 auto;">
             <div class="content-header">
                 <button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1">
                 <i class="fas fa fa-align-left"></i>
                 </button>
                 <div></div>
                 <div class="not-cont">
-                    <span class="notification">1</span>
+                    <span class="notification"></span>
                     <i class="fa fa-bell fa-2x"></i>
                 </div>
             </div>
-            <div class="view-port">
-                    <div class="res-table-cont">
+            
+                    
                             <div class="name-search">
-                                <h1>Residents</h1>
-                                <input type="text" placeholder="search residents">
+                                <h1>Gatemen</h1>
+                                <input type="tablesearch" name="search" placeholder=" search gateman users" id="myInput"
+							onkeyup="filterList()">
                             </div>
-                            <div class="res-table">
-                                <table id="table">
-                                    <tr class="table-head">
-                                        <th>
-                                            Name
-                                            <i class="fa fa-filter"></i>
-                                        </th>
-                                        <th>
-                                            Estate
-                                            <i class="fa fa-filter"></i>
-                                        </th>
-                                        <th>
-                                            Phone number
-                                            <i class="fa fa-filter"></i>
-                                        </th>
-                                        <th></th>
-                                    </tr>
-                                    <!-- <tr>
-                                        <td>Sandra Anderson</td>
-                                        <td>Otedola Estate</td>
-                                        <td>+234 803 234 3456</td>
-                                        <td class="view-stats">view stats</td>
-                                    </tr>
-                                    <tr>
-                                            <td>Sandra Anderson</td>
-                                            <td>Otedola Estate</td>
-                                            <td>+234 803 234 3456</td>
-                                            <td class="view-stats">view stats</td>
-                                        </tr> -->
-                                </table>
-                            </div>
-                    </div>
+                            
+                                <table class="admins" id="gatemanTable">
+									<thead>
+										<tr style="border-top: 1px solid black; border-bottom: 1px solid black;">
+											<td>S/N</td>
+											<td>Name <i class="fa fa-filter"></i></td>
+											<td>Estate <i class="fa fa-filter"></i></td>
+											<td>Email Address <i class="fa fa-filter"></i></td>
+											<td>Phone <i class="fa fa-filter"></i></td>
+											<td></td>
+										</tr>
+									</thead>
+								
+									
+					
+								</table>
+                            
+                   
                     <div class="info-cont hide" id="informationCont">
                         <button id="closeInfoBtn">X</button>
                         <p id="dataName"></p>
@@ -162,14 +151,17 @@
                             <p>320 <span class="labels">times</span></p>
                         </div>
                     </div>
-            </div>
+            
         </div>
     </div>
 </body>
 <!--Import third party cdn-->
 <script src="../js/general/third_party_cdn.js"></script>
 <script src="../js/general/placeholder.js"></script>
-<script src="../js/general/residents.js"></script>
+<script src="../js/general/routes.js"></script>
+<script src="../js/general/gateman.js"></script>
+
+
 <script type="text/javascript">
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {

@@ -105,6 +105,16 @@ class Routes {
     removeServiceProvider(id) {
         return `api/v1/service_provider/delete/${id}`;
     }
+    //Users
+    get allUsers(){
+        return `api/v1/user/all`;
+    }
+    get editUser(){
+        return `api/v1/user/edit`;
+    }
+    showUser(id){
+        return `api/v1/user/${id}`;
+    }
     path(path) {
         return path; 
     }
