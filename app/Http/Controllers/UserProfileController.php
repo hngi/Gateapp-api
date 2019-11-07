@@ -151,7 +151,7 @@ class UserProfileController extends Controller
                  $phone     = $user->phone;
                  $message   = 'Use this 4 digit otp token to verify your new phone number '. $user->verifycode;
                  $smsOtpController = new SmsOtpController; 
-                //  $smsOtpController->africasTalking($phone, $message);
+                 $smsOtpController->africasTalking($phone, $message);
                 $res['important'] = 'An otp token has ben sent to you phone because you changed your phone number!';
             }
             //Upload image
