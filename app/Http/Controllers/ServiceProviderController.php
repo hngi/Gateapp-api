@@ -232,7 +232,7 @@ class ServiceProviderController extends Controller
                 $service->image = $data['image'];
             } else {
                 $data = null;
-                $service->image = 'noimage.jpg';
+                $service->image = 'gateguard-logo.png';
             };
             $service->save();
 
@@ -284,9 +284,6 @@ class ServiceProviderController extends Controller
                     return response()->json($data, $data['status_code']);
                 }
                 $service->image = $data['image'];
-            } else {
-                $data = null;
-                $service->image = 'noimage.jpg';
             }
 
             $service->save();
@@ -417,13 +414,43 @@ class ServiceProviderController extends Controller
         {
          $res["status_code"] = 501;
          $res["message"] = "Failed!";
-
          $res["error"] = $e->getMessage();
 
          return response()->json($res, $res["status_code"]);
         }
        }
 
+    // Method to get all service provider requests
+    public function serviceProviderRequests()
+    {
+     try {
+          $requests = [];
+          $services = Service_Provider::all();
+          foreach($services as $service)
+          {
+           $status = $service->status;
+           if($status == 0)
+           {
+            array_push($requests, $services);
+           }
+          }
+         
+          $res["status_code"] = 200;
+          $res["message"] = "Success!";
+          $res["requests"] = $requests;
+         
+          return response()->json($res, $res["status_code"]);
+         }
+          catch (\Exception $e)
+         {
+          $res["status_code"] = 501;
+          $res["message"] = "Failed!";
+          $res["error"] = $e->getMessage();
+              
+          return response()->json($res, $res["status_code"]);
+         }
+    }
+    
     public function restore($id)
     {
      $service = Service_Provider::onlyTrashed()->find($id)->restore();

@@ -10,12 +10,21 @@ class Category extends Model
     protected $fillable = ['title'];
 
 
-    public function service_provider()
- {
-     return $this->hasMany(Service_Provider::class);
- }
+    public function service_provider(){
+ 
+        return $this->hasMany(Service_Provider::class);
+    }
 
+
+
+    public function scopeSearch($query, $s) {
+        return $query->estateResidents
+        (where ('name', 'like', '%' .$s. '%'));
+    }
 }
+
+
+
 
  // Service provider's relationship with category
  

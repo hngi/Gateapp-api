@@ -230,7 +230,12 @@ class GatemanController extends Controller
 
                 // $avisitor = Visitor::where('id', $resident)->update(['time_in' => NOW(), 'status' => 1]);
 
-                $visitor = Visitor::where('id', $visitor_id)->with('user')->get();
+                $visitor = Visitor::where('id', $visitor_id)->with(['user' => function($query){
+                    $query->with(['home' => function($query){
+                        $query->with('estate');
+                     }]);
+                 }])->first();
+                
                 $res ['Message'] = "Visitor Has been checked in succesfully";
                 $res ['Visitor details'] = $visitor;
             	return response()->json($res, 202);
@@ -303,7 +308,11 @@ class GatemanController extends Controller
                 $history->visit_date = $avisitor->value('time_out');
                 $history->save();
 
-                $visitor = Visitor::where('id', $visitor_id)->with('user')->first();
+                $visitor = Visitor::where('id', $visitor_id)->with(['user' => function($query){
+                    $query->with(['home' => function($query){
+                        $query->with('estate');
+                     }]);
+                 }])->first();
                 $res ['Message'] = "Visitor Has been checked out succesfully";
                 $res ['Visitor details'] = $visitor;
                 $resident_notifiable = User::find($resident_id);

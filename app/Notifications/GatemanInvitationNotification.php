@@ -105,7 +105,7 @@ class GatemanInvitationNotification extends Notification implements ShouldQueue
         return [
             'title' => $this->title,
             'body' => $this->body,
-            'resident' => $this->resident,
+            'resident_id' => $this->resident->id,
         ];
     }
 }
