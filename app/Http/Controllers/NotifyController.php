@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 class NotifyController extends Controller
 {
@@ -59,6 +60,33 @@ class NotifyController extends Controller
 
       return response()->json(["message" => "Notification item has been marked as read"]);
     }
+
+    /**
+     * Mark batch notification as read
+     * @param $ids
+     * @return \Illuminate\Http\JsonResponse
+     */
+    
+    public function markSelectedAsRead(Request $request,$ids){
+
+        $array_id = explode(',',$ids);
+        foreach ($array_id as $id) {
+            
+            $notification = DatabaseNotification::where('id', $id)->first();
+            if (! $notification) {
+            // return response()->json([
+            //     'message' => "Notification item not found"
+            // ], 404);
+            error_log('Cant');
+        } else{
+            $notification->markAsRead();
+        }
+  
+          
+        }
+        
+        return response()->json(["message" => "Notification item has been marked as read"]);
+      }
 
     /**
      * Delete a notification item

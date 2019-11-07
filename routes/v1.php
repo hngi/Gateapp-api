@@ -430,9 +430,11 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Delete Notification
     Route::delete('notifications/{id}', 'NotifyController@delete');
     // Update Notification
-    Route::patch('notifications/{id}', 'NotifyController@markread');
+    Route::patch('/notifications/{id}', 'NotifyController@markread');
+    Route::patch('/notifications/read/{ids}', 'NotifyController@markSelectedAsRead');
+    
 });
-
+Route::patch('/notifications/read/{ids}', 'NotifyController@markSelectedAsRead');
 //view faq
 Route::get('faq', 'FaqController@index');
 Route::get('faq/{id}', 'FaqController@show');
