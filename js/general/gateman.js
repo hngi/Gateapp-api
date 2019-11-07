@@ -8,8 +8,8 @@
         trs.forEach(tr => tr.style.display = [...tr.children].find(td => td.innerHTML.toUpperCase().includes(filter)) ? '' : 'none');
     };
     
-
- let endpoint = `${api_origin}${allUsers}`;
+ const routes = new Routes();
+ let endpoint = `${routes.api_origin}${routes.allUsers}`;
  rowElement = document.getElementById('gatemanTable');
 
  fetch(endpoint, {
