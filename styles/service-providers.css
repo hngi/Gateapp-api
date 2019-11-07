@@ -28,7 +28,7 @@ body{
     height: 100%;
 }
 .left-cont{
-    background: url('/images/service-providers.png');
+    background: url('../images/service-providers.png');
     background-repeat: no-repeat;
     background-size: cover;
     object-fit: contain;
