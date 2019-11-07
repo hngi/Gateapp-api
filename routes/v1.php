@@ -80,6 +80,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Service provider information based on id
     Route::get('/service-provider/info/{id}', 'ServiceProviderController@search')->middleware('superAdmin');
 
+    // Route to get service provider requests
+    Route::get('/service-provider/requests', 'ServiceProviderController@serviceProviderRequests')->middleware('superAdmin');
+
     // Admin only delete a specific service provider
     Route::delete('/service-provider/delete/{id}', 'ServiceProviderController@destroy')->middleware('superAdmin');
 
