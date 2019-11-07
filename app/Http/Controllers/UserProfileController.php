@@ -130,10 +130,11 @@ class UserProfileController extends Controller
             $user->email     = $request->input('email') ??  $user->email;
             $user->duty_time  = $request->input('duty_time') ?? $user->duty_time;
 
-            if ($user->phone != $request->input('phone')) {
+            $phone = '+'.$request->input('phone');
+            if ($user->phone != $phone) {
                 $user->email_verified_at = null;
                 $user->verifycode = mt_rand(1000,9999);
-                $user->phone      = $request->input('phone');
+                $user->phone      = $phone;
 
                  //Send sms otp to user
                  $phone     = $user->phone;

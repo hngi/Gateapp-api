@@ -44,17 +44,11 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //show all admin
     Route::get('/admin', 'UserProfileController@showAllAdmin')->middleware('superAdmin');
 
-
-    // Show all visitor
-    Route::get('allVisitors', 'VisitorController@index')->middleware('admin');
-
-    
     //Fetch residents  scheduled visits stats
    Route::get('ScheduledVisits/{resident_id}', 'Statistics\UserStatsController@fetchScheduledVisit')->middleware('superAdmin');
 
    //Fetch residents  finished visits stats
    Route::get('finishedVisit/{resident_id}', 'Statistics\UserStatsController@finishedVisit')->middleware('superAdmin');
-
 
 
     //(Admin interactions with Estates)
@@ -107,6 +101,17 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // super admin Admin only fetch all visitors
     Route::get('/visitors','VisitorController@fetchSuperAdminVisitors')->middleware('superAdmin');
+    //Block selectd admin access
+    Route::put('revokeadminaccess/{user_id}', 'UserProfileController@revokeAdmin')->middleware('superAdmin');
+
+    //Unblock selected admin
+    Route::put('unrevokeadminaccess/{user_id}', 'UserProfileController@unrevokeAdmin')->middleware('superAdmin');
+
+    //Reset admin password
+    Route::post('resetadminpass/reset/{admin_id}', 'UserProfileController@resetAdmin')->middleware('superAdmin');
+
+
+
 
     // Estate Admin only fetch estate visitors
     Route::get('/visitors/{id}','VisitorController@fetchEstateVisitors')->middleware('estateAdmin');
@@ -175,6 +180,12 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //Estate Admin rejects Service Providers request
     Route::post('/service-provider/reject/{id}', 'ServiceProviderController@reject')->middleware('estateAdmin');
+    
+    //Show residents in the system
+    Route::get('residents/all', 'ResidentController@residents')->middleware('superAdmin');
+
+    //Show residents in the specific estate of logged in Estate Admin
+    Route::get('/estate/{id}/residents', 'ResidentController@estateResidents')->middleware('estateAdmin');
 
 
 });
@@ -313,7 +324,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('visitor', 'VisitorController@residentVisitor')->middleware('checkResident');
 
     //Visitor QR
-    Route::get('visitor/getQrImage', 'VisitorController@getQrImage')->middleware('checkResident');
+    Route::get('visitor/getQrImage/{id}', 'VisitorController@getQrImage')->middleware('checkResident');
 
     // Show signed in user visitor history
     Route::get('visitorHistory', 'VisitorController@residentHistory')->middleware('checkResident');
@@ -336,6 +347,18 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //reschedule a visitor
     Route::post('visitor/{id}', 'VisitorController@schedule')->middleware('checkResident');
+
+    // Ban a visitor
+    Route::post('visitor/{id}/ban', 'VisitorController@ban');
+
+    // Remove ban on a visitor
+    Route::post('visitor/{id}/remove-ban/', 'VisitorController@removeBan');
+
+    // Get banned visitors
+    Route::prefix('visitors/banned')->group( function () {
+        Route::get('/all', 'VisitorController@getAllBannedVisitors');
+        Route::get('/for-estate/{estate}', 'VisitorController@getBannedVisitorsForAnEstate');
+    });
 
     //(Residents and Gateman)
 
@@ -401,16 +424,6 @@ Route::get('faq', 'FaqController@index');
 Route::get('faq/{id}', 'FaqController@show');
 //send support message
 Route::post('/support/send', 'SupportController@send');
-
-//Block selectd admin access
-Route::put('revokeadminaccess/{user_id}', 'UserProfileController@revokeAdmin')->middleware('superAdmin');
-
-//Unblock selected admin
-Route::put('unrevokeadminaccess/{user_id}', 'UserProfileController@unrevokeAdmin')->middleware('superAdmin');
-
-//Reset admin password
-Route::post('resetadminpass/reset/{admin_id}', 'UserProfileController@resetAdmin')->middleware('superAdmin');
-
 
 // Notification types
 Route::get('notifications/types', 'NotifyController@types');

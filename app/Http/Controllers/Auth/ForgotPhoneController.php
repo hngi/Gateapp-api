@@ -43,9 +43,10 @@ class ForgotPhoneController extends Controller
         //start temporay transaction
         DB::beginTransaction();
         try{
+            $phone = '+'.$request->input('phone');
             //generate a new verify code 
             $user->email_verified_at    = null;
-            $user->phone          = $request->input('new_phone');
+            $user->phone            = $phone;
             if ($user->device_id != $request->input('new_device_id')) {
                   $user->device_id = $request->input('new_device_id');
              }
@@ -81,8 +82,8 @@ class ForgotPhoneController extends Controller
         $this->validate($request, [
             'phone' => 'required',
         ]);
-
-           $user = User::where('phone', $request->input('phone'))->first();
+           $phone = '+'.$request->input('phone');
+           $user = User::where('phone', $phone)->first();
            if ($user == null) {
                 $res['success'] = false;
                 $res['message'] = 'User not found!';
