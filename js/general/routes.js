@@ -48,6 +48,11 @@ class Routes {
     get allVisits() {
         return 'api/v1/statistics/visits';
     }
+    //Create an Estate Admin 
+    get addAdmin(){
+        return `api/v1/create/estate_admin`;
+    }
+   
     // Get All Estate Admin Information 
     get fetchAllEstateAdmin() {
         return 'api/v1/admin';
@@ -84,6 +89,18 @@ class Routes {
     //Service Providers Submit Request on Website
     get serviceProviderSubmit() {
         return `api/v1/service_provider/create_request`;
+    }
+    // Get all Service Providers
+    get allServiceProvider() {
+        return `api/v1/service_provider`;
+    }
+    // Suspend service provider
+    suspendServiceProvider(id) {
+        return `api/v1/service_provider/suspend/${id}`;
+    }
+    // Remove service provider
+    removeServiceProvider(id) {
+        return `api/v1/service_provider/delete/${id}`;
     }
     path(path) {
         return path; 
