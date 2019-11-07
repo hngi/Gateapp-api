@@ -1,0 +1,49 @@
+.welcome-image {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+      url("../images/contact-header.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+.contact-con {
+    min-height: 100vh;
+}
+.always-here {
+    min-height: 40vh;
+}
+.always-here p {
+    font-size: 18px;
+    line-height: 5vh;
+}
+.always-here li {
+    border: 0;
+}
+.always-here .list-group-item {
+    font-size: 14px;
+}
+.always-here .list-title{
+    font-size: 18px;
+}
+.contact-form form {
+    border-radius: 12px;
+}
+.contact-form input,.contact-form textarea {
+    border: none;
+    border-bottom: 1px solid grey;
+    border-radius: 0px;
+    overflow: hidden;
+}
+.contact-con button {
+    font-size: 14px;
+}
+.embedded-map {
+    height: 50vh;
+}
+.embedded-map iframe {
+    height: 100%;
+    width: 100%;
+    border: 1px solid black;
+}
+.contact-info {
+    border: 1px solid transparent
+}
