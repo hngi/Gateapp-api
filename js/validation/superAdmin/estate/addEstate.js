@@ -23,11 +23,6 @@ const validateForm = (addEstateForm) => {
     //Convert form to formData
     const formData = new FormData(addEstateForm);
 
-    //Split locations into Address, City and Country
-    const splitLocation = formData.get('location').split(',');
-    //Array Destructring
-    [estateAddress, estateCity, estateCountry] = splitLocation;
-
     //Throw error if field is empty
     if(formData.get('estate_name') == '') {
         estateNameError.innerHTML = 'Esate name is required';
@@ -41,22 +36,18 @@ const validateForm = (addEstateForm) => {
         return false;
     }
     //Throw error if field is empty
-    if(estateAddress == undefined || estateCity == undefined || estateCountry == undefined) {
-        locationError.innerHTML = 'A location of this format (Adress,City,Country) is required';
+    if(formData.get('address') == '' || formData.get('city') == ''  || formData.get('country') == '' ) {
+        locationError.innerHTML = 'An estate location is required!';
         permit = false;
         return false;
     }
 
     //Throw error if field is empty
-    if(formData.get('image').name == '') {
-        imageError.classList.add('image-error-sty')
-        imageError.innerHTML = 'Please choose an estate image';
-        permit = false;
-        return false;
-    }else {
+    if(formData.get('image').name != '') {
         imageError.style.color = '#49a347';
         imageError.innerHTML = formData.get('image').name;
     }
+
      //Throw error if image size is too large
      if(formData.get('image').size >= 200000) {
         imageError.classList.add('image-error-sty')
