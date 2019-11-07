@@ -46,6 +46,11 @@ class Routes {
   get allVisits() {
     return "api/v1/statistics/visits";
   }
+  //Create an Estate Admin
+  get addAdmin() {
+    return `api/v1/create/estate_admin`;
+  }
+
   // Get All Estate Admin Information
   get fetchAllEstateAdmin() {
     return "api/v1/admin";
@@ -54,9 +59,13 @@ class Routes {
   revokeEstateAdminAccess(id) {
     return `api/v1/revokeadminaccess/${id}`;
   }
-  resetEstateAdminPassword(id) {
+  restoreEstateAdminAccess(id) {
     return `api/v1/unrevokeadminaccess/${id}`;
   }
+  resetEstateAdminPassword(id) {
+    return `api/v1/resetadminpass/reset/${id}`;
+  }
+
   //Visitor Banned
   get allBannedVisitor() {
     return `api/v1/visitors/banned/all`;
