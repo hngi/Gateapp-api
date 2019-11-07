@@ -70,6 +70,9 @@ class Routes {
     get addEstate() {
         return `api/v1/estate`;
     }
+    get fetchEstates() {
+        return `api/v1/estates`;
+    }
     editEstate(estate_id) {
         return `api/v1/estate/${estate_id}`;
     }

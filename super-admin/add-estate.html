@@ -103,14 +103,26 @@
                         <p class="error-fields" id="estateNameError"></p>
                     </div>
                     <div class="form-group mb-2">
-                        <label for="">Estate Location <small>(Address,City,Country)</small></label>
-                        <input type="text" name="location" class="form-control" placeholder="Park Avenue, Ikeja, Lagos">
-                        <p class="error-fields" id="locationError">Please seperate location format with a comma</p>
+                        <div class="col-12 row px-0 mx-0">
+                            <div class="col-4 px-1 mx-0">
+                                <label for="">Address</label>
+                                <input type="text" name="address" class="form-control" placeholder="Park Avenue">
+                            </div>
+                            <div class="col-4 px-1 mx-0">
+                                <label for="">City</label>
+                                <input type="text" name="city" class="form-control" placeholder="Ikeja">
+                            </div>
+                            <div class="col-4 px-1 mx-0">
+                                <label for="">Country</label>
+                                <input type="text" name="country" class="form-control" placeholder="Nigeria">
+                            </div>
+                        </div>
+                        <p class="error-fields" id="locationError"></p>
                     </div>
                     <div class="input-group mb-3">
                         <div class="custom-file">
                             <input  type="file" name="image" class="custom-file-input">
-                            <label class="custom-file-label" for="inputGroupFile01" data-img-label>Choose file</label>
+                            <label class="custom-file-label" for="inputGroupFile01" data-img-label>Choose estate image</label>
                         </div>
                     </div>
                     <button data-add-esate-btn type="submit" class="btn btn-success estate-submit-btn col-6">
