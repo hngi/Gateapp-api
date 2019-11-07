@@ -243,7 +243,7 @@ class VisitorController extends Controller
             'phone_no'          => 'string|nullable',
             'purpose'           => 'string|nullable',
             'visiting_period'   => 'string',
-            'description'       => 'string',
+            'description'       => 'string|nullable',
         ]);
 
         DB::beginTransaction();
