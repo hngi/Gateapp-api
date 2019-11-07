@@ -365,7 +365,7 @@ class VisitorController extends Controller
      */
     public function fetchAllVisitHistory()
     {
-        $visitors = DB::table('visitors_history')->orderBy('estate_id')->get();
+        $visitors = DB::table('visitors_history')->get();
         if($visitors) {
             $res['status']  = true;
             $res['message'] = 'Estate visitors';
@@ -387,7 +387,13 @@ class VisitorController extends Controller
      */
     public function fetchEstateVisitors($id)
     {
-        $visitors = DB::table('visitors')->where('estate_id', $id)->get();
+        // $visitors = DB::table('visitors')->where('estate_id', $id)->get();
+            $visitors  = DB::table('visitors')
+            ->select()
+            ->join('estates', 'estates.id','=','visitors.estate_id')
+            ->where('estate_id', $id)
+            ->get();
+
         if(!$visitors) {
             $res['status']  = false;
             $res['message'] = 'No Record found';
@@ -431,8 +437,12 @@ class VisitorController extends Controller
      * @return JSON
      */    public function fetchSuperAdminVisitors()
     {
-        // $visitors = \App\Visitor::all();
-        $visitors = DB::table('visitors')->orderBy('user_id')->get();
+
+    $visitors  = DB::table('visitors')
+            ->select()
+            ->join('estates', 'estates.id','=','visitors.estate_id')
+            ->get();
+
         if($visitors) {
             $res['status']  = true;
             $res['message'] = 'All visitors (All)';
