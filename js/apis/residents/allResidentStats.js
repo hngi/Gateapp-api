@@ -10,11 +10,23 @@ const getResidenceStats = id => {
   try {
     let firstAPICall = fetch(
       `${routes.api_origin}${routes.scheduledVisits(id)}`,
-      { Authorization: token }
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: token
+        }
+      }
     );
     let secondAPICall = fetch(
       `${routes.api_origin}${routes.finishedVisits(id)}`,
-      { Authorization: token }
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: token
+        }
+      }
     );
     Promise.all([firstAPICall, secondAPICall])
       .then(values => Promise.all(values.map(value => value.json())))
