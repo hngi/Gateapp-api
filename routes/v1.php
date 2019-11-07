@@ -483,7 +483,7 @@ Route::get('/test-notification2', function () {
     $gateman = \App\User::query()->where('role', 2)->inRandomOrder()->first();
     $visitor = \App\Visitor::query()->inRandomOrder()->first();
 
-    $gateman->notify(new App\Notifications\VisitorArrivalNotification($resident, $gateman, $visitor));
+    $gateman->notify(new App\Notifications\VisitorArrivalNotification($resident, $gateman, $visitor,false));
 });
 
 //----------- Service provider request route ---------------------------------//
