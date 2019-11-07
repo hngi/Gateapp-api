@@ -80,6 +80,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Service provider information based on id
     Route::get('/service-provider/info/{id}', 'ServiceProviderController@search')->middleware('superAdmin');
 
+    // Route to get service provider requests
+    Route::get('/service-provider/requests', 'ServiceProviderController@serviceProviderRequests')->middleware('superAdmin');
+
     // Admin only delete a specific service provider
     Route::delete('/service-provider/delete/{id}', 'ServiceProviderController@destroy')->middleware('superAdmin');
 
@@ -113,6 +116,16 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('resetadminpass/reset/{admin_id}', 'UserProfileController@resetAdmin')->middleware('superAdmin');
 
 
+
+
+    //Block selectd admin access
+    Route::put('revokeadminaccess/{user_id}', 'UserProfileController@revokeAdmin')->middleware('superAdmin');
+
+    //Unblock selected admin
+    Route::put('unrevokeadminaccess/{user_id}', 'UserProfileController@unrevokeAdmin')->middleware('superAdmin');
+
+    //Reset admin password
+    Route::post('resetadminpass/reset/{admin_id}', 'UserProfileController@resetAdmin')->middleware('superAdmin');
 
 
     // Estate Admin only fetch estate visitors
