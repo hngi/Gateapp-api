@@ -425,7 +425,8 @@ class ServiceProviderController extends Controller
     {
      try {
           $requests = [];
-          $services = Service_Provider::all();
+          $services = Service_Provider::with('estate')->with('category')->get();
+          
           foreach($services as $service)
           {
            $status = $service->status;

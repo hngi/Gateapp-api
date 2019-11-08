@@ -235,6 +235,10 @@ class GatemanController extends Controller
                         $query->with('estate');
                      }]);
                  }])->first();
+                 $resident_notifiable = User::find($resident_id);
+                 $gateman_notifiable  = User::find($this->user->id);
+                 $resident_notifiable->notify(new VisitorArrivalNotification($resident_notifiable, $gateman_notifiable, $visitor,false));
+                 
                 
                 $res ['Message'] = "Visitor Has been checked in succesfully";
                 $res ['Visitor details'] = $visitor;
@@ -317,7 +321,7 @@ class GatemanController extends Controller
                 $res ['Visitor details'] = $visitor;
                 $resident_notifiable = User::find($resident_id);
                 $gateman_notifiable  = User::find($this->user->id);
-                $resident_notifiable->notify(new VisitorArrivalNotification($resident_notifiable, $gateman_notifiable, $visitor));
+                $resident_notifiable->notify(new VisitorArrivalNotification($resident_notifiable, $gateman_notifiable, $visitor,true));
             	return response()->json($res, 202);
             }
             else {

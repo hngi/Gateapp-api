@@ -19,21 +19,32 @@ class VisitorArrivalNotification extends Notification implements ShouldQueue
     private $gateman;
     private $title;
     private $body;
+    private $checkingOut;
 
     /**
      * Create a new notification instance.
      * @param User $resident
      * @param User $gateman
      * @param Visitor $visitor
+     * @param bool $checkingOut
      */
-    public function __construct(User $resident, User $gateman, Visitor $visitor)
+    public function __construct(User $resident, User $gateman, Visitor $visitor, bool $checkingOut)
     {
         $this->resident = $resident;
         $this->visitor = $visitor;
         $this->gateman = $gateman;
+        $this->checkingOut = $checkingOut;
+        if($checkingOut)
+        {
+        $this->title = 'Visitor Checked Out';
+        $this->body = $this->visitor->name .  "has left,They are being checked out by {$this->gateman->name}";
+        } else{
+             $this->title = 'Visitor Arrival';
+        $this->body = $this->visitor->name .  "has arrived to see you \n They are being checked in by {$this->gateman->name}";
+        }
 
-        $this->title = 'Visitor Arrival';
-        $this->body = $this->visitor->name .  'has arrived to see you \n They are being checked in by {$this->gateman->name}';
+       
+        
         
     }
 
