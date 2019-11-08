@@ -164,7 +164,7 @@ class EstateController extends Controller
                     $estate->image = $data['image'];
                 }else {
                     $data = null;
-                    $estate->image = 'noimage.jpg';
+                    $estate->image = 'gateguard-logo.png';
                 }
 
                 $estate->save();
@@ -218,9 +218,6 @@ class EstateController extends Controller
                             return response()->json($data, $data['status_code']);
                         }
                         $estate->image = $data['image'];
-                    }else {
-                        $data = null;
-                        $estate->image = 'noimage.jpg';
                     }
 
                     $estate->save();
