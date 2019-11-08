@@ -44,11 +44,16 @@
     		</div>
     		<h2 class="welcome">Welcome To Gate Pass</h2>
     		<div>
-    			 <h4>Hello {{$user->name}}</h4>
+    			 <h4>Hello {{$user->first_name}} {{$user->last_name}}</h4>
     		</div>
     		<div>
     			 <p class="note">Use this verification token to confirm account</p>
     			 <p class="verifycode">{{ $user->verifycode}}</p>
     		</div>
+
+			<div>
+                 <p class="team">if this mail is not authourize by you please discard</p>
+                 <p class="team" style="font-style: italic;">GateGuard Team</p>
+            </div>
     	</body>
     </html>
