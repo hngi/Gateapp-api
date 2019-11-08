@@ -24,7 +24,7 @@ Route::post('login', 'Auth\LoginController@authenticate'); //Not Needed
 Route::post('login/admin', 'Auth\AdminLoginController@authenticate'); //Admins Only (Super Admin and Estate Admin)
 
 //View Estates
-Route::get('/public/estates', 'EstateController@index');
+Route::get('public/estates', 'EstateController@index');
 
 //Admin Routes (Specific Route)*******************************************************
 
