@@ -55,6 +55,51 @@ class Routes {
     return `api/v1/statistics/estate/${id}`;
   }
 
+    // Get All Estate Admin Information 
+    get fetchAllEstateAdmin() {
+        return 'api/v1/admin';
+    }
+    // Get All Estate Admin Information 
+    revokeEstateAdminAccess(id) {
+        return `api/v1/revokeadminaccess/${id}`;
+    }
+    resetEstateAdminPassword(id) {
+        return `api/v1/unrevokeadminaccess/${id}`;
+    }
+    //Visitor Banned
+    get allBannedVisitor(){
+        return `api/v1/visitors/banned/all`;
+    }
+    removeBannedVisitor(visitor_id) {
+        return `api/v1/visitor/${visitor_id}/remove-ban`;
+    }
+    //Estates
+    get addEstate() {
+        return `api/v1/estate`;
+    }
+    editEstate(estate_id) {
+        return `api/v1/estate/${estate_id}`;
+    }
+    //Newsletter Subscribe
+    get newsletter() {
+        return `api/v1/newsletter`;
+    }
+    //Service Providers Submit Request on Website
+    get serviceProviderSubmit() {
+        return `api/v1/service_provider/create_request`;
+    }
+    //Get all estates
+    get allEstates() {
+        return `api/v1/public/estates`;
+    }
+    //Get service provider categories
+    get serviceProviderCategory() {
+        return `api/v1/public/sp-categories`;
+    }
+    path(path) {
+        return path; 
+    }
+
   // Get All Estate Admin Information
   get fetchAllEstateAdmin() {
     return "api/v1/admin";
@@ -140,8 +185,4 @@ class Routes {
   finishedVisits(id) {
     return `api/v1/finishedVisit/${id}`;
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 9996a39cbe68bd1b73fe844d2e135bf43f493f6f
