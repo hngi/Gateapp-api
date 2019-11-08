@@ -17,33 +17,33 @@ class Routes {
   }
   //Super Admin - Admin Page
   //Weeekly
-  get weeklyEstate() {
+  get statWeeklyEstate() {
     return "api/v1/statistics/weeklyEstate";
   }
-  get weeklyServiceProvider() {
+  get statWeeklyServiceProvider() {
     return "api/v1/statistics/weeklyService";
   }
-  get weeklyServiceVisits() {
+  get statWeeklyServiceVisits() {
     return "api/v1/statistics/weeklyVisits";
   }
   //Monthly
-  get monthlyEstate() {
+  get statMonthlyEstate() {
     return "api/v1/statistics/monthlyEstate";
   }
-  get monthlyServiceProvider() {
+  get statMonthlyServiceProvider() {
     return `api/v1/statistics/monthlyService`;
   }
-  get monthlyServiceVisits() {
+  get statMonthlyServiceVisits() {
     return `api/v1/statistics/monthlyVisits`;
   }
   //Monthly
-  get allEstate() {
+  get statAllEstate() {
     return "api/v1/statistics/estate";
   }
-  get allServiceProvider() {
+  get statAllServiceProvider() {
     return "api/v1/statistics/service";
   }
-  get allVisits() {
+  get statAllVisits() {
     return "api/v1/statistics/visits";
   }
   //Create an Estate Admin
