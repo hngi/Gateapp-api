@@ -5,15 +5,10 @@ console.log(addUrl);
 const spSubmitApi = (event) => {  
     event.preventDefault();
     const name = document.querySelector('#fullname').value;
-    console.log(name);
     const phone = document.querySelector('#phone').value;
-    console.log(phone);
     const description = document.querySelector('#bizname').value;
-    console.log(description);
     const estate_id = document.querySelector('#estate-dropdown').value;
-    console.log(estate_id);
     const category_id = document.querySelector('#category-dropdown').value;
-    console.log(category_id);
     const data = {
         name,
         phone,
