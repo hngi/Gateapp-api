@@ -89,11 +89,9 @@ class Routes {
         return path; 
     }
     //Service Providers Request
-    get serviceProviderRequestSearch () {
-        return `api/v1/service-provider/info/{id}`;
+    get allServiceProviderRequests () {
+        return `api/v1/service-provider/requests`;
     }
-    get serviceProviderRequest () {
-        return `api/v1/service-provider/info/{id}`;
-    }
+    
     
 }
