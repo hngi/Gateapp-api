@@ -23,6 +23,11 @@ Route::post('login', 'Auth\LoginController@authenticate'); //Not Needed
 //Login Admin
 Route::post('login/admin', 'Auth\AdminLoginController@authenticate'); //Admins Only (Super Admin and Estate Admin)
 
+//View Estates
+Route::get('public/estates', 'EstateController@index');
+
+// Get all Service Provider categories
+Route::get('public/sp-categories', 'SPCategoryController@fetchCategories');
 
 //Admin Routes (Specific Route)*******************************************************
 
@@ -98,17 +103,6 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Delete a Service Provider category
     Route::delete('sp-category/{id}', 'SPCategoryController@deleteCategory')->middleware('superAdmin');
 
-    // super Admin only fetch all visit history
-    Route::get('/history','VisitorController@fetchAllVisitHistory')->middleware('superAdmin');
-
-    // Estate Admin only fetch visit history
-    Route::get('/history/{id}','VisitorController@fetchEstateVisitHistory')->middleware('estateAdmin');
-
-    // Super Admin only fetch visit history for one visitor
-    Route::get('/history/visitor/{id}','VisitorController@fetchVisitorHistory')->middleware('superAdmin');
-
-    // super admin Admin only fetch all visitors
-    Route::get('/visitors','VisitorController@fetchSuperAdminVisitors')->middleware('superAdmin');
     //Block selectd admin access
     Route::put('revokeadminaccess/{user_id}', 'UserProfileController@revokeAdmin')->middleware('superAdmin');
 
@@ -118,8 +112,17 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //Reset admin password
     Route::post('resetadminpass/reset/{admin_id}', 'UserProfileController@resetAdmin')->middleware('superAdmin');
 
+    // super Admin only fetch all visit history
+    Route::get('/history','VisitorController@fetchAllVisitHistory')->middleware('superAdmin');
 
+    // Estate Admin only fetch visit history
+    Route::get('/history/{id}','VisitorController@fetchEstateVisitHistory')->middleware('estateAdmin');
 
+        // super Admin only fetch singles visitor visit history
+        Route::get('/history/visitor/{id}','VisitorController@fetchVisitorHistory')->middleware('superAdmin');
+
+    // super admin Admin only fetch all visitors
+    Route::get('/visitors','VisitorController@fetchSuperAdminVisitors')->middleware('superAdmin');
 
     // Estate Admin only fetch estate visitors
     Route::get('/visitors/{id}','VisitorController@fetchEstateVisitors')->middleware('estateAdmin');
@@ -240,17 +243,17 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::delete('/user/delete', 'UserProfileController@destroy');
 
 
-    // Ban a visitor
-    Route::post('visitor/{id}/ban', 'VisitorController@ban');
+    // // Ban a visitor
+    // Route::post('visitor/{id}/ban', 'VisitorController@ban');
 
-    // Remove ban on a visitor
-    Route::post('visitor/{id}/remove-ban/', 'VisitorController@removeBan');
+    // // Remove ban on a visitor
+    // Route::post('visitor/{id}/remove-ban/', 'VisitorController@removeBan');
 
-    // Get banned visitors
-    Route::prefix('visitors/banned')->group( function () {
-        Route::get('/all', 'VisitorController@getAllBannedVisitors');
-        Route::get('/for-estate/{estate}', 'VisitorController@getBannedVisitorsForAnEstate');
-    });
+    // // Get banned visitors
+    // Route::prefix('visitors/banned')->group( function () {
+    //     Route::get('/all', 'VisitorController@getAllBannedVisitors');
+    //     Route::get('/for-estate/{estate}', 'VisitorController@getBannedVisitorsForAnEstate');
+    // });
 
 
     //User Image upload api
@@ -316,8 +319,6 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Get requests for a gateman
     Route::get('gateman/requests', 'GatemanController@residentRequest')->middleware('checkGateman');
 
-    // Get all Service Provider categories
-    Route::get('/sp-category', 'SPCategoryController@fetchCategories');
 });
 
 // Logged in Residents Routes *******************************************************
@@ -436,9 +437,11 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Delete Notification
     Route::delete('notifications/{id}', 'NotifyController@delete');
     // Update Notification
-    Route::patch('notifications/{id}', 'NotifyController@markread');
-});
+    Route::patch('/notifications/{id}', 'NotifyController@markread');
+    Route::patch('/notifications/read/{ids}', 'NotifyController@markSelectedAsRead');
 
+});
+Route::patch('/notifications/read/{ids}', 'NotifyController@markSelectedAsRead');
 //view faq
 Route::get('faq', 'FaqController@index');
 Route::get('faq/{id}', 'FaqController@show');
@@ -474,7 +477,7 @@ Route::get('/test-notification2', function () {
     $gateman = \App\User::query()->where('role', 2)->inRandomOrder()->first();
     $visitor = \App\Visitor::query()->inRandomOrder()->first();
 
-    $gateman->notify(new App\Notifications\VisitorArrivalNotification($resident, $gateman, $visitor));
+    $gateman->notify(new App\Notifications\VisitorArrivalNotification($resident, $gateman, $visitor,false));
 });
 
 //----------- Service provider request route ---------------------------------//

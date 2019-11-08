@@ -133,7 +133,8 @@ class VisitorController extends Controller
     ) {
         // validate the posted data
         $this->validate($request, [
-            'name'              => ['required', 'regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
+
+            'name'              => 'required|string',
             'arrival_date'      => 'required|date',
             'car_plate_no'      => 'string|nullable',
             'purpose'           => 'string',
@@ -237,7 +238,9 @@ class VisitorController extends Controller
 
         // validate the posted data
         $this->validate($request, [
-            'name'              => ['regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/'],
+
+
+            'name'              => 'required|string',
             'arrival_date'      => 'required|date',
             'car_plate_no'      => 'string|nullable',
             'phone_no'          => 'string|nullable',
@@ -463,12 +466,10 @@ class VisitorController extends Controller
      * @return JSON
      */    public function fetchSuperAdminVisitors()
     {
-
-    $visitors  = DB::table('visitors')
-            ->select()
-            ->join('estates', 'estates.id','=','visitors.estate_id')
-            ->get();
-
+        // $visitors = \App\Visitor::all();
+        $visitors = Visitor::with('estate')
+                    ->with('user')
+                    ->orderBy('user_id')->get();
         if($visitors) {
             $res['status']  = true;
             $res['message'] = 'All visitors (All)';
@@ -569,7 +570,7 @@ class VisitorController extends Controller
      */
     public function ban($id)
     {
-        $this->middleware('admin');
+        $this->middleware('superAdmin');
 
         $visitor = Visitor::query()->findOrFail($id);
 

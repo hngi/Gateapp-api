@@ -40,6 +40,12 @@ class Visitor extends Model
         // return $this->belongsTo(User::class);
         return $this->belongsTo('App\User');
     }
+    public function estate()
+    {
+        // return $this->belongsTo(User::class);
+        return $this->belongsTo('App\Estate');
+    }
+
 
     /**
      * Get the home that the visitor visited.

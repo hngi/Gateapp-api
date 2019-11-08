@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 class NotifyController extends Controller
 {
@@ -61,6 +62,33 @@ class NotifyController extends Controller
     }
 
     /**
+     * Mark batch notification as read
+     * @param $ids
+     * @return \Illuminate\Http\JsonResponse
+     */
+    
+    public function markSelectedAsRead(Request $request,$ids){
+
+        $array_id = explode(',',$ids);
+        foreach ($array_id as $id) {
+            
+            $notification = DatabaseNotification::where('id', $id)->first();
+            if (! $notification) {
+            // return response()->json([
+            //     'message' => "Notification item not found"
+            // ], 404);
+            error_log('Cant');
+        } else{
+            $notification->markAsRead();
+        }
+  
+          
+        }
+        
+        return response()->json(["message" => "Notification item has been marked as read"]);
+      }
+
+    /**
      * Delete a notification item
      * @param $id
      * @return \Illuminate\Http\JsonResponse
@@ -92,25 +120,6 @@ class NotifyController extends Controller
         $typ = str_replace("App\Notifications\\", '', $typ);
 
         return Str::snake($typ);
-    }
-
-    /**
-     * Get a list oof all possible notification types
-     * @return \Illuminate\Support\Collection
-     */
-    public function types()
-    {
-        // We get all the files on the Notifications dir - that end with "Notifications"
-        // which are all possibly notifications classes and use them as notifications types
-        $types = collect(glob(app_path('Notifications/*Notification.php')));
-
-        $types->transform(function ($item, $key) {
-            $rp = [app_path('Notifications') => '', '.php' => '', '/' => ''];
-            $type = strtr($item, $rp);
-            return $this->snakeCasedType($type);
-        });
-
-        return $types;
     }
 
 

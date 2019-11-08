@@ -232,7 +232,7 @@ class ServiceProviderController extends Controller
                 $service->image = $data['image'];
             } else {
                 $data = null;
-                $service->image = 'noimage.jpg';
+                $service->image = 'gateguard-logo.png';
             };
             $service->save();
 
@@ -284,9 +284,6 @@ class ServiceProviderController extends Controller
                     return response()->json($data, $data['status_code']);
                 }
                 $service->image = $data['image'];
-            } else {
-                $data = null;
-                $service->image = 'noimage.jpg';
             }
 
             $service->save();
