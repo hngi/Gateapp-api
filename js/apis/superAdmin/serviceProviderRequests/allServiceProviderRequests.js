@@ -1,36 +1,73 @@
+const routes = new Routes();
+const spUrl = `${routes.api_origin}${routes.allServiceProviderRequests}`;
 
+const singlemodal = document.querySelector('#singleProviderModal');
+const approveButton = document.querySelector('#approveBtn');
+const rejectButton = document.querySelector('#rejectBtn');
 
-const updateServiceProviderTable = async (data) => {
-    // return
-    let tbody = "";
-    for (let i = 0; i < data[0].length; i++) {
-        const row = data[0][i];
-        // return
-        const tr = "<tr>";
-        const td1 = "<td>" + row.name + "</td>";
-        const td2 = "<td>" + row.description + "</td>";
-        const td4 = "<td>" + "<a href='" + row.id + "' data-toggle='modal' data-target='#singleProviderModal'>View Details</a>" + "</td>";
-        let td3 = ""
-        await fetch('http://gateappapi.herokuapp.com/api/v1/estate/' + row.estate_id, {
-            headers: {
-                Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9nYXRlYXBwYXBpLmhlcm9rdWFwcC5jb21cL2FwaVwvdjFcL2xvZ2luXC9hZG1pbiIsImlhdCI6MTU3MzEyMDA2NiwiZXhwIjoxNTczMzM2MDY2LCJuYmYiOjE1NzMxMjAwNjYsImp0aSI6IjNaOXZDUmNneVJRelJLMEMiLCJzdWIiOjg1LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.AFwChREgNxECAzucbYDglfhXXkGAfhQ3lpd5bU4cCQk'
-            }
+// Get Response From api 
+const fetchServiceProviderRequests = () => {
+    
+    fetch(spUrl, {
+        method: "GET",
+        mode: "cors",
+        headers: {
+            "Accept": "aplication/json",
+            "Authorization": token
+        },
+
+    })
+        .then(resp => resp.json())
+        .then(data => {
+            let {requests}  = data;
+            let [services] = requests;
+            
+            console.log(requests);
+            console.log(services);
+            console.log(requests.length);
+           updateServiceProviderTable(services);
+          
         })
-        .then(res => res.json())
-        .then(data => { td3 = "<td>" + data.estate.estate_name + ", " + data.estate.address + "</td>" })
-        .catch(err => console.log(err))
-        tbody += tr + td1 + td2 + td3 + td4 + "</tr>"
-    }
-    // console.log(tbody)
-    document.querySelector('tbody').innerHTML = tbody;
-    return;
-}
 
-fetch('http://gateappapi.herokuapp.com/api/v1/service-provider/requests', {
-    headers: {
-        Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9nYXRlYXBwYXBpLmhlcm9rdWFwcC5jb21cL2FwaVwvdjFcL2xvZ2luXC9hZG1pbiIsImlhdCI6MTU3MzEyMDA2NiwiZXhwIjoxNTczMzM2MDY2LCJuYmYiOjE1NzMxMjAwNjYsImp0aSI6IjNaOXZDUmNneVJRelJLMEMiLCJzdWIiOjg1LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.AFwChREgNxECAzucbYDglfhXXkGAfhQ3lpd5bU4cCQk'
-    }
-})
-.then(res => res.json())
-.then(data => updateServiceProviderTable(data.requests))
-.catch(err => console.log(err))
+}
+fetchServiceProviderRequests();
+
+const updateServiceProviderTable =  (services) => {
+
+    const table = document.querySelector('[data-serviceProvider-view]');
+    services.map((spRequest) => {
+        let {estate, category} = spRequest;
+        let {estate_name, address, city, country} = estate;
+        let {title} = category;
+        let row = table.insertRow(),
+        spName = row.insertCell(),
+        spServiceType = row.insertCell(),
+        spLocation = row.insertCell(),
+        moreDetails = row.insertCell();
+
+        spName.innerHTML = `${spRequest.name}`;
+        spServiceType.innerHTML = `${category.title}`;
+        spLocation.innerHTML =`${estate.estate_name}, ${estate.city}, ${estate.country} `;
+        moreDetails.innerHTML = '<a href="" data-toggle="modal" data-target="#singleProviderModal">View Details</a>'
+
+        moreDetails.addEventListener('click',()=>{
+            modalName.innerHTML = `${spRequest.name}`;
+            modalPhone.innerHTML = `${spRequest.phone}`;
+            modalEstate.innerHTML = `${estate.estate_name}`;
+            modalDate.innerHTML = `${spRequest.created_at}`;
+            modalCategory.innerHTML = `${category.title}`;
+            
+            
+            approveButton.setAttribute('data-id', `${spRequest.id}`);
+            rejectButton.setAttribute('data-id', `${spRequest.id}`);
+            console.log(approveButton);
+
+            
+         })
+
+
+        
+    })
+
+} 
+

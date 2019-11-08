@@ -25,7 +25,7 @@ fetchEstates();
 
 const populateEstate = (estates) =>{
     estates.map((est) => {
-       
+       console.log(est)
         let option;
         option = document.createElement('option');
         option.text = `${est.estate_name}, ${est.city}, ${est.country}`;
