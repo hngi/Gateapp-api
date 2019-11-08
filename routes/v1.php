@@ -26,6 +26,9 @@ Route::post('login/admin', 'Auth\AdminLoginController@authenticate'); //Admins O
 //View Estates
 Route::get('public/estates', 'EstateController@index');
 
+// Get all Service Provider categories
+Route::get('public/sp-categories', 'SPCategoryController@fetchCategories');
+
 //Admin Routes (Specific Route)*******************************************************
 
 Route::group(['middleware' => ['jwt.verify']], function () {
@@ -313,8 +316,6 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Get requests for a gateman
     Route::get('gateman/requests', 'GatemanController@residentRequest')->middleware('checkGateman');
 
-    // Get all Service Provider categories
-    Route::get('/sp-category', 'SPCategoryController@fetchCategories');
 });
 
 // Logged in Residents Routes *******************************************************
