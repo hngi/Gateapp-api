@@ -237,7 +237,7 @@ class VisitorController extends Controller
 
         // validate the posted data
         $this->validate($request, [
-            
+
             'name'              => 'required|string',
             'arrival_date'      => 'required|date',
             'car_plate_no'      => 'string|nullable',
