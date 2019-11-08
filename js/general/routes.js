@@ -121,16 +121,8 @@ class Routes {
     return path;
   }
   //Service Providers Request
-<<<<<<< HEAD
   get updateServiceProviderTable () {
     return `api/v1/service-provider/requests`;
-=======
-  get serviceProviderRequestSearch() {
-    return `api/v1/service-provider/info/{id}`;
-  }
-  get serviceProviderRequest() {
-    return `api/v1/service-provider/info/{id}`;
->>>>>>> 9996a39cbe68bd1b73fe844d2e135bf43f493f6f
   }
   //All residents
   get allResidents() {
