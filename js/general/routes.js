@@ -163,7 +163,7 @@ class Routes {
         return path; 
     }
     //Service Providers Request
-    get allServiceProviderRequests () {
+    get updateServiceProviderTable () {
         return `api/v1/service-provider/requests`;
     }
     
