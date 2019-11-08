@@ -81,6 +81,14 @@ class Routes {
     get serviceProviderSubmit() {
         return `api/v1/service_provider/create_request`;
     }
+    //Get all estates
+    get allEstates() {
+        return `api/v1/public/estates`;
+    }
+    //Get service provider categories
+    get serviceProviderCategory() {
+        return `api/v1/public/sp-categories`;
+    }
     path(path) {
         return path; 
     }

@@ -71,31 +71,15 @@
         </div>
         <div class="right">
             <h3>Register as a service provider</h3>
-            <form action="">
-                <input type="text" class="input" placeholder="Full name*" required>
-                <input type="Phone" class="input" placeholder="PhoneNumber*" required>
-                <input type="text" class="input" placeholder="Business Name*" required>
-                <input type="text" class="input" placeholder="Business Location*">
-                <select class="input">
-                    <option value="">Service Type</option>
-                    <option value="">Gardener</option>
-                    <option value="">Mechanic</option>
-                    <option value="">Barber</option>
-                    <option value="">Cook</option>
-                    <option value="">Event Manager</option>
-                    <option value="">House help</option>
-                    <option value="">Clinic</option>
-                    <option value="">Carpenter</option>
-                    <option value="">Plumber</option>
-                    <option value="">Electrician</option>
-                    <option value="">Fire Service</option>
-                    <option value="">Tailor</option>
-                    <option value="">Cobbler</option>
-                    <option value="">Teacher</option>
-                    <option value="">Hair Dresser</option>
-                    <option value="">Others</option>
+            <form role="form" id="spForm" action="">
+                <input type="text" class="input" id="fullname" placeholder="Full Name*" required>
+                <input type="tel" id="phone" class="input" placeholder="Phone Number*" required>
+                <input type="text" class="input" id="bizname" placeholder="Business Name*" required>
+                <select id="estate-dropdown" class="input">
                 </select>
-                <button type="submit">register</button>
+                <select id="category-dropdown" class="input">
+                </select>
+                <button type="submit" id="register">register</button>
             </form>
         </div>
     </div>
@@ -152,6 +136,13 @@
             </div>
         </div>
     </footer>
+
+<!-- Import js -->
+<script src="js/general/third_party_cdn.js"></script>
+<script src="js/general/routes.js"></script>
+<script src="js/apis/serviceProviderSubmitRequest/getAllEstate.js"></script>
+<script src="js/apis/serviceProviderSubmitRequest/getSPCategory.js"></script>
+<script src="js/apis/serviceProviderSubmitRequest/serviceProviderSubmit.js"></script>
 </body>
 
 </html>
