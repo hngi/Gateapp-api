@@ -1,5 +1,5 @@
 const routes = new Routes();
-axios.defaults.baseURL = routes.api_origin;
+axios.defaults.baseURL = "http://localhost:8000";
 axios.defaults.headers.common['Authorization'] = token;
 const container = document.querySelector(`table.estates-table tbody`);
 
@@ -55,19 +55,22 @@ const getBannedVisitors = () => {
     axios.get(routes.allBannedVisitor)
         .then(response => {
             let banned = response.data.data;
-            let data = ``;
            if (banned.length < 1) {
                return document.querySelector(`#loading_wait td`).innerHTML = `No banned visitor`;
            }
 
+           container.innerHTML  = '';
+
             $(banned).each((index, item) => {
-                data +=`<tr id="baned_visitor_${item.id}">
+                let row =`<tr id="baned_visitor_${item.id}">
                     <td>${item.name}</td>
                     <td>${item.estate || 'Otedola Estate'}</td>
                     <td>${item.time_in || 'Not Available'}</td>
                     <td><a href="javascript:void(0)" class="unban-link" onclick="confirmBanRemove(${item.id})">Unban</a>
                     </td>
                 </tr>`;
+
+                $(container).append(row);
             });
 
             container.innerHTML = data;
