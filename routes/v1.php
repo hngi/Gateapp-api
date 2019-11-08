@@ -104,6 +104,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Estate Admin only fetch visit history
     Route::get('/history/{id}','VisitorController@fetchEstateVisitHistory')->middleware('estateAdmin');
 
+    // Super Admin only fetch visit history for one visitor
+    Route::get('/history/visitor/{id}','VisitorController@fetchVisitorHistory')->middleware('superAdmin');
+
     // super admin Admin only fetch all visitors
     Route::get('/visitors','VisitorController@fetchSuperAdminVisitors')->middleware('superAdmin');
     //Block selectd admin access
@@ -193,7 +196,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //Estate Admin rejects Service Providers request
     Route::post('/service-provider/reject/{id}', 'ServiceProviderController@reject')->middleware('estateAdmin');
-    
+
     //Show residents in the system
     Route::get('residents/all', 'ResidentController@residents')->middleware('superAdmin');
 
@@ -342,9 +345,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Show signed in user visitor history
     Route::get('visitorHistory', 'VisitorController@residentHistory')->middleware('checkResident');
 
-    //Delete Signed in user visitor histories 
+    //Delete Signed in user visitor histories
     Route::delete("visit_histories/delete/{id}", "VisitorController@deleteVisitHistories")->middleware('checkResident');
-    
+
     //Get all scheduled visits by a user
     Route::get('visitor/allScheduled', 'VisitorController@getScheduled')->middleware('checkResident');
     Route::delete('visitor/deleteScheduled/{id}', 'VisitorController@deleteScheduled')->middleware('checkResident');
