@@ -121,11 +121,8 @@ class Routes {
     return path;
   }
   //Service Providers Request
-  get serviceProviderRequestSearch() {
-    return `api/v1/service-provider/info/{id}`;
-  }
-  get serviceProviderRequest() {
-    return `api/v1/service-provider/info/{id}`;
+  get updateServiceProviderTable () {
+    return `api/v1/service-provider/requests`;
   }
   //All residents
   get allResidents() {
@@ -143,4 +140,8 @@ class Routes {
   finishedVisits(id) {
     return `api/v1/finishedVisit/${id}`;
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 9996a39cbe68bd1b73fe844d2e135bf43f493f6f

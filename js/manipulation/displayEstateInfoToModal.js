@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+//Get the Modal DOM Values
+=======
    //Get the Modal DOM Values
+>>>>>>> 9996a39cbe68bd1b73fe844d2e135bf43f493f6f
 let estateId    = document.querySelector('#estateId');
 let estateName  = document.querySelector('#estateName');
 let estateLocation = document.querySelector('#estateLocation');
@@ -56,6 +60,8 @@ const displayEstateInfoToModal = (event, viewEstateBtn) => {
           console.error(error.response.data);
    });
 };
+<<<<<<< HEAD
+=======
 
 
 
@@ -64,3 +70,4 @@ const displayEstateInfoToModal = (event, viewEstateBtn) => {
 
 
 
+>>>>>>> 9996a39cbe68bd1b73fe844d2e135bf43f493f6f
