@@ -51,6 +51,10 @@ class Routes {
     return `api/v1/create/estate_admin`;
   }
 
+  generalStats(id) {
+    return `api/v1/statistics/estate/${id}`;
+  }
+
   // Get All Estate Admin Information
   get fetchAllEstateAdmin() {
     return "api/v1/admin";
