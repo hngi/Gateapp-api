@@ -51,6 +51,10 @@ class Routes {
     return `api/v1/create/estate_admin`;
   }
 
+  generalStats(id) {
+    return `api/v1/statistics/estate/${id}`;
+  }
+
   // Get All Estate Admin Information
   get fetchAllEstateAdmin() {
     return "api/v1/admin";
@@ -66,109 +70,6 @@ class Routes {
     return `api/v1/resetadminpass/reset/${id}`;
   }
 
-<<<<<<< HEAD
-    get api_origin() {
-        return 'https://gateappapi.herokuapp.com/';
-    }
-    //Authentication Paths
-    get signin() {
-        return 'api/v1/login/admin';
-    }
-    //Super Admin - Admin Page 
-    //Weeekly
-    get weeklyEstate() {
-        return 'api/v1/statistics/weeklyEstate';
-    }
-    get weeklyServiceProvider() {
-        return 'api/v1/statistics/weeklyService';
-    }
-    get weeklyServiceVisits() {
-        return 'api/v1/statistics/weeklyVisits';
-    }
-    //Monthly
-    get monthlyEstate() {
-        return 'api/v1/statistics/monthlyEstate';
-    }
-    get monthlyServiceProvider() {
-        return `api/v1/statistics/monthlyService`;
-    }
-    get monthlyServiceVisits() {
-        return `api/v1/statistics/monthlyVisits`;
-    }
-    //Monthly
-    get allEstate() {
-        return 'api/v1/statistics/estate';
-    }
-    get allServiceProvider() {
-        return 'api/v1/statistics/service';
-    }
-    get allVisits() {
-        return 'api/v1/statistics/visits';
-    }
-    //Create an Estate Admin 
-    get addAdmin(){
-        return `api/v1/create/estate_admin`;
-    }
-   
-    // Get All Estate Admin Information 
-    get fetchAllEstateAdmin() {
-        return 'api/v1/admin';
-    }
-    // Get All Estate Admin Information 
-    revokeEstateAdminAccess(id) {
-        return `api/v1/revokeadminaccess/${id}`;
-    }
-    restoreEstateAdminAccess(id) {
-        return `api/v1/unrevokeadminaccess/${id}`;
-    }
-    resetEstateAdminPassword(id) {
-        return `api/v1/resetadminpass/reset/${id}`;
-    }
-   
-    //Visitor Banned
-    get allBannedVisitor(){
-        return `api/v1/visitors/banned/all`;
-    }
-    removeBannedVisitor(visitor_id) {
-        return `api/v1/visitor/${visitor_id}/remove-ban`;
-    }
-    //Estates
-    get addEstate() {
-        return `api/v1/estate`;
-    }
-    editEstate(estate_id) {
-        return `api/v1/estate/${estate_id}`;
-    }
-    //Newsletter Subscribe
-    get newsletter() {
-        return `api/v1/newsletter`;
-    }
-    //Service Providers Submit Request on Website
-    get serviceProviderSubmit() {
-        return `api/v1/service_provider/create_request`;
-    }
-    // Get all Service Providers
-    get allServiceProvider() {
-        return `api/v1/service_provider`;
-    }
-    // Suspend service provider
-    suspendServiceProvider(id) {
-        return `api/v1/service_provider/suspend/${id}`;
-    }
-    // Remove service provider
-    removeServiceProvider(id) {
-        return `api/v1/service_provider/delete/${id}`;
-    }
-    path(path) {
-        return path; 
-    }
-    //Service Providers Request
-    get updateServiceProviderTable () {
-        return `api/v1/service-provider/requests`;
-    }
-    
-    
-=======
   //Visitor Banned
   get allBannedVisitor() {
     return `api/v1/visitors/banned/all`;
@@ -242,5 +143,4 @@ class Routes {
   finishedVisits(id) {
     return `api/v1/finishedVisit/${id}`;
   }
->>>>>>> 09880decf2426d94e6230ab243641b2faf13426a
 }
