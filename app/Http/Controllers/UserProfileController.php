@@ -125,10 +125,10 @@ class UserProfileController extends Controller
     {  // update user information
         $user = Auth::user();
         $this->validate($request, [
-            'name' => 'string',
-            'phone' => 'unique:users,phone,' . $user->id,
+            'name' => 'required|string',
+            'phone' => 'required|unique:users,phone,' . $user->id,
             'username' => 'unique:users,username,' . $user->id,
-            'email'    => 'unique:users,email,' . $user->id,
+            'email'    => 'nullable|unique:users,email,' . $user->id,
             'duty_time'    => 'string'
         ]);
 
@@ -141,7 +141,7 @@ class UserProfileController extends Controller
             $user->email     = $request->input('email') ??  $user->email;
             $user->duty_time  = $request->input('duty_time') ?? $user->duty_time;
 
-            $phone = '+'.$request->input('phone');
+            $phone = $request->input('phone');
             if ($user->phone != $phone) {
                 $user->email_verified_at = null;
                 $user->verifycode = mt_rand(1000,9999);
@@ -152,6 +152,7 @@ class UserProfileController extends Controller
                  $message   = 'Use this 4 digit otp token to verify your new phone number '. $user->verifycode;
                  $smsOtpController = new SmsOtpController; 
                  $smsOtpController->africasTalking($phone, $message);
+                 $res['new_number'] = true;
                 $res['important'] = 'An otp token has ben sent to you phone because you changed your phone number!';
             }
             //Upload image
