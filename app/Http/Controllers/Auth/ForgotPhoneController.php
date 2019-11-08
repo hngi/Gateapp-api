@@ -57,7 +57,7 @@ class ForgotPhoneController extends Controller
             $current_user = !$user->name->isEmpty() ? $user->name : 'member';
             $message      = 'Hello'.$current_user.' user this 4 digit otp to verify new phone '. $user->verifycode;
             $smsOtpController = new SmsOtpController; 
-            // $smsOtpController->africansTalking($phone, $message);
+            $smsOtpController->africansTalking($phone, $message);
             //Commit changes 
             DB::commit();
 
@@ -92,7 +92,7 @@ class ForgotPhoneController extends Controller
                 try{
                     $message   = 'Use this verification otp to verify your account '. $user->verifycode;
                     $smsOtpController = new SmsOtpController; 
-                    // $result = $smsOtpController->africasTalking($phone, $message);
+                    $result = $smsOtpController->africasTalking($phone, $message);
                     //Commit changes 
                     DB::commit();
 
