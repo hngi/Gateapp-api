@@ -434,9 +434,11 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Delete Notification
     Route::delete('notifications/{id}', 'NotifyController@delete');
     // Update Notification
-    Route::patch('notifications/{id}', 'NotifyController@markread');
+    Route::patch('/notifications/{id}', 'NotifyController@markread');
+    Route::patch('/notifications/read/{ids}', 'NotifyController@markSelectedAsRead');
+    
 });
-
+Route::patch('/notifications/read/{ids}', 'NotifyController@markSelectedAsRead');
 //view faq
 Route::get('faq', 'FaqController@index');
 Route::get('faq/{id}', 'FaqController@show');
@@ -472,7 +474,7 @@ Route::get('/test-notification2', function () {
     $gateman = \App\User::query()->where('role', 2)->inRandomOrder()->first();
     $visitor = \App\Visitor::query()->inRandomOrder()->first();
 
-    $gateman->notify(new App\Notifications\VisitorArrivalNotification($resident, $gateman, $visitor));
+    $gateman->notify(new App\Notifications\VisitorArrivalNotification($resident, $gateman, $visitor,false));
 });
 
 //----------- Service provider request route ---------------------------------//
