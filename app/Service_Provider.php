@@ -20,4 +20,11 @@ class Service_Provider extends Model
        
         return $this->belongsTo('App\Category');
     }
+
+    public function estate()
+    {
+
+        return $this->belongsTo('App\Estate');
+    }
+    
 }
