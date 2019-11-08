@@ -1,5 +1,5 @@
 const routes = new Routes();
-axios.defaults.baseURL = "http://localhost:8000";
+axios.defaults.baseURL = routes.api_origin;
 axios.defaults.headers.common['Authorization'] = token;
 const container = document.querySelector(`table.estates-table tbody`);
 

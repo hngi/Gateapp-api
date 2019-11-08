@@ -53,7 +53,7 @@ const displayEstateInfoToModal = (event, viewEstateBtn) => {
             visitorCount.innerHTML = result.visits;
             pWkVisitorCount.innerHTML = result.visits_past_week;
        }).catch(error => {
-          console.error(error);
+          console.error(error.response.data);
    });
 };
 
