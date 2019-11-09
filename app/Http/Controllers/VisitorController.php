@@ -389,17 +389,41 @@ class VisitorController extends Controller
      */
     public function fetchVisitorHistory($id)
    {
+
+       //getting the visitor name from the table
        $visitorName = DB::table('visitors')->where('id',$id)->pluck('name');
        $visitorsHistory = DB::table('visitors_history')
-       ->join('visitors','visitors.id','=','visitors_history.visitor_id')
+        ->join('visitors','visitors.id','=','visitors_history.visitor_id')
        ->where('visitor_id', $id)
        ->get();
-       if($visitorsHistory)
+
+       //change the result from Collection to an array so i can iterate through
+       //and fetch the estete name the visitor visited
+       settype($visitorsHistory, 'array');
+       $histories = $visitorsHistory["\x00*\x00items"];
+
+       foreach ($histories as $history) {
+        $name = DB::table('estates')->where('id',$history->id)->pluck('estate_name');
+        settype($name,'array');
+
+        if(count($name["\x00*\x00items"]) != 0 )
+        {
+         $name = $name["\x00*\x00items"][0];   
+        }
+        else
+        {
+            $name = "estate does not exist";
+        }
+        
+        $history->estate_name = $name;
+        }
+
+        if($visitorsHistory)
        {
            $res['status']  = true;
            $res['visitorName'] = $visitorName;
            $res['message'] = "visit history for one user";
-           $res['visitors'] = $visitorsHistory;
+           $res['history'] = $histories;
            return response()->json($res, 200);
        }
        else
