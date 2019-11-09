@@ -26,23 +26,22 @@ const fetchAllStat = (requestkey = 'wkly') => {
     }
     //Weeekly route 
     if(requestkey == 'wkly'){
-        api_1  = triggerFetch(`${routes.api_origin}${routes.weeklyEstate}`);
-        api_2  = triggerFetch(`${routes.api_origin}${routes.weeklyServiceProvider}`)
-        api_3  = triggerFetch(`${routes.api_origin}${routes.weeklyServiceVisits}`)
+        api_1  = triggerFetch(`${routes.api_origin}${routes.statWeeklyEstate}`);
+        api_2  = triggerFetch(`${routes.api_origin}${routes.statWeeklyServiceProvider}`)
+        api_3  = triggerFetch(`${routes.api_origin}${routes.statWeeklyServiceVisits}`)
     }
     //Monthly route 
     if(requestkey == 'mnthly'){
-        api_1  = triggerFetch(`${routes.api_origin}${routes.monthlyEstate}`)
-        api_2  = triggerFetch(`${routes.api_origin}${routes.monthlyServiceProvider}`)
-        api_3  = triggerFetch(`${routes.api_origin}${routes.monthlyServiceVisits}`)
+        api_1  = triggerFetch(`${routes.api_origin}${routes.statMonthlyEstate}`)
+        api_2  = triggerFetch(`${routes.api_origin}${routes.statMonthlyServiceProvider}`)
+        api_3  = triggerFetch(`${routes.api_origin}${routes.statMonthlyServiceVisits}`)
     }
     //All Statistics route 
        if(requestkey == 'all'){
-        api_1  = triggerFetch(`${routes.api_origin}${routes.allEstate}`)
-        api_2  = triggerFetch(`${routes.api_origin}${routes.allServiceProvider}`)
-        api_3  = triggerFetch(`${routes.api_origin}${routes.allVisits}`)
+        api_1  = triggerFetch(`${routes.api_origin}${routes.statAllEstate}`)
+        api_2  = triggerFetch(`${routes.api_origin}${routes.statAllServiceProvider}`)
+        api_3  = triggerFetch(`${routes.api_origin}${routes.statAllVisits}`)
     }
-    
     request = [api_1, api_2, api_3];
     //Error handling
     const handleError = (res) => {

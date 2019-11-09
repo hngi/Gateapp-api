@@ -17,39 +17,88 @@ class Routes {
   }
   //Super Admin - Admin Page
   //Weeekly
-  get weeklyEstate() {
+  get statWeeklyEstate() {
     return "api/v1/statistics/weeklyEstate";
   }
-  get weeklyServiceProvider() {
+  get statWeeklyServiceProvider() {
     return "api/v1/statistics/weeklyService";
   }
-  get weeklyServiceVisits() {
+  get statWeeklyServiceVisits() {
     return "api/v1/statistics/weeklyVisits";
   }
   //Monthly
-  get monthlyEstate() {
+  get statMonthlyEstate() {
     return "api/v1/statistics/monthlyEstate";
   }
-  get monthlyServiceProvider() {
+  get statMonthlyServiceProvider() {
     return `api/v1/statistics/monthlyService`;
   }
-  get monthlyServiceVisits() {
+  get statMonthlyServiceVisits() {
     return `api/v1/statistics/monthlyVisits`;
   }
   //Monthly
-  get allEstate() {
+  get statAllEstate() {
     return "api/v1/statistics/estate";
   }
-  get allServiceProvider() {
+  get statAllServiceProvider() {
     return "api/v1/statistics/service";
   }
-  get allVisits() {
+  get statAllVisits() {
     return "api/v1/statistics/visits";
   }
   //Create an Estate Admin
   get addAdmin() {
     return `api/v1/create/estate_admin`;
   }
+
+  generalStats(id) {
+    return `api/v1/statistics/estate/${id}`;
+  }
+
+    // Get All Estate Admin Information 
+    get fetchAllEstateAdmin() {
+        return 'api/v1/admin';
+    }
+    // Get All Estate Admin Information 
+    revokeEstateAdminAccess(id) {
+        return `api/v1/revokeadminaccess/${id}`;
+    }
+    resetEstateAdminPassword(id) {
+        return `api/v1/unrevokeadminaccess/${id}`;
+    }
+    //Visitor Banned
+    get allBannedVisitor(){
+        return `api/v1/visitors/banned/all`;
+    }
+    removeBannedVisitor(visitor_id) {
+        return `api/v1/visitor/${visitor_id}/remove-ban`;
+    }
+    //Estates
+    get addEstate() {
+        return `api/v1/estate`;
+    }
+    editEstate(estate_id) {
+        return `api/v1/estate/${estate_id}`;
+    }
+    //Newsletter Subscribe
+    get newsletter() {
+        return `api/v1/newsletter`;
+    }
+    //Service Providers Submit Request on Website
+    get serviceProviderSubmit() {
+        return `api/v1/service_provider/create_request`;
+    }
+    //Get all estates
+    get allEstates() {
+        return `api/v1/public/estates`;
+    }
+    //Get service provider categories
+    get serviceProviderCategory() {
+        return `api/v1/public/sp-categories`;
+    }
+    path(path) {
+        return path; 
+    }
 
   // Get All Estate Admin Information
   get fetchAllEstateAdmin() {
@@ -103,6 +152,19 @@ class Routes {
   removeServiceProvider(id) {
     return `api/v1/service_provider/delete/${id}`;
   }
+  //Service Provider Requests
+  // Get all Service Providers request 
+  get allServiceProviderRequests(){
+    return `api/v1/service-provider/requests`;
+  }
+  // Approve Service Provider request 
+   approveServiceProviderRequests(id){
+    return `api/v1/service-provider/approve/${id}`;
+  }
+  // Reject Service Providers request 
+   rejectServiceProviderRequests(id){
+    return `api/v1/service-provider/reject/${id}`;
+  }
   //Users
   get allUsers() {
     return `api/v1/user/all`;
@@ -117,11 +179,8 @@ class Routes {
     return path;
   }
   //Service Providers Request
-  get serviceProviderRequestSearch() {
-    return `api/v1/service-provider/info/{id}`;
-  }
-  get serviceProviderRequest() {
-    return `api/v1/service-provider/info/{id}`;
+  get updateServiceProviderTable () {
+    return `api/v1/service-provider/requests`;
   }
   //All residents
   get allResidents() {

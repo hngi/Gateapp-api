@@ -1,9 +1,18 @@
+<<<<<<< HEAD
+//Get the Modal DOM Values
+=======
    //Get the Modal DOM Values
+>>>>>>> 9996a39cbe68bd1b73fe844d2e135bf43f493f6f
 let estateId    = document.querySelector('#estateId');
 let estateName  = document.querySelector('#estateName');
 let estateLocation = document.querySelector('#estateLocation');
 let estateImage = document.querySelector('#estateImage');
 let estateCreated = document.querySelector('#estateCreated');
+
+let estateResidents = document.getElementById(`estate_residents`);
+let estateGatemen = document.getElementById(`estate_gatemen`);
+let visitorCount = document.getElementById(`estate_total_visits`);
+let pWkVisitorCount = document.getElementById(`estate_pwk_total`);
 
 console.log(estateId)
 
@@ -28,7 +37,31 @@ const displayEstateInfoToModal = (event, viewEstateBtn) => {
    if(estate_img != 'gateguard-logo.png'){
       estateImage.innerHTML = `<img class="estate-img-view-sty" src="https://res.cloudinary.com/getfiledata/image/upload/${estate_img}">`;
    }
-}
+
+   // Fetch stats
+   // reset the stats
+   let placeholder = `<span class="spinner-grow"></span>`;
+   estateResidents.innerHTML = estateGatemen.innerHTML = visitorCount.innerHTML = pWkVisitorCount.innerHTML = placeholder;
+   //fetch the stats
+   axios.get(routes.generalStats(id), {
+      baseURL: routes.api_origin,
+      headers: {
+         'Accept': "application/json",
+         'Authorization': token,
+      },
+   })
+       .then(response => {
+          let result = response.data.data;
+            estateResidents.innerHTML = result.residents;
+            estateGatemen.innerHTML = result.gatemen;
+            visitorCount.innerHTML = result.visits;
+            pWkVisitorCount.innerHTML = result.visits_past_week;
+       }).catch(error => {
+          console.error(error.response.data);
+   });
+};
+<<<<<<< HEAD
+=======
 
 
 
@@ -37,3 +70,4 @@ const displayEstateInfoToModal = (event, viewEstateBtn) => {
 
 
 
+>>>>>>> 9996a39cbe68bd1b73fe844d2e135bf43f493f6f
