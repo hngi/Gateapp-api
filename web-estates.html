@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="styles/navbar.css">
     <link rel="stylesheet" href="styles/download-footer.css">
     <link rel="stylesheet" href="styles/web-estate.css">
-    <title>GateGuard</title>
+    <title data-title>Estate</title>
 </head>
 
 <body>
@@ -34,23 +34,31 @@
 
                 <div class="collapse navbar-collapse nav-utilities" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item mx-1">
-                            <a class="nav-link" href="#">Estates</a>
+                        <li class="nav-item dropdown mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Products
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="web-providers.html">Service Directory</a>
+                                <a class="dropdown-item" href="residents learn more.html">Resident App</a>
+                                <a class="dropdown-item" href="guards learn.html">Guard App</a>
+                            </div>
                         </li>
                         <li class="nav-item mx-1">
                             <a class="nav-link" href="partners.html">Partners</a>
                         </li>
                         <li class="nav-item mx-1">
-                            <a class="nav-link" href="#">About Us</a>
+                            <a class="nav-link" href="aboutus.html">About Us</a>
                         </li>
                         <li class="nav-item mx-1">
-                            <a class="nav-link" href="#">Contact Us</a>
+                            <a class="nav-link" href="contactus.html">Contact Us</a>
                         </li>
 
                     </ul>
                     <button class="btn btn-success login-btn mx-2" onclick="location.href='login.html'">LOGIN</button>
                     <button class="btn btn-outline-success signup-btn mx-2"
-                        onclick="location.href='https://drive.google.com/open?id=1kds4OWSe-A4IwaIzP--E15qN_Yb3h43K'">DOWNLOAD</button>
+                        onclick="location.href='https://drive.google.com/open?id=1bMnK1u4ysAiKAHuIgwCX7y4faExcUj7E'">DOWNLOAD</button>
                 </div>
             </nav>
             <div class="col-12 welcome-image">
@@ -89,10 +97,12 @@
                 <div class="col-12">
                     <nav>
                         <div class="nav col-12" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link active" id="nav-home-features-tab" data-toggle="tab" href="#nav-home-features"
-                                role="tab" aria-controls="nav-home-features" aria-selected="true">Home Features</a>
-                            <a class="nav-item nav-link" id="nav-profile-features-tab" data-toggle="tab" href="#nav-community-features"
-                                role="tab" aria-controls="nav-profile-features" aria-selected="false">Community Features</a>
+                            <a class="nav-item nav-link active" id="nav-home-features-tab" data-toggle="tab"
+                                href="#nav-home-features" role="tab" aria-controls="nav-home-features"
+                                aria-selected="true">Home Features</a>
+                            <a class="nav-item nav-link" id="nav-profile-features-tab" data-toggle="tab"
+                                href="#nav-community-features" role="tab" aria-controls="nav-profile-features"
+                                aria-selected="false">Community Features</a>
                         </div>
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
@@ -148,7 +158,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="nav-community-features" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <div class="tab-pane fade" id="nav-community-features" role="tabpanel"
+                            aria-labelledby="nav-profile-tab">
                             <div id="homeFeaturesCarousel" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
@@ -290,7 +301,7 @@
                             <div class="col-12 download-links row mx-0 px-0 mt-5">
                                 <div class="col-12 col-sm-8 mt-2 col-md-5 store-link px-0">
                                     <img src="images/playstore.png" style="cursor: pointer" alt=""
-                                        onclick="location.href='https://drive.google.com/open?id=1kds4OWSe-A4IwaIzP--E15qN_Yb3h43K'">
+                                        onclick="location.href='https://drive.google.com/open?id=1bMnK1u4ysAiKAHuIgwCX7y4faExcUj7E'">
                                 </div>
                                 <div class="col-12 col-sm-8 mt-2 col-md-5 store-link px-0">
                                     <img src="images/appstore.png" alt="">
@@ -299,70 +310,32 @@
                         </div>
                     </div>
                 </div>
-                <!--                 <div class="col-12 subscribe row mx-0">
-                    <div class="col-12 col-sm-8 col-md-6 subscribe-words mx-auto">
-                        <div class="col-12 col-md-8 mt-5 mx-auto">
-                            <h2>SUBSCRIBE TO OUR <br> NEWSLETTER</h2>
-                            <hr class="green-underline mt-2 ml-0">
-                            <div class="col-12 row mx-0 px-0 breakdown-feature">
-                                <div class="pt-2 col-2">
-                                    <img class="" src="images/star.png" alt="">
-                                </div>
-                                <div class="pt-2 col-10">
-                                    <p class="">Guards real time notifications on visitors coming <br> to to visit.</p>
-                                </div>
-                            </div>
-                            <div class="col-12 row mx-0 px-0 breakdown-feature">
-                                <div class="pt-2 col-2">
-                                    <img class="" src="images/star.png" alt="">
-                                </div>
-                                <div class="pt-2 col-10">
-                                    <p class="">Guards real time notifications on visitors coming <br> to to visit.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 subscribe-form mb-5">
-                        <div class="col-12 col-sm-8 col-md-10 mx-auto">
-                            <form>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Name">
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control" placeholder="Email">
-                                </div>
-                                <button type="submit" class="btn col-12">Submit</button>
-                            </form>
-                        </div>
-                    </div> 
-                </div> -->
                 <footer class="border col-12 app-footer">
                     <div class="col-11 mx-auto row mx-0 mt-5">
                         <div class="col-12 col-md">
                             <ul class="list-group footer-list">
                                 <li class="list-group-item pb-2 list-header">Features</li>
-                                <li class="list-group-item py-1 footer-links ">Visitor Management</li>
-                                <li class="list-group-item py-1 footer-links ">Delivery Management</li>
-                                <li class="list-group-item py-1 footer-links ">Communication Management</li>
+                                <li class="list-group-item py-1 footer-links" onclick="location.href='residents learn more.html'">Residents</li>
+                                <li class="list-group-item py-1 footer-links" onclick="location.href='guards learn.html'">Guards</li>
                             </ul>
                         </div>
                         <div class="col-12 col-md">
                             <ul class="list-group footer-list">
                                 <li class="list-group-item pb-2 list-header">Company</li>
-                                <li class="list-group-item py-1 footer-links ">About Us</li>
-                                <li class="list-group-item py-1 footer-links ">Contact Us</li>
-                                <li class="list-group-item py-1 footer-links ">Frequently Asked Questions</li>
-                                <li class="list-group-item py-1 footer-links ">Terms and Conditions</li>
+                                <li class="list-group-item py-1 footer-links" onclick="location.href='aboutus.html'">About Us</li>
+                                <li class="list-group-item py-1 footer-links" onclick="location.href='contactus.html'">Contact Us</li>
+                                <li class="list-group-item py-1 footer-links" onclick="location.href='faq.html'">Frequently Asked Questions</li>
+                                <li class="list-group-item py-1 footer-links" onclick="location.href='termsandconditions.html'">Terms and Conditions</li>
                             </ul>
                         </div>
                         <div class="col-12 col-md">
                             <ul class="list-group footer-list">
                                 <li class="list-group-item pb-2 list-header">Contact</li>
-                                <li class="list-group-item py-1 footer-links">3 Birrel Avenue, Sabo. <br>
+                                <li class="list-group-item py-1 footer-links" style="cursor: initial;">3 Birrel Avenue, Sabo. <br>
                                     Yaba, Lagos State, <br>
                                     Nigeria</li>
-                                <li class="list-group-item py-1 footer-links">+234 705 784 3748</li>
-                                <li class="list-group-item py-1 footer-links">contact@gateguard.co</li>
+                                <li class="list-group-item py-1 footer-links" style="cursor: initial;">+234 705 784 3748</li>
+                                <li class="list-group-item py-1 footer-links" style="cursor: initial;">contact@gateguard.co</li>
                             </ul>
                         </div>
                         <div class="col-8 col-sm-6 col-md">
@@ -370,16 +343,16 @@
                                 <img src="images/gateguard-white.png" alt="">
                             </div>
                             <div class="col-12 col-md-8 mt-3 social-links">
-                                <img class="mx-2" src="images/instagram.png" alt="">
-                                <img class="mx-2" src="images/twitter.png" alt="">
-                                <img class="mx-2" src="images/facebook.png" alt="">
+                                <img class="mx-2" src="images/instagram.png" alt="" onclick="location.href='https://instagram.com'">
+                                <img class="mx-2" src="images/twitter.png" alt="" onclick="location.href='https://twitter.com'">
+                                <img class="mx-2" src="images/facebook.png" alt="" onclick="location.href='https://facebook.com'">
                             </div>
                             <div class="col-12 mt-2 footer-download">
                                 <p class="mb-1">Download App</p>
                                 <div class="col-12 row mx-0 px-0">
                                     <div class="col px-0 app-cons mr-2">
                                         <img src="images/playstore.png" style="cursor: pointer" alt="playstore"
-                                            onclick="location.href='https://drive.google.com/open?id=1kds4OWSe-A4IwaIzP--E15qN_Yb3h43K'">
+                                            onclick="location.href='https://drive.google.com/open?id=1bMnK1u4ysAiKAHuIgwCX7y4faExcUj7E'">
                                     </div>
                                     <div class="col px-0 app-cons">
                                         <img src="images/appstore.png" alt="">
@@ -396,5 +369,7 @@
 </body>
 <!--Import third party cdn-->
 <script src="js/general/third_party_cdn.js"></script>
+<script src="js/general/placeholder.js"></script>
+<script src="js/apis/newsletterSubscribe/newsletter.js"></script>
 
 </html>

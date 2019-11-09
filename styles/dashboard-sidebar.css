@@ -47,6 +47,8 @@ a:focus {
 }
 
 #sidebar ul p {
+    cursor: pointer;
+    font-size: 16px;
     color: #fff;
     padding: 10px 10px 10px 1.8rem;
 }

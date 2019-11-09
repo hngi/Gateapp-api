@@ -1,5 +1,5 @@
 .welcome-image {
-  height: 60vh;
+  min-height: 60vh;
   background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
     url("../images/welcome-image.png");
   background-size: cover;
@@ -7,7 +7,7 @@
   background-repeat: no-repeat;
 }
 .welcome-image-words {
-  height: 50vh;
+  min-height: 50vh;
   margin-top: 13vh;
 }
 .welcome-image-words h1 {
@@ -46,16 +46,13 @@
 .what-is-gateguard p {
   font-size: 16px;
 }
-.green-underline {
-  width: 3vw;
-  border-top: 4px solid #49a347;
-}
 .gateguard-image {
   height: 60vh;
 }
 .gateguard-image img {
   height: 100%;
   width: 100%;
+  object-fit: contain;
 }
 .feature-breakdown {
   min-height: 100vh;
@@ -89,6 +86,7 @@
 .breakdown-image img {
   height: 100%;
   width: 100%;
+  object-fit: cover;
 }
 .customers {
 }
@@ -162,4 +160,12 @@
 } */
 .subscribe-form button:focus {
   background: #49a347;
+}
+.download-image-con img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.list-star{
+  list-style-image: url(../images/star.png);
 }

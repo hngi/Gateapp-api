@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/dashboard-sidebar.css">
+    <link rel="stylesheet" href="../styles/add-estate.css">
+    <title data-title>Add Estate</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar" class="active">
+            <div class="col-12 dash-logo mt-3">
+                <img class="ml-3" src="../images/gateguard-white.png" alt="">
+            </div>
+            <ul class="list-unstyled components">
+                <p onclick="location.href='default-tab.html'">Dashboard</p>
+                <li class="">
+                    <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Admins</a>
+                    <ul class="collapse list-unstyled" id="adminSubmenu">
+                        <li>
+                            <a href="admins.html">View all admins</a>
+                        </li>
+                        <li>
+                            <a href="add_admin.html">Add an admin</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="residents.html">Residents</a>
+                </li>
+                <li>
+                    <a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Visitors</a>
+                    <ul class="collapse list-unstyled" id="visitorsSubmenu">
+                        <li>
+                            <a href="visitors-tab.html">All Visitors</a>
+                        </li>
+                        <li>
+                            <a href="banned-visitors-tab.html">Banned Visitors</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#estatesSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Estates</a>
+                    <ul class="collapse list-unstyled" id="estatesSubmenu">
+                        <li class="">
+                            <a href="estates-tab.html">All Estates</a>
+                        </li>
+                        <li>
+                            <a href="add-estate.html">Add an Estate</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#providersSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Providers</a>
+                    <ul class="collapse list-unstyled" id="providersSubmenu">
+                        <li>
+                            <a href="providers-tab.html">All Providers</a>
+                        </li>
+                        <li>
+                            <a href="provider-request.html">Provider Requests</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+            <button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1">
+                <i class="fas fa fa-align-left"></i>
+            </button>
+            <div class="col-12 notif text-right mb-4 dropdown">
+                <button class="btn p-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa fa-bell"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Notifications will appear here</a>
+                </div>
+            </div>
+            <div class="col-12 tab-full scroller">
+                <h4 class="pl-3">Add an Estate</h4>
+                <form class="col-10 col-md-8" data-add-estate-form>
+                    <div class="form-group mb-2">
+                        <label for="">Estate Name</label>
+                        <input type="text" name="estate_name" class="form-control" placeholder="Example Estate">
+                        <p class="error-fields" id="estateNameError"></p>
+                    </div>
+                    <div class="form-group mb-2">
+                        <div class="col-12 row px-0 mx-0">
+                            <div class="col-4 px-1 mx-0">
+                                <label for="">Address</label>
+                                <input type="text" name="address" class="form-control" placeholder="Park Avenue">
+                            </div>
+                            <div class="col-4 px-1 mx-0">
+                                <label for="">City</label>
+                                <input type="text" name="city" class="form-control" placeholder="Ikeja">
+                            </div>
+                            <div class="col-4 px-1 mx-0">
+                                <label for="">Country</label>
+                                <input type="text" name="country" class="form-control" placeholder="Nigeria">
+                            </div>
+                        </div>
+                        <p class="error-fields" id="locationError"></p>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="custom-file">
+                            <input  type="file" name="image" class="custom-file-input">
+                            <label class="custom-file-label" for="inputGroupFile01" data-img-label>Choose estate image</label>
+                        </div>
+                    </div>
+                    <button data-add-esate-btn type="submit" class="btn btn-success estate-submit-btn col-6">
+                        Submit
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<!--Import third party cdn-->
+<script src="../js/general/third_party_cdn.js"></script>
+
+<script src="../js/general/placeholder.js"></script>
+
+<script src="../js/general/routes.js"></script>
+
+<script src="../js/general/onSession.js"></script>
+
+<script src="../js/validation/superAdmin/estate/addEstate.js"></script>
+
+<script src="../js/apis/superAdmin/estate/addEstate.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
+    });
+</script>
+
+</html>
