@@ -1,6 +1,7 @@
 const routes = new Routes();
 const spUrl = `${routes.api_origin}${routes.allServiceProviderRequests}`;
 
+const table = document.querySelector('[data-serviceProvider-view]');
 const singlemodal = document.querySelector('#singleProviderModal');
 const approveButton = document.querySelector('#approveBtn');
 const rejectButton = document.querySelector('#rejectBtn');
@@ -21,7 +22,7 @@ const fetchServiceProviderRequests = () => {
         .then(data => {
             let {requests}  = data;
             let [services] = requests;
-            
+            table.innerHTML = "";
             console.log(requests);
             console.log(services);
             console.log(requests.length);
@@ -34,8 +35,9 @@ fetchServiceProviderRequests();
 
 const updateServiceProviderTable =  (services) => {
 
-    const table = document.querySelector('[data-serviceProvider-view]');
+    
     services.map((spRequest) => {
+       
         let {estate, category} = spRequest;
         let {estate_name, address, city, country} = estate;
         let {title} = category;
