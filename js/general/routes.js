@@ -9,7 +9,7 @@ Import Note: The base_url.js hold every every third party base url origin and ap
 
 class Routes {
   get api_origin() {
-    return "https://gateappapi.herokuapp.com/";
+    return "http://127.0.0.1:8000/";
   }
   //Authentication Paths
   get signin() {
@@ -151,6 +151,19 @@ class Routes {
   // Remove service provider
   removeServiceProvider(id) {
     return `api/v1/service_provider/delete/${id}`;
+  }
+  //Service Provider Requests
+  // Get all Service Providers request 
+  get allServiceProviderRequests(){
+    return `api/v1/service-provider/requests`;
+  }
+  // Approve Service Provider request 
+   approveServiceProviderRequests(id){
+    return `api/v1/service-provider/approve/${id}`;
+  }
+  // Reject Service Providers request 
+   rejectServiceProviderRequests(id){
+    return `api/v1/service-provider/reject/${id}`;
   }
   //Users
   get allUsers() {
