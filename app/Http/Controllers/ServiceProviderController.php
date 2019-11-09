@@ -544,19 +544,32 @@ class ServiceProviderController extends Controller
     }
     public function approve($id)
     {
-        $application = Service_Provider::findOrFail($id);
-        $application->status = 1;
-        $application->save();
+        $application = Service_Provider::find($id);
+       
+        if($application){
+            $application->status = 1;
+            $application->save();
+            return response()->json(['status' => true, 'message' => 'Service provider accepted'], 200);
+        }else{
+            return response()->json(['status' => false, 'message' => 'No records found'], 404);
+        }
+      
 
 
-        return response()->json(['status' => true, 'message' => 'Service provider accepted'], 200);
+       
     }
     public function reject($id)
     {
-        $application = Service_Provider::findOrFail($id);
-        $application->delete($id);
+        $application = Service_Provider::find($id);
+        if(!$application){
+            return response()->json(['status' => false, 'message' => 'No records found'], 404);
 
+        }else{
+            
 
-        return response()->json(['status' => true, 'message' => 'Service provider rejected'], 200);
+            $application->delete($id);
+            return response()->json(['status' => true, 'message' => 'Service provider rejected'], 200);
+        }
+       
     }
 }
