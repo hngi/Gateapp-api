@@ -1,6 +1,8 @@
 // This script revokes admin access 
 
-function revoke() { 
+function revoke(event, revokeButton) { 
+
+    event.preventDefault(); 
     revokeButton.innerHTML = '<span class="spinner-border spinner-border-sm" style="width: 1.3em; height: 1.3em;" role="status" aria-hidden="true"></span> Processing...'
     let revokeId = revokeButton.getAttribute('data-id');  
     const revokeUrl = `${routes.api_origin}${routes.revokeEstateAdminAccess(revokeId)}`;
@@ -56,5 +58,5 @@ function revoke() {
       }
    }
 }
-
+revokeButton.addEventListener('click', (event) => revoke(event, revokeButton));
 

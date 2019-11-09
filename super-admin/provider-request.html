@@ -8,8 +8,8 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/dashboard-sidebar.css">
     <link rel="stylesheet" href="../styles/estates.css">
@@ -42,8 +42,7 @@
             <ul class="list-unstyled components">
                 <p onclick="location.href='default-tab.html'">Dashboard</p>
                 <li class="">
-                    <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Admins</a>
+                    <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Admins</a>
                     <ul class="collapse list-unstyled" id="adminSubmenu">
                         <li>
                             <a href="admins.html">View all admins</a>
@@ -57,8 +56,7 @@
                     <a href="residents.html">Residents</a>
                 </li>
                 <li>
-                    <a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Visitors</a>
+                    <a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Visitors</a>
                     <ul class="collapse list-unstyled" id="visitorsSubmenu">
                         <li>
                             <a href="visitors-tab.html">All Visitors</a>
@@ -69,8 +67,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#estatesSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Estates</a>
+                    <a href="#estatesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Estates</a>
                     <ul class="collapse list-unstyled" id="estatesSubmenu">
                         <li class="">
                             <a href="estates-tab.html">All Estates</a>
@@ -81,8 +78,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#providersSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Providers</a>
+                    <a href="#providersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Providers</a>
                     <ul class="collapse list-unstyled" id="providersSubmenu">
                         <li>
                             <a href="providers-tab.html">All Providers</a>
@@ -112,7 +108,7 @@
                 <div class="col-12 row mx-0 tab-header">
                     <h4 class="col-12 col-md-6">Provider Requests</h4>
                     <div class="form-group col-12 col-md-6 ml-auto">
-                        <input type="email" class="form-control col-12 col-md-8 ml-auto" placeholder="Search Estates">
+                        <input type="email" class="form-control col-12 col-md-8 ml-auto" placeholder="Search Requests">
                     </div>
                     <table class="table table-borderless estates-table">
                         <thead>
@@ -123,7 +119,14 @@
                                 <th scope="col"></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody data-serviceProvider-view>
+                            <tr>
+                                <td scope="col"></td>
+                                <td scope="col"> </td>
+                                <td scope="col"> <span class="spinner-border" role="status" style="color: #49a347; position: absolute;left: 40%;margin-top: 10vh;display: block;"> </span></td>
+                                <td></td>
+                            </tr>
+
                             <!-- <tr>
                                 <td>Obonge Catering</td>
                                 <td>Food and Catering</td>
@@ -163,38 +166,50 @@
         <div class="modal-dialog col-12 px-1 mx-0" role="document">
             <div class="modal-content col-11 col-md-4 px-0 mx-auto">
                 <div class="modal-body">
-                    <h4 class="text-center">Obonge Catering</h4>
+                    <h3 class="text-center" id="modalName"></h3>
                     <div class="col-12 single-provider-details row mx-0">
-                        <p class="provider-location col-12 mt-5">Park Avenue</p>
-                        <span class="provider-phone col-12">+234 907 834 9183</span>
+                        <p style="font-size: 18px" class="provider-location col-12 mt-5 " id="modalEstate"></p>
+
+                        <span class="provider-phone col-12" id="modalPhone"></span>
                         <div class="col-12 px-0 row mx-0">
                             <div class="col-12 px-0">
                                 <span class="col-12 stat-name">Requested</span>
-                                <p class="col-12 stat-value">23rd May, 2018</p>
+                                <p class="col-12 stat-value" id="modalDate"></p>
                             </div>
                             <div class="col-12 px-0">
                                 <span class="col-12 stat-name">Service Type</span>
-                                <p class="col-12 stat-value">Food and Catering</p>
+                                <p class="col-12 stat-value" id="modalCategory"></p>
                             </div>
-                            <button class="btn btn-suspend col-12 mt-2">Approve</button>
-                            <button class="btn btn-remove col-12 mt-2">Reject</button>
+                            <button id="approveBtn" class="btn btn-suspend  col-12 mt-2" data-id="#">Approve</button>
+                            <button id="rejectBtn" class="btn btn-remove col-12 mt-2" data-id="#">Reject</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</body> 
+</body>
 <!--Import third party cdn-->
 <script src="../js/general/third_party_cdn.js"></script>
+
 <script src="../js/general/placeholder.js"></script>
+
+<script src="../js/general/routes.js"></script>
+
+<script src="../js/general/onSession.js"></script>
+
+<script src="../js/apis/superAdmin/serviceProviderRequests/allServiceProviderRequests.js"></script>
+
+<script src="../js/apis/superAdmin/serviceProviderRequests/approveSPRequest.js"></script>
+
+<script src="../js/apis/superAdmin/serviceProviderRequests/rejectSPRequest.js"></script>
+
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#sidebarCollapse').on('click', function () {
+    $(document).ready(function() {
+        $('#sidebarCollapse').on('click', function() {
             $('#sidebar').toggleClass('active');
         });
     });
 </script>
-<script src="../js/apis/superAdmin/allServiceProviderRequests.js"></script>
 
 </html>
