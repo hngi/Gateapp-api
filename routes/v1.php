@@ -117,6 +117,10 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Estate Admin only fetch visit history
     Route::get('/history/{id}','VisitorController@fetchEstateVisitHistory')->middleware('estateAdmin');
+    
+    // super Admin only fetch visit history of one visitor
+    Route::get('/history/visitor/{id}','VisitorController@fetchVisitorHistory')->middleware('superAdmin');
+
 
     // super admin Admin only fetch all visitors
     Route::get('/visitors','VisitorController@fetchSuperAdminVisitors')->middleware('superAdmin');
