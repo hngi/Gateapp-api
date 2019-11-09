@@ -1,7 +1,8 @@
 // This script revokes admin access 
 
-function restore() {
-  
+const restore = (event, restoreButton) => {
+
+    event.preventDefault();
     restoreButton.innerHTML = '<span class="spinner-border spinner-border-sm" style="width: 1.3em; height: 1.3em;" role="status" aria-hidden="true"></span> Processing...'
     let restoreId = restoreButton.getAttribute('data-id');  
     const restoreUrl = `${routes.api_origin}${routes.restoreEstateAdminAccess(restoreId)}`;
@@ -66,7 +67,8 @@ function restore() {
       }
    }
 
-  //})
   
 }
+
+restoreButton.addEventListener('click', (event) => restore(event, restoreButton));
 

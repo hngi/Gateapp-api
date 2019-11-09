@@ -1,7 +1,8 @@
 // This script revokes admin access 
 
-function resetPassword() {
+const resetPassword =(event, resetButton) =>{
   
+  event.preventDefault();
   resetButton.innerHTML = '<span class="spinner-border spinner-border-sm" style="width: 1.3em; height: 1.3em;" role="status" aria-hidden="true"></span> Processing...'
     let resetId = resetButton.getAttribute('data-id');  
     const resetUrl = `${routes.api_origin}${routes.resetEstateAdminPassword(resetId)}`;
@@ -62,4 +63,5 @@ function resetPassword() {
 
   
 }
+resetButton.addEventListener('click', (event) => resetPassword(event, resetButton));
 
