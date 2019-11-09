@@ -152,6 +152,19 @@ class Routes {
   removeServiceProvider(id) {
     return `api/v1/service_provider/delete/${id}`;
   }
+  //Service Provider Requests
+  // Get all Service Providers request 
+  get allServiceProviderRequests(){
+    return `api/v1/service-provider/requests`;
+  }
+  // Approve Service Provider request 
+   approveServiceProviderRequests(id){
+    return `api/v1/service-provider/approve/${id}`;
+  }
+  // Reject Service Providers request 
+   rejectServiceProviderRequests(id){
+    return `api/v1/service-provider/reject/${id}`;
+  }
   //Users
   get allUsers() {
     return `api/v1/user/all`;

@@ -103,6 +103,7 @@
     </div>
     <!-- @team-gateapp, side nav ends here -->
     <!-- main page content begins here -->
+
     <div id="tablecontent">
         <div class="container-fluid">
             <a href="#" style="color: black;"><i class="fa fa-bell"></i></a>
@@ -110,7 +111,7 @@
             <table class="search" style="width: 100%;">
                 <tr>
                     <td>
-                        <h1>Estate Adminstrators</h1>
+                        <h4>Estate Adminstrators</h4>
                     </td>
                     <td><input type="tablesearch" name="search" placeholder=" search admin users" id="myInput" onkeyup="myFunction()" hidden></td>
                 </tr>
@@ -129,7 +130,7 @@
                     <tr>
                         <td scope="col"></td>
                         <td scope="col"> </td>
-                        <td scope="col"> <span class="spinner-border" role="status" style="color: #49a347;"> </span></td>
+                        <td scope="col"> <span class="spinner-border" role="status" style="color: #49a347; position: absolute;left: 40%;margin-top: 10vh;display: block;"> </span></td>
                         <td></td>
                     </tr>
 
@@ -250,6 +251,7 @@
             </table>
         </div>
     </div>
+
     </div>
     </div>
     <!-- Modal inserted here -->
@@ -265,11 +267,11 @@
                     <p class="text-center" id="modalAddress"></p>
                     <br>
 
-                    <button class="btn btn-danger" id="revoke" data-id="#" onclick="revoke()" style="background-color: #EB5757; width: 300px; margin-bottom: 30px;">Revoke Access</button>
+                    <button class="btn btn-danger" id="revoke" data-id="#" style="background-color: #EB5757; width: 300px; margin-bottom: 30px;">Revoke Access</button>
                     <br>
-                    <button class="btn btn-warning text-light" id="restore" data-id="#" onclick="restore()" style="background-color: #49a347; width: 300px; margin-bottom: 30px;">Restore Access</button>
+                    <button class="btn btn-warning text-light" id="restore" data-id="#" style="background-color: #49a347; width: 300px; margin-bottom: 30px;">Restore Access</button>
                     <br>
-                    <button class="btn btn-warning text-light" id="resetPassword" data-id="#" onclick="resetPassword()" style="background-color: #56CCF2; width: 300px;">Reset Password</button>
+                    <button class="btn btn-warning text-light" id="resetPassword" data-id="#" style="background-color: #56CCF2; width: 300px;">Reset Password</button>
 
                 </div>
             </div>
