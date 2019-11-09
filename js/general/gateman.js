@@ -9,10 +9,12 @@
     };
     
  const routes = new Routes();
- let endpoint = `${routes.api_origin}${routes.allUsers}`;
+ let allUsersUrl = `${routes.api_origin}${routes.allUsers}`;
  rowElement = document.getElementById('gatemanTable');
+ let spinner = document.querySelector("[data-preloader]");
 
- fetch(endpoint, {
+ spinner.style.display = "block";
+ fetch(allUsersUrl, {
  method: 'GET', 
  mode: 'cors', 
  redirect: 'follow',
@@ -34,41 +36,50 @@
                  <td>%EMAIL%</td>
                  <td>%PHONE%</td>
                  <td>
-                 <a href="#" data-id="%ID%" data-toggle="modal" data-target="#singleEstateModal" class='btn btn-default btn-xs' title="View Details"><i class="fa fa-eye"></i></a>
-                 <a href="#" data-id="%ID%" class='btn btn-default btn-xs' title="Edit"><i class="fa fa-edit"></i></a>                 
-                 <a href="#" data-id="%ID%" class='btn btn-default btn-xs' title="Delete"><i class="fa fa-trash"></i></a>
+                 <a href="#"
+                 data-id='%ID%'
+                 data-name='%NAME%'
+                 data-estate='%ESTATE%'
+                 data-email='%EMAIL%'
+                 data-phone='%PHONE%'
+                 data-date='%DATE%'
+                 class="displayGateman green"
+                 data-toggle="modal"  
+                 data-target="#gatemanModal">View Details</a>
                  </td>
              </tr>
      ` ; 
  
-     
 
  const displayGatemen = (results) => {
      let count = 0;
-     
+     if(results){
+      spinner.style.display = "none";
+     }
  
      results.forEach(el => {
     
-    // console.log(el);
+   //  console.log(el);
       count += 1;
      //Replace the placeholder text with some actual data
      newHtml = html.replace('%SN%', count);
-     newHtml = newHtml.replace('%NAME%', el.name);
+     newHtml = newHtml.replace(/%NAME%/g, el.name);
      if(el.home != null) {
-        newHtml = newHtml.replace('%ESTATE%', el.home.estate.estate_name);
+        newHtml = newHtml.replace(/%ESTATE%/g, el.home.estate.estate_name);
      } else {
-        newHtml = newHtml.replace('%ESTATE%', '-');
+        newHtml = newHtml.replace(/%ESTATE%/g, '-');
      }
      if(el.email != null) {
-        newHtml = newHtml.replace('%EMAIL%', el.email);
+        newHtml = newHtml.replace(/%EMAIL%/g, el.email);
      }else {
-        newHtml = newHtml.replace('%EMAIL%', '-');
+        newHtml = newHtml.replace(/%EMAIL%/g, '-');
      }
-     newHtml = newHtml.replace('%PHONE%', el.phone);
+     newHtml = newHtml.replace(/%PHONE%/g, el.phone);
      newHtml = newHtml.replace(/%ID%/g, el.id);
+     
+     newHtml = newHtml.replace('%DATE%', el.created_at);
 
      //Insert the HTML into the DOM
      rowElement.insertAdjacentHTML('beforeend', newHtml);
      });
-
  }
