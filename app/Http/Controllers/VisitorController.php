@@ -381,6 +381,35 @@ class VisitorController extends Controller
         }
     }
 
+     /**
+     * Fetch all Visit History for one visitor
+     *
+     * @param  integer
+     * @return JSON
+     */
+    public function fetchVisitorHistory($id)
+   {
+       $visitorName = DB::table('visitors')->where('id',$id)->pluck('name');
+       $visitorsHistory = DB::table('visitors_history')
+       ->join('visitors','visitors.id','=','visitors_history.visitor_id')
+       ->where('visitor_id', $id)
+       ->get();
+       if($visitorsHistory)
+       {
+           $res['status']  = true;
+           $res['visitorName'] = $visitorName;
+           $res['message'] = "visit history for one user";
+           $res['visitors'] = $visitorsHistory;
+           return response()->json($res, 200);
+       }
+       else
+       {
+           $res['status']  = false;
+           $res['message'] = 'No Record found';
+           return response()->json($res, 404);
+       }
+    }
+
 
     /**
      * fetch visitors to an estate

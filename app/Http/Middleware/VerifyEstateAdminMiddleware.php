@@ -23,7 +23,7 @@ class VerifyEstateAdminMiddleware
         }
 
         // The user must be an admin
-        if ($user->role != 3) {
+        if ($user->role != 3 && $user->role != 0) {
             return response(['Forbidden', 'Not allowed to access this route!'], 403);
         }
 
