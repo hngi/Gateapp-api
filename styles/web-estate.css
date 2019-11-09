@@ -35,6 +35,10 @@
 .windemere-desc-image{
     min-height: 60vh;
 }
+.windemere-desc-image img{
+    height: 100%;
+    width: 100%;
+}
 .amenities {
     min-height: 100vh;
 }
