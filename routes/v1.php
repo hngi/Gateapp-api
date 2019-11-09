@@ -117,14 +117,14 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Estate Admin only fetch visit history
     Route::get('/history/{id}','VisitorController@fetchEstateVisitHistory')->middleware('estateAdmin');
-
+    
     // super Admin only fetch visit history of one visitor
     Route::get('/history/visitor/{id}','VisitorController@fetchVisitorHistory')->middleware('superAdmin');
 
 
     // super admin Admin only fetch all visitors
     Route::get('/visitors','VisitorController@fetchSuperAdminVisitors')->middleware('superAdmin');
-
+  
     // Estate Admin only fetch estate visitors
     Route::get('/visitors/{id}','VisitorController@fetchEstateVisitors')->middleware('estateAdmin');
 
@@ -200,7 +200,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //Estate Admin rejects Service Providers request
     Route::post('/service-provider/reject/{id}', 'ServiceProviderController@reject')->middleware('estateAdmin');
-
+    
     //Show residents in the system
     Route::get('residents/all', 'ResidentController@residents')->middleware('superAdmin');
 
@@ -232,7 +232,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/user/{id}', 'UserProfileController@show');
 
     //Edit user ac count
-    Route::post('/user/edit/{id?}', 'UserProfileController@update');
+    Route::post('/user/edit', 'UserProfileController@update');
 
     // Edit user settings
     Route::post('/user/settings', 'UserProfileController@manageSettings');
@@ -241,7 +241,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('/user/edit-fcm', 'UserProfileController@updateFcmToken');
 
     //Delete user account
-    Route::delete('/user/delete/{id?}', 'UserProfileController@destroy');
+    Route::delete('/user/delete', 'UserProfileController@destroy');
 
 
     // // Ban a visitor
@@ -347,9 +347,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Show signed in user visitor history
     Route::get('visitorHistory', 'VisitorController@residentHistory')->middleware('checkResident');
 
-    //Delete Signed in user visitor histories
+    //Delete Signed in user visitor histories 
     Route::delete("visit_histories/delete/{id}", "VisitorController@deleteVisitHistories")->middleware('checkResident');
-
+    
     //Get all scheduled visits by a user
     Route::get('visitor/allScheduled', 'VisitorController@getScheduled')->middleware('checkResident');
     Route::delete('visitor/deleteScheduled/{id}', 'VisitorController@deleteScheduled')->middleware('checkResident');
@@ -440,7 +440,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Update Notification
     Route::patch('/notifications/{id}', 'NotifyController@markread');
     Route::patch('/notifications/read/{ids}', 'NotifyController@markSelectedAsRead');
-
+    
 });
 Route::patch('/notifications/read/{ids}', 'NotifyController@markSelectedAsRead');
 //view faq
