@@ -146,9 +146,9 @@
 							<p class="text-center" id="dataCreatedAt"></p>
 							<br>
 		
-							<button class="btn btn-warning text-light" id="restore" data-id="#" onclick="restore()" style="background-color: #49a347; width: 300px; margin: 0 auto 5px auto; display: block; text-align: center;">Edit Gateman</button>
+							<button class="btn btn-warning text-light" id="editGateman" data-id="#"  style="background-color: #49a347; width: 300px; margin: 0 auto 5px auto; display: block; text-align: center;">Edit Gateman</button>
 							<br>
-							<button class="btn btn-danger" id="revoke" data-id="#" onclick="revoke()" style="background-color: #EB5757; width: 300px; margin: 0 auto 5px auto; display: block;">Delete Gateman</button>
+							<button class="btn btn-danger" id="deleteGateman" data-id="#" style="background-color: #EB5757; width: 300px; margin: 0 auto 5px auto; display: block;">Delete Gateman</button>
 					</div>
 					<div class="modal-footer">
 					  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -156,30 +156,6 @@
 				  </div>
 				</div>
 			  </div>
-
-
-			<!-- Modal inserted here -->
-			<div class="modal fade " id="singleGatemanModal" tabindex="-1" role="dialog" aria-hidden="true">
-				<div class="modal-dialog col-12 px-1 mx-0" role="document">
-					<div class="modal-content col-11 col-md-9 px-0 ml-auto mr-auto">
-						<div class="modal-body small_modal">
-							<img class="mx-auto d-block" src="" id="profileImage"></img>
-							<h1 class="text-center" id="dataName"></h1>
-							<h3 class="text-center" id="dataEstate"></h3>
-							<h4 class="text-center" id="dataEmail"></h4>
-							<p class="text-center" id="dataPhone"></p>
-							<p class="text-center" id="dataCreatedAt"></p>
-							<br>
-		
-							<button class="btn btn-warning text-light" id="restore" data-id="#" onclick="restore()" style="background-color: #49a347; width: 300px; margin-bottom: 30px;">Edit Gateman</button>
-							<br>
-							<button class="btn btn-danger" id="revoke" data-id="#" onclick="revoke()" style="background-color: #EB5757; width: 300px; margin-bottom: 30px;">Delete Gateman</button>
-							
-		
-						</div>
-					</div>
-				</div>
-			</div>
 
 
 		</div>
@@ -206,6 +182,8 @@
 	let email = $(event.relatedTarget).data('email');
 	let phone = $(event.relatedTarget).data('phone');
 	let date = $(event.relatedTarget).data('date');
+	$(this).find("#editGateman").attr('data-id', id);
+	$(this).find("#deleteGateman").attr('data-id', id);
 	$(this).find("#dataName").text(name);
 	$(this).find("#dataEstate").text(estate);
 	$(this).find("#dataEmail").text(email);

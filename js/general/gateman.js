@@ -83,3 +83,16 @@
      rowElement.insertAdjacentHTML('beforeend', newHtml);
      });
  }
+
+ const editGatemanBtn = document.getElementById("editGateman");
+ const deleteGatemanBtn = document.getElementById("deleteGateman");
+
+ editGatemanBtn.addEventListener('click', (event)=> {
+   alert(`Are you sure you really want to edit this man with ID = ${editGatemanBtn.dataset.id}?`);
+
+ });
+
+ deleteGatemanBtn.addEventListener('click', (event)=> {
+   alert(`Are you sure you really want to delete this man  with ID =  ${editGatemanBtn.dataset.id}?`);
+ });
+
