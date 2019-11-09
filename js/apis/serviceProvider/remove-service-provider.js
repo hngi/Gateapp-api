@@ -4,7 +4,7 @@ const remove = (event, removeButton) => {
 
     event.preventDefault();
     removeButton.innerHTML = '<span class="spinner-border text-light spinner-border-sm" style="width: 1.3em; height: 1.3em;" role="status" aria-hidden="true"></span> Processing...';
-    const Id  = suspendButton.getAttribute('data-id'); 
+    const Id  = removeButton.getAttribute('data-id'); 
     const url  = `${routes.api_origin}${routes.removeServiceProvider(Id)}`;
     console.log(Id)
     console.log(url)
