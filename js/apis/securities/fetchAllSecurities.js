@@ -91,13 +91,20 @@
    let gatemanName = document.getElementById('dataName').textContent;
    let gatemanPhone = document.getElementById('dataPhone').textContent;
    let gatemanEmail = document.getElementById('dataEmail').textContent;
+   let editUserUrl = `${routes.api_origin}api/v1/user/edit/${gatemanID}`;
 
-   // console.log(gatemanName);
-   // console.log(gatemanPhone);
-   // console.log(gatemanID);
-   
-   let editUserUrl = `${routes.api_origin}api/v1/user/edit/${editGatemanBtn.dataset.id}`;
+   let gatemanData = {
+      'name' : gatemanName,
+      'phone' : gatemanPhone,
+      'email' : gatemanEmail,
+      'id'  : gatemanID,
+      'url' : editUserUrl
+  };
+
+   localStorage.setItem( 'currentGatemanInfo', gatemanData );
+
    window.location = "/super-admin/edit-gateman.html"; 
+   // window.location = "file:///C:/wamp/www/hng/Gateapp-api/super-admin/edit-gateman.html"; 
       
 
  });
