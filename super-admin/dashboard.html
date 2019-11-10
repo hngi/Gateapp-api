@@ -14,7 +14,7 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/dashboard-sidebar.css">
-    <link rel="stylesheet" href="../styles/default.css">
+    <link rel="stylesheet" href="../styles/dashboard.css">
     <title data-title>Dashboard</title>
 </head>
 
@@ -36,76 +36,91 @@
     </div> -->
     <div class="wrapper">
         <!-- Sidebar  -->
-               <!-- Sidebar  -->
-               <nav id="sidebar" class="active">
-                <div class="col-12 dash-logo mt-3">
-                    <img class="ml-3" src="../images/gateguard-white.png" alt="">
-                </div>
-                <ul class="list-unstyled components">
-                    <p onclick="location.href='dashboard.html'">Dashboard</p>
-                    <li class="">
-                        <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Admins</a>
-                        <ul class="collapse list-unstyled" id="adminSubmenu">
-                            <li>
-                                <a href="admins.html">View all admins</a>
-                            </li>
-                            <li class="">
-                                <a href="add-admin.html">Add an admin</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="residents.html">Residents</a>
-                    </li>
-                    <li>
-                        <a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Visitors</a>
-                        <ul class="collapse list-unstyled" id="visitorsSubmenu">
-                            <li>
-                                <a href="visitors.html">All Visitors</a>
-                            </li>
-                            <li>
-                                <a href="banned-visitors.html">Banned Visitors</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#estatesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Estates</a>
-                        <ul class="collapse list-unstyled" id="estatesSubmenu">
-                            <li class="">
-                                <a href="estates.html">All Estates</a>
-                            </li>
-                            <li>
-                                <a href="add-estate.html">Add an Estate</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#providersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Providers</a>
-                        <ul class="collapse list-unstyled" id="providersSubmenu">
-                            <li>
-                                <a href="providers.html">All Providers</a>
-                            </li>
-                            <li>
-                                <a href="providers-request.html">Provider Requests</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-
+        <nav id="sidebar" class="active">
+            <div class="col-12 dash-logo mt-3">
+                <img class="ml-3" src="../images/gateguard-white.png" alt="">
+                <button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1"
+                    style="z-index: 9999999999; margin-left: 120px; position: absolute;">
+                    <i class="fas fa fa-align-left"></i>
+                </button>
+            </div>
+            <ul class="list-unstyled components">
+                <p onclick="location.href='dashboard.html'">Dashboard</p>
+                <li class="">
+                    <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Admins</a>
+                    <ul class="collapse list-unstyled" id="adminSubmenu">
+                        <li>
+                            <a href="admins.html">View all admins</a>
+                        </li>
+                        <li class="">
+                            <a href="add-admin.html">Add an admin</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="residents.html">Residents</a>
+                </li>
+                <li>
+                    <a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Visitors</a>
+                    <ul class="collapse list-unstyled" id="visitorsSubmenu">
+                        <li>
+                            <a href="visitors.html">All Visitors</a>
+                        </li>
+                        <li>
+                            <a href="banned-visitors.html">Banned Visitors</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#estatesSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Estates</a>
+                    <ul class="collapse list-unstyled" id="estatesSubmenu">
+                        <li class="">
+                            <a href="estates.html">All Estates</a>
+                        </li>
+                        <li>
+                            <a href="add-estate.html">Add an Estate</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#providersSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Providers</a>
+                    <ul class="collapse list-unstyled" id="providersSubmenu">
+                        <li>
+                            <a href="providers.html">All Providers</a>
+                        </li>
+                        <li>
+                            <a href="providers-request.html">Provider Requests</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#gatemenSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Gatemen</a>
+                    <ul class="collapse list-unstyled" id="gatemenSubmenu">
+                        <li>
+                            <a href="security-men.html">All Gatemen</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
         <!-- Page Content  -->
         <div id="content">
-            <button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1">
-                <i class="fas fa fa-align-left"></i>
-            </button>
-            <div class="col-12 notif text-right mb-4 dropdown">
-                <button class="btn p-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa fa-bell"></i>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Notifications will appear here</a>
-                </div>
-            </div>
+                <div class="col-12 notif text-right mb-4 dropdown">
+                        <button class="btn p-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa fa-bell"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Notifications will appear here</a>
+                        </div>
+                        <button class="btn p-1" data-admin-logout>
+                            <img width="25vh" height="25vh" src="../images/logout.png">
+                        </button>
+                    </div>
             <div class="col-12 tab-full scroller">
                 <!-- <div class="toast border" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false" style="max-width: 70vw;">
                     <div class="toast-header">
@@ -120,19 +135,19 @@
                 </div> -->
                 <div class="container-fluid">
                     <div class="row stat-tab-box">
-                      <span data-wkly-btn class="all-stat-tabs stat_active"></span>
-                      <span data-mnthly-btn class="all-stat-tabs"></span>
-                      <span data-all-btn class="all-stat-tabs"></span>
+                        <span data-wkly-btn class="all-stat-tabs stat_active"></span>
+                        <span data-mnthly-btn class="all-stat-tabs"></span>
+                        <span data-all-btn class="all-stat-tabs"></span>
                     </div>
-                <div class="col-12 weekly-stats row mx-0 mt-5" data-stat-view>
-                    <div class="text-center" style="position: absolute; left: 50%; margin-top:50px;">
-                        <div class="spinner-border" role="status" style="color: #49a347;">
+                    <div class="col-12 weekly-stats row mx-0 mt-5" data-stat-view>
+                        <div class="text-center" style="position: absolute; left: 50%; margin-top:50px;">
+                            <div class="spinner-border" role="status" style="color: #49a347;">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </body>
 <!--Import third party cdn-->
 <script src="../js/general/third_party_cdn.js"></script>
@@ -140,6 +155,7 @@
 <script src="../js/general/routes.js"></script>
 <script src="../js/general/onSession.js"></script>
 <script src="../js/apis/superAdmin/statistics/admin-dashboard.js"></script>
+<script src="../js/general/global.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
