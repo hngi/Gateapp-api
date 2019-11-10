@@ -13,7 +13,7 @@
  rowElement = document.getElementById('gatemanTable');
  let spinner = document.querySelector("[data-preloader]");
 
- spinner.style.display = "block";
+ 
  fetch(allUsersUrl, {
  method: 'GET', 
  mode: 'cors', 
@@ -24,9 +24,18 @@
      "Authorization": token
  })
  }).then( response => response.json())
- .then( data => {     
+ .then( data => {   
+    if(data){
+      spinner.style.display = "none";
+    }  
     displayGatemen(data.gatemans);
-     });
+     }).catch(error=> {
+      Swal.fire({
+         title: "Unexpected Error",
+         html: `<p style="color:tomato; font-size:17px;">This may be due to internet connection not available, please turn on internet connection or referesh to try again, Thank you!</p>`,
+         confirmButtonText: "Close"
+       });
+   });
  
   html = `
               <tr class="js--gatemanRow">
@@ -53,9 +62,7 @@
 
  const displayGatemen = (results) => {
      let count = 0;
-     if(results){
-      spinner.style.display = "none";
-     }
+    
  
      results.forEach(el => {
     
@@ -95,12 +102,13 @@
    let gatemanPhone = document.getElementById('dataPhone').textContent;
    let gatemanEmail = document.getElementById('dataEmail').textContent;
 
-   console.log(gatemanName);
-   console.log(gatemanPhone);
-   console.log(gatemanID);
+   // console.log(gatemanName);
+   // console.log(gatemanPhone);
+   // console.log(gatemanID);
    
    let editUserUrl = `${routes.api_origin}api/v1/user/edit/${editGatemanBtn.dataset.id}`;
    window.location = "file:///C:/wamp/www/hng/Gateapp-api/super-admin/edit-gateman.html"; 
+   document.querySelector('[data-add-gateman-btn]').textContent = 'Update';
   
     
 
@@ -124,7 +132,7 @@
             html: `<p style="color:tomato; font-size:17px;"> ${data.message} </p>`,
             confirmButtonText: "Close"
           });
-          setTimeout(() => { location.reload();; }, 6000);
+          setTimeout(() => { location.reload();; }, 3000);
         
           });
  });

@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/dashboard-sidebar.css">
     <link rel="stylesheet" type="text/css" href="../styles/seunogunyemi.css">
-    <title data-title>Modify Gateman</title>
+    <title data-title>Add Gateman</title>
 </head>
 
 <body>
@@ -87,37 +87,22 @@
         </div>
     </div>
 
-    <!-- 
-        "name": "Akindele Taiwo",
-            "username": null,
-            "phone": "2348062359610",
-            "email": "dave@gmail.com",
-            "image": "d0pqgbnjvrvthie8uuux.jpg",
-            "user_type": "gateman",
-            "duty_time": "0",
 
-            <h1 class="text-center" id="dataName"></h1>
-							<h3 class="text-center" id="dataEstate"></h3>
-							<h4 class="text-center" id="dataEmail"></h4>
-							<p class="text-center" id="dataPhone"></p>
-     -->
-
-    <!-- admin content begins here -->
     <div class="wrap">
 
         <div class="main active">
             <a href="#"><i class="fa fa-bell"></i></a>
             <br>
-            <h1>Edit Gateman</h1>
-            <form class="col-10 col-md-8" data-add-estate-admin-form>
+            <h1>Add Gateman</h1>
+            <form class="col-10 col-md-8" data-add-gateman-form>
                 <div class="form-group mb-2">
                     <label for="">Full Name</label>
-                    <input type="text" name="name" id="gatemanInputName" class="form-control" placeholder="eg FirstName LastName">
+                    <input type="text" name="name" id="gatemanInputName" class="form-control" placeholder="eg John Doe" required>
                     <p class="error-fields" id="adminEmailError"></p>
                 </div>
                 <div class="form-group mb-2">
                         <label for="">Phone</label>
-                        <input type="number" name="phone" id="gatemanInputPhone" class="form-control" placeholder="eg 08000000000">
+                        <input type="number" name="phone" id="gatemanInputPhone" class="form-control" placeholder="eg 08000000000" required>
                         <p class="error-fields" id="adminEmailError"></p>
                     </div>
                     <div class="form-group mb-2">
@@ -138,7 +123,7 @@
                 </div>
 
                 <button data-add-gateman-btn type="submit" class="btn btn-success estate-submit-btn col-6">
-                        Add 
+                        Add Gateman
                     </button>
             </form>
 
@@ -154,7 +139,7 @@
 <script src="../js/general/routes.js"></script>
 
 <script src="../js/general/onSession.js"></script>
-<script src="../js/general/gateman.js"></script>
+<script src="../js/general/addGateman.js"></script>
 
 
 <script type="text/javascript">
@@ -163,14 +148,6 @@
             $('#sidebar').toggleClass('active');
         });
     });
-
-
-    
-   document.getElementById('gatemanInputName').value = gatemanName;
-   document.getElementById('gatemanInputPhone').value = gatemanPhone;
-   document.getElementById('gatemanInputEmail').value = gatemanPhone;
-
-
 </script>
 
 </html>
