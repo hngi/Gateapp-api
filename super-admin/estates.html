@@ -37,22 +37,21 @@
         </div>
     </div> -->
     <div class="wrapper">
-        <!-- Sidebar  -->
-        <nav id="sidebar" class="active">
+         <!-- Sidebar  -->
+         <nav id="sidebar" class="active">
             <div class="col-12 dash-logo mt-3">
                 <img class="ml-3" src="../images/gateguard-white.png" alt="">
             </div>
             <ul class="list-unstyled components">
-                <p onclick="location.href='default-tab.html'">Dashboard</p>
+                <p onclick="location.href='dashboard.html'">Dashboard</p>
                 <li class="">
-                    <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Admins</a>
+                    <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Admins</a>
                     <ul class="collapse list-unstyled" id="adminSubmenu">
                         <li>
                             <a href="admins.html">View all admins</a>
                         </li>
-                        <li>
-                            <a href="add_admin.html">Add an admin</a>
+                        <li class="">
+                            <a href="add-admin.html">Add an admin</a>
                         </li>
                     </ul>
                 </li>
@@ -60,26 +59,21 @@
                     <a href="residents.html">Residents</a>
                 </li>
                 <li>
-                    <a href="gateman-tab.html">Gatemen</a>
-                </li>
-                <li>
-                    <a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Visitors</a>
+                    <a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Visitors</a>
                     <ul class="collapse list-unstyled" id="visitorsSubmenu">
                         <li>
-                            <a href="visitors-tab.html">All Visitors</a>
+                            <a href="visitors.html">All Visitors</a>
                         </li>
                         <li>
-                            <a href="banned-visitors-tab.html">Banned Visitors</a>
+                            <a href="banned-visitors.html">Banned Visitors</a>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#estatesSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Estates</a>
+                    <a href="#estatesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Estates</a>
                     <ul class="collapse list-unstyled" id="estatesSubmenu">
                         <li class="">
-                            <a href="estates-tab.html">All Estates</a>
+                            <a href="estates.html">All Estates</a>
                         </li>
                         <li>
                             <a href="add-estate.html">Add an Estate</a>
@@ -87,14 +81,13 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#providersSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Providers</a>
+                    <a href="#providersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Providers</a>
                     <ul class="collapse list-unstyled" id="providersSubmenu">
                         <li>
-                            <a href="providers-tab.html">All Providers</a>
+                            <a href="providers.html">All Providers</a>
                         </li>
                         <li>
-                            <a href="provider-request.html">Provider Requests</a>
+                            <a href="providers-request.html">Provider Requests</a>
                         </li>
                     </ul>
                 </li>
@@ -134,27 +127,7 @@
                                 <div class="spinner-border" role="status" style="color: #49a347;">
                                 </div>
                             </div>
-                            <!-- <tr>
-                                <td>Otedola Estate</td>
-                                <td>Park Avenue, Lekki o</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Otedola Estate</td>
-                                <td>Park Avenue, Lekki o</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Otedola Estate</td>
-                                <td>Park Avenue, Lekki o</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a>
-                                </td>
-                            </tr> -->
+  
                         </tbody>
                     </table>
                 </div>
@@ -165,7 +138,7 @@
     <div class="modal fade" id="singleEstateModal" tabindex="-1" role="dialog" aria-hidden="true" data-Estate-Modal>
         <div class="modal-dialog col-12 px-1 mx-0" role="document">
             <div class="modal-content col-11 col-md-9 px-0 ml-auto">
-                <span id="estateId" style="position: absolute;">1</span>
+                <span id="estateId" style="position: absolute; visibility: hidden;"></span>
                 <div class="modal-body row mx-0">
                     <h4 id="estateName" class="col-10">Otedola Estate</h4>
                     <h4 class="edit-estate-link ml-auto col-2" data-toggle="modal"
@@ -184,19 +157,19 @@
                             <h6 class="col-12 px-0 mt-2">Stats</h6>
                             <div class="col-6 px-0">
                                 <p class="mb-0">Residents</p>
-                                <span id="estate_residents"><span class="spinner-grow"></span></span>
+                                <span class="green" id="estate_residents"><span class="spinner-grow"></span></span>
                             </div>
                             <div class="col-6 px-0">
                                 <p class="mb-0">Gatemen</p>
-                                <span id="estate_gatemen"><span class="spinner-grow"></span></span>
+                                <span class="green" id="estate_gatemen"><span class="spinner-grow"></span></span>
                             </div>
                             <div class="col-6 px-0">
                                 <p class="mb-0">Visits Scheduled (Total)</p>
-                                <span id="estate_total_visits"><span class="spinner-grow"></span> </span>
+                                <span class="green" id="estate_total_visits"><span class="spinner-grow"></span> </span>
                             </div>
                             <div class="col-6 px-0">
                                 <p class="mb-0">Visits Scheduled (Past week)</p>
-                                <span id="estate_pwk_total"><span class="spinner-grow"></span> </span>
+                                <span class="green" id="estate_pwk_total"><span class="spinner-grow"></span> </span>
                             </div>
                         </div>
                         <div class="col-12 col-md gatemen scroller mb-3 px-0 mt-2">
@@ -209,36 +182,6 @@
                                 <span class="col-6 mt-2 px-0">Tomiwa Adeleke</span>
                                 <button type="button" class="col-3 edit-gateman px-0 btn btn-link" data-toggle="modal"
                                     data-target="#editGatemanModal">Edit</button>
-                                <button type="button" class="col-3 delete-gateman px-0 btn btn-link">Delete</button>
-                            </div>
-                            <div class="indiv-gateman col-12 row mx-0 px-0">
-                                <span class="col-6 mt-2 px-0">Tomiwa Adeleke</span>
-                                <button type="button" class="col-3 edit-gateman px-0 btn btn-link" data-toggle="modal"
-                                    data-target="#addGatemanModal">Edit</button>
-                                <button type="button" class="col-3 delete-gateman px-0 btn btn-link">Delete</button>
-                            </div>
-                            <div class="indiv-gateman col-12 row mx-0 px-0">
-                                <span class="col-6 mt-2 px-0">Tomiwa Adeleke</span>
-                                <button type="button" class="col-3 edit-gateman px-0 btn btn-link" data-toggle="modal"
-                                    data-target="#addGatemanModal">Edit</button>
-                                <button type="button" class="col-3 delete-gateman px-0 btn btn-link">Delete</button>
-                            </div>
-                            <div class="indiv-gateman col-12 row mx-0 px-0">
-                                <span class="col-6 mt-2 px-0">Tomiwa Adeleke</span>
-                                <button type="button" class="col-3 edit-gateman px-0 btn btn-link" data-toggle="modal"
-                                    data-target="#addGatemanModal">Edit</button>
-                                <button type="button" class="col-3 delete-gateman px-0 btn btn-link">Delete</button>
-                            </div>
-                            <div class="indiv-gateman col-12 row mx-0 px-0">
-                                <span class="col-6 mt-2 px-0">Tomiwa Adeleke</span>
-                                <button type="button" class="col-3 edit-gateman px-0 btn btn-link" data-toggle="modal"
-                                    data-target="#addGatemanModal">Edit</button>
-                                <button type="button" class="col-3 delete-gateman px-0 btn btn-link">Delete</button>
-                            </div>
-                            <div class="indiv-gateman col-12 row mx-0 px-0">
-                                <span class="col-6 mt-2 px-0">Tomiwa Adeleke</span>
-                                <button type="button" class="col-3 edit-gateman px-0 btn btn-link" data-toggle="modal"
-                                    data-target="#addGatemanModal">Edit</button>
                                 <button type="button" class="col-3 delete-gateman px-0 btn btn-link">Delete</button>
                             </div>
                         </div>
