@@ -1,9 +1,10 @@
 // JS Fetch to get all service providers
 const routes = new Routes();
-const url = `${routes.api_origin}${routes.allServiceProviders}`;
+const url = `${routes.api_origin}${routes.allServiceProvider}`;
 
-//Get Dom Elements 
+// Get Dom Elements 
 const table = document.querySelector('#sp-tab');
+const spinner = document.querySelector('[data-serviceProvider-view]');
 const suspend = document.querySelector('#suspend');
 const remove = document.querySelector("#remove");
 const singlemodal = document.querySelector('#singleProviderModal');
@@ -32,6 +33,7 @@ fetch(url, {
                 spPhone = row.insertCell(),
                 spDetails = row.insertCell(),
                 moreDetails = row.insertCell();
+                spinner.innerHTML = "";
            
             //Insert Response into table
             spName.innerHTML = `${sp.name}`;
