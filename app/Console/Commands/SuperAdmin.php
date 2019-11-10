@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\SuperAdminPassword;
 
 class SuperAdmin extends Command
 {
@@ -40,16 +41,18 @@ class SuperAdmin extends Command
      */
     public function handle()
     {
-        $name = $this->argument('name');
-        $email = $this->argument('email');
-        $password = Hash::make($this->argument('password'));
+        $name     = $this->argument('name');
+        $email    = $this->argument('email');
+        $password = $this->argument('password');
 
         try{
             DB::table('users')->insert(
-                ['name' => $name, 'email' => $email, 'password' => $password]
+                ['name' => $name, 'email' => $email, 'password' => Hash::make($password)]
             );    
 
-            $this->info('Admin Created Successfully');
+            Mail::to($email)->send(new SuperAdminPassword($name, $password));
+            $this->info('Super Admin Created Successfully');
+
         }catch(\Exception $e) {
             $this->info('An Error occured: '. $e->getMessage());
         }
