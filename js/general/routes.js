@@ -9,7 +9,8 @@ Import Note: The base_url.js hold every every third party base url origin and ap
 
 class Routes {
   get api_origin() {
-    return "https://gateappapi.herokuapp.com/";
+    // return "https://gateappapi.herokuapp.com/";
+    return "http://127.0.0.1:8000/";
   }
   //Authentication Paths
   get signin() {
@@ -55,11 +56,11 @@ class Routes {
     return `api/v1/statistics/estate/${id}`;
   }
 
-    // Get All Estate Admin Information 
+    // Get All Estate Admin Information
     get fetchAllEstateAdmin() {
         return 'api/v1/admin';
     }
-    // Get All Estate Admin Information 
+    // Get All Estate Admin Information
     revokeEstateAdminAccess(id) {
         return `api/v1/revokeadminaccess/${id}`;
     }
@@ -97,7 +98,7 @@ class Routes {
         return `api/v1/public/sp-categories`;
     }
     path(path) {
-        return path; 
+        return path;
     }
 
   // Get All Estate Admin Information
@@ -153,15 +154,15 @@ class Routes {
     return `api/v1/service_provider/delete/${id}`;
   }
   //Service Provider Requests
-  // Get all Service Providers request 
+  // Get all Service Providers request
   get allServiceProviderRequests(){
     return `api/v1/service-provider/requests`;
   }
-  // Approve Service Provider request 
+  // Approve Service Provider request
    approveServiceProviderRequests(id){
     return `api/v1/service-provider/approve/${id}`;
   }
-  // Reject Service Providers request 
+  // Reject Service Providers request
    rejectServiceProviderRequests(id){
     return `api/v1/service-provider/reject/${id}`;
   }
@@ -197,5 +198,11 @@ class Routes {
   //scheduled visits
   finishedVisits(id) {
     return `api/v1/finishedVisit/${id}`;
+  }
+  visitorHistory(id){
+    return `api/v1/history/visitor/${id}`;
+  }
+  banVisitor(id){
+    return `api/v1/visitor/${id}/ban`;
   }
 }
