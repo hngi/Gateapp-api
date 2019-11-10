@@ -100,8 +100,17 @@
     <div class="wrap">
 
         <div class="main active">
-            <a href="#"><i class="fa fa-bell"></i></a>
-            <br>
+                <div class="col-12 notif text-right mb-4 dropdown">
+                        <button class="btn p-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa fa-bell"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Notifications will appear here</a>
+                        </div>
+                        <button class="btn p-1" data-admin-logout>
+                            <img width="25vh" height="25vh" src="../images/logout.png">
+                        </button>
+                    </div>
             <h1>Add Gateman</h1>
             <form class="col-10 col-md-8" data-add-gateman-form>
                 <div class="form-group mb-2">

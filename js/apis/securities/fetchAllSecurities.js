@@ -98,9 +98,7 @@
    
    let editUserUrl = `${routes.api_origin}api/v1/user/edit/${editGatemanBtn.dataset.id}`;
    window.location = "file:///C:/wamp/www/hng/Gateapp-api/super-admin/edit-gateman.html"; 
-   document.querySelector('[data-add-gateman-btn]').textContent = 'Update';
-  
-    
+      
 
  });
 
