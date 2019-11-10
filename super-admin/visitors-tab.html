@@ -261,7 +261,7 @@
                                 </td>
                             </tr> -->
 
-                        </tbody> 
+                        </tbody>
             </table>
           </div>
         </div>
@@ -278,55 +278,14 @@
       <div class="modal-dialog col-12 px-1 mx-0" role="document">
         <div class="modal-content col-11 col-md-4 px-0 mx-auto">
           <div class="modal-body">
-            <h4 id="modalName" class="text-center">Sarah Anderson</h4>
+            <h4 id="modalName" class="text-center" data-history-name>Sarah Anderson</h4>
             <div class="col-12 single-visit text-center row mx-0">
-              <!-- <div class="col-6 border-right"><span>10/10/2019</span></div>
-                        <div class="col-6"><span>Otedola Estate</span></div> -->
-                        <table class="table table-borderless">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Estate</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>10/10/2019</td>
-                                    <td>Otedola Estate</td>
-                                </tr>
-                                <!-- <tr>
-                                    <td>10/10/2019</td>
-                                    <td>Otedola Estate</td>
-                                </tr>
-                                <tr>
-                                    <td>10/10/2019</td>
-                                    <td>Otedola Estate</td>
-                                </tr>
-                                <tr>
-                                    <td>10/10/2019</td>
-                                    <td>Otedola Estate</td>
-                                </tr>
-                                <tr>
-                                    <td>10/10/2019</td>
-                                    <td>Otedola Estate</td>
-                                </tr>
-                                <tr>
-                                    <td>10/10/2019</td>
-                                    <td>Otedola Estate</td>
-                                </tr>
-                                <tr>
-                                    <td>10/10/2019</td>
-                                    <td>Otedola Estate</td>
-                                </tr>
-                                <tr>
-                                    <td>10/10/2019</td>
-                                    <td>Otedola Estate</td>
-                                </tr>
-                                 -->
-                            </tbody>
-                            
+
+                        <table class="table table-borderless" id="historyTable">
+                        </tbody>
+
                         </table>
-                        <button id="ban" class="btn btn-danger col-10 mx-auto">Ban</button>
+                        <button id="ban" class="btn btn-danger col-10 mx-auto" data-ban-btn>Ban</button>
                     </div>
                 </div>
             </div>
@@ -341,6 +300,7 @@
 <script src="../js/general/routes.js"></script>
 <script src="../js/general/onSession.js"></script>
 <script src="../js/apis/visitors/allVisitors.js"></script>
+<script src="../js/apis/visitors/visitorHistory.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
