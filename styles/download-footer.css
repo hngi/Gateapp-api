@@ -30,7 +30,7 @@
 }
 /* Footer CSS */
 .app-footer{
-    min-height: 40vh;
+    min-height: 260px;
     background: #49a347;
 }
 .list-header{
@@ -76,9 +76,9 @@
 
 .login{
     background: #fff;
-    height: auto;
-    max-height: 40vh;
+    height: 250px;
     margin-top: 80px;
+    margin-bottom: 60px;
     border-radius: 5px;
     display: flex;
     flex-flow: column nowrap;

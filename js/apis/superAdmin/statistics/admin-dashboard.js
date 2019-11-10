@@ -140,7 +140,7 @@ const insertStat = (statHolder) => {
          btn.classList.add('stat_active');
 
          statView.innerHTML += `
-            <h6 class="col-12 stats-header">${type} Statistics</h6>
+            <h5 class="col-12 stats-header" style="font-weight:bold; text-align:center;">${type} Statistics</h5>
             <div class="col-12 col-md-4 stat text-center">
                 <h2 class="mb-0 mt-3">${ visit_count }</h2>
                 <span>Scheduled Visit</span>
