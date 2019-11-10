@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="../styles/dashboard-sidebar.css">
     <link rel="stylesheet" href="../styles/residents.css">
     <title data-title>Residents</title>
+    <script src="../js/general/onSession.js"></script>
+
   </head>
 
   <body>
@@ -79,10 +81,11 @@
 						</ul>
           </li>
           <li>
-              <a href="#gatemenSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Gatemen</a>
-            <ul class="collapse list-unstyled" id="gatemenSubmenu">
+            <a href="#securitiesSubmenu" data-toggle="collapse" aria-expanded="false"
+              class="dropdown-toggle">Securities</a>
+            <ul class="collapse list-unstyled" id="securitiesSubmenu">
               <li>
-                <a href="security-men.html">All Gatemen</a>
+                <a href="security-men.html">All Securities</a>
               </li>
             </ul>
           </li>
@@ -108,7 +111,10 @@
           <div class="res-table-cont ">
             <div class="name-search">
               <h4 class="col-12 col-md-6" style="font-weight: bold;">Residents</h4>
-              <input type="text" placeholder="search residents" />
+              <div class="form-group col-12 col-md-6 ml-auto">
+                <input type="tablesearch" class="form-control col-12 col-md-8 ml-auto" name="search" placeholder="Search Security" id="myInput"
+                onkeyup="filterList()">
+                </div>
             </div>
             <div class="res-table">
               <table>
@@ -186,12 +192,10 @@
 <script src="../js/general/third_party_cdn.js"></script>
 <script src="../js/general/placeholder.js"></script>
 <script src="../js/general/routes.js"></script>
-<script src="../js/general/onSession.js"></script>
 <script src="../js/apis/residents/getAllResidents.js"></script>
 <script src="../js/apis/residents/allResidentStats.js"></script>
 <script src="../js/manipulation/displayResidentInfo.js"></script>
 <script src="../js/general/global.js"></script>
-
 <script type="text/javascript">
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
