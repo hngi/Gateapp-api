@@ -11,3 +11,4 @@
 ## api Folder (js/apis)
 #### This handles the the api interaction folder, it is where the request to consume the api is done 
 #### files are named according to the type of request been carried out
+
