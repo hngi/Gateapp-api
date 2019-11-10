@@ -20,10 +20,10 @@ class ServiceProviderController extends Controller
         $res = array();
 
         if (Auth::check()) {
-           $user = Auth::user();
+          /* $user = Auth::user();
            $role = $user->role;
 
-           if ($role === "1" || $role === "2" ) {
+           if ($role === "1" || $role === "2" ) {*/
                 // $service = Service_Provider::all();
                 $query = DB::table('service_providers')
                                 ->join('estates', 'service_providers.estate_id', '=', 'estates.id')
@@ -41,10 +41,10 @@ class ServiceProviderController extends Controller
                     $res["status"] = 200;
                     $res["message"] = "No service providers registered";
                 }
-           } else {
+         /*  } else {
                $res['status'] = 401;
                $res['message'] = "You must login as a resident or admin.";
-           }
+           }*/
        } else {
         $res['status'] = 401;
         $res['message'] = "You are not logged in.";
