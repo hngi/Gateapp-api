@@ -8,8 +8,10 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/dashboard-sidebar.css">
     <link rel="stylesheet" type="text/css" href="../styles/seunogunyemi.css">
@@ -17,65 +19,82 @@
 </head>
 
 <body>
-   
+
     <div class="wrapper">
-              <!-- Sidebar  -->
-              <nav id="sidebar" class="active">
-                <div class="col-12 dash-logo mt-3">
-                    <img class="ml-3" src="../images/gateguard-white.png" alt="">
-                </div>
-                <ul class="list-unstyled components">
-                    <p onclick="location.href='dashboard.html'">Dashboard</p>
-                    <li class="">
-                        <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Admins</a>
-                        <ul class="collapse list-unstyled" id="adminSubmenu">
-                            <li>
-                                <a href="admins.html">View all admins</a>
-                            </li>
-                            <li class="">
-                                <a href="add-admin.html">Add an admin</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="residents.html">Residents</a>
-                    </li>
-                    <li>
-                        <a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Visitors</a>
-                        <ul class="collapse list-unstyled" id="visitorsSubmenu">
-                            <li>
-                                <a href="visitors.html">All Visitors</a>
-                            </li>
-                            <li>
-                                <a href="banned-visitors.html">Banned Visitors</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#estatesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Estates</a>
-                        <ul class="collapse list-unstyled" id="estatesSubmenu">
-                            <li class="">
-                                <a href="estates.html">All Estates</a>
-                            </li>
-                            <li>
-                                <a href="add-estate.html">Add an Estate</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#providersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Providers</a>
-                        <ul class="collapse list-unstyled" id="providersSubmenu">
-                            <li>
-                                <a href="providers.html">All Providers</a>
-                            </li>
-                            <li>
-                                <a href="providers-request.html">Provider Requests</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-    <!-- 
+        <!-- Sidebar  -->
+        <nav id="sidebar" class="active">
+            <div class="col-12 dash-logo mt-3">
+                <img class="ml-3" src="../images/gateguard-white.png" alt="">
+                <button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1"
+                    style="z-index: 9999999999; margin-left: 120px; position: absolute;">
+                    <i class="fas fa fa-align-left"></i>
+                </button>
+            </div>
+            <ul class="list-unstyled components">
+                <p onclick="location.href='dashboard.html'">Dashboard</p>
+                <li class="">
+                    <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Admins</a>
+                    <ul class="collapse list-unstyled" id="adminSubmenu">
+                        <li>
+                            <a href="admins.html">View all admins</a>
+                        </li>
+                        <li class="">
+                            <a href="add-admin.html">Add an admin</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="residents.html">Residents</a>
+                </li>
+                <li>
+                    <a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Visitors</a>
+                    <ul class="collapse list-unstyled" id="visitorsSubmenu">
+                        <li>
+                            <a href="visitors.html">All Visitors</a>
+                        </li>
+                        <li>
+                            <a href="banned-visitors.html">Banned Visitors</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#estatesSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Estates</a>
+                    <ul class="collapse list-unstyled" id="estatesSubmenu">
+                        <li class="">
+                            <a href="estates.html">All Estates</a>
+                        </li>
+                        <li>
+                            <a href="add-estate.html">Add an Estate</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#providersSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Providers</a>
+                    <ul class="collapse list-unstyled" id="providersSubmenu">
+                        <li>
+                            <a href="providers.html">All Providers</a>
+                        </li>
+                        <li>
+                            <a href="providers-request.html">Provider Requests</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#gatemenSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Gatemen</a>
+                    <ul class="collapse list-unstyled" id="gatemenSubmenu">
+                        <li>
+                            <a href="security-men.html">All Gatemen</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <!-- 
         "name": "Akindele Taiwo",
             "username": null,
             "phone": "2348062359610",
@@ -90,48 +109,60 @@
 							<p class="text-center" id="dataPhone"></p>
      -->
 
-    <!-- admin content begins here -->
-    <div class="wrap">
+        <!-- admin content begins here -->
+        <div class="wrap">
 
-        <div class="main active">
-            <a href="#"><i class="fa fa-bell"></i></a>
-            <br>
-            <h1>Edit Gateman</h1>
-            <form class="col-10 col-md-8" data-add-estate-admin-form>
-                <div class="form-group mb-2">
-                    <label for="">Full Name</label>
-                    <input type="text" name="name" id="gatemanInputName" class="form-control" placeholder="eg FirstName LastName">
-                    <p class="error-fields" id="adminEmailError"></p>
-                </div>
-                <div class="form-group mb-2">
-                        <label for="">Phone</label>
-                        <input type="number" name="phone" id="gatemanInputPhone" class="form-control" placeholder="eg 08000000000">
+            <div class="main active">
+                    <div class="col-12 notif text-right mb-4 dropdown">
+                            <button class="btn p-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa fa-bell"></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Notifications will appear here</a>
+                            </div>
+                            <button class="btn p-1" data-admin-logout>
+                                <img width="25vh" height="25vh" src="../images/logout.png">
+                            </button>
+                        </div>
+                <h1>Edit Gateman</h1>
+                <form class="col-10 col-md-8" data-add-estate-admin-form>
+                    <div class="form-group mb-2">
+                        <label for="">Full Name</label>
+                        <input type="text" name="name" id="gatemanInputName" class="form-control"
+                            placeholder="eg FirstName LastName">
                         <p class="error-fields" id="adminEmailError"></p>
                     </div>
                     <div class="form-group mb-2">
-                            <label for="">Emai</label>
-                            <input type="email" name="email" id="gatemanInputEmail" class="form-control" placeholder="eg name@mail.com">
-                            <p class="error-fields" id="adminEmailError"></p>
-                        </div>
-                    
-                <div class="form-group mb-2">
-                    <label for="duty_time">Duty Time </label>
-                    <select class="form-control" name="duty_time" id="duty_time">
+                        <label for="">Phone</label>
+                        <input type="number" name="phone" id="gatemanInputPhone" class="form-control"
+                            placeholder="eg 08000000000">
+                        <p class="error-fields" id="adminEmailError"></p>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="">Emai</label>
+                        <input type="email" name="email" id="gatemanInputEmail" class="form-control"
+                            placeholder="eg name@mail.com">
+                        <p class="error-fields" id="adminEmailError"></p>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label for="duty_time">Duty Time </label>
+                        <select class="form-control" name="duty_time" id="duty_time">
                             <option value="0"> Morning</option>
                             <option value="1"> Afternoon</option>
                             <option value="2"> Evening</option>
-                           
+
                         </select>
-                    <p class="error-fields" id="estateError"></p>
-                </div>
+                        <p class="error-fields" id="estateError"></p>
+                    </div>
 
-                <button data-add-admin-btn type="submit" class="btn btn-success estate-submit-btn col-6">
-                        Update 
+                    <button data-add-admin-btn type="submit" class="btn btn-success estate-submit-btn col-6">
+                        Update
                     </button>
-            </form>
+                </form>
 
+            </div>
         </div>
-    </div>
 </body>
 
 <!--Import third party cdn-->
@@ -143,22 +174,23 @@
 
 <script src="../js/general/onSession.js"></script>
 <script src="../js/general/gateman.js"></script>
+<script src="../js/general/global.js"></script>
 
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('#sidebarCollapse').on('click', function() {
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');
         });
     });
 
 
-    
-   document.getElementById('gatemanInputName').value = gatemanName;
-   document.getElementById('gatemanInputPhone').value = gatemanPhone;
-   document.getElementById('gatemanInputEmail').value = gatemanPhone;
 
-   
+    document.getElementById('gatemanInputName').value = gatemanName;
+    document.getElementById('gatemanInputPhone').value = gatemanPhone;
+    document.getElementById('gatemanInputEmail').value = gatemanPhone;
+
+
 </script>
 
 </html>

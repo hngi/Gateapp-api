@@ -37,90 +37,92 @@
         </div>
     </div> -->
     <div class="wrapper">
-         <!-- Sidebar  -->
-         <nav id="sidebar" class="active">
-          <div class="col-12 dash-logo mt-3">
-              <img class="ml-3" src="../images/gateguard-white.png" alt="">
-          </div>
-          <ul class="list-unstyled components">
-              <p onclick="location.href='dashboard.html'">Dashboard</p>
-              <li class="">
-                  <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Admins</a>
-                  <ul class="collapse list-unstyled" id="adminSubmenu">
-                      <li>
-                          <a href="admins.html">View all admins</a>
-                      </li>
-                      <li class="">
-                          <a href="add-admin.html">Add an admin</a>
-                      </li>
-                  </ul>
-              </li>
+      	<!-- Sidebar  -->
+		<nav id="sidebar" class="active">
+				<div class="col-12 dash-logo mt-3">
+					<img class="ml-3" src="../images/gateguard-white.png" alt="">
+					<button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1" style="z-index: 9999999999; margin-left: 120px; position: absolute;">
+						<i class="fas fa fa-align-left"></i>
+					</button>
+				</div>
+				<ul class="list-unstyled components">
+					<p onclick="location.href='dashboard.html'">Dashboard</p>
+					<li class="">
+						<a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Admins</a>
+						<ul class="collapse list-unstyled" id="adminSubmenu">
+							<li>
+								<a href="admins.html">View all admins</a>
+							</li>
+							<li class="">
+								<a href="add-admin.html">Add an admin</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="residents.html">Residents</a>
+					</li>
+					<li>
+						<a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Visitors</a>
+						<ul class="collapse list-unstyled" id="visitorsSubmenu">
+							<li>
+								<a href="visitors.html">All Visitors</a>
+							</li>
+							<li>
+								<a href="banned-visitors.html">Banned Visitors</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#estatesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Estates</a>
+						<ul class="collapse list-unstyled" id="estatesSubmenu">
+							<li class="">
+								<a href="estates.html">All Estates</a>
+							</li>
+							<li>
+								<a href="add-estate.html">Add an Estate</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#providersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Providers</a>
+						<ul class="collapse list-unstyled" id="providersSubmenu">
+							<li>
+								<a href="providers.html">All Providers</a>
+							</li>
+							<li>
+								<a href="providers-request.html">Provider Requests</a>
+							</li>
+						</ul>
+          </li>
+          <li>
+              <a href="#gatemenSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Gatemen</a>
+            <ul class="collapse list-unstyled" id="gatemenSubmenu">
               <li>
-                  <a href="residents.html">Residents</a>
+                <a href="security-men.html">All Gatemen</a>
               </li>
-              <li>
-                  <a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Visitors</a>
-                  <ul class="collapse list-unstyled" id="visitorsSubmenu">
-                      <li>
-                          <a href="visitors.html">All Visitors</a>
-                      </li>
-                      <li>
-                          <a href="banned-visitors.html">Banned Visitors</a>
-                      </li>
-                  </ul>
-              </li>
-              <li>
-                  <a href="#estatesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Estates</a>
-                  <ul class="collapse list-unstyled" id="estatesSubmenu">
-                      <li class="">
-                          <a href="estates.html">All Estates</a>
-                      </li>
-                      <li>
-                          <a href="add-estate.html">Add an Estate</a>
-                      </li>
-                  </ul>
-              </li>
-              <li>
-                  <a href="#providersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Providers</a>
-                  <ul class="collapse list-unstyled" id="providersSubmenu">
-                      <li>
-                          <a href="providers.html">All Providers</a>
-                      </li>
-                      <li>
-                          <a href="providers-request.html">Provider Requests</a>
-                      </li>
-                  </ul>
-              </li>
-          </ul>
-      </nav>
-
+            </ul>
+          </li>
+				</ul>
+			</nav>
       <!-- Page Content  -->
       <div id="content">
-        <button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1">
-          <i class="fas fa fa-align-left"></i>
-        </button>
-        <div class="col-12 notif text-right mb-4 dropdown">
-          <button
-            class="btn p-1"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            <i class="fas fa fa-bell"></i>
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Notifications will appear here</a>
+          <div class="col-12 notif text-right mb-4 dropdown">
+              <button class="btn p-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa fa-bell"></i>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#">Notifications will appear here</a>
+              </div>
+              <button class="btn p-1" data-admin-logout>
+                  <img width="25vh" height="25vh" src="../images/logout.png">
+              </button>
           </div>
-        </div>
         <div class="col-12 tab-full scroller">
           <div class="col-12 row mx-0 tab-header">
             <h4 class="col-12 col-md-6">Visitors</h4>
             <div class="form-group col-12 col-md-6 ml-auto">
-              <input
-                type="email"
-                class="form-control col-12 col-md-8 ml-auto"
-                placeholder="Search Estates"
-              />
+              <input type="tablesearch" class="form-control col-12 col-md-8 ml-auto" name="search" placeholder="Search Visitor" id="myInput"
+              onkeyup="filterList()">
             </div>
             <table  class="table table-borderless estates-table">
               <thead>
@@ -133,93 +135,16 @@
               </thead>
               <tbody id="table">
                  <div data-preloader="" class="text-center" style="position: absolute;left: 50%;margin-top: 30vh;display: block;">
-                                <div class="spinner-border" role="status" style="color: #49a347;">
-                                </div>
-                            </div>
+                      <div class="spinner-border" role="status" style="color: #49a347;">
+                      </div>
+                  </div>
                             <!-- <tr>
                                 <td>Sarah Anderson</td>
                                 <td>Otedola Estate</td>
                                 <td>10/10/2019</td>
                                 <td><a href="" data-toggle="modal" data-target="#singleVisitorModal">View History</a>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleVisitorModal">View History</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleVisitorModal">View History</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleVisitorModal">View History</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleVisitorModal">View History</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleVisitorModal">View History</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleVisitorModal">View History</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleVisitorModal">View History</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleVisitorModal">View History</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleVisitorModal">View History</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleVisitorModal">View History</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Anderson</td>
-                                <td>Otedola Estate</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleVisitorModal">View History</a>
-                                </td>
-                            </tr> -->
+                            </tr>-->
 
                         </tbody>
             </table>
@@ -228,13 +153,7 @@
       </div>
     </div>
     <!-- Modals -->
-    <div
-      class="modal fade"
-      id="singleVisitorModal"
-      tabindex="-1"
-      role="dialog"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="singleVisitorModal" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog col-12 px-1 mx-0" role="document">
         <div class="modal-content col-11 col-md-4 px-0 mx-auto">
           <div class="modal-body">
@@ -261,6 +180,8 @@
 <script src="../js/general/onSession.js"></script>
 <script src="../js/apis/visitors/allVisitors.js"></script>
 <script src="../js/apis/visitors/visitorHistory.js"></script>
+<script src="../js/general/search.js"></script>
+<script src="../js/general/global.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
