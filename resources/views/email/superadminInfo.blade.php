@@ -1,7 +1,7 @@
 <!DOCTYPE html>
     <html lang="en-US">
     	<head>
-            <title>Estate Admin Welcome</title>
+            <title>GateGuard Super Admin</title>
     		<meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
     		<style type="text/css">
@@ -48,12 +48,12 @@
     		<div>
     			
     		</div>
-    		<h2 class="welcome">Estate Admin Welcome</h2>
+    		<h2 class="welcome">GateGuard Super Admin</h2>
     		<div>
-    			 <h4 style="color: grey;">Hello {{$user->email}} </h4>
+    			 <h4 style="color: grey;">Hello {{$name}} </h4>
     		</div>
     		<div>
-				 <p class="note">You have been added as an admin to {{ $estate->estate_name }} @ {{ $estate->address }}, {{ $estate->city }},  {{ $estate->country }}</p>
+				 <p class="note">You have been added as a super admin to GateGuard App</p>
     			 <p class="note">Use this current email and password to login into your account!</p>
     			 <p class="verifycode">{{ $password }}</p>
     		</div><br><br>
@@ -62,5 +62,7 @@
                  <p class="team">if this mail is not authourize by you please discard! Thank you</p>
                  <p class="team" style="font-style: italic;">GateGuard Team</p>
             </div>
+
+			<a style="color: #49a347;" href="gateguard.co">Go to GateGuard</a>
     	</body>
     </html>
