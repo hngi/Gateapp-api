@@ -1,13 +1,3 @@
-	
-	filterList = () => {
-        let searchInput, filter, tr, i, td, txtValue;
-        
-        searchInput = document.getElementById('myInput');
-        filter = searchInput.value.toUpperCase();
-        trs = document.querySelectorAll('.js--gatemanRow');
-        trs.forEach(tr => tr.style.display = [...tr.children].find(td => td.innerHTML.toUpperCase().includes(filter)) ? '' : 'none');
-    };
-    
  const routes = new Routes();
  let allUsersUrl = `${routes.api_origin}${routes.allUsers}`;
  rowElement = document.getElementById('gatemanTable');
@@ -38,7 +28,7 @@
    });
  
   html = `
-              <tr class="js--gatemanRow">
+              <tr class="js--gatemanRow search-row" style="font-weight:bold;">
                  <td>%SN%</td>
                  <td>%NAME%</td>
                  <td>%ESTATE%</td>
@@ -107,8 +97,12 @@
    // console.log(gatemanID);
    
    let editUserUrl = `${routes.api_origin}api/v1/user/edit/${editGatemanBtn.dataset.id}`;
+<<<<<<< HEAD:js/general/gateman.js
    window.location = "file:///C:/wamp/www/hng/Gateapp-api/super-admin/edit-gateman.html"; 
    document.querySelector('[data-add-gateman-btn]').textContent = 'Update';
+=======
+   // window.location = "file:///C:/wamp/www/hng/Gateapp-api/super-admin/edit-gateman.html"; 
+>>>>>>> 2aa80ff44ce83dfc5db6c55568fb47eb16fda1f4:js/apis/securities/fetchAllSecurities.js
   
     
 

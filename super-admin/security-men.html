@@ -14,7 +14,7 @@
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="../styles/global.css">
 	<link rel="stylesheet" href="../styles/dashboard-sidebar.css">
-	<link rel="stylesheet" href="../styles/estates.css">
+	<link rel="stylesheet" href="../styles/residents.css">
 	<title data-title>Gatemen</title>
 	<!--Current user on session-->
 	<script src="../js/general/onSession.js"></script>
@@ -86,11 +86,11 @@
 					</ul>
 				</li>
 				<li>
-					<a href="#gatemenSubmenu" data-toggle="collapse" aria-expanded="false"
-						class="dropdown-toggle">Gatemen</a>
-					<ul class="collapse list-unstyled" id="gatemenSubmenu">
+					<a href="#securitiesSubmenu" data-toggle="collapse" aria-expanded="false"
+						class="dropdown-toggle">Securities</a>
+					<ul class="collapse list-unstyled" id="securitiesSubmenu">
 						<li>
-							<a href="security-men.html">All Gatemen</a>
+							<a href="security-men.html">All Securities</a>
 						</li>
 					</ul>
 				</li>
@@ -98,87 +98,92 @@
 		</nav>
 		<!-- Page Content  -->
 		<div id="content">
-			<div id="tablecontent">
-				<div class="container-fluid">
-						<div class="col-12 notif text-right mb-4 dropdown">
-								<button class="btn p-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<i class="fas fa fa-bell"></i>
-								</button>
-								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									<a class="dropdown-item" href="#">Notifications will appear here</a>
-								</div>
-								<button class="btn p-1" data-admin-logout>
-									<img width="25vh" height="25vh" src="../images/logout.png">
-								</button>
-							</div>
+				<div class="col-12 notif text-right mb-4 dropdown">
+					<button class="btn p-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fas fa fa-bell"></i>
+					</button>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<a class="dropdown-item" href="#">Notifications will appear here</a>
+					</div>
+					<button class="btn p-1" data-admin-logout>
+						<img width="25vh" height="25vh" src="../images/logout.png">
+					</button>
+				</div>
 
-					<table class="search" style="width: 100%;">
-						<tr>
-							<td>
-								<h1>Gatemen</h1>
-							</td>
-							<td><input type="tablesearch" name="search" placeholder=" search gateman users" id="myInput"
-									onkeyup="filterList()"></td>
-						</tr>
-					</table>
+
+			<div class="col-12 tab-full scroller" style="height: 100vh;">
+				<div class="col-12 row mx-0 tab-header">
+					<h4 class="col-12 col-md-6" style="font-weight: bold;">Security</h4>
+					<div class="form-group col-12 col-md-6 ml-auto">
+					<input type="tablesearch" class="form-control col-12 col-md-8 ml-auto" name="search" placeholder="Search Security" id="myInput"
+					onkeyup="filterList()">
+					</div>
 					<table class="admins" id="gatemanTable">
 						<thead>
-							<tr style="border-top: 1px solid black; border-bottom: 1px solid black;">
+							<tr style="border-top: 1px solid black; border-bottom: 1px solid black; font-weight: bold;;">
 								<td>S/N</td>
-								<td>Name <i class="fa fa-filter"></i></td>
-								<td>Estate <i class="fa fa-filter"></i></td>
-								<td>Email Address <i class="fa fa-filter"></i></td>
-								<td>Phone <i class="fa fa-filter"></i></td>
+								<td>Name</td>
+								<td>Estate</td>
+								<td>Email Address</td>
+								<td>Phone</td>
 								<td></td>
 							</tr>
 						</thead>
+						<tbody>
+						<div data-preloader="" class="text-center" style="position: absolute;left: 50%;margin-top: 30vh;display: block;">
+							<div class="spinner-border" role="status" style="color: #49a347;">
+							</div>
+						</div>
 
-
-
+						</tbody>
 					</table>
 				</div>
 			</div>
 		</div>
-	</div>
-	</div>
-	</div>
-	<!-- Modal inserted here -->
-	<div class="modal fade " id="singleEstateModal" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog col-12 px-1 mx-0" role="document">
-			<div class="modal-content col-11 col-md-9 px-0 ml-auto mr-auto">
-				<div class="modal-body small_modal">
-					<h1>Chukwudi Ubong</h1>
-					<h3>Otedola Estate</h3>
-					<p>admin@gatepass.com</p>
+		
+		<div class="modal fade" id="gatemanModal" tabindex="-1" role="dialog" aria-labelledby="my-modal"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Gateman Information</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<img class="mx-auto d-block" src="" id="profileImage"></img>
+					<h1 class="text-center" id="dataName"></h1>
+					<h3 class="text-center" id="dataEstate"></h3>
+					<h4 class="text-center" id="dataEmail"></h4>
+					<p class="text-center" id="dataPhone"></p>
+					<p class="text-center" id="dataCreatedAt"></p>
 					<br>
 
-					<button class="btn btn-danger"
-						style="background-color: #EB5757; width: 300px; margin-bottom: 30px;">Revoke Access</button>
+					<button class="btn btn-warning text-light" id="editGateman" data-id="#"
+						style="background-color: #49a347; width: 300px; margin: 0 auto 5px auto; display: block; text-align: center;">Edit
+						Gateman</button>
 					<br>
-					<button class="btn btn-warning" style="background-color: #56CCF2; width: 300px;">Reset
-						Password</button>
-
+					<button class="btn btn-danger" id="deleteGateman" data-id="#"
+						style="background-color: #EB5757; width: 300px; margin: 0 auto 5px auto; display: block;">Delete
+						Gateman</button>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
+
+	</div>
 </body>
-
 <!--Import third party cdn-->
 <script src="../js/general/third_party_cdn.js"></script>
-
-
-<!--Import third party cdn-->
-<script src="../js/general/third_party_cdn.js"></script>
-
-<!--Import the base url for the project-->
+<script src="../js/general/placeholder.js"></script>
 <script src="../js/general/routes.js"></script>
-
-
-
-<!-- Import the Gateman Request script  -->
-<script src="../js/general/gateman.js"></script>
+<script src="../js/apis/securities/fetchAllSecurities.js"></script>
+<script src="../js/general/search.js"></script>
 <script src="../js/general/global.js"></script>
 
 
@@ -188,18 +193,22 @@
 			$('#sidebar').toggleClass('active');
 		});
 	});
+
+	$('#gatemanModal').on('show.bs.modal', function (event) {
+		let id = $(event.relatedTarget).data('id');
+		let name = $(event.relatedTarget).data('name');
+		let estate = $(event.relatedTarget).data('estate');
+		let email = $(event.relatedTarget).data('email');
+		let phone = $(event.relatedTarget).data('phone');
+		let date = $(event.relatedTarget).data('date');
+		$(this).find("#editGateman").attr('data-id', id);
+		$(this).find("#deleteGateman").attr('data-id', id);
+		$(this).find("#dataName").text(name);
+		$(this).find("#dataEstate").text(estate);
+		$(this).find("#dataEmail").text(email);
+		$(this).find("#dataPhone").text(phone);
+		$(this).find("#dataCreatedAt").text('Registration Date: ' + date);
+	});
 </script>
-
-<script type="text/javascript">
-	// Get the modal
-	var modal = document.getElementById("myModal");
-
-	// When the user clicks anywhere outside of the modal, close it
-	window.onclick = function (event) {
-		if (event.target == modal) {
-			modal.style.display = "none";
-		}
-	}
-</script>
-
 </html>
+

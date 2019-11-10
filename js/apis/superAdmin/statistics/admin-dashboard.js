@@ -63,7 +63,7 @@ const fetchAllStat = (requestkey = 'wkly') => {
                     }) 
                 break;
             case 429:
-                    location.replace('login.html');
+                    location.replace('../login.html');
                 break;
             default:
         }

@@ -8,8 +8,10 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/dashboard-sidebar.css">
     <link rel="stylesheet" type="text/css" href="../styles/seunogunyemi.css">
@@ -37,11 +39,16 @@
         <nav id="sidebar" class="active">
             <div class="col-12 dash-logo mt-3">
                 <img class="ml-3" src="../images/gateguard-white.png" alt="">
+                <button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1"
+                    style="z-index: 9999999999; margin-left: 120px; position: absolute;">
+                    <i class="fas fa fa-align-left"></i>
+                </button>
             </div>
             <ul class="list-unstyled components">
                 <p onclick="location.href='dashboard.html'">Dashboard</p>
                 <li class="">
-                    <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Admins</a>
+                    <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Admins</a>
                     <ul class="collapse list-unstyled" id="adminSubmenu">
                         <li>
                             <a href="admins.html">View all admins</a>
@@ -78,7 +85,8 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#estatesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Estates</a>
+                    <a href="#estatesSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Estates</a>
                     <ul class="collapse list-unstyled" id="estatesSubmenu">
                         <li class="">
                             <a href="estates.html">All Estates</a>
@@ -89,7 +97,8 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#providersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Providers</a>
+                    <a href="#providersSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Providers</a>
                     <ul class="collapse list-unstyled" id="providersSubmenu">
                         <li>
                             <a href="providers.html">All Providers</a>
@@ -99,46 +108,59 @@
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <a href="#gatemenSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Gatemen</a>
+                    <ul class="collapse list-unstyled" id="gatemenSubmenu">
+                        <li>
+                            <a href="security-men.html">All Gatemen</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </nav>
-
         <!-- Page Content  -->
         <div id="content">
-            <button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1">
-                <i class="fas fa fa-align-left"></i>
-            </button>
+            <div class="wrap mt-3">
+                <div class="col-12 notif text-right mb-4 dropdown">
+                        <button class="btn p-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa fa-bell"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Notifications will appear here</a>
+                        </div>
+                        <button class="btn p-1" data-admin-logout>
+                            <img width="25vh" height="25vh" src="../images/logout.png">
+                        </button>
+                    </div>
+                <h4 style="font-weight: bold;">Add an Admin</h4>
+                <form class="col-10 col-md-8" data-add-estate-admin-form>
+                    <div class="form-group mb-2">
+                        <label for="">Email</label>
+                        <input type="email" name="email" id="email" class="form-control"
+                            placeholder="Estate Admin Email eg name@mail.com">
+                        <p class="error-fields" id="adminEmailError"></p>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="">Select an Estate </label>
+                        <select class="form-control" name="estate_id" id="selectEstate">
+                            <option value="0"> Select an Estate</option>
+
+                        </select>
+                        <p class="error-fields" id="estateError"></p>
+                    </div>
+
+                    <button data-add-admin-btn type="submit" class="btn btn-success estate-submit-btn col-6">
+                        Add Admin
+                    </button>
+                </form>
+
+            </div>
         </div>
     </div>
 
     <!-- admin content begins here -->
-    <div class="wrap">
 
-        <div class="main active">
-            <a href="#"><i class="fa fa-bell"></i></a>
-            <br>
-            <h1>Add an Admin</h1>
-            <form class="col-10 col-md-8" data-add-estate-admin-form>
-                <div class="form-group mb-2">
-                    <label for="">Email</label>
-                    <input type="email" name="email" id="email" class="form-control" placeholder="Estate Admin Email eg name@mail.com">
-                    <p class="error-fields" id="adminEmailError"></p>
-                </div>
-                <div class="form-group mb-2">
-                    <label for="">Select an Estate </label>
-                    <select class="form-control" name="estate_id" id="selectEstate">
-                            <option value="0"> Select an Estate</option>
-                           
-                        </select>
-                    <p class="error-fields" id="estateError"></p>
-                </div>
-
-                <button data-add-admin-btn type="submit" class="btn btn-success estate-submit-btn col-6">
-                        Add Admin
-                    </button>
-            </form>
-
-        </div>
-    </div>
 </body>
 
 <!--Import third party cdn-->
@@ -153,10 +175,11 @@
 <script src="../js/validation/superAdmin/estate-admin/addEstateAdmin.js"></script>
 
 <script src="../js/apis/superAdmin/estate-admin/addEstateAdmin.js"></script>
+<script src="../js/general/global.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('#sidebarCollapse').on('click', function() {
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');
         });
     });

@@ -91,7 +91,17 @@ body {
   color: tomato !important;
   font-size: 13px;
 }
-
+@media(max-width: 768px) {
+  #sidebar{
+    position:absolute; 
+    height: 100vh; 
+    z-index: 9999;
+    }
+  .view-box {
+    widows: 100% !important;
+  }
+    
+}
 
 /* 
  Spinner class
@@ -111,4 +121,3 @@ body {
 
 @keyframes spinner-border {
 to { transform: rotate(360deg); }
-}
