@@ -17,6 +17,7 @@
     <link rel="stylesheet" type="text/css" href="../styles/estates.css">
     <link rel="stylesheet" type="text/css" href="../styles/seunogunyemi.css">
     <title data-title>Admin List</title>
+    <script src="../js/general/onSession.js"></script>
 </head>
 
 <body>
@@ -37,7 +38,7 @@
     </div> -->
     <div class="wrapper">
         <!-- Sidebar  -->
-        <nav id="sidebar" class="active">
+        <nav id="sidebar" class="">
             <div class="col-12 dash-logo mt-3">
                 <img class="ml-3" src="../images/gateguard-white.png" alt="">
                 <button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1"
@@ -98,15 +99,15 @@
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a href="#gatemenSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Gatemen</a>
-                    <ul class="collapse list-unstyled" id="gatemenSubmenu">
-                        <li>
-                            <a href="security-men.html">All Gatemen</a>
-                        </li>
-                    </ul>
-                </li>
+               <li>
+					<a href="#securitiesSubmenu" data-toggle="collapse" aria-expanded="false"
+						class="dropdown-toggle">Securities</a>
+					<ul class="collapse list-unstyled" id="securitiesSubmenu">
+						<li>
+							<a href="security-men.html">All Securities</a>
+						</li>
+					</ul>
+				</li>
             </ul>
         </nav>
         <!-- Page Content  -->
@@ -194,9 +195,8 @@
 <script src="../js/apis/superAdmin/estate-admin/revokeAdminAccess.js"></script>
 
 <script src="../js/apis/superAdmin/estate-admin/resetAdminPassword.js"></script>
+
 <script src="../js/general/global.js"></script>
-
-
 
 
 <script type="text/javascript">
