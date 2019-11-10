@@ -30,7 +30,7 @@
 }
 /* Footer CSS */
 .app-footer{
-    min-height: 260px;
+    min-height: 40vh;
     background: #49a347;
 }
 .list-header{
