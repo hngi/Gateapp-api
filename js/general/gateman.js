@@ -84,15 +84,48 @@
      });
  }
 
+
  const editGatemanBtn = document.getElementById("editGateman");
  const deleteGatemanBtn = document.getElementById("deleteGateman");
 
+
  editGatemanBtn.addEventListener('click', (event)=> {
-   alert(`Are you sure you really want to edit this man with ID = ${editGatemanBtn.dataset.id}?`);
+   let gatemanID = editGatemanBtn.dataset.id;
+   let gatemanName = document.getElementById('dataName').textContent;
+   let gatemanPhone = document.getElementById('dataPhone').textContent;
+   let gatemanEmail = document.getElementById('dataEmail').textContent;
+
+   console.log(gatemanName);
+   console.log(gatemanPhone);
+   console.log(gatemanID);
+   
+   let editUserUrl = `${routes.api_origin}api/v1/user/edit/${editGatemanBtn.dataset.id}`;
+   window.location = "file:///C:/wamp/www/hng/Gateapp-api/super-admin/edit-gateman.html"; 
+  
+    
 
  });
 
  deleteGatemanBtn.addEventListener('click', (event)=> {
-   alert(`Are you sure you really want to delete this man  with ID =  ${editGatemanBtn.dataset.id}?`);
+   let deleteUserUrl = `${routes.api_origin}api/v1/user/delete/${editGatemanBtn.dataset.id}`;
+   fetch(deleteUserUrl, {
+      method: 'DELETE', 
+      mode: 'cors', 
+      redirect: 'follow',
+      headers: new Headers({
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Authorization": token
+      })
+      }).then( response => response.json())
+      .then( data => {     
+         Swal.fire({
+            title: "Message",
+            html: `<p style="color:tomato; font-size:17px;"> ${data.message} </p>`,
+            confirmButtonText: "Close"
+          });
+          setTimeout(() => { location.reload();; }, 6000);
+        
+          });
  });
 

@@ -170,9 +170,6 @@ class Routes {
   get allUsers() {
     return `api/v1/user/all`;
   }
-  get editUser() {
-    return `api/v1/user/edit`;
-  }
   showUser(id) {
     return `api/v1/user/${id}`;
   }
