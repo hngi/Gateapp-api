@@ -1,6 +1,6 @@
 const removeButton   = document.querySelector('#remove');
 
-const remove = (event, removeButton) => {
+const removeEvent = (event, removeButton) => {
 
     event.preventDefault();
     removeButton.innerHTML = '<span class="spinner-border text-light spinner-border-sm" style="width: 1.3em; height: 1.3em;" role="status" aria-hidden="true"></span> Processing...';
@@ -9,7 +9,7 @@ const remove = (event, removeButton) => {
     console.log(Id)
     console.log(url)
     fetch(url, {
-        method: "POST",
+        method: "DELETE",
         headers: {
             "Accept": "application/json",
             "Content-Type": "application/json",
@@ -62,4 +62,4 @@ const remove = (event, removeButton) => {
      }
 }
 
-removeButton.addEventListener('click', (event) => remove(event, removeButton));
+removeButton.addEventListener('click', (event) => removeEvent(event, removeButton));
