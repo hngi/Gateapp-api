@@ -22,7 +22,7 @@
   background: #49a347;
   color: white;
   font-size: 12px;
-  border-radius: 0px;
+  /* border-radius: 0px; */
 }
 .features h3 {
   font-weight: bold;
@@ -77,7 +77,7 @@
 .learn-more-btn {
   background: #49a347;
   color: white;
-  border-radius: 0px;
+  /* border-radius: 0px; */
 }
 .breakdown-image {
   height: 45vh;
@@ -134,7 +134,7 @@
 }
 .subscribe-form input {
   color: black;
-  border-radius: 0px;
+  /* border-radius: 0px; */
   border: 1px solid black;
 }
 .subscribe-form input::placeholder {
@@ -148,7 +148,7 @@
   background: #49a347;
   color: white;
   border: none;
-  border-radius: 0px;
+  /* border-radius: 0px; */
 }
 /* .subscribe-form button:hover {
   background: white;
