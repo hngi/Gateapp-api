@@ -28,7 +28,7 @@ body{
     padding: 0px 10px;
 }
 .kc-first-cont h1 {
-    font-size: 4em;
+    font-size: 30px;
     line-height: 1em;
     text-align: center;
 }
@@ -44,6 +44,8 @@ body{
     padding: .7em 1.2em;
     margin: 20px 0px;
     text-transform: uppercase;
+    border-radius: 0.25em;
+    font-size: 12px;
 }
 
 /* OUR PARTNERS CONTAINER */
@@ -223,13 +225,13 @@ body{
         margin: 5px 0px;
         font-size: 15px;
     }
-    
+
 }
 @media screen and (max-width: 450px) {
     .showcase{
     width: auto;
     }
-} 
+}
 
 /* ---------------- */
 .margin{
