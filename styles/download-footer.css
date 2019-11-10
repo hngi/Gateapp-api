@@ -9,6 +9,7 @@
 .download-image-con img{
     height: 100%;
     width: 100%;
+    object-fit: contain;
 }
 .details-con{
     margin-top: 15vh;
