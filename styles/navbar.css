@@ -14,7 +14,7 @@
     color: black !important;
 }
 .nav-item .dropdown-menu {
-    border-radius: 0px;
+    /* border-radius: 0px; */
 }
 .nav-item .dropdown-menu .dropdown-item{
     font-size: 12px;
@@ -45,6 +45,5 @@
     .app-logo {
         margin-left: 0vw;
     }
-    
-}
 
+}
