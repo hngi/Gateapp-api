@@ -1,6 +1,12 @@
 body {
     font-family: 'Open Sans', sans-serif;
 }
+.green {
+  color: #49a347 !important;
+  cursor: pointer !important;
+  font-weight: bold !important;
+}
+
 .scroller{
   overflow-y: scroll;
 }

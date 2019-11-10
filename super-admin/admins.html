@@ -35,225 +35,104 @@
     </div> -->
     <div class="wrapper">
         <!-- Sidebar  -->
-        <nav id="sidebar" class="active">
-            <div class="col-12 dash-logo mt-3">
-                <img class="ml-3" src="../images/gateguard-white.png" alt="">
-            </div>
-            <ul class="list-unstyled components">
-                <p onclick="location.href='default-tab.html'">Dashboard</p>
-                <li class="">
-                    <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Admins</a>
-                    <ul class="collapse list-unstyled" id="adminSubmenu">
-                        <li class="">
-                            <a href="admins.html">View all admins</a>
-                        </li>
-                        <li>
-                            <a href="add_admin.html">Add an admin</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="residents.html">Residents</a>
-                </li>
-                <li>
-                    <a href="gateman-tab.html">Gatemen</a>
-                </li>
-                <li>
-                    <a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Visitors</a>
-                    <ul class="collapse list-unstyled" id="visitorsSubmenu">
-                        <li>
-                            <a href="visitors-tab.html">All Visitors</a>
-                        </li>
-                        <li>
-                            <a href="banned-visitors-tab.html">Banned Visitors</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#estatesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Estates</a>
-                    <ul class="collapse list-unstyled" id="estatesSubmenu">
-                        <li class="">
-                            <a href="estates-tab.html">All Estates</a>
-                        </li>
-                        <li>
-                            <a href="add-estate.html">Add an Estate</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#providersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Providers</a>
-                    <ul class="collapse list-unstyled" id="providersSubmenu">
-                        <li>
-                            <a href="providers-tab.html">All Providers</a>
-                        </li>
-                        <li>
-                            <a href="provider-request.html">Provider Requests</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
+             <!-- Sidebar  -->
+             <nav id="sidebar" class="active">
+                <div class="col-12 dash-logo mt-3">
+                    <img class="ml-3" src="../images/gateguard-white.png" alt="">
+                </div>
+                <ul class="list-unstyled components">
+                    <p onclick="location.href='dashboard.html'">Dashboard</p>
+                    <li class="">
+                        <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Admins</a>
+                        <ul class="collapse list-unstyled" id="adminSubmenu">
+                            <li>
+                                <a href="admins.html">View all admins</a>
+                            </li>
+                            <li class="">
+                                <a href="add-admin.html">Add an admin</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="residents.html">Residents</a>
+                    </li>
+                    <li>
+                        <a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Visitors</a>
+                        <ul class="collapse list-unstyled" id="visitorsSubmenu">
+                            <li>
+                                <a href="visitors.html">All Visitors</a>
+                            </li>
+                            <li>
+                                <a href="banned-visitors.html">Banned Visitors</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#estatesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Estates</a>
+                        <ul class="collapse list-unstyled" id="estatesSubmenu">
+                            <li class="">
+                                <a href="estates.html">All Estates</a>
+                            </li>
+                            <li>
+                                <a href="add-estate.html">Add an Estate</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#providersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Providers</a>
+                        <ul class="collapse list-unstyled" id="providersSubmenu">
+                            <li>
+                                <a href="providers.html">All Providers</a>
+                            </li>
+                            <li>
+                                <a href="providers-request.html">Provider Requests</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
 
         <!-- Page Content  -->
-        <div id="content">
-            <button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1">
-				<i class="fas fa fa-align-left"></i>
-			</button>
+         <div id="content">
+                <button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1">
+                    <i class="fas fa fa-align-left"></i>
+                </button>
+                <div class="col-12 notif text-right mb-4 dropdown">
+                    <button class="btn p-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa fa-bell"></i>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Notifications will appear here</a>
+                    </div>
+                </div>
+                <div class="col-12 tab-full scroller">
+                    <div class="col-12 row mx-0 tab-header">
+                        <h4 class="col-12 col-md-6">Admins</h4>
+                        <div class="form-group col-12 col-md-6 ml-auto">
+                            <input type="email" class="form-control col-12 col-md-8 ml-auto" placeholder="Search Estates">
+                        </div>
+                        <table class="table table-borderless estates-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Estate</th>
+                                    <th scope="col">Email Address</th>
+                                    <th scope="col">Added</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody data-admin-view>
+                                <div data-preloader class="text-center" style="position: absolute; left: 50%; margin-top:30vh;">
+                                    <div class="spinner-border" role="status" style="color: #49a347;">
+                                    </div>
+                                </div>
+    
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <!-- @team-gateapp, side nav ends here -->
-    <!-- main page content begins here -->
-
-    <div id="tablecontent">
-        <div class="container-fluid">
-            <a href="#" style="color: black;"><i class="fa fa-bell"></i></a>
-            <br>
-            <table class="search" style="width: 100%;">
-                <tr>
-                    <td>
-                        <h4>Estate Adminstrators</h4>
-                    </td>
-                    <td><input type="tablesearch" name="search" placeholder=" search admin users" id="myInput" onkeyup="myFunction()" hidden></td>
-                </tr>
-            </table>
-            <table class="admins" id="myTable" class="table table-borderless estates-table">
-                <thead>
-                    <tr style="border-top: 1px solid black; border-bottom: 1px solid black;">
-                        <td scope="col">Name <i class="fa fa-filter"></i></td>
-                        <td scope="col">Estate <i class="fa fa-filter"></i></td>
-                        <td scope="col">Email Address <i class="fa fa-filter"></i></td>
-                        <td></td>
-                    </tr>
-
-                </thead>
-                <tbody data-admin-view>
-                    <tr>
-                        <td scope="col"></td>
-                        <td scope="col"> </td>
-                        <td scope="col"> <span class="spinner-border" role="status" style="color: #49a347; position: absolute;left: 40%;margin-top: 10vh;display: block;"> </span></td>
-                        <td></td>
-                    </tr>
-
-                </tbody>
-                <!-- <tr>
-                    <td>Sarah Anderson</td>
-                    <td>*super</td>
-                    <td>admin@gatepass.com</td>
-                    <td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Tomiwa Adeleke</td>
-                    <td>Lekki Gardens Phase 3</td>
-                    <td>otheremail@example.com</td>
-                    <td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Shodipe Bolanle</td>
-                    <td>M.K.O Abiola Gardens</td>
-                    <td>sam@rectify.org</td>
-                    <td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Chukuwdi Ubong</td>
-                    <td>Otedola Estate</td>
-                    <td>admin@gatepass.com</td>
-                    <td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Sarah Anderson</td>
-                    <td>*super</td>
-                    <td>admin@gatepass.com</td>
-                    <td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Tomiwa Adeleke</td>
-                    <td>Lekki Gardens Phase 3</td>
-                    <td>otheremail@example.com</td>
-                    <td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Shodipe Bolanle</td>
-                    <td>M.K.O Abiola Gardens</td>
-                    <td>sam@rectify.org</td>
-                    <td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Chukuwdi Ubong</td>
-                    <td>Otedola Estate</td>
-                    <td>admin@gatepass.com</td>
-                    <td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Sarah Anderson</td>
-                    <td>*super</td>
-                    <td>admin@gatepass.com</td>
-                    <td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Tomiwa Adeleke</td>
-                    <td>Lekki Gardens Phase 3</td>
-                    <td>otheremail@example.com</td>
-                    <td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Shodipe Bolanle</td>
-                    <td>M.K.O Abiola Gardens</td>
-                    <td>sam@rectify.org</td>
-                    <td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Chukuwdi Ubong</td>
-                    <td>Otedola Estate</td>
-                    <td>admin@gatepass.com</td>
-                    <td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Sarah Anderson</td>
-                    <td>*super</td>
-                    <td>admin@gatepass.com</td>
-                    <td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Tomiwa Adeleke</td>
-                    <td>Lekki Gardens Phase 3</td>
-                    <td>otheremail@example.com</td>
-                    <td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Shodipe Bolanle</td>
-                    <td>M.K.O Abiola Gardens</td>
-                    <td>sam@rectify.org</td>
-                    <td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Chukuwdi Ubong</td>
-                    <td>Otedola Estate</td>
-                    <td>admin@gatepass.com</td>
-                    <td><a href="#" data-toggle="modal" data-target="#singleEstateModal" class="green">View Details</a>
-                    </td>
-                </tr> -->
-
-            </table>
-        </div>
-    </div>
-
-    </div>
-    </div>
     <!-- Modal inserted here -->
     <div class="modal fade " id="singleEstateModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog col-12 px-1 mx-0" role="document">
