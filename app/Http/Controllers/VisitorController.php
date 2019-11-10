@@ -389,17 +389,15 @@ class VisitorController extends Controller
      */
     public function fetchVisitorHistory($id)
    {
-       $visitorName = DB::table('visitors')->where('id',$id)->pluck('name');
-       $visitorsHistory = DB::table('visitors_history')
-       ->join('visitors','visitors.id','=','visitors_history.visitor_id')
-       ->where('visitor_id', $id)
-       ->get();
-       if($visitorsHistory)
+
+       //getting the visitor name from the table
+       $visitorsHistory = \App\Visitor::where('id',$id)->with('visitor_history','estate')->get();
+
+        if($visitorsHistory)
        {
            $res['status']  = true;
-           $res['visitorName'] = $visitorName;
            $res['message'] = "visit history for one user";
-           $res['visitors'] = $visitorsHistory;
+           $res['history'] = $visitorsHistory;
            return response()->json($res, 200);
        }
        else
