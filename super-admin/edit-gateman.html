@@ -23,65 +23,71 @@
 <body>
 
     <div class="wrapper">
-        <!-- Sidebar  -->
-        <nav id="sidebar" class="active">
-            <div class="col-12 dash-logo mt-3">
-                <img class="ml-3" src="../images/gateguard-white.png" alt="">
-                <button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1"
-                    style="z-index: 9999999999; margin-left: 120px; position: absolute;">
-                    <i class="fas fa fa-align-left"></i>
-                </button>
-            </div>
-            <ul class="list-unstyled components">
-                <p onclick="location.href='dashboard.html'">Dashboard</p>
-                <li class="">
-                    <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Admins</a>
-                    <ul class="collapse list-unstyled" id="adminSubmenu">
-                        <li>
-                            <a href="admins.html">View all admins</a>
-                        </li>
+              <!-- Sidebar  -->
+              <nav id="sidebar" class="active">
+                    <div class="col-12 dash-logo mt-3">
+                        <img class="ml-3" src="../images/gateguard-white.png" alt="">
+                    </div>
+                    <ul class="list-unstyled components">
+                        <p onclick="location.href='default-tab.html'">Dashboard</p>
                         <li class="">
-                            <a href="add-admin.html">Add an admin</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="residents.html">Residents</a>
-                </li>
-                <li>
-                    <a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Visitors</a>
-                    <ul class="collapse list-unstyled" id="visitorsSubmenu">
-                        <li>
-                            <a href="visitors.html">All Visitors</a>
+                            <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Admins</a>
+                            <ul class="collapse list-unstyled" id="adminSubmenu">
+                                <li>
+                                    <a href="admins.html">View all admins</a>
+                                </li>
+                                <li class="">
+                                    <a href="add_admin.html">Add an admin</a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
-                            <a href="banned-visitors.html">Banned Visitors</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#estatesSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Estates</a>
-                    <ul class="collapse list-unstyled" id="estatesSubmenu">
-                        <li class="">
-                            <a href="estates.html">All Estates</a>
+                            <a href="residents.html">Residents</a>
                         </li>
                         <li>
-                            <a href="add-estate.html">Add an Estate</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#providersSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Providers</a>
-                    <ul class="collapse list-unstyled" id="providersSubmenu">
+                                <a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false"
+                                    class="dropdown-toggle">Gatemen</a>
+                                <ul class="collapse list-unstyled" id="visitorsSubmenu">
+                                    <li>
+                                        <a href="gatemans.html">All Gatemen</a>
+                                    </li>
+                                    <li>
+                                        <a href="add-gateman.html">Add Gateman</a>
+                                    </li>
+                                </ul>
+                            </li>
                         <li>
-                            <a href="providers.html">All Providers</a>
+                            <a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Visitors</a>
+                            <ul class="collapse list-unstyled" id="visitorsSubmenu">
+                                <li>
+                                    <a href="visitors-tab.html">All Visitors</a>
+                                </li>
+                                <li>
+                                    <a href="banned-visitors-tab.html">Banned Visitors</a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
-                            <a href="providers-request.html">Provider Requests</a>
+                            <a href="#estatesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Estates</a>
+                            <ul class="collapse list-unstyled" id="estatesSubmenu">
+                                <li class="">
+                                    <a href="estates-tab.html">All Estates</a>
+                                </li>
+                                <li>
+                                    <a href="add-estate.html">Add an Estate</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#providersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Providers</a>
+                            <ul class="collapse list-unstyled" id="providersSubmenu">
+                                <li>
+                                    <a href="providers-tab.html">All Providers</a>
+                                </li>
+                                <li>
+                                    <a href="provider-request.html">Provider Requests</a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </li>
@@ -91,27 +97,21 @@
 					<ul class="collapse list-unstyled" id="securitiesSubmenu">
 						<li>
 							<a href="security-men.html">All Securities</a>
-						</li>
+                        </li>
+                        <li>
+                                <a href="add-gateman.html">Add Security</a>
+                            </li>
 					</ul>
 				</li>
             </ul>
         </nav>
-        <!-- 
-        "name": "Akindele Taiwo",
-            "username": null,
-            "phone": "2348062359610",
-            "email": "dave@gmail.com",
-            "image": "d0pqgbnjvrvthie8uuux.jpg",
-            "user_type": "gateman",
-            "duty_time": "0",
+        <div id="content">
+                <button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1">
+                    <i class="fas fa fa-align-left"></i>
+                </button>
+            </div>
+        </div>  
 
-            <h1 class="text-center" id="dataName"></h1>
-							<h3 class="text-center" id="dataEstate"></h3>
-							<h4 class="text-center" id="dataEmail"></h4>
-							<p class="text-center" id="dataPhone"></p>
-     -->
-
-        <!-- admin content begins here -->
         <div class="wrap">
 
             <div class="main active">
@@ -175,7 +175,7 @@
 <script src="../js/general/routes.js"></script>
 
 <script src="../js/general/onSession.js"></script>
-<script src="../js/general/gateman.js"></script>
+<script src="../js/apis/securities/fetchAllSecurities.js"></script>
 <script src="../js/general/global.js"></script>
 
 <script type="text/javascript">
@@ -185,13 +185,7 @@
         });
     });
 
-
-
-    document.getElementById('gatemanInputName').value = gatemanName;
-    document.getElementById('gatemanInputPhone').value = gatemanPhone;
-    document.getElementById('gatemanInputEmail').value = gatemanPhone;
-
-
+    console.log(editUserUrl)
 </script>
 
 </html>
