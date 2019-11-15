@@ -13,25 +13,11 @@
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/dashboard-sidebar.css">
     <link rel="stylesheet" type="text/css" href="../styles/seunogunyemi.css">
-    <title data-title>Add Admin</title>
+    <title data-title>Add Gateman</title>
 </head>
 
 <body>
-    <!-- <div class="container-fluid">
-        <div class="row">
-            <div class="dashboard-full col-12 row mx-0 px-0">
-                <div class="col-2 border-right our-sidebar">
-                    <div class="col-12 dash-logo mt-3">
-                        <img src="../images/GatePASS.png" alt="">
-                    </div>
-                    div.col-12.sidebar
-                </div>
-                <div class="col-10">
-
-                </div>
-            </div>
-        </div>
-    </div> -->
+   
     <div class="wrapper">
         <!-- Sidebar  -->
         <nav id="sidebar" class="active">
@@ -54,6 +40,18 @@
                 <li>
                     <a href="residents.html">Residents</a>
                 </li>
+                <li>
+						<a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false"
+							class="dropdown-toggle">Gatemen</a>
+						<ul class="collapse list-unstyled" id="visitorsSubmenu">
+							<li>
+								<a href="gatemans.html">All Gatemen</a>
+							</li>
+							<li>
+								<a href="add-gateman.html">Add Gateman</a>
+							</li>
+						</ul>
+					</li>
                 <li>
                     <a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Visitors</a>
                     <ul class="collapse list-unstyled" id="visitorsSubmenu">
@@ -98,30 +96,52 @@
         </div>
     </div>
 
-    <!-- admin content begins here -->
+
     <div class="wrap">
 
         <div class="main active">
-            <a href="#"><i class="fa fa-bell"></i></a>
-            <br>
-            <h1>Add an Admin</h1>
-            <form class="col-10 col-md-8" data-add-estate-admin-form>
+                <div class="col-12 notif text-right mb-4 dropdown">
+                        <button class="btn p-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa fa-bell"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Notifications will appear here</a>
+                        </div>
+                        <button class="btn p-1" data-admin-logout>
+                            <img width="25vh" height="25vh" src="../images/logout.png">
+                        </button>
+                    </div>
+            <h1>Add Gateman</h1>
+            <form class="col-10 col-md-8" data-add-gateman-form>
                 <div class="form-group mb-2">
-                    <label for="">Email</label>
-                    <input type="email" name="email" id="email" class="form-control" placeholder="Estate Admin Email eg name@mail.com">
+                    <label for="">Full Name</label>
+                    <input type="text" name="name" id="gatemanInputName" class="form-control" placeholder="eg John Doe" required>
                     <p class="error-fields" id="adminEmailError"></p>
                 </div>
                 <div class="form-group mb-2">
-                    <label for="">Select an Estate </label>
-                    <select class="form-control" name="estate_id" id="selectEstate">
-                            <option value="0"> Select an Estate</option>
+                        <label for="">Phone</label>
+                        <input type="number" name="phone" id="gatemanInputPhone" class="form-control" placeholder="eg 08000000000" required>
+                        <p class="error-fields" id="adminEmailError"></p>
+                    </div>
+                    <div class="form-group mb-2">
+                            <label for="">Emai</label>
+                            <input type="email" name="email" id="gatemanInputEmail" class="form-control" placeholder="eg name@mail.com">
+                            <p class="error-fields" id="adminEmailError"></p>
+                        </div>
+                    
+                <div class="form-group mb-2">
+                    <label for="duty_time">Duty Time </label>
+                    <select class="form-control" name="duty_time" id="duty_time">
+                            <option value="0"> Morning</option>
+                            <option value="1"> Afternoon</option>
+                            <option value="2"> Evening</option>
                            
                         </select>
                     <p class="error-fields" id="estateError"></p>
                 </div>
 
-                <button data-add-admin-btn type="submit" class="btn btn-success estate-submit-btn col-6">
-                        Add Admin
+                <button data-add-gateman-btn type="submit" class="btn btn-success estate-submit-btn col-6">
+                        Add Gateman
                     </button>
             </form>
 
@@ -137,10 +157,8 @@
 <script src="../js/general/routes.js"></script>
 
 <script src="../js/general/onSession.js"></script>
+<script src="../js/general/addGateman.js"></script>
 
-<script src="../js/validation/superAdmin/estate-admin/addEstateAdmin.js"></script>
-
-<script src="../js/apis/superAdmin/estate-admin/addEstateAdmin.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {

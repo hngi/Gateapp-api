@@ -58,7 +58,7 @@ const viewResidents = () => {
             data-residence-date="${created_at}" 
             data-residence-estate="${
               resident.home === null ? "-" : resident.home.estate.estate_name
-            }"><a href="#">view stats</a></td>
+            }"><a href="#">View Details</a></td>
             </tr>`;
     });
 

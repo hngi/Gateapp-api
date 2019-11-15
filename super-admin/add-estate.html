@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="../styles/dashboard-sidebar.css">
     <link rel="stylesheet" href="../styles/add-estate.css">
     <title data-title>Add Estate</title>
+
+    <script src="../js/general/onSession.js"></script>
 </head>
 
 <body>
@@ -24,9 +26,13 @@
         <nav id="sidebar" class="active">
             <div class="col-12 dash-logo mt-3">
                 <img class="ml-3" src="../images/gateguard-white.png" alt="">
+                <button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1"
+                    style="z-index: 9999999999; margin-left: 120px; position: absolute;">
+                    <i class="fas fa fa-align-left"></i>
+                </button>
             </div>
             <ul class="list-unstyled components">
-                <p onclick="location.href='default-tab.html'">Dashboard</p>
+                <p onclick="location.href='dashboard.html'">Dashboard</p>
                 <li class="">
                     <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false"
                         class="dropdown-toggle">Admins</a>
@@ -34,8 +40,8 @@
                         <li>
                             <a href="admins.html">View all admins</a>
                         </li>
-                        <li>
-                            <a href="add_admin.html">Add an admin</a>
+                        <li class="">
+                            <a href="add-admin.html">Add an admin</a>
                         </li>
                     </ul>
                 </li>
@@ -47,10 +53,10 @@
                         class="dropdown-toggle">Visitors</a>
                     <ul class="collapse list-unstyled" id="visitorsSubmenu">
                         <li>
-                            <a href="visitors-tab.html">All Visitors</a>
+                            <a href="visitors.html">All Visitors</a>
                         </li>
                         <li>
-                            <a href="banned-visitors-tab.html">Banned Visitors</a>
+                            <a href="banned-visitors.html">Banned Visitors</a>
                         </li>
                     </ul>
                 </li>
@@ -59,7 +65,7 @@
                         class="dropdown-toggle">Estates</a>
                     <ul class="collapse list-unstyled" id="estatesSubmenu">
                         <li class="">
-                            <a href="estates-tab.html">All Estates</a>
+                            <a href="estates.html">All Estates</a>
                         </li>
                         <li>
                             <a href="add-estate.html">Add an Estate</a>
@@ -71,29 +77,38 @@
                         class="dropdown-toggle">Providers</a>
                     <ul class="collapse list-unstyled" id="providersSubmenu">
                         <li>
-                            <a href="providers-tab.html">All Providers</a>
+                            <a href="providers.html">All Providers</a>
                         </li>
                         <li>
-                            <a href="provider-request.html">Provider Requests</a>
+                            <a href="providers-request.html">Provider Requests</a>
                         </li>
                     </ul>
                 </li>
+                <li>
+					<a href="#securitiesSubmenu" data-toggle="collapse" aria-expanded="false"
+						class="dropdown-toggle">Securities</a>
+					<ul class="collapse list-unstyled" id="securitiesSubmenu">
+						<li>
+							<a href="security-men.html">All Securities</a>
+						</li>
+					</ul>
+				</li>
             </ul>
         </nav>
 
         <!-- Page Content  -->
         <div id="content">
-            <button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1">
-                <i class="fas fa fa-align-left"></i>
-            </button>
-            <div class="col-12 notif text-right mb-4 dropdown">
-                <button class="btn p-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa fa-bell"></i>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Notifications will appear here</a>
-                </div>
-            </div>
+                <div class="col-12 notif text-right mb-4 dropdown">
+                        <button class="btn p-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa fa-bell"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Notifications will appear here</a>
+                        </div>
+                        <button class="btn p-1" data-admin-logout>
+                            <img width="25vh" height="25vh" src="../images/logout.png">
+                        </button>
+                    </div>
             <div class="col-12 tab-full scroller">
                 <h4 class="pl-3">Add an Estate</h4>
                 <form class="col-10 col-md-8" data-add-estate-form>
@@ -121,8 +136,9 @@
                     </div>
                     <div class="input-group mb-3">
                         <div class="custom-file">
-                            <input  type="file" name="image" class="custom-file-input">
-                            <label class="custom-file-label" for="inputGroupFile01" data-img-label>Choose estate image</label>
+                            <input type="file" name="image" class="custom-file-input">
+                            <label class="custom-file-label" for="inputGroupFile01" data-img-label>Choose estate
+                                image</label>
                         </div>
                     </div>
                     <button data-add-esate-btn type="submit" class="btn btn-success estate-submit-btn col-6">
@@ -145,7 +161,7 @@
 <script src="../js/validation/superAdmin/estate/addEstate.js"></script>
 
 <script src="../js/apis/superAdmin/estate/addEstate.js"></script>
-
+<script src="../js/general/global.js"></script>
 <script type="text/javascript">
 
     $(document).ready(function () {

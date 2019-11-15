@@ -14,8 +14,10 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/dashboard-sidebar.css">
-    <link rel="stylesheet" href="../styles/default.css">
-    <title data-title>Statistics</title>
+    <link rel="stylesheet" type="text/css" href="../styles/seunogunyemi.css">
+    <title data-title>Add Admin</title>
+
+    <script src="../js/general/onSession.js"></script>
 </head>
 
 <body>
@@ -39,9 +41,13 @@
         <nav id="sidebar" class="active">
             <div class="col-12 dash-logo mt-3">
                 <img class="ml-3" src="../images/gateguard-white.png" alt="">
+                <button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1"
+                    style="z-index: 9999999999; margin-left: 120px; position: absolute;">
+                    <i class="fas fa fa-align-left"></i>
+                </button>
             </div>
             <ul class="list-unstyled components">
-                <p onclick="location.href='default-tab.html'">Dashboard</p>
+                <p onclick="location.href='dashboard.html'">Dashboard</p>
                 <li class="">
                     <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false"
                         class="dropdown-toggle">Admins</a>
@@ -49,8 +55,8 @@
                         <li>
                             <a href="admins.html">View all admins</a>
                         </li>
-                        <li>
-                            <a href="add_admin.html">Add an admin</a>
+                        <li class="">
+                            <a href="add-admin.html">Add an admin</a>
                         </li>
                     </ul>
                 </li>
@@ -58,17 +64,25 @@
                     <a href="residents.html">Residents</a>
                 </li>
                 <li>
-                    <a href="gateman-tab.html">Gatemen</a>
-                </li>
+						<a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false"
+							class="dropdown-toggle">Gatemen</a>
+						<ul class="collapse list-unstyled" id="visitorsSubmenu">
+							<li>
+								<a href="gatemans.html">All Gatemen</a>
+							</li>
+							<li>
+								<a href="add-gateman.html">Add Gateman</a>
+							</li>
+						</ul>
+					</li>
                 <li>
-                    <a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Visitors</a>
+                    <a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Visitors</a>
                     <ul class="collapse list-unstyled" id="visitorsSubmenu">
                         <li>
-                            <a href="visitors-tab.html">All Visitors</a>
+                            <a href="visitors.html">All Visitors</a>
                         </li>
                         <li>
-                            <a href="banned-visitors-tab.html">Banned Visitors</a>
+                            <a href="banned-visitors.html">Banned Visitors</a>
                         </li>
                     </ul>
                 </li>
@@ -77,7 +91,7 @@
                         class="dropdown-toggle">Estates</a>
                     <ul class="collapse list-unstyled" id="estatesSubmenu">
                         <li class="">
-                            <a href="estates-tab.html">All Estates</a>
+                            <a href="estates.html">All Estates</a>
                         </li>
                         <li>
                             <a href="add-estate.html">Add an Estate</a>
@@ -89,73 +103,86 @@
                         class="dropdown-toggle">Providers</a>
                     <ul class="collapse list-unstyled" id="providersSubmenu">
                         <li>
-                            <a href="providers-tab.html">All Providers</a>
+                            <a href="providers.html">All Providers</a>
                         </li>
                         <li>
-                            <a href="provider-request.html">Provider Requests</a>
+                            <a href="providers-request.html">Provider Requests</a>
                         </li>
                     </ul>
                 </li>
+                <li>
+					<a href="#securitiesSubmenu" data-toggle="collapse" aria-expanded="false"
+						class="dropdown-toggle">Securities</a>
+					<ul class="collapse list-unstyled" id="securitiesSubmenu">
+						<li>
+							<a href="security-men.html">All Securities</a>
+						</li>
+					</ul>
+				</li>
             </ul>
         </nav>
-
         <!-- Page Content  -->
         <div id="content">
-            <button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1">
-                <i class="fas fa fa-align-left"></i>
-            </button>
-            <div class="col-12 notif text-right mb-4 dropdown">
-                <button class="btn p-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa fa-bell"></i>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Notifications will appear here</a>
-                </div>
-            </div>
-            <div class="col-12 tab-full scroller">
-                <!-- <div class="toast border" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false" style="max-width: 70vw;">
-                    <div class="toast-header">
-                        <small class="ml-auto">11 mins ago</small>
-                    </div>
-                    <div class="toast-body">
-                            <button type="button" class="ml-auto mb-1 close" data-dismiss="toast" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                        <span>You can write your alert here! </span>
-                    </div>
-                </div> -->
-                <div class="container-fluid">
-                    <div class="row stat-tab-box">
-                      <span data-wkly-btn class="all-stat-tabs stat_active"></span>
-                      <span data-mnthly-btn class="all-stat-tabs"></span>
-                      <span data-all-btn class="all-stat-tabs"></span>
-                    </div>
-                <div class="col-12 weekly-stats row mx-0 mt-5" data-stat-view>
-                    <div class="text-center" style="position: absolute; left: 50%; margin-top:50px;">
-                        <div class="spinner-border" role="status" style="color: #49a347;">
+            <div class="wrap mt-3">
+                <div class="col-12 notif text-right mb-4 dropdown">
+                        <button class="btn p-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa fa-bell"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Notifications will appear here</a>
                         </div>
+                        <button class="btn p-1" data-admin-logout>
+                            <img width="25vh" height="25vh" src="../images/logout.png">
+                        </button>
                     </div>
-                </div>
+                <h4 style="font-weight: bold;">Add an Admin</h4>
+                <form class="col-10 col-md-8" data-add-estate-admin-form>
+                    <div class="form-group mb-2">
+                        <label for="">Email</label>
+                        <input type="email" name="email" id="email" class="form-control"
+                            placeholder="Estate Admin Email eg name@mail.com">
+                        <p class="error-fields" id="adminEmailError"></p>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="">Select an Estate </label>
+                        <select class="form-control" name="estate_id" id="selectEstate">
+                            <option value="0"> Select an Estate</option>
+
+                        </select>
+                        <p class="error-fields" id="estateError"></p>
+                    </div>
+
+                    <button data-add-admin-btn type="submit" class="btn btn-success estate-submit-btn col-6">
+                        Add Admin
+                    </button>
+                </form>
+
             </div>
         </div>
     </div>
+
+    <!-- admin content begins here -->
+
 </body>
+
 <!--Import third party cdn-->
 <script src="../js/general/third_party_cdn.js"></script>
+
 <script src="../js/general/placeholder.js"></script>
+
 <script src="../js/general/routes.js"></script>
+
 <script src="../js/general/onSession.js"></script>
-<script src="../js/apis/superAdmin/statistics/admin-dashboard.js"></script>
+
+<script src="../js/validation/superAdmin/estate-admin/addEstateAdmin.js"></script>
+
+<script src="../js/apis/superAdmin/estate-admin/addEstateAdmin.js"></script>
+<script src="../js/general/global.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');
         });
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        $('.toast').toast('show');
     });
 </script>
 

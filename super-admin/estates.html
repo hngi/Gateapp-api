@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/dashboard-sidebar.css">
     <link rel="stylesheet" href="../styles/estates.css">
@@ -41,9 +41,13 @@
         <nav id="sidebar" class="active">
             <div class="col-12 dash-logo mt-3">
                 <img class="ml-3" src="../images/gateguard-white.png" alt="">
+                <button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1"
+                    style="z-index: 9999999999; margin-left: 120px; position: absolute;">
+                    <i class="fas fa fa-align-left"></i>
+                </button>
             </div>
             <ul class="list-unstyled components">
-                <p onclick="location.href='default-tab.html'">Dashboard</p>
+                <p onclick="location.href='dashboard.html'">Dashboard</p>
                 <li class="">
                     <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false"
                         class="dropdown-toggle">Admins</a>
@@ -51,8 +55,8 @@
                         <li>
                             <a href="admins.html">View all admins</a>
                         </li>
-                        <li>
-                            <a href="add_admin.html">Add an admin</a>
+                        <li class="">
+                            <a href="add-admin.html">Add an admin</a>
                         </li>
                     </ul>
                 </li>
@@ -60,17 +64,25 @@
                     <a href="residents.html">Residents</a>
                 </li>
                 <li>
-                    <a href="gateman-tab.html">Gatemen</a>
-                </li>
+						<a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false"
+							class="dropdown-toggle">Gatemen</a>
+						<ul class="collapse list-unstyled" id="visitorsSubmenu">
+							<li>
+								<a href="gatemans.html">All Gatemen</a>
+							</li>
+							<li>
+								<a href="add-gateman.html">Add Gateman</a>
+							</li>
+						</ul>
+					</li>
                 <li>
-                    <a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Visitors</a>
+                    <a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Visitors</a>
                     <ul class="collapse list-unstyled" id="visitorsSubmenu">
                         <li>
-                            <a href="visitors-tab.html">All Visitors</a>
+                            <a href="visitors.html">All Visitors</a>
                         </li>
                         <li>
-                            <a href="banned-visitors-tab.html">Banned Visitors</a>
+                            <a href="banned-visitors.html">Banned Visitors</a>
                         </li>
                     </ul>
                 </li>
@@ -79,7 +91,7 @@
                         class="dropdown-toggle">Estates</a>
                     <ul class="collapse list-unstyled" id="estatesSubmenu">
                         <li class="">
-                            <a href="estates-tab.html">All Estates</a>
+                            <a href="estates.html">All Estates</a>
                         </li>
                         <li>
                             <a href="add-estate.html">Add an Estate</a>
@@ -91,29 +103,37 @@
                         class="dropdown-toggle">Providers</a>
                     <ul class="collapse list-unstyled" id="providersSubmenu">
                         <li>
-                            <a href="providers-tab.html">All Providers</a>
+                            <a href="providers.html">All Providers</a>
                         </li>
                         <li>
-                            <a href="provider-request.html">Provider Requests</a>
+                            <a href="providers-request.html">Provider Requests</a>
                         </li>
                     </ul>
                 </li>
+                <li>
+					<a href="#securitiesSubmenu" data-toggle="collapse" aria-expanded="false"
+						class="dropdown-toggle">Securities</a>
+					<ul class="collapse list-unstyled" id="securitiesSubmenu">
+						<li>
+							<a href="security-men.html">All Securities</a>
+						</li>
+					</ul>
+				</li>
             </ul>
         </nav>
-
         <!-- Page Content  -->
         <div id="content">
-            <button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1">
-                <i class="fas fa fa-align-left"></i>
-            </button>
-            <div class="col-12 notif text-right mb-4 dropdown">
-                <button class="btn p-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa fa-bell"></i>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Notifications will appear here</a>
-                </div>
-            </div>
+                <div class="col-12 notif text-right mb-4 dropdown">
+                        <button class="btn p-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa fa-bell"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Notifications will appear here</a>
+                        </div>
+                        <button class="btn p-1" data-admin-logout>
+                            <img width="25vh" height="25vh" src="../images/logout.png">
+                        </button>
+                    </div>
             <div class="col-12 tab-full scroller">
                 <div class="col-12 row mx-0 tab-header">
                     <h4 class="col-12 col-md-6">Estates</h4>
@@ -130,31 +150,12 @@
                             </tr>
                         </thead>
                         <tbody data-fetch-estates>
-                            <div data-preloader class="text-center" style="position: absolute; left: 50%; margin-top:30vh;">
+                            <div data-preloader class="text-center"
+                                style="position: absolute; left: 50%; margin-top:30vh;">
                                 <div class="spinner-border" role="status" style="color: #49a347;">
                                 </div>
                             </div>
-                            <!-- <tr>
-                                <td>Otedola Estate</td>
-                                <td>Park Avenue, Lekki o</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Otedola Estate</td>
-                                <td>Park Avenue, Lekki o</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Otedola Estate</td>
-                                <td>Park Avenue, Lekki o</td>
-                                <td>10/10/2019</td>
-                                <td><a href="" data-toggle="modal" data-target="#singleEstateModal">Visit Details</a>
-                                </td>
-                            </tr> -->
+
                         </tbody>
                     </table>
                 </div>
@@ -165,18 +166,19 @@
     <div class="modal fade" id="singleEstateModal" tabindex="-1" role="dialog" aria-hidden="true" data-Estate-Modal>
         <div class="modal-dialog col-12 px-1 mx-0" role="document">
             <div class="modal-content col-11 col-md-9 px-0 ml-auto">
-                <span id="estateId" style="position: absolute;">1</span>
+                <span id="estateId" style="position: absolute; visibility: hidden;"></span>
                 <div class="modal-body row mx-0">
                     <h4 id="estateName" class="col-10">Otedola Estate</h4>
-                    <h4 class="edit-estate-link ml-auto col-2" data-toggle="modal"
-                    data-target="#editEstateModal"><i class="fa fas fa-edit"></i></h4>
+                    <h4 class="edit-estate-link ml-auto col-2" data-toggle="modal" data-target="#editEstateModal"><i
+                            class="fa fas fa-edit"></i></h4>
                     <div id="estateImage" class="col-12 border estate-image px-0">
 
                     </div>
                     <div class="col-12 estate-details px-0 row mx-0 mt-3">
                         <div class="col-12 col-md mt-2">
                             <span class="address-header">Location</span>
-                            <p id="estateLocation" class="address-listed">Off Mobolaji Bank Anthony way, Ikeja, Lagos, Nigeria</p>
+                            <p id="estateLocation" class="address-listed">Off Mobolaji Bank Anthony way, Ikeja, Lagos,
+                                Nigeria</p>
                             <span class="added-header">Added on</span>
                             <p id="estateCreated" class="added-listed">10/10/2019</p>
                         </div>
@@ -184,19 +186,19 @@
                             <h6 class="col-12 px-0 mt-2">Stats</h6>
                             <div class="col-6 px-0">
                                 <p class="mb-0">Residents</p>
-                                <span id="estate_residents"><span class="spinner-grow"></span></span>
+                                <span class="green" id="estate_residents"><span class="spinner-grow"></span></span>
                             </div>
                             <div class="col-6 px-0">
                                 <p class="mb-0">Gatemen</p>
-                                <span id="estate_gatemen"><span class="spinner-grow"></span></span>
+                                <span class="green" id="estate_gatemen"><span class="spinner-grow"></span></span>
                             </div>
                             <div class="col-6 px-0">
                                 <p class="mb-0">Visits Scheduled (Total)</p>
-                                <span id="estate_total_visits"><span class="spinner-grow"></span> </span>
+                                <span class="green" id="estate_total_visits"><span class="spinner-grow"></span> </span>
                             </div>
                             <div class="col-6 px-0">
                                 <p class="mb-0">Visits Scheduled (Past week)</p>
-                                <span id="estate_pwk_total"><span class="spinner-grow"></span> </span>
+                                <span class="green" id="estate_pwk_total"><span class="spinner-grow"></span> </span>
                             </div>
                         </div>
                         <div class="col-12 col-md gatemen scroller mb-3 px-0 mt-2">
@@ -209,36 +211,6 @@
                                 <span class="col-6 mt-2 px-0">Tomiwa Adeleke</span>
                                 <button type="button" class="col-3 edit-gateman px-0 btn btn-link" data-toggle="modal"
                                     data-target="#editGatemanModal">Edit</button>
-                                <button type="button" class="col-3 delete-gateman px-0 btn btn-link">Delete</button>
-                            </div>
-                            <div class="indiv-gateman col-12 row mx-0 px-0">
-                                <span class="col-6 mt-2 px-0">Tomiwa Adeleke</span>
-                                <button type="button" class="col-3 edit-gateman px-0 btn btn-link" data-toggle="modal"
-                                    data-target="#addGatemanModal">Edit</button>
-                                <button type="button" class="col-3 delete-gateman px-0 btn btn-link">Delete</button>
-                            </div>
-                            <div class="indiv-gateman col-12 row mx-0 px-0">
-                                <span class="col-6 mt-2 px-0">Tomiwa Adeleke</span>
-                                <button type="button" class="col-3 edit-gateman px-0 btn btn-link" data-toggle="modal"
-                                    data-target="#addGatemanModal">Edit</button>
-                                <button type="button" class="col-3 delete-gateman px-0 btn btn-link">Delete</button>
-                            </div>
-                            <div class="indiv-gateman col-12 row mx-0 px-0">
-                                <span class="col-6 mt-2 px-0">Tomiwa Adeleke</span>
-                                <button type="button" class="col-3 edit-gateman px-0 btn btn-link" data-toggle="modal"
-                                    data-target="#addGatemanModal">Edit</button>
-                                <button type="button" class="col-3 delete-gateman px-0 btn btn-link">Delete</button>
-                            </div>
-                            <div class="indiv-gateman col-12 row mx-0 px-0">
-                                <span class="col-6 mt-2 px-0">Tomiwa Adeleke</span>
-                                <button type="button" class="col-3 edit-gateman px-0 btn btn-link" data-toggle="modal"
-                                    data-target="#addGatemanModal">Edit</button>
-                                <button type="button" class="col-3 delete-gateman px-0 btn btn-link">Delete</button>
-                            </div>
-                            <div class="indiv-gateman col-12 row mx-0 px-0">
-                                <span class="col-6 mt-2 px-0">Tomiwa Adeleke</span>
-                                <button type="button" class="col-3 edit-gateman px-0 btn btn-link" data-toggle="modal"
-                                    data-target="#addGatemanModal">Edit</button>
                                 <button type="button" class="col-3 delete-gateman px-0 btn btn-link">Delete</button>
                             </div>
                         </div>
@@ -255,13 +227,11 @@
                     <form class="mt-2">
                         <div class="form-group">
                             <label for="">Name</label>
-                            <input type="text" class="form-control" id=""
-                                placeholder="">
+                            <input type="text" class="form-control" id="" placeholder="">
                         </div>
                         <div class="form-group">
                             <label for="">Number</label>
-                            <input type="password" class="form-control" id=""
-                                placeholder="">
+                            <input type="password" class="form-control" id="" placeholder="">
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
@@ -277,13 +247,11 @@
                     <form class="mt-2">
                         <div class="form-group">
                             <label for="">Name</label>
-                            <input type="text" class="form-control" id=""
-                                placeholder="">
+                            <input type="text" class="form-control" id="" placeholder="">
                         </div>
                         <div class="form-group">
                             <label for="">Number</label>
-                            <input type="password" class="form-control" id=""
-                                placeholder="">
+                            <input type="password" class="form-control" id="" placeholder="">
                         </div>
                         <button type="submit" class="btn btn-success">Submit</button>
                     </form>
@@ -304,13 +272,15 @@
                         </div>
                         <div class="form-group mb-2">
                             <label for="">Estate Location <small>(Address,City,Country)</small></label>
-                            <input type="text" name="location" class="form-control" placeholder="Park Avenue, Ikeja, Lagos">
+                            <input type="text" name="location" class="form-control"
+                                placeholder="Park Avenue, Ikeja, Lagos">
                             <p class="error-fields" id="locationError">Please seperate location format with a comma</p>
                         </div>
                         <div class="input-group mb-3">
                             <div class="custom-file">
-                                <input  type="file" name="image" class="custom-file-input">
-                                <label class="custom-file-label" for="inputGroupFile01" data-img-label>Choose file</label>
+                                <input type="file" name="image" class="custom-file-input">
+                                <label class="custom-file-label" for="inputGroupFile01" data-img-label>Choose
+                                    file</label>
                             </div>
                         </div>
                         <button data-add-esate-btn type="submit" class="btn btn-success estate-submit-btn col-12">
@@ -332,7 +302,7 @@
 <script src="../js/apis/superAdmin/estate/fetchAllEstate.js"></script>
 <!--- Manipulation of estate display to the Modal-->
 <script src="../js/manipulation/displayEstateInfoToModal.js"></script>
-
+<script src="../js/general/global.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {

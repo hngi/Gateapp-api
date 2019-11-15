@@ -5,6 +5,7 @@ const table = document.querySelector('[data-serviceProvider-view]');
 const singlemodal = document.querySelector('#singleProviderModal');
 const approveButton = document.querySelector('#approveBtn');
 const rejectButton = document.querySelector('#rejectBtn');
+const spinner = document.querySelector('[data-preloader]');
 
 // Get Response From api 
 const fetchServiceProviderRequests = () => {
@@ -20,6 +21,7 @@ const fetchServiceProviderRequests = () => {
     })
         .then(resp => resp.json())
         .then(data => {
+            spinner.style.display = 'none';
             let {requests}  = data;
             let [services] = requests;
             table.innerHTML = "";
@@ -28,6 +30,17 @@ const fetchServiceProviderRequests = () => {
             console.log(requests.length);
            updateServiceProviderTable(services);
           
+        })
+        .catch(err=> {
+            if (err) {
+                spinner.style.display = 'none';
+                console.log(err);
+                Swal.fire({
+                    title: 'Unexpected Error',
+                    html: `<p style="color:tomato; font-size:17px;">It is not you, it us, please refresh again, Thank you!</p>`,
+                    confirmButtonText: 'Close'
+                })
+            }
         })
 
 }
@@ -50,7 +63,7 @@ const updateServiceProviderTable =  (services) => {
         spName.innerHTML = `${spRequest.name}`;
         spServiceType.innerHTML = `${category.title}`;
         spLocation.innerHTML =`${estate.estate_name}, ${estate.city}, ${estate.country} `;
-        moreDetails.innerHTML = '<a href="" data-toggle="modal" data-target="#singleProviderModal">View Details</a>'
+        moreDetails.innerHTML = '<a class="green" href="" data-toggle="modal" data-target="#singleProviderModal">View Details</a>'
 
         moreDetails.addEventListener('click',()=>{
             modalName.innerHTML = `${spRequest.name}`;

@@ -1,19 +1,9 @@
-	
-	filterList = () => {
-        let searchInput, filter, tr, i, td, txtValue;
-        
-        searchInput = document.getElementById('myInput');
-        filter = searchInput.value.toUpperCase();
-        trs = document.querySelectorAll('.js--gatemanRow');
-        trs.forEach(tr => tr.style.display = [...tr.children].find(td => td.innerHTML.toUpperCase().includes(filter)) ? '' : 'none');
-    };
-    
  const routes = new Routes();
  let allUsersUrl = `${routes.api_origin}${routes.allUsers}`;
  rowElement = document.getElementById('gatemanTable');
  let spinner = document.querySelector("[data-preloader]");
 
- spinner.style.display = "block";
+ 
  fetch(allUsersUrl, {
  method: 'GET', 
  mode: 'cors', 
@@ -24,12 +14,21 @@
      "Authorization": token
  })
  }).then( response => response.json())
- .then( data => {     
+ .then( data => {   
+    if(data){
+      spinner.style.display = "none";
+    }  
     displayGatemen(data.gatemans);
-     });
+     }).catch(error=> {
+      Swal.fire({
+         title: "Unexpected Error",
+         html: `<p style="color:tomato; font-size:17px;">This may be due to internet connection not available, please turn on internet connection or referesh to try again, Thank you!</p>`,
+         confirmButtonText: "Close"
+       });
+   });
  
   html = `
-              <tr class="js--gatemanRow">
+              <tr class="js--gatemanRow search-row" style="font-weight:bold;">
                  <td>%SN%</td>
                  <td>%NAME%</td>
                  <td>%ESTATE%</td>
@@ -53,9 +52,7 @@
 
  const displayGatemen = (results) => {
      let count = 0;
-     if(results){
-      spinner.style.display = "none";
-     }
+    
  
      results.forEach(el => {
     
@@ -84,15 +81,54 @@
      });
  }
 
+
  const editGatemanBtn = document.getElementById("editGateman");
  const deleteGatemanBtn = document.getElementById("deleteGateman");
 
+
  editGatemanBtn.addEventListener('click', (event)=> {
-   alert(`Are you sure you really want to edit this man with ID = ${editGatemanBtn.dataset.id}?`);
+   let gatemanID = editGatemanBtn.dataset.id;
+   let gatemanName = document.getElementById('dataName').textContent;
+   let gatemanPhone = document.getElementById('dataPhone').textContent;
+   let gatemanEmail = document.getElementById('dataEmail').textContent;
+   let editUserUrl = `${routes.api_origin}api/v1/user/edit/${gatemanID}`;
+
+   let gatemanData = {
+      'name' : gatemanName,
+      'phone' : gatemanPhone,
+      'email' : gatemanEmail,
+      'id'  : gatemanID,
+      'url' : editUserUrl
+  };
+
+   localStorage.setItem( 'currentGatemanInfo', gatemanData );
+
+   window.location = "/super-admin/edit-gateman.html"; 
+   // window.location = "file:///C:/wamp/www/hng/Gateapp-api/super-admin/edit-gateman.html"; 
+      
 
  });
 
  deleteGatemanBtn.addEventListener('click', (event)=> {
-   alert(`Are you sure you really want to delete this man  with ID =  ${editGatemanBtn.dataset.id}?`);
+   let deleteUserUrl = `${routes.api_origin}api/v1/user/delete/${editGatemanBtn.dataset.id}`;
+   fetch(deleteUserUrl, {
+      method: 'DELETE', 
+      mode: 'cors', 
+      redirect: 'follow',
+      headers: new Headers({
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Authorization": token
+      })
+      }).then( response => response.json())
+      .then( data => {     
+         Swal.fire({
+            title: "Message",
+            html: `<p style="color:tomato; font-size:17px;"> ${data.message} </p>`,
+            confirmButtonText: "Close"
+          });
+          setTimeout(() => { location.reload();; }, 3000);
+        
+          });
  });
 
