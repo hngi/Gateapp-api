@@ -29,7 +29,7 @@ class GatemanInvitationNotification extends Notification implements ShouldQueue
         $this->gateman = $gateman;
 
         $this->title = "Invite";
-        $this->body = "{$this->resident->name} has invited you as a gateman to his home";
+        $this->body = "{$this->resident->name}  has invited you as a gateman to his home";
     }
 
     /**
