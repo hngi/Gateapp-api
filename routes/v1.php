@@ -152,8 +152,6 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/support/{id}', 'SupportController@show')->middleware('superAdmin');
     //delete support message
     Route::delete('/support/{id}', 'SupportController@destroy')->middleware('superAdmin');
-    // Reply to support message
-    Route::post('/support/{support}/reply', 'SupportController@reply');
 
     // Show Total Number of Estates on the system
     Route::get('statistics/estate', 'Statistics\EstateStatsController@index')->middleware('superAdmin');
