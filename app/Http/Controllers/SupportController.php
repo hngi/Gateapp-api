@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Mail\SupportMail;
+use App\Mail\SupportReply as SupportReplyMail;
+use App\SupportReply;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use App\Support;
@@ -12,44 +16,100 @@ class SupportController extends Controller
 {
     public function index()
     {
-        $support = Support::all();
-        return response()->json($support);
+        $support = Support::with('replies')->get();
+        return response()->json(['data' => $support]);
     }
+
     public function send(Request $request)
     {
-
-        $validator = Validator::make($request->all(), [
-            'email'  =>  'required|email',
-            'subject'     =>  'required',
-            'message' =>  'required'
+        $data = $request->validate([
+            'email' =>  ['required', 'email'],
+            'subject'  =>  ['required', 'string', 'min:4'],
+            'message' => ['required', 'string', 'min:10'],
         ]);
 
-        if ($validator->fails()) {
+        DB::beginTransaction();
 
-            $response = array('response' => $validator->messages(), 'success' => false);
-            return $response;
-        } else {
-            $data = array(
-                'email'     => $request->email,
-                'subject'      =>  $request->subject,
-                'message'   =>   $request->message
-            );
+        try {
             Support::create($data);
-            Mail::to('support@gateapp.com')->send(new SupportMail($data));
-            return response()->json(['message' => 'Thanks for contacting us!']);
+
+            Mail::to(config('mail.support_address'))->send(new SupportMail($data));
+
+            DB::commit();
+
+            return response()->json(['message' => 'Your message has been sent and we will get back to you soon.']);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'message' => 'An error was encountered, please retry later.',
+                'hint' =>  $e->getMessage(),
+            ], 501);
         }
+
+
     }
 
     public function show($id)
     {
-        $support = Support::where('id', $id)->first();
+        $support = Support::where('id', $id)->firstOrFail();
 
-        return response()->json(['message' => 'One support message', 'support' => $support]);
+        return response()->json(['message' => 'Support message retrieved.', 'data' => $support]);
     }
+
+
     public function destroy($id)
     {
-        $support = Support::where('id', $id)->first();
+        $support = Support::where('id', $id)->firstOrfail();
         $support->delete();
-        return response()->json(['message' => 'Support Message was successfully deleted']);
+
+        return response()->json(null, 204);
+    }
+
+    /**
+     * Reply to a support message
+     * @param Request $request
+     * @param Support $support
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function reply(Request $request, Support $support)
+    {
+        $request->validate([
+            'message' => ['required', 'string', 'min:10'],
+        ]);
+
+        $user = auth()->user();
+
+        DB::beginTransaction();
+
+        try {
+
+            $reply = SupportReply::query()->create([
+                'message' => $request->input('message'),
+                'user_id' =>  $user->id,
+                'support_id' => $support->id,
+            ]);
+
+            // Update the parent support
+            $support->updated_at = now()->toDateTimeString();
+            $support->update();
+
+            // Mail the creator of the support message this new reply
+            Mail::to($support->email)->send(new SupportReplyMail($support, $reply));
+
+            DB::commit();
+
+            return response()->json([
+                'message' => 'The reply has been sent successfully',
+                'data' => $reply,
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return  response()->json([
+                'message' => 'An error was encountered',
+                'hint' => $e->getMessage(),
+            ]);
+        }
     }
 }

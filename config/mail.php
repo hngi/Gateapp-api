@@ -133,4 +133,7 @@ return [
 
     'log_channel' => env('MAIL_LOG_CHANNEL'),
 
+    // Support email address
+    'support_address' => env('MAIL_SUPPORT_ADDRESS'),
+
 ];
