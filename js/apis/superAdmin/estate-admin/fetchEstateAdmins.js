@@ -9,7 +9,6 @@ const revokeButton = document.querySelector('#revoke');
 const restoreButton = document.querySelector("#restore");
 const resetButton = document.querySelector("#resetPassword");
 const profileImage = document.querySelector('#profileImage');
-const spinner = document.querySelector('[data-preloader]');
 
 
 
@@ -30,7 +29,6 @@ const spinner = document.querySelector('[data-preloader]');
     .then(resp => resp.json())
     .then(data => {
         table.innerHTML = "";
-        spinner.style.display = 'none';
         let admins = data.admins;
         console.log(admins);
         
@@ -46,14 +44,12 @@ const spinner = document.querySelector('[data-preloader]');
                 adminName = row.insertCell(),
                 adminEstate = row.insertCell(),
                 adminEmail = row.insertCell(),
-                adminAdded = row.insertCell(),
                 moreDetails = row.insertCell();
-
+            
             //Insert Response into table
-            adminName.innerHTML = admin.name ? `${admin.name}` : '---  --- ---';
+            adminName.innerHTML = `${admin.name}`;
             adminEstate.innerHTML = `${estate.estate_name}`;
             adminEmail.innerHTML = `${admin.email}`;
-            adminAdded.innerHTML = `${admin.created_at}`;
             
             
             const myImage = `https://res.cloudinary.com/getfiledata/image/upload/w_200,c_fill,ar_1:1,g_auto,r_max/`+`${admin.image}`;
@@ -84,16 +80,6 @@ const spinner = document.querySelector('[data-preloader]');
              
         })
         
-      }).catch(err => {
-        if (err) {
-            spinner.style.display = 'none';
-            console.log(err);
-            Swal.fire({
-                title: 'Unexpected Error',
-                html: `<p style="color:tomato; font-size:17px;">This may be due to internet connection not available, please turn on internet connection or referesh to try again, Thank you!</p>`,
-                confirmButtonText: 'Close'
-            })
-        }
       })
 
       

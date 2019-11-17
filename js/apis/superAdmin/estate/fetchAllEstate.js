@@ -94,7 +94,7 @@ const viewEstate = () => {
                  data-estate-img='${image}'
                  data-estate-location='${address}, ${city}, ${country}'
                  data-estate-created='${ created_at}'
-                 class="displayEstate green"
+                 class="displayEstate"
                  data-toggle="modal"  
                  data-target="#singleEstateModal">Estate Details</a>
                 </td>
@@ -107,7 +107,7 @@ const viewEstate = () => {
         const viewEstateBtns = Array.from(document.querySelectorAll('.displayEstate'));
         viewEstateBtns.map(viewEstateBtn =>
             viewEstateBtn.addEventListener('click', (event) => displayEstateInfoToModal(event, viewEstateBtn))
-        )
+            )
     }
 }
 fetchEstates();

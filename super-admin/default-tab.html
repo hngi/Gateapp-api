@@ -14,11 +14,26 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/dashboard-sidebar.css">
-    <link rel="stylesheet" href="../styles/add-estate.css">
-    <title data-title>Add Estate</title>
+    <link rel="stylesheet" href="../styles/default.css">
+    <title data-title>Statistics</title>
 </head>
 
 <body>
+    <!-- <div class="container-fluid">
+        <div class="row">
+            <div class="dashboard-full col-12 row mx-0 px-0">
+                <div class="col-2 border-right our-sidebar">
+                    <div class="col-12 dash-logo mt-3">
+                        <img src="../images/GatePASS.png" alt="">
+                    </div>
+                    div.col-12.sidebar
+                </div>
+                <div class="col-10">
+
+                </div>
+            </div>
+        </div>
+    </div> -->
     <div class="wrapper">
         <!-- Sidebar  -->
         <nav id="sidebar" class="active">
@@ -41,6 +56,9 @@
                 </li>
                 <li>
                     <a href="residents.html">Residents</a>
+                </li>
+                <li>
+                    <a href="gateman-tab.html">Gatemen</a>
                 </li>
                 <li>
                     <a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false"
@@ -95,63 +113,49 @@
                 </div>
             </div>
             <div class="col-12 tab-full scroller">
-                <h4 class="pl-3">Add an Estate</h4>
-                <form class="col-10 col-md-8" data-add-estate-form>
-                    <div class="form-group mb-2">
-                        <label for="">Estate Name</label>
-                        <input type="text" name="estate_name" class="form-control" placeholder="Example Estate">
-                        <p class="error-fields" id="estateNameError"></p>
+                <!-- <div class="toast border" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false" style="max-width: 70vw;">
+                    <div class="toast-header">
+                        <small class="ml-auto">11 mins ago</small>
                     </div>
-                    <div class="form-group mb-2">
-                        <div class="col-12 row px-0 mx-0">
-                            <div class="col-4 px-1 mx-0">
-                                <label for="">Address</label>
-                                <input type="text" name="address" class="form-control" placeholder="Park Avenue">
-                            </div>
-                            <div class="col-4 px-1 mx-0">
-                                <label for="">City</label>
-                                <input type="text" name="city" class="form-control" placeholder="Ikeja">
-                            </div>
-                            <div class="col-4 px-1 mx-0">
-                                <label for="">Country</label>
-                                <input type="text" name="country" class="form-control" placeholder="Nigeria">
-                            </div>
-                        </div>
-                        <p class="error-fields" id="locationError"></p>
+                    <div class="toast-body">
+                            <button type="button" class="ml-auto mb-1 close" data-dismiss="toast" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                        <span>You can write your alert here! </span>
                     </div>
-                    <div class="input-group mb-3">
-                        <div class="custom-file">
-                            <input  type="file" name="image" class="custom-file-input">
-                            <label class="custom-file-label" for="inputGroupFile01" data-img-label>Choose estate image</label>
+                </div> -->
+                <div class="container-fluid">
+                    <div class="row stat-tab-box">
+                      <span data-wkly-btn class="all-stat-tabs stat_active"></span>
+                      <span data-mnthly-btn class="all-stat-tabs"></span>
+                      <span data-all-btn class="all-stat-tabs"></span>
+                    </div>
+                <div class="col-12 weekly-stats row mx-0 mt-5" data-stat-view>
+                    <div class="text-center" style="position: absolute; left: 50%; margin-top:50px;">
+                        <div class="spinner-border" role="status" style="color: #49a347;">
                         </div>
                     </div>
-                    <button data-add-esate-btn type="submit" class="btn btn-success estate-submit-btn col-6">
-                        Submit
-                    </button>
-                </form>
+                </div>
             </div>
         </div>
     </div>
 </body>
 <!--Import third party cdn-->
 <script src="../js/general/third_party_cdn.js"></script>
-
 <script src="../js/general/placeholder.js"></script>
-
 <script src="../js/general/routes.js"></script>
-
 <script src="../js/general/onSession.js"></script>
-
-<script src="../js/validation/superAdmin/estate/addEstate.js"></script>
-
-<script src="../js/apis/superAdmin/estate/addEstate.js"></script>
-
+<script src="../js/apis/superAdmin/statistics/admin-dashboard.js"></script>
 <script type="text/javascript">
-
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');
         });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('.toast').toast('show');
     });
 </script>
 

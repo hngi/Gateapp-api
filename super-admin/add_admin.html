@@ -8,11 +8,12 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/dashboard-sidebar.css">
-    <title data-title>Sidebar</title>
+    <link rel="stylesheet" type="text/css" href="../styles/seunogunyemi.css">
+    <title data-title>Add Admin</title>
 </head>
 
 <body>
@@ -40,50 +41,43 @@
             <ul class="list-unstyled components">
                 <p onclick="location.href='default-tab.html'">Dashboard</p>
                 <li class="">
-                    <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Admins</a>
+                    <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Admins</a>
                     <ul class="collapse list-unstyled" id="adminSubmenu">
                         <li>
                             <a href="admins.html">View all admins</a>
                         </li>
-                        <li>
+                        <li class="">
                             <a href="add_admin.html">Add an admin</a>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#">Residents</a>
+                    <a href="residents.html">Residents</a>
                 </li>
                 <li>
-                    <a href="gateman-tab.html">Gatemen</a>
-                </li>
-                <li>
-                    <a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Visitors</a>
+                    <a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Visitors</a>
                     <ul class="collapse list-unstyled" id="visitorsSubmenu">
                         <li>
-                            <a href="#">All Visitors</a>
+                            <a href="visitors-tab.html">All Visitors</a>
                         </li>
                         <li>
-                            <a href="#">Banned Visitors</a>
+                            <a href="banned-visitors-tab.html">Banned Visitors</a>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#estatesSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Estates</a>
+                    <a href="#estatesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Estates</a>
                     <ul class="collapse list-unstyled" id="estatesSubmenu">
-                        <li>
-                            <a href="#">All Estates</a>
+                        <li class="">
+                            <a href="estates-tab.html">All Estates</a>
                         </li>
                         <li>
-                            <a href="#">Add an estates</a>
+                            <a href="add-estate.html">Add an Estate</a>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#providersSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Providers</a>
+                    <a href="#providersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Providers</a>
                     <ul class="collapse list-unstyled" id="providersSubmenu">
                         <li>
                             <a href="providers-tab.html">All Providers</a>
@@ -103,13 +97,54 @@
             </button>
         </div>
     </div>
+
+    <!-- admin content begins here -->
+    <div class="wrap">
+
+        <div class="main active">
+            <a href="#"><i class="fa fa-bell"></i></a>
+            <br>
+            <h1>Add an Admin</h1>
+            <form class="col-10 col-md-8" data-add-estate-admin-form>
+                <div class="form-group mb-2">
+                    <label for="">Email</label>
+                    <input type="email" name="email" id="email" class="form-control" placeholder="Estate Admin Email eg name@mail.com">
+                    <p class="error-fields" id="adminEmailError"></p>
+                </div>
+                <div class="form-group mb-2">
+                    <label for="">Select an Estate </label>
+                    <select class="form-control" name="estate_id" id="selectEstate">
+                            <option value="0"> Select an Estate</option>
+                           
+                        </select>
+                    <p class="error-fields" id="estateError"></p>
+                </div>
+
+                <button data-add-admin-btn type="submit" class="btn btn-success estate-submit-btn col-6">
+                        Add Admin
+                    </button>
+            </form>
+
+        </div>
+    </div>
 </body>
+
 <!--Import third party cdn-->
 <script src="../js/general/third_party_cdn.js"></script>
+
 <script src="../js/general/placeholder.js"></script>
+
+<script src="../js/general/routes.js"></script>
+
+<script src="../js/general/onSession.js"></script>
+
+<script src="../js/validation/superAdmin/estate-admin/addEstateAdmin.js"></script>
+
+<script src="../js/apis/superAdmin/estate-admin/addEstateAdmin.js"></script>
+
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#sidebarCollapse').on('click', function () {
+    $(document).ready(function() {
+        $('#sidebarCollapse').on('click', function() {
             $('#sidebar').toggleClass('active');
         });
     });

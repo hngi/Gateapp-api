@@ -26,25 +26,21 @@ const fetchData = async () => {
     let data = await response.json();
     console.log(data);
     const { visitors } = data;
-    console.log(visitors);
     return visitors.map(visitor => {
       const {
         name,
-        banned,
         estate: { estate_name },
         updated_at
       } = visitor;
       //Render data
-      if(!banned){
-        spinner.style.display = "none";
-        table.innerHTML += `
-                  <tr>
-                  <td>${name}</td>
-                  <td>${estate_name}</td>
-                  <td>${convertDate(updated_at)}</td>
-                  <td><a href="" data-toggle="modal" data-target="#singleVisitorModal" onclick="fetchVisitorHistory(${visitor.id})">View History</a></td>
-                  </tr>`;
-      }
+      spinner.style.display = "none";
+      table.innerHTML += `
+                <tr>
+                <td>${name}</td>
+                <td>${estate_name}</td>
+                <td>${convertDate(updated_at)}</td>
+                <td><a href="" data-toggle="modal" data-target="#singleVisitorModal">View History</a></td>
+                </tr>`;
     });
   } catch (err) {
     Swal.fire({

@@ -15,13 +15,14 @@ input[type="text"]{
 }
 .fa-search			{
 						background-color: #49A347;
+						display: none;
 						color: white;
 						width: 40px;
 						height: 40px;
 						border-radius: 30px;
 						font-size: 20px;
 						position: absolute;
-						left: 1050px;
+						left: 1020px;
 }
 button					{
 							width: 80%;
@@ -54,9 +55,12 @@ button					{
 							width: 10px;
 							float: right;
 }
-@media(max-width: 400px){
+@media(min-width: 400px){
 .fa-search			{
 						background-color: #49A347;
+						/*position: absolute;
+						left: 30px;*/
+						display: none;
 						color: white;
 						width: 40px;
 						height: 40px;

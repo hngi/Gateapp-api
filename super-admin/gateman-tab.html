@@ -14,7 +14,8 @@
 	<link rel="stylesheet" href="../styles/dashboard-sidebar.css">
 	<link rel="stylesheet" href="../styles/residents.css">
 	<title data-title>Gatemen</title>
-
+	<!--Current user on session-->
+	<script src="../js/general/onSession.js"></script>
 </head>
 
 <body>
@@ -42,20 +43,9 @@
 				<li>
 					<a href="residents.html">Residents</a>
 				</li>
-				
 				<li>
-						<a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false"
-							class="dropdown-toggle">Gatemen</a>
-						<ul class="collapse list-unstyled" id="visitorsSubmenu">
-							<li>
-								<a href="gatemans.html">All Gatemen</a>
-							</li>
-							<li>
-								<a href="add-gateman.html">Add Gateman</a>
-							</li>
-						</ul>
-					</li>
-
+					<a href="gateman-tab.html">Gatemen</a>
+				</li>
 				<li>
 					<a href="#visitorsSubmenu" data-toggle="collapse" aria-expanded="false"
 						class="dropdown-toggle">Visitors</a>
@@ -127,11 +117,11 @@
 					</tr>
 				</thead>
 				<tbody data-fetch-gatemen>
-						<div data-preloader="" class="text-center" style="position: absolute;left: 50%;margin-top: 30vh;display: block;">
-                                <div class="spinner-border" role="status" style="color: #49a347;">
-                                </div>
-                            </div>
-					<div id="gatemanResults"></div>
+					<div data-preloader class="text-center"
+						style="position: absolute;left: 50%;margin-top: 30vh;display: block;">
+						<div class="spinner-border" role="status" style="color: #49a347;">
+						</div>
+					</div>
 
 				</tbody>
 
@@ -172,12 +162,10 @@
 	</div>
 </body>
 <!--Import third party cdn-->
-<script src="../js/general/onSession.js"></script>
 <script src="../js/general/third_party_cdn.js"></script>
 <script src="../js/general/placeholder.js"></script>
 <script src="../js/general/routes.js"></script>
 <script src="../js/general/gateman.js"></script>
-
 
 
 <script type="text/javascript">

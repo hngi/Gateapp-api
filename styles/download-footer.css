@@ -76,9 +76,9 @@
 
 .login{
     background: #fff;
-    height: 250px;
+    height: auto;
+    max-height: 40vh;
     margin-top: 80px;
-    margin-bottom: 60px;
     border-radius: 5px;
     display: flex;
     flex-flow: column nowrap;
