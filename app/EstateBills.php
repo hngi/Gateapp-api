@@ -15,5 +15,6 @@ class EstateBills extends Model
         'item',
         'icon_link',
         'base_amount',
+        'estates_id'
     ];
 }

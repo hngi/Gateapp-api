@@ -214,7 +214,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         // for estate admin satisfied privileges
         Route::namespace('EstateBills\Admin')->group(function () {
             Route::middleware(['estateAdmin'])->group(function(){
-                Route::post('estate', AddBills::class);
+                Route::post('estate/{estate_id}', AddBills::class);
             });
         });
 
