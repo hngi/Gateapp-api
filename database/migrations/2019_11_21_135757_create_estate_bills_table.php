@@ -15,13 +15,13 @@ class CreateEstateBillsTable extends Migration
     {
         Schema::create('estate_bills', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigIncrements('estate_id');
+            $table->unsignedBigInteger('estates_id');
             $table->string('item');
             $table->string('icon_link');
             $table->float('base_amount');
             $table->timestamps();
 
-            $table->foreign('estate_id')->references('id')->on('estates')->onDelete('cascade');
+            $table->foreign('estates_id')->references('id')->on('estates')->onDelete('cascade');
         });
     }
 
