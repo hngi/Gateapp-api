@@ -62,7 +62,7 @@ class AddBills extends Controller
             return response()->json([
                 'status'  => true,
                 'data'	  => $saved,
-                'message' => "Item: {$bills->name} has been added as a billable item for {$estate_name['estate_name']}"
+                'message' => "Item: {$saved->item} has been added as a billable item for {$estate_name['estate_name']}"
             ], 200);
         }
         catch(QueryException $e)
