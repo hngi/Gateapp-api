@@ -17,4 +17,15 @@ class EstateBills extends Model
         'base_amount',
         'estates_id'
     ];
+
+    /**
+     * Joins Estate model with EstateBills model
+     *
+     * @see Laravel Eloquent Relationship (https://laravel.com/docs/6.x/eloquent-relationships)
+     * @return App\EstateBills
+     */
+    public function estates()
+    {
+        return $this->belongsTo(Estate::class);
+    }
 }
