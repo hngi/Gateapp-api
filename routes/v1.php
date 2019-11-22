@@ -220,7 +220,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
         // for resident-user satisfied privileges
         Route::namespace('EstateBills\Residents')->group(function () {
-            Route::middleware(['estateAdmin'])->group(function(){
+            Route::middleware(['checkResident'])->group(function(){
                 Route::get('estate', GetAllBills::class);
             });
         });
