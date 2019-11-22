@@ -21,6 +21,8 @@ class Estate extends Model
      */
     public function billableItems()
     {
-        return $this->hasMany(EstateBills::class);
+        return $this->hasMany(EstateBills::class)->select([
+            'id as estate_bills_id', 'item', 'icon_link', 'base_amount'
+        ]);
     }
 }

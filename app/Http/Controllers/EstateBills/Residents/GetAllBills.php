@@ -47,7 +47,7 @@ class GetAllBills extends Controller
         return response()->json([
         	'count'   => $estate_bills->count(),
             'status'  => true,
-            'data'	  => $estate_bills
+            'data'	  => $estate
         ], 200);
 	}
 }
