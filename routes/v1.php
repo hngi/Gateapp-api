@@ -152,6 +152,8 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/support/{id}', 'SupportController@show')->middleware('superAdmin');
     //delete support message
     Route::delete('/support/{id}', 'SupportController@destroy')->middleware('superAdmin');
+    // Reply to support message
+    Route::post('/support/{support}/reply', 'SupportController@reply');
 
     // Show Total Number of Estates on the system
     Route::get('statistics/estate', 'Statistics\EstateStatsController@index')->middleware('superAdmin');
@@ -207,6 +209,22 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //Show residents in the specific estate of logged in Estate Admin
     Route::get('/estate/{id}/residents', 'ResidentController@estateResidents')->middleware('estateAdmin');
 
+    // Estate bill related model's routes
+    Route::group(['prefix' => 'bills'], function () {
+        // for estate admin satisfied privileges
+        Route::namespace('EstateBills\Admin')->group(function () {
+            Route::middleware(['estateAdmin'])->group(function(){
+                Route::post('estate/{estate_id}', AddBills::class);
+            });
+        });
+
+        // for resident-user satisfied privileges
+        Route::namespace('EstateBills\Residents')->group(function () {
+            Route::middleware(['checkResident'])->group(function(){
+                Route::get('estate', GetAllBills::class);
+            });
+        });
+    });
 
 });
 
