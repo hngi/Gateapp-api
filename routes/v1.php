@@ -460,6 +460,14 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::patch('/notifications/read/{ids}', 'NotifyController@markSelectedAsRead');
 
 });
+
+//Rave Payment Route
+Route::group(['middleware' => ['jwt.verify']], function () {
+    Route::post('begin_card_pay', 'RaveCardPayController@initaiteCardPay');
+    Route::post('insert_card_pin', 'RaveCardPayController@insertCardPin');
+    Route::post('otp_confirmation', 'RaveCardPayController@otpConfirmation');
+});
+
 Route::patch('/notifications/read/{ids}', 'NotifyController@markSelectedAsRead');
 //view faq
 Route::get('faq', 'FaqController@index');
@@ -476,6 +484,7 @@ Route::get('generate-code', 'TestController@qrCode');
 Route::post('test_image', 'TestController@upload');
 Route::post('african_talking', 'SmsOtpController@africasTalkingTest');
 Route::post('otp', 'SmsOtpController@otp');
+
 
 //test notification
 Route::get('/test-notification', function () {
