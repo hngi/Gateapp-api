@@ -19,13 +19,16 @@ class Subscribe
     {
         // Implicit route model binding is used here
         $data = ResidentBill::query()
-            ->create([
+            ->updateOrCreate([
                 'users_id' => auth()->user()->id,
                 'estate_bills_id' => $estate_bills->id,
+            ], [
                 'usage_duration' => null,
                 'amount' => $estate_bills->base_amount,
                 'status' => false,
             ]);
+
+        $data->load('billInfo');
 
         return response()->json([
             'message' => 'Bill subscription successful.',
