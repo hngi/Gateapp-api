@@ -1,0 +1,108 @@
+.mainSectionOfPage		{
+							background-color: #FFFFFF;
+							position: absolute;
+							top: 120px;
+							width: 80%;
+							padding-left: 50px;
+							margin-left: auto;
+							margin-right: auto;
+							padding-right: 20px;
+							
+}
+ul						{
+							list-style-type: none;
+}
+li 						{
+							display: inline;
+}
+.active					{
+							color: white;
+							background-color: #E5E5E5;
+}
+.headerButton			{
+							display: block;
+							float: right;
+							margin-right: 5px;
+}
+h3						{
+							padding-top: 15px;
+							margin-left: 15px;
+							color: green;
+}
+p 						{
+							text-align: left;
+}
+body					{
+							background-color: #E5E5E5;
+							mix-blend-mode: normal;
+}
+table, .table 					{
+							margin-top: 30px;
+							/*width: 100%;*/
+							display: table;
+						}
+
+.top_section, section, tr			{
+							background-color: white;
+							border-radius: 3px;
+							width: 100%;
+}
+.input					{
+							height: 50px;
+}
+/*table.fixed{table-layout: fixed;}
+table.fixed td {overflow: hidden;}
+*/
+/*.shift-right			{
+							width: 10%;
+							padding-left: 15px;
+}
+.shift-name				{
+							width: 25%;
+}
+.shift-number			{
+							width: 25%;
+}
+.shift-phone			{
+							width: 15%;
+}*/
+.section: hover {border-collapse: separate; border-spacing: 500px; border-color: #E5E5E5; box-shadow: 0px 0px 10px 0px;}
+.green_button			{
+							float: right;
+							background-color: green;
+							color: white;
+							border: 3px;
+							margin-right: 5px;
+							box-shadow: none;
+}
+.big_button				{
+							height: 40px;
+							width: 150px;
+							border-radius: 5px;
+							display: block;
+							float: right;
+}
+.view					{
+							border-radius: 4px;
+							width: 80px;
+}
+/*.fa-trash				{
+							padding-left: 25%;
+}*/
+
+table:hover				{
+							-webkit-box-shadow: -9px 24px 20px -9px rgba(0,0,0,0.75);
+							-moz-box-shadow: -9px 24px 20px -9px rgba(0,0,0,0.75);
+							box-shadow: -9px 24px 20px -9px rgba(0,0,0,0.75);
+}
+i 						{
+							visibility: hidden;
+						}
+
+@media(max-width: 500px){
+	tr{font-size: 7px;}
+	.view{width: 30px; height: 15px;}
+	.big_button{width: 60px;}
+	#sidebar{height: auto;}
+}
+
