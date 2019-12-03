@@ -13,4 +13,9 @@ class ResidentBill extends Model
         'amount',
         'status',
     ];
+
+    public function scopeBillInfo()
+    {
+        return $this->belongsTo(EstateBills::class, 'estate_bills_id');
+    }
 }
