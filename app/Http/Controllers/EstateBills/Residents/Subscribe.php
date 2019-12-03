@@ -32,4 +32,20 @@ class Subscribe
             'data' => $data
         ]);
     }
+
+    /**
+     * Returns all bills a user has subscribed to
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function subscribed()
+    {
+        $user = auth()->user();
+
+        $bills = ResidentBill::where('users_id', $user->id)->with('billInfo')->get();
+
+        return response()->json([
+            'count' => $bills->count(),
+            'data' => $bills,
+        ]);
+    }
 }

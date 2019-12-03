@@ -220,7 +220,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         Route::middleware('checkResident')->namespace('EstateBills\Residents')->group( function () {
             Route::post('estate/{estate_id}', GetAllBills::class);
             Route::post('subscribe/{estate_bills}', 'Subscribe');
+            Route::post('subscribed', 'Subscribe@subscribed');
             Route::post('pending', 'PendingBills');
+            Route::post('paid', 'PaidBills');
         });
     });
 
