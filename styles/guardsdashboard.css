@@ -98,6 +98,7 @@ table:hover				{
 i 						{
 							visibility: hidden;
 						}
+.breadcrumb{justify-content: space-between;}
 .fontAwesome{ font-family: 'Helvetica', FontAwesome, sans-serif; }
 .breadcrumb-item{float: right;}
 .Guards{color: green;}
