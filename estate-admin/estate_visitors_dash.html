@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="../styles/estate-dashboard-sidebar.css">
     <link rel="stylesheet" href="../styles/dashboard.css">
     <link rel="stylesheet" href="../styles/guardsdashboard.css">
-    <title data-title>Manage Guards Dashboard</title>
+    <title data-title>Manage Visitors Dashboard</title>
     <script src="../js/general/onSession.js"></script>
 
 </head>
@@ -37,9 +37,9 @@
                     <li>
                         <a href="">Residents</a>
                     </li>
-                    <li class="active">
-                        <a href="" data-toggle="collapse" aria-expanded="false">Guards</a>
                     <li>
+                        <a href="" data-toggle="collapse" aria-expanded="false">Guards</a>
+                    <li class="active">
                         <a href="" data-toggle="collapse" aria-expanded="false">Visitors</a>
                     </li>
                     <li>
@@ -101,20 +101,19 @@
 <nav aria-label="breadcrumb" style="background-color: #49A347;">
         <ol class="breadcrumb"><!-- <span class="Guards">Guards</span> -->
         <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item active"><a href="#">Guards</a></li>
+        <li class="breadcrumb-item active"><a href="#">Visitors</a></li>
     </ol>
 </nav>
         <!-- top nav ends here -->
-            
-                <section>
+        <section>
                     <div class="table">
                     <table class="table top_section" >
                         <tr>
                             <th scope="col">
-                            <h3>Peace Estate Guards</h3>
+                            <h3>Peace Estate Visitors' Log</h3>
                             </th>
                             <th colspan="4">
-                            <input type="submit" value="+ Add Guard" name="button" class="green_button big_button">
+                            <input type="text" placeholder="&#128270; search visitors"  name="search" class="form-control ml-auto">
                             </th>
                         </tr>
                         </table>
@@ -131,31 +130,31 @@
                                 <span class="fa fa-sort"> Name</span>
                             </th>
                             <th scope="col">
-                                <span class="fa fa-sort"> Shift</span>
+                                <span class="fa fa-sort"> Apartment</span>
                             </th>
                             <th scope="col">
                                 <span class="fa fa-sort"> Phone</span>
                             </th>
                             <th scope="col">
-                                Actions
+                                Total Visits
                             </th>
                         </tr>
-                        <tr class="input">
-                            <th scope= "row">01
+                </table>
+                <table class="table">
+                        <tr>
+                            <th> <p>01</p>
                             </th>
-                            <td class="shift-name">
-                                <img class="img-fluid rounded-circle" src="../images/Avatar.png"><p>Adam James</p>
+                            <td>
+                                <img class="img-fluid rounded-circle" src="../images/Avatar.png"> Adam James
                             </td>
                             <td>
-                                <p>Morning</p>
+                                <p>Block A, Flat 5</p>
                             </td>
                             <td class="shift-phone">
                                 <p>+23480123456789</p>
                             </td>
                             <td>
-                                <span class="fa fa-trash"><i class="unseen">delete</i></span>
-                            
-                                <span class="fa fa-pencil"><i class="unseen">edit</i></span>
+                                <p>13</p>
                             </td>
                             <td>
                                 <input type="submit" name="view" value="view" class="green_button view">
@@ -166,7 +165,6 @@
 
                 <section>
                     <table class="table">
-                       
                         <tr class="input">
                             <th> 02
                             </th>
@@ -174,15 +172,13 @@
                                 <img class="img-fluid rounded-circle" src="../images/Avatar.png"> Black Natasha
                             </td>
                             <td>
-                                <p>Morning</p>
+                                <p>Block C, Flat 1</p>
                             </td>
                             <td>
                                 <p>+23480123456789</p>
                             </td>
                             <td>
-                                <span class="fa fa-trash"><i class="unseen">delete</i></span>
-                            
-                                <span class="fa fa-pencil"><i class="unseen">edit</i></span>
+                               <p>05</p>
                             </td>
                             <td>
                                 <input type="submit" name="view" value="view" class="green_button view">
@@ -195,24 +191,21 @@
 
                 <section>
                     <table class="table">
-                        
                         <tr class="input">
                             <th>
-                                03
+                                <p>03</p>
                             </th>
                             <td>
-                                <img class="img-fluid rounded-circle" src="../images/Avatar.png">Chris Rock
+                                <img class="img-fluid rounded-circle" src="../images/Avatar.png"> Chris Rock
                             </td>
                             <td>
-                                <p>Morning</p>
+                                <p>Block D, Flat 3</p>
                             </td>
                             <td>
                                 <p>+23480123456789</p>
                             </td>
                             <td>
-                                <span class="fa fa-trash"><i class="unseen">delete</i></span>
-                            
-                                <span class="fa fa-pencil"><i class="unseen">edit</i></span>
+                                <p>08</p>
                             </td>
                             <td>
                                 <input type="submit" name="view" value="view" class="green_button view">
@@ -226,21 +219,45 @@
                         
                         <tr class="input">
                             <th>
-                                04
+                                <p>04</p>
                             </th>
                             <td>
                                 <img class="img-fluid rounded-circle" src="../images/Avatar.png"> Damien Duff
                             </td>
                             <td>
-                                <p>Night</p>
+                                <p>Block D, Flat 3</p>
                             </td>
                             <td>
                                 <p>+23480123456789</p>
                             </td>
                             <td>
-                                <span class="fa fa-trash"><i class="unseen">delete</i></span>
-                            
-                                <span class="fa fa-pencil"><i class="unseen">edit</i></span>
+                                <p>08</p>
+                            </td>
+                            <td>
+                                <input type="submit" name="view" value="view" class="green_button view">
+                            </td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section>
+                    <table class="table">
+                        
+                        <tr class="input">
+                            <th>
+                                <p>05</p>
+                            </th>
+                            <td>
+                                <img class="img-fluid rounded-circle" src="../images/Avatar.png"> Eseoghene Tina
+                            </td>
+                            <td>
+                                <p>Block D, Flat 3</p>
+                            </td>
+                            <td>
+                                <p>+23480123456789</p>
+                            </td>
+                            <td>
+                                <p>08</p>
                             </td>
                             <td>
                                 <input type="submit" name="view" value="view" class="green_button view">
@@ -249,12 +266,34 @@
                     </table>
                 </section>
             
-                                
+            <section>
+                    <table class="table">
+                        
+                        <tr class="input">
+                            <th>
+                                <p>06</p>
+                            </th>
+                            <td>
+                                <img class="img-fluid rounded-circle" src="../images/Avatar.png"> Freddy Bombay
+                            </td>
+                            <td>
+                                <p>Block D, Flat 3</p>
+                            </td>
+                            <td>
+                                <p>+23480123456789</p>
+                            </td>
+                            <td>
+                                <p>08</p>
+                            </td>
+                            <td>
+                                <input type="submit" name="view" value="view" class="green_button view">
+                            </td>
+                        </tr>
+                    </table>
+                </section>                    
         </div>
 
         </div>
-        
-  
 </body>
 <!--Import third party cdn-->
 <script src="../js/general/third_party_cdn.js"></script>
