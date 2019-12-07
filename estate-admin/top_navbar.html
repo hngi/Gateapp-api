@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/estate-dashboard-sidebar.css">
+    <link rel="stylesheet" href="../styles/dashboard.css">
+    <link rel="stylesheet" href="../styles/guardsdashboard.css">
+    <script src="../js/general/onSession.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#" style="margin-left: 50px; color: green;">Peace Estate</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2 fontAwesome" type="search" placeholder= " &#128269; Search residents or guards" aria-label="Search" style="width: 500px;">
+      <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+    </form>
+    <ul class="navbar-nav ml-auto" style="margin-top: 10px;">
+      <li class="nav-item">
+        <a class="nav-link" href="#"><span class="fa fa-envelope"></span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><span class="fa fa-bell"></span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><img class="img-rounded" src="../images/Avatar.png" style="border-radius: 6px;"></a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <b>Frederick Damasus</b>
+          <p>Admin</p>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#"><span class="fa fa-cog" style="margin-left: 15px; margin-right: 15px;"></span>Profile Setting</a>
+          <a class="dropdown-item" href="#"><span class="fa fa-sign-out"></span>Log out</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<nav aria-label="breadcrumb" style="background-color: #49A347;">
+        <ol class="breadcrumb"><span class="Guards">Guards</span>
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active"><a href="#">Guards</a></li>
+    </ol>
+</nav>
+</body>
+<!--Import third party cdn-->
+<script src="../js/general/third_party_cdn.js"></script>
+<script src="../js/general/placeholder.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('.toast').toast('show');
+    });
+</script>
+
+</html>

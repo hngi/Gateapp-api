@@ -98,11 +98,23 @@ table:hover				{
 i 						{
 							visibility: hidden;
 						}
+.breadcrumb{justify-content: space-between;}
+.fontAwesome{ font-family: 'Helvetica', FontAwesome, sans-serif; }
+.breadcrumb-item{float: right;}
+.Guards{color: green;}
+
 
 @media(max-width: 500px){
 	tr{font-size: 7px;}
 	.view{width: 30px; height: 15px;}
 	.big_button{width: 60px;}
 	#sidebar{height: auto;}
+	.fontAwesome{visibility: hidden;}
+	.dropdown-toggle:{position: absolute; left: 5px;}
+	.dropdown{background-color: #E5E5E5; margin-bottom: 45px; width: 80px;}
+	.breadcrumb{ background-color: #E5E5E5;}
+	.dropdown-menu, body{font-size: 7px;}
+	.fa-envelope, .fa-bell{font-size: 18px;}
+	/*.dropdown-toggle:FOCUS{background-color: #E5E5E5;}*/
 }
 
