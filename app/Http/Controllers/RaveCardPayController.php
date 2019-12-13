@@ -59,7 +59,7 @@ class RaveCardPayController extends Controller
 	     'transaction_reference' => $request->input('transaction_reference'),
 	     'otp' => $request->input('otp')
 		 );
-	     $url =  "https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/validatecharge";
+	     $url = env('RAVE_CARD_VERIFY_URL');
 
 	 	$response = $this->curlConnection($postdata, $url);
 
@@ -132,7 +132,7 @@ class RaveCardPayController extends Controller
 	     'PBFPubKey' => env('RAVE_PUBLIC_KEY'),
 	     'client' => $post_enc,
 	     'alg' => '3DES-24');
-	    $url =  "https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/charge";
+	    $url =  env('RAVE_CARD_INITIATOR_URL');
 	 	$result = $this->curlConnection($postdata, $url);
 	 	return $result;
 	}
