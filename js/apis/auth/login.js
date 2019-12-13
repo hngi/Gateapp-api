@@ -46,7 +46,7 @@ const loginApi = (event, loginForm) => {
                 if(data.user.user_type === 'super_admin'){
                     location.replace('super-admin/dashboard.html');
                 }else {
-                    location.replace('estate-admin/estates.html');
+                    location.replace('estate-admin/estate_guards_dash.html');
                 }
 
             }
