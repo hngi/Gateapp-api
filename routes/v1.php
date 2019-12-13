@@ -207,6 +207,22 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //Show residents in the specific estate of logged in Estate Admin
     Route::get('/estate/{id}/residents', 'ResidentController@estateResidents')->middleware('estateAdmin');
 
+    // Estate bill related model's routes
+    Route::group(['prefix' => 'bills'], function () {
+        // for estate admin satisfied privileges
+        Route::middleware('estateAdmin')->namespace('EstateBills\Admin')->group( function () {
+            Route::post('estate/{estate_id}', AddBills::class);
+        });
+
+        // for resident-user satisfied privileges
+        Route::middleware('checkResident')->namespace('EstateBills\Residents')->group( function () {
+            Route::post('estate/{estate_id}', GetAllBills::class);
+            Route::post('subscribe/{estate_bills}', 'Subscribe');
+            Route::post('subscribed', 'Subscribe@subscribed');
+            Route::post('pending', 'PendingBills');
+            Route::post('paid', 'PaidBills');
+        });
+    });
 
 });
 
@@ -442,6 +458,14 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::patch('/notifications/read/{ids}', 'NotifyController@markSelectedAsRead');
     
 });
+
+//Rave Payment Route
+Route::group(['middleware' => ['jwt.verify']], function () {
+    Route::post('begin_card_pay', 'RaveCardPayController@initaiteCardPay');
+    Route::post('insert_card_pin', 'RaveCardPayController@insertCardPin');
+    Route::post('otp_confirmation', 'RaveCardPayController@otpConfirmation');
+});
+
 Route::patch('/notifications/read/{ids}', 'NotifyController@markSelectedAsRead');
 //view faq
 Route::get('faq', 'FaqController@index');
@@ -458,6 +482,7 @@ Route::get('generate-code', 'TestController@qrCode');
 Route::post('test_image', 'TestController@upload');
 Route::post('african_talking', 'SmsOtpController@africasTalkingTest');
 Route::post('otp', 'SmsOtpController@otp');
+
 
 //test notification
 Route::get('/test-notification', function () {
