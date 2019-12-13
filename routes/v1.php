@@ -212,17 +212,17 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Estate bill related model's routes
     Route::group(['prefix' => 'bills'], function () {
         // for estate admin satisfied privileges
-        Route::namespace('EstateBills\Admin')->group(function () {
-            Route::middleware(['estateAdmin'])->group(function(){
-                Route::post('estate/{estate_id}', AddBills::class);
-            });
+        Route::middleware('estateAdmin')->namespace('EstateBills\Admin')->group( function () {
+            Route::post('estate/{estate_id}', AddBills::class);
         });
 
         // for resident-user satisfied privileges
-        Route::namespace('EstateBills\Residents')->group(function () {
-            Route::middleware(['checkResident'])->group(function(){
-                Route::get('estate', GetAllBills::class);
-            });
+        Route::middleware('checkResident')->namespace('EstateBills\Residents')->group( function () {
+            Route::post('estate/{estate_id}', GetAllBills::class);
+            Route::post('subscribe/{estate_bills}', 'Subscribe');
+            Route::post('subscribed', 'Subscribe@subscribed');
+            Route::post('pending', 'PendingBills');
+            Route::post('paid', 'PaidBills');
         });
     });
 
