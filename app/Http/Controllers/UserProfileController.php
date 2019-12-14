@@ -235,9 +235,9 @@ class UserProfileController extends Controller
     public function manageSettings(Request $request)
     {
         $data = [
-            'app_notification' => $request->filled('app_notification'),
-            'push_notification' => $request->filled('push_notification'),
-            'location_tracking' => $request->filled('location_tracking'),
+            'app_notification' => $request->input('app_notification'),
+            'push_notification' => $request->input('push_notification'),
+            'location_tracking' => $request->input('location_tracking'),
         ];
 
         DB::beginTransaction();
@@ -249,8 +249,14 @@ class UserProfileController extends Controller
             if ($user->settings) {
                 // remove items not filled in the request
                 array_walk($data, function ($item, $key) use (&$data) {
-                    if ($item == false) unset($data[$key]);
+                    if ($item === null) {
+                        unset($data[$key]);
+                    }
                 });
+
+                if (empty($data)) {
+                    return response()->json(['message' => 'At least one parameter is required for an update'], 400);
+                }
 
                 $user->settings()->update($data);
             } else {
