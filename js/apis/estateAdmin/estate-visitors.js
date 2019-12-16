@@ -1,9 +1,9 @@
 let estate_guard = JSON.parse(sessionStorage.getItem('estateId'));
 let estate_id = estate_guard.home.estate_id;
 
-const gatemenTable = document.getElementById("gatemenTable");
+const visitorsTable = document.getElementById("visitors");
 
-const url = `http://52.40.191.249/api/v1/estate/${estate_id}/gateman`;
+const url = `http://52.40.191.249/api/v1/visitors/${estate_id}`;
 
 //Fetch data
 const fetchData = async () => {
@@ -17,17 +17,18 @@ const fetchData = async () => {
         }
       });
       let data = await response.json();
-      const { gatemen } = data;
+      const { visitors } = data;
       let count = 0;
-      return gatemen.map(gatemen => {
+      return visitors.map(visitor => {
         const {
           name,
-          phone,
-          image
-        } = gatemen;
+          phone_no,
+          image,
+          visit_count
+        } = visitor;
         count++;
 
-        gatemenTable.innerHTML += `<tr class="input">
+        visitorsTable.innerHTML += `<tr class="input">
                             <th scope= "row">${count}
                             </th>
                             <td class="shift-name">
@@ -37,12 +38,10 @@ const fetchData = async () => {
                                 <p>Morning</p>
                             </td>
                             <td class="shift-phone">
-                                <p>${phone}</p>
+                                <p>${phone_no}</p>
                             </td>
                             <td>
-                                <span class="fa fa-trash"><i class="unseen">delete</i></span>
-                            
-                                <span class="fa fa-pencil"><i class="unseen">edit</i></span>
+                                <p>${visit_count}</p>
                             </td>
                             <td>
                                 <input type="submit" name="view" value="view" class="green_button view">
