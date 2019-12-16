@@ -34,11 +34,9 @@
     <title data-title>Dashboard</title>
     <script src="../js/general/onSession.js"></script>
   </head>
-
   <body>
     <div class="wrapper">
-      <!-- Sidebar  -->
-      <!-- Sidebar  -->
+      <!-- Sidebar --><!-- Sidebar -->
       <nav id="sidebar" class="">
         <div class="col-12 dash-logo">
           <img class="ml-3 mt-3" src="../images/gateguard-white.png" alt="" />
@@ -69,7 +67,6 @@
               />Guards</a
             >
           </li>
-
           <li>
             <a href="" data-toggle="collapse" aria-expanded="false"
               ><img
@@ -117,22 +114,35 @@
           </li>
         </ul>
       </nav>
-
-      <!-- Page Content  -->
+      <!-- Page Content -->
       <div id="content">
         <button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1">
-          <i class="fas fa fa-align-left"></i>
-        </button>
+          <i class="fas fa fa-align-left"></i></button>
 
         <!--INNER CONTENT CONTAINER-->
         <div class="innerContent">
-          <div
-            class="panel panel-default d-flex justify-content-md-around align-items-start"
-            style="width: inherit;"
+          
+          <!--NAVBAR-->
+          <nav
+            class="navbar navbar-toggleable-md navbar-inverse navbar-expand-lg d-flex justify-content-md-around align-items-start mb-1"
           >
-            <h1 class="peace-header">Peace Estate</h1>
-
-            <form method="get">
+            <a
+              class="navbar-brand peace-header"
+              style="margin-top: -10px;"
+              href="/"
+              >Peace Estate</a
+            ><button
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <form method="get" class="form-inline mr-4 ml-4">
               <div class="form-group header-form d-flex align-items-center">
                 <img
                   src="../images/search.jpeg"
@@ -140,45 +150,51 @@
                   height="16px"
                   alt="Search"
                   style="opacity: 0.5;"
-                />
-                <input
+                /><input
                   type="text"
-                  placeholder="Search residents or guards..."
+                  placeholder="Search residents..."
                   class="form-control header-input bg-white"
                 />
               </div>
             </form>
-
-            <div>
-              <img src="../images/message.svg" alt="Message" />
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav d-flex justify-content-between icons">
+                <li class="nav-item">
+                  <img src="../images/message.svg" alt="Message" />
+                </li>
+                <li class="nav-item">
+                  <img src="../images/Bell.svg" alt="Bell" srcset="" />
+                </li>
+                <li class="nav-item">
+                  <img src="../images/Person.svg" alt="You" srcset="" />
+                </li>
+                <li class="nav-item d-flex flex-row">
+                  <div class="d-flex flex-column" style="width: inherit;">
+                    <p style="font-size: 16px;">Frederick Damascus</p>
+                    <p style="font-size: 10px; margin-top: -1.5em;">ADMIN</p>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <img
+                    src="../images/chevron-down.svg"
+                    width="14px"
+                    height="20px"
+                    alt="Down"
+                  />
+                </li>
+              </ul>
             </div>
-
-            <div>
-              <img src="../images/Bell.svg" alt="Bell" srcset="" />
-            </div>
-
-            <div>
-              <img src="../images/Person.svg" alt="You" srcset="" />
-            </div>
-
-            <div class="d-flex flex-column ">
-              <p style="font-size: 16px;">Frederick Damascus</p>
-              <p style="font-size: 10px; margin-top: -1.5em;">ADMIN</p>
-            </div>
-
-            <div><img src="../images/chevron-down.svg" alt="Down" /></div>
-          </div>
+          </nav>
         </div>
 
         <!--DIV WITH PANEL WITH BREADCRUMB-->
         <div
-          class="d-flex justify-content-md-between align-items-center"
-          style="border: none; padding: 0 1.5em 0 6em; background: #e0ede6;height: 35px; margin-top: -10px; margin-bottom: 3em;"
+          class="d-flex justify-content-between align-items-center"
+          style="border: none; padding: 0 1.5em 0 5em; background: #e0ede6;height: 35px; margin-top: -1.5em; margin-bottom: 3em; width: 100%;"
         >
           <p style="color: #49A347;font-size: 18px; margin-top: 14px;">
             Dashboard
           </p>
-
           <ul
             class="list-group d-flex flex-row justify-content-md-between"
             style="list-style: none;"
@@ -190,255 +206,288 @@
         </div>
 
         <div class="d-flex flex-row justify-content-md-around">
-          <!--FIRST COLUMN CARDS-->
-          <div class="col-md-3" style="margin-left: 5em;">
-            <div
-              class="card shadow p-3 mb-5 bg-white rounded"
-              style="width: 16rem; border: none;"
-            >
-              <div class="card-body" style="padding: 5px;">
-                <h5 class="card-title">Total Residents</h5>
-                <div class="d-flex justify-content-between align-items-start">
-                  <p style="font-size: 28px;">16</p>
-                  <div
-                    style="border-radius: 50%; padding: 13px; background-color: #edf6ed;"
-                  >
-                    <img src="../images/VectorPeople.svg" alt="People" />
+
+          <!--CONTENT CONTAINER-->
+          <div class="container">
+            <div class="row">
+
+              <!--FIRST COLUMN-->
+              <div class="col">
+                <div class="d-flex justify-content-between">
+
+                  <!--FIRST CARD COLUMN-->
+                  <div class="d-flex flex-column">
+                    <div
+                      class="card shadow p-3 mb-5 bg-white rounded"
+                      style="border: none;"
+                    >
+                      <div class="card-body" style="padding: 5px;">
+                        <h5 class="card-title">Total Residents</h5>
+                        <div
+                          class="d-flex justify-content-between align-items-start"
+                        >
+                          <p style="font-size: 28px;">16</p>
+                          <div
+                            style="border-radius: 50%; padding: 13px; background-color: #edf6ed;"
+                          >
+                            <img
+                              src="../images/VectorPeople.svg"
+                              alt="People"
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="d-flex justify-content-start align-items-end"
+                          style="margin-bottom: -10px;"
+                        >
+                          <p class="mr-2">
+                            &#8599; +<span style="font-size: #50ddb8;"
+                              >50%</span
+                            >
+                          </p>
+                          <p style="font-size: 10px; color: #ABAFB3;">
+                            Since last month
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="card shadow p-3 mb-5 bg-white rounded"
+                      style="border: none; margin-top: -1.5em; margin-bottom: 2em !important;"
+                    >
+                      <div class="card-body" style="padding: 5px;">
+                        <h5 class="card-title">Total Visits Scheduled</h5>
+                        <div
+                          class="d-flex justify-content-between align-items-start"
+                        >
+                          <p style="font-size: 28px;">50</p>
+                          <div
+                            style="border-radius: 50%; padding: 13px; background-color: #f2fbe9;"
+                          >
+                            <img src="../images/VectorStamp.svg" alt="People" />
+                          </div>
+                        </div>
+                        <div
+                          class="d-flex justify-content-start align-items-end"
+                          style="margin-bottom: -10px;"
+                        >
+                          <p class="mr-2">
+                            &#8599; +<span style="font-size: #50ddb8;"
+                              >11.5%</span
+                            >
+                          </p>
+                          <p style="font-size: 10px; color: #ABAFB3;">
+                            Since last month
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="card shadow p-3 mb-5 bg-white rounded"
+                      style="border: none; margin-top: -0.5em;"
+                    >
+                      <div class="card-body" style="padding: 5px;">
+                        <h5 class="card-title">Total Bills Received</h5>
+                        <div
+                          class="d-flex justify-content-between align-items-start"
+                        >
+                          <p style="font-size: 28px;">50, 000</p>
+                          <div
+                            style="border-radius: 50%; padding: 13px; background-color: #e5fcff;"
+                          >
+                            <img
+                              src="../images/flat-color-icons_money-transfer.svg"
+                              alt="People"
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="d-flex justify-content-start align-items-end"
+                          style="margin-bottom: -10px;"
+                        >
+                          <p class="mr-2">
+                            &#8599; +<span style="font-size: #50ddb8;"
+                              >11.5%</span
+                            >
+                          </p>
+                          <p style="font-size: 10px; color: #ABAFB3;">
+                            Since last month
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!--SECOND CARD COLUMN-->
+                  <div class="d-flex flex-column">
+                    <div
+                      class="card shadow-lg p-3 mb-5 bg-white rounded"
+                      style="border: none;"
+                    >
+                      <div class="card-body" style="padding: 5px;">
+                        <h5 class="card-title">Security Guards</h5>
+                        <div
+                          class="d-flex justify-content-between align-items-start"
+                        >
+                          <p style="font-size: 28px;">4</p>
+                          <div
+                            style="border-radius: 50%; background-color: #ebfaf9;"
+                          >
+                            <img src="../images/Police.svg" alt="People" />
+                          </div>
+                        </div>
+                        <div
+                          class="d-flex justify-content-start align-items-end"
+                          style="margin-bottom: -10px;"
+                        >
+                          <p class="mr-2">
+                            &#8599; +<span style="font-size: #50ddb8;"
+                              >10%</span
+                            >
+                          </p>
+                          <p style="font-size: 10px; color: #ABAFB3;">
+                            Since last month
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="card shadow p-3 mb-5 bg-white rounded"
+                      style="border: none; margin-top: -1.5em;"
+                    >
+                      <div class="card-body" style="padding: 5px;">
+                        <h5 class="card-title">Service Providers</h5>
+                        <div
+                          class="d-flex justify-content-between align-items-start"
+                        >
+                          <p style="font-size: 28px;">7</p>
+                          <div
+                            style="border-radius: 50%; padding: 13px; background-color: #e6f4ff;"
+                          >
+                            <img src="../images/VectorTools.svg" alt="People" />
+                          </div>
+                        </div>
+                        <div
+                          class="d-flex justify-content-start align-items-end"
+                          style="margin-bottom: -10px;"
+                        >
+                          <p class="mr-2">
+                            &#8599; +<span style="font-size: #50ddb8;"
+                              >0.42%</span
+                            >
+                          </p>
+                          <p style="font-size: 10px; color: #ABAFB3;">
+                            Since last month
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="card shadow p-3 mb-5 bg-white rounded"
+                      style="border: none; margin-top: -1.5em;"
+                    >
+                      <div class="card-body" style="padding: 5px;">
+                        <h5 class="card-title">Pending Payments</h5>
+                        <div
+                          class="d-flex justify-content-between align-items-start"
+                        >
+                          <p style="font-size: 28px;">7</p>
+                          <div
+                            style="border-radius: 50%; padding: 13px; background-color: #fbe5e5;"
+                          >
+                            <img
+                              src="../images/ion_timer-sharp.svg"
+                              alt="People"
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="d-flex justify-content-start align-items-end"
+                          style="margin-bottom: -10px;"
+                        >
+                          <p class="mr-2">
+                            &#8599; +<span style="font-size: #50ddb8;"
+                              >0.42%</span
+                            >
+                          </p>
+                          <p style="font-size: 10px; color: #ABAFB3;">
+                            Since last month
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div
-                  class="d-flex justify-content-start align-items-end"
-                  style="margin-bottom: -10px;"
-                >
-                  <p class="mr-2">
-                    &#8599; + <span style="font-size: #50ddb8;">50%</span>
-                  </p>
-                  <p style="font-size: 10px; color: #ABAFB3;">
-                    Since last month
-                  </p>
-                </div>
               </div>
-            </div>
 
-            <div
-              class="card shadow p-3 mb-5 bg-white rounded"
-              style="width: 16rem; border: none; margin-top: -1.5em;"
-            >
-              <div class="card-body" style="padding: 5px;">
-                <h5 class="card-title">Total Visits Scheduled</h5>
-                <div class="d-flex justify-content-between align-items-start">
-                  <p style="font-size: 28px;">50</p>
-                  <div
-                    style="border-radius: 50%; padding: 13px; background-color: #f2fbe9;"
+              <!--SECOND COLUMN-->
+              <div class="col">
+                <div class="shadow p-3 mb-5 bg-white rounded table-responsive">
+                  <table
+                    class="table table-borderless"
+                    style="background-color: #fff;"
                   >
-                    <img src="../images/VectorStamp.svg" alt="People" />
-                  </div>
-                </div>
-                <div
-                  class="d-flex justify-content-start align-items-end"
-                  style="margin-bottom: -10px;"
-                >
-                  <p class="mr-2">
-                    &#8599; + <span style="font-size: #50ddb8;">11.5%</span>
-                  </p>
-                  <p style="font-size: 10px; color: #ABAFB3;">
-                    Since last month
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="card shadow p-3 mb-5 bg-white rounded"
-              style="width: 16rem; border: none; margin-top: -1.5em;"
-            >
-              <div class="card-body" style="padding: 5px;">
-                <h5 class="card-title">Total Bills Received</h5>
-                <div class="d-flex justify-content-between align-items-start">
-                  <p style="font-size: 28px;">50,000</p>
-                  <div
-                    style="border-radius: 50%; padding: 13px; background-color: #e5fcff;"
-                  >
-                    <img
-                      src="../images/flat-color-icons_money-transfer.svg"
-                      alt="People"
+                    <div
+                      class="d-flex justify-content-between align-items-center bg-white pt-4"
+                      style="padding: 10px;"
+                    >
+                      <p>Recent Payments</p>
+                      <p style="color: #54a852;">Verify Payments</p>
+                    </div>
+                    <thead>
+                      <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Payment Mode</th>
+                        <th scope="col">Status</th>
+                      </tr>
+                    </thead>
+                    <hr
+                      style="margin: 0 !important; padding: 0 !important; color: #efefef;"
                     />
-                  </div>
-                </div>
-                <div
-                  class="d-flex justify-content-start align-items-end"
-                  style="margin-bottom: -10px;"
-                >
-                  <p class="mr-2">
-                    &#8599; + <span style="font-size: #50ddb8;">11.5%</span>
-                  </p>
-                  <p style="font-size: 10px; color: #ABAFB3;">
-                    Since last month
-                  </p>
+                    <tbody>
+                      <tr>
+                        <th>18 Nov</th>
+                        <td>NGN 5000</td>
+                        <td>Online</td>
+                        <td>Pending</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">18 Nov</th>
+                        <td>NGN 5000</td>
+                        <td>Cash</td>
+                        <td>Pending</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">18 Nov</th>
+                        <td>NGN 5000</td>
+                        <td>Cash</td>
+                        <td>Pending</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">17 Nov</th>
+                        <td>NGN 10000</td>
+                        <td>Bank Deposit</td>
+                        <td>Pending</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
+              
             </div>
-          </div>
-
-          <!--SECOND COLUMN OF CARDS-->
-          <div class="col-md-3" style="margin-right: 1em;">
-            <div
-              class="card shadow-lg p-3 mb-5 bg-white rounded"
-              style="width: 16rem; border: none;"
-            >
-              <div class="card-body" style="padding: 5px;">
-                <h5 class="card-title">Security Guards</h5>
-                <div class="d-flex justify-content-between align-items-start">
-                  <p style="font-size: 28px;">4</p>
-                  <div
-                    style="border-radius: 50%; padding: 13px; background-color: #ebfaf9;"
-                  >
-                    <img src="../images/VectorPeople.svg" alt="People" />
-                  </div>
-                </div>
-                <div
-                  class="d-flex justify-content-start align-items-end"
-                  style="margin-bottom: -10px;"
-                >
-                  <p class="mr-2">
-                    &#8599; + <span style="font-size: #50ddb8;">10%</span>
-                  </p>
-                  <p style="font-size: 10px; color: #ABAFB3;">
-                    Since last month
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="card shadow p-3 mb-5 bg-white rounded"
-              style="width: 16rem; border: none; margin-top: -1.5em;"
-            >
-              <div class="card-body" style="padding: 5px;">
-                <h5 class="card-title">Service Providers</h5>
-                <div class="d-flex justify-content-between align-items-start">
-                  <p style="font-size: 28px;">7</p>
-                  <div
-                    style="border-radius: 50%; padding: 13px; background-color: #e6f4ff;"
-                  >
-                    <img src="../images/VectorTools.svg" alt="People" />
-                  </div>
-                </div>
-                <div
-                  class="d-flex justify-content-start align-items-end"
-                  style="margin-bottom: -10px;"
-                >
-                  <p class="mr-2">
-                    &#8599; + <span style="font-size: #50ddb8;">0.42%</span>
-                  </p>
-                  <p style="font-size: 10px; color: #ABAFB3;">
-                    Since last month
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="card shadow p-3 mb-5 bg-white rounded"
-              style="width: 16rem; border: none; margin-top: -1.5em;"
-            >
-              <div class="card-body" style="padding: 5px;">
-                <h5 class="card-title">Pending Payments</h5>
-                <div class="d-flex justify-content-between align-items-start">
-                  <p style="font-size: 28px;">7</p>
-                  <div
-                    style="border-radius: 50%; padding: 13px; background-color: #fbe5e5;"
-                  >
-                    <img src="../images/ion_timer-sharp.svg" alt="People" />
-                  </div>
-                </div>
-                <div
-                  class="d-flex justify-content-start align-items-end"
-                  style="margin-bottom: -10px;"
-                >
-                  <p class="mr-2">
-                    &#8599; + <span style="font-size: #50ddb8;">0.42%</span>
-                  </p>
-                  <p style="font-size: 10px; color: #ABAFB3;">
-                    Since last month
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!--THIRD TABLE COLUMN-->
-          <div class="col-md-5">
-            <table
-              class="table table-borderless"
-              style="background-color: #fff;"
-            >
-              <div
-                class="d-flex justify-content-between align-items-center bg-white pt-4"
-                style="padding: inherit;"
-              >
-                <p>Recent Payments</p>
-                <p style="color: #54a852;">Verify Payments</p>
-              </div>
-              <thead>
-                <tr>
-                  <th scope="col">Date</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Payment Mode</th>
-                  <th scope="col">Status</th>
-                </tr>
-              </thead>
-              <hr
-                style="margin: 0 !important; padding: 0 !important; color: #efefef;"
-              />
-              <tbody>
-                <tr>
-                  <th>18 Nov</th>
-                  <td>NGN 5000</td>
-                  <td>Online</td>
-                  <td>Pending</td>
-                </tr>
-                <tr>
-                  <th scope="row">18 Nov</th>
-                  <td>NGN 5000</td>
-                  <td>Cash</td>
-                  <td>Pending</td>
-                </tr>
-                <tr>
-                  <th scope="row">17 Nov</th>
-                  <td>NGN 10000</td>
-                  <td>Bank Deposit</td>
-                  <td>Pending</td>
-                </tr>
-                <tr>
-                  <th scope="row">18 Nov</th>
-                  <td>NGN 5000</td>
-                  <td>Cash</td>
-                  <td>Pending</td>
-                </tr>
-                <tr>
-                  <th scope="row">17 Nov</th>
-                  <td>NGN 10000</td>
-                  <td>Bank Deposit</td>
-                  <td>Pending</td>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </div>
       </div>
     </div>
-
-    <!--Import third party cdn-->
-    <script src="../js/general/third_party_cdn.js"></script>
+    <!--Import third party cdn--><script src="../js/general/third_party_cdn.js"></script>
     <script src="../js/general/placeholder.js"></script>
     <script type="text/javascript">
       $(document).ready(function() {
         $("#sidebarCollapse").on("click", function() {
           $("#sidebar").toggleClass("active");
         });
-      });
-    </script>
+      });</script>
     <script>
       $(document).ready(function() {
         $(".toast").toast("show");

@@ -1,14 +1,17 @@
-.dash-logo{
+.dash-logo {
     height: 10vh;
     padding: 1.5em 1.5em;
 }
-.our-sidebar{
+
+.our-sidebar {
     height: 100vh;
     background: #49a347;
 }
-.dash-logo img{
+
+.dash-logo img {
     width: 50%;
 }
+
 a,
 a:hover,
 a:focus {
@@ -16,6 +19,7 @@ a:focus {
     text-decoration: none;
     transition: all 0.3s;
 }
+
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
@@ -90,14 +94,16 @@ ul ul a {
     background: #49a347;
     text-indent: 1rem;
 }
-.sidebar-btn{
+
+.sidebar-btn {
     border-radius: 50%;
     height: 6vh;
     width: 6vh;
     background: #49a347;
     color: #fff;
 }
-.sidebar-btn i{
+
+.sidebar-btn i {
     font-size: 14px;
 }
 
@@ -107,7 +113,7 @@ ul ul a {
 
 #content {
     width: 100%;
-    padding: 20px;
+    /* padding: 20px; */
     min-height: 100vh;
     transition: all 0.3s;
 }
@@ -120,15 +126,19 @@ ul ul a {
     #sidebar {
         margin-left: -250px;
     }
+
     #sidebar.active {
         margin-left: 0;
     }
+
     #sidebarCollapse span {
         display: none;
     }
-    
+
 }
+
 @media (min-width: 769px) {
+
     /* #sidebar {
         margin-left: -250px;
     } */
@@ -137,5 +147,5 @@ ul ul a {
     } */
     #sidebarCollapse {
         display: none;
-    } 
+    }
 }
