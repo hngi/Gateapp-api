@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/estate-dashboard-sidebar.css">
+    <link rel="stylesheet" href="../styles/dashboard.css">
+    <link rel="stylesheet" href="../styles/guardsdashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <title data-title>Payments Overview</title>
+    <!-- <script src="../js/general/onSession.js"></script> -->
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+               <!-- Sidebar  -->
+               <nav id="sidebar" class="">
+                <div class="col-12 dash-logo">
+                    <img class="ml-3 mt-3" src="../images/gateguard-white.png" alt="">
+                </div>
+                <ul class="list-unstyled components">
+                    <p onclick="location.href='dashboard.html'">Dashboard</p>
+                    <li class="">
+                        <a href="" data-toggle="collapse" aria-expanded="false">Admins</a>
+                    </li>
+                    <li>
+                        <a href="">Residents</a>
+                    </li>
+                    <li>
+                        <a href="" data-toggle="collapse" aria-expanded="false">Guards</a>
+                    <li>
+                        <a href="" data-toggle="collapse" aria-expanded="false">Visitors</a>
+                    </li>
+                    <li>
+                        <a href="" data-toggle="collapse" aria-expanded="false">Service Providers</a>
+                    </li>
+                    <li  class="active">
+                        <a href="" data-toggle="collapse" aria-expanded="false">Payments</a>
+                    </li>
+                    <li>
+                        <a href="" data-toggle="collapse" aria-expanded="false">Messages</a>
+                    </li>
+                    <li>
+                        <a href="" data-toggle="collapse" aria-expanded="false">Settings</a>
+                    </li>
+                </ul>
+            </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+            <button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1">
+                <i class="fas fa fa-align-left"></i>
+            </button>
+        <!-- top nav starts here -->
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#" style="margin-left: 0px; color: green;">Peace Estate</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2 fontAwesome" type="search" placeholder= " &#128269; Search residents or guards" aria-label="Search" style="width: 500px;">
+      <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+    </form>
+    <ul class="navbar-nav ml-auto" style="margin-top: 10px;">
+      <li class="nav-item">
+        <a class="nav-link" href="#"><span class="fa fa-envelope"></span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><span class="fa fa-bell"></span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><img class="img-rounded" src="../images/Avatar.png" style="border-radius: 6px;"></a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <b>Frederick Damasus</b>
+          <p>Admin</p>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#"><span class="fa fa-cog" style="margin-left: 15px; margin-right: 15px;"></span>Profile Setting</a>
+          <a class="dropdown-item" href="#"><span class="fa fa-sign-out" style="margin-left: 15px; margin-right: 15px;"></span>Log out</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<nav aria-label="breadcrumb" style="background-color: #49A347;">
+        <ol class="breadcrumb"><!-- <span class="Guards">Guards</span> -->
+        <li class="breadcrumb-item"><a href="#">Payments</a></li>
+        <li class="breadcrumb-item"><a href="#">Payments</a></li>
+    </ol>
+</nav>
+        <!-- top nav ends here -->
+        
+                      <div class="container-fluid">
+                          <div class="row">
+                            <!-- main overview section starts here -->
+                              <div class="col-md-7">
+                                  <ul class="semi-headers">
+                                      <li class="semi-navs">
+                                          <a class="semi-nav-items activated" href="#">Overview</a>
+                                      </li>
+
+                                      <li class="semi-headers">
+                                          <a class="semi-nav-items" href="#">Transactions</a>
+                                      </li>
+
+                                      <li class="semi-headers">
+                                          <a class="semi-nav-items" href="#">Generate Bills</a>
+                                      </li>
+
+                                      <li class="semi-headers">
+                                          <a class="semi-nav-items" href="#">Added Services</a>
+                                      </li>
+                                  </ul>
+                                  <div class="row">
+                                      <div class="col-md-6">
+                                          <section>
+                                              <table class="table">
+                                                  <tr>
+                                                      <td>Bills Received</td>
+                                                      <td></td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td><span class="fa fa-map"></span><B class="money">NGN 500, 000</B>
+                                                            <p class="grey">This Month</p>
+                                                      </td>
+                                                      <td class="td_rate"><p class="rate"><span class="fa fa-long-arrow-up"></span>18%</p></td>
+                                                  </tr>
+                                              </table>
+                                          </section>
+                                      </div>
+                                      <div class="col-md-6">
+                                          <section>
+                                              <table class="table">
+                                                  <tr>
+                                                      <td>Overdue</td>
+                                                      <td></td>
+                                                  </tr>
+                                                  <tr class="overdue">
+                                                      <td><span class="fa fa-globe"></span><b class="money">NGN 200, 000</b>
+                                                                <p class="grey">This Month</p>
+                                                      </td>
+                                                      <td class="td_rate"><p class="rate red"><span class="fa fa-long-arrow-up red"></span>24%</p></td>
+                                                  </tr>
+                                              </table>
+                                          </section>
+                                      </div>
+                                  </div>
+                                  <!-- graph section starts here -->
+                                  <div class="row">
+                                      <div class="col-md-12 graph">
+                                        <section>
+                                            
+                                          <canvas id="myChart"></canvas>
+  <script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+        datasets: [{
+            label: 'Monthly Bills Recieved',
+            data: [150000, 210000, 185000, 145000, 155000, 205000, 165000, 140000, 175000, 150500],
+            backgroundColor: [
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347'
+            ],
+            borderColor: [
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347'
+            ],
+            borderWidth: 0.5
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
+                                          
+                                        </section>
+                                      </div>
+                                  </div>
+                              </div>
+                              <!-- main overview section ends here -->
+                              <div class="col-md-5">
+                                  <section class="below">
+                                      <table class="table with_dates">
+                                          <tr>
+                                              <h2 class="dark-header">
+                                                  Scheduled Bills
+                                              </h2>
+                                              <a class="date" href="#">November 2019</a>
+                                          </tr>
+                                          <tr class="calender calender-items">
+                                              <td><span class="fa fa-angle-left"></span></td>
+                                              <td class="day first"><h5 class="number"> 26</h5><p>MON</p></td>
+                                              <td class="day-active"><h5 class="number"> 27</h5><p>TUE</p></td>
+                                              <td class="day"><h5 class="number"> 28</h5><p>WED</p></td>
+                                              <td class="day"><h5 class="number"> 29</h5><p>THU</p><p class="dot">&#11044;</p></td>
+                                              <td class="day"><h5 class="number"> 30</h5><p>FRI</p></td>
+                                              <td class="day"><h5 class="number"> 1</h5><p>SAT</p></td>
+                                              <td class="day"><h5 class="number"> 2</h5><p>SUN</p><p class="dot">&#11044;</p></td>
+                                              <td class="chevron"><span class="fa fa-angle-right"></span></td>
+                                          </tr>
+                                        </table>
+                                        <table class="table">
+                                          <tr class="security_fees">
+                                              <td>
+                                                  <span class="fa fa-shield"></span><b class="dark-header">Security Contribution</b>
+                                                  <p class="fees"><b>NGN 5, 000</b></p>
+                                                  <p class="red red_security">399</p>
+                                                  <p class="red_security grey">Issued: Nov 18 <i>used for space</i>Due: Nov 29</p>
+                                              </td>
+                                          </tr>
+                                          <tr class="maintenance_fees">
+                                            <td>
+                                              <span class="fa fa-wrench"></span><b class="dark-header">Maintenance Charge</b>
+                                              <p class="fees"><b>NGN 5, 000</b></p>
+                                              <p class="red_security grey">Issued: Nov 18 <i>used for space</i>Due: Nov 29</p>
+                                            </td>
+                                          </tr>
+                                      </table>
+                                  </section>
+                              </div>
+                          </div>
+                      </div>      
+        
+</body>
+<!--Import third party cdn-->
+<script type="text/javascript" src="../js/general/chart.js"></script>
+<script src="../js/general/third_party_cdn.js"></script>
+<script src="../js/general/placeholder.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('.toast').toast('show');
+    });
+</script>
+
+</html>
