@@ -1,9 +1,37 @@
-let estate_guard = JSON.parse(sessionStorage.getItem('estateId'));
+let estate_guard = JSON.parse(sessionStorage.getItem('estateGuard'));
+// console.log(estate_guard);
 let estate_id = estate_guard.home.estate_id;
 
 const gatemenTable = document.getElementById("gatemenTable");
 
 const url = `http://52.40.191.249/api/v1/estate/${estate_id}/gateman`;
+const estateUrl = `http://52.40.191.249/api/v1/estate/${estate_id}`;
+
+//fetch Estate name
+const fetchEstate = async ()=>{
+  try {
+    let response = await fetch(estateUrl, {
+      headers: {
+        Accept: "applicaion/json",
+        "Content-Type": "application/json",
+        Authorization: token
+      }
+    });
+    let data = await response.json();
+    // console.log(data)
+    const {estate} = data;
+    let estateName = estate.estate_name;
+    // console.log(estateName)
+
+    document.querySelectorAll('.estate_name').forEach(key=>{
+      key.innerHTML = estateName;
+    });
+  } catch (err){
+    console.log(err);
+  }
+}
+
+fetchEstate();
 
 //Fetch data
 const fetchData = async () => {
