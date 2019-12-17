@@ -250,6 +250,29 @@ ul ul a {
     display: flex;
     flex-direction: row;
   }
+
+
+}
+
+@media (max-width: 780px) {
+
+  .card-column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card {
+    width: unset;
+  }
+
+}
+
+@media (min-width: 576px) and (max-width: 769px) {
+
+  .header-form {
+    margin-bottom: 10px;
+  }
+
 }
 
 @media (min-width: 769px) {
