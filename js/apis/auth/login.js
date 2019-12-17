@@ -1,5 +1,7 @@
 const routes = new Routes();
 
+sessionStorage.removeItem('estateId');
+
 const loginApi = (event, loginForm) => {
     event.preventDefault();
     const submitBtn = event.target[2];
@@ -47,6 +49,7 @@ const loginApi = (event, loginForm) => {
                     location.replace('super-admin/dashboard.html');
                 }else {
                     location.replace('estate-admin/estate_guards_dash.html');
+                    sessionStorage.setItem('estateId', JSON.stringify(data));
                 }
 
             }
