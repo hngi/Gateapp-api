@@ -118,3 +118,102 @@ i 						{
 	/*.dropdown-toggle:FOCUS{background-color: #E5E5E5;}*/
 }
 
+/*payments overview page starts here*/
+.semi-headers{background-color:; border-spacing: 2px; border-radius: 4px;}
+.semi-headers, .semi-navs, .semi-nav-items {margin: 0px; padding: 10px; height: 50px;}
+.semi-nav-items{color: green; background-color: white; border-radius: 4px;}
+.activated{background-color: green; color: white;}
+.fa-map, .fa-shield, .fa-wrench{color: green; background-color: #E5E5E5; border-radius: 10px; border-width: 1900px; background-size: contain; margin: 10px; font-size: 18px;}
+.money{font-size: 22px;}
+.grey{color: grey; margin-left: 30px;}
+.fa-long-arrow-up{color: green; margin: 5px; font-size: 18px;}
+.rate{color: green; border: 1px solid #E5E5E5; border-radius: 5px;}
+.fa-globe{color: red; border-width: 1900px; border-radius: 10px; margin: 10px; font-size: 18px;}
+.red{color: red;}
+.dark-header{padding-left: 15px; padding-top: 15px; color: #414D55; font-size: 18px; font-weight: bold;}
+.date{padding-left: 15px; color: #2662F0;}
+.calender{background-color: #E5E5E5; border-top: 5px solid #E5E5E5; border-radius: 5px; display: flex; width: auto; margin-left: 0px; margin-right: 0px; font-size: 14px; cursor: pointer;}
+.fa-angle-left, .fa-angle-right{margin-top: 20px; font-size: 18px; font-weight: bold; cursor: pointer;}
+.day-active{background-color: white; border: 1px solid white; border-top: 1px solid white; border-radius: 10px;  border-bottom: 5px solid white; margin-bottom: 5px;}
+.number{text-align: center; padding: 0px;}
+p{font-size: 9px;}
+.dot{text-align: center; color: red;}
+.security{color: grey; margin-left: 5px;}
+.red_security, .fees{margin-left: 35px; font-size: inherit;}
+table{width: 100%;}
+.table-sm{display: table; margin-left: 0px;}
+#columnchart_values{ display: block; margin: 0px; width: 900px;}
+
+@media(max-width: 360px){
+	.money, h2{font-size: 14px;}
+	.td_rate{width: 30%;}
+	.fa{font-size: 20px; margin-left: 5px;}
+	.table{width: 300px; display: table;}
+	.calender, .number{font-size: 8px; margin-left: -25px;}
+	.calender{width: 100%;}
+	.number{margin-left: 3px;}
+	.security_fees, .maintenance_fees{font-size: 11px; display: flex; width: 300px;}
+	.semi-headers{display: flex; width: 80%; align-content: center;}
+	.semi-headers, .semi-navs, .semi-nav-items {margin-left: -1px; padding: 10px; height: 35px;}
+	.semi-navs{margin-top: 10px;}
+	.calender{background-color: #E5E5E5; border-top: 5px solid #E5E5E5; border-radius: 0px; display: flex; width: 320px;}
+	.with_dates{width: 320px;}
+	.chevron{width: 5%;}
+	#columnchart_values{width: auto;}
+}
+@media(max-width: 411){
+	.money, h2{font-size: 16px;}
+	.td_rate{width: 30%;}
+	.fa{font-size: 35px; margin-left: 5px;}
+	.table{width: 300px; display: table;}
+	.calender, .number{font-size: 8px;}
+	.calender{font-size: 9px;}
+	.security{font-size: 15px; display: flex; width: 300px;}
+	.semi-headers{display: flex; width: 80%; align-content: center;}
+	.semi-headers, .semi-navs, .semi-nav-items {margin-left: -1px; padding: 10px; height: 35px;}
+	.semi-navs{margin-top: 10px;}
+	.chevron{width: 5%;}
+	.graph{width: 100%;}	
+}
+
+@media(max-width: 387px){
+	.money, h2{font-size: 10px;}
+	.td_rate{width: 30%;}
+	.fa{font-size: 15px; margin-left: 5px;}
+	.table{width: 300px; display: table;}
+	.calender, .number{font-size: 8px;}
+	.calender{margin-left: -30px;}
+	.number{margin-left: 3px;}
+	.security_fees, .maintenance_fees{font-size: 11px; display: flex; width: 300px;}
+	.semi-headers{display: flex; width: 80%; align-content: center;}
+	.semi-headers, .semi-navs, .semi-nav-items {margin-left: -1px; padding: 10px; height: 35px; text-align: center;}
+	.semi-navs{margin-top: 10px;}
+	.chevron{width: 5%;}
+	.activated{padding-bottom: 15px;}
+	.tableheader, .fa-sort{font-size: 12px;}
+	}
+@media(min-width: 768){
+	body{font-size: 11px; background-color: red;}
+	.calender{font-size: 10px;}
+	.semi-headers, .semi-navs, .semi-nav-items{font-size: 9px; padding: 0px; margin: 0px;}
+}
+/*payment transaction starts here*/'
+.underlined{text-decoration: underline; text-decoration-color: green;}
+.Transactions{display: table;}
+.personsName{width: 12%;}
+.Apartment{width: 15%;}
+.lastDate{width: 10%;}
+.amountPaid{width: 15%;}
+.billNumber{width: 10%;}
+.paymentMode{width: 8%;}
+.attachment{width: 15%;}
+.verify{width: 10%;}
+.green_button{border-radius: 4px;}
+.search{display: block; float: right; border: none; border-radius: 3px; width: 20%; background-color: #E5E5E5; height: 32px;}
+
+/*modal css*/
+.modal-content{width: 30%; position: absolute; top: 25%; left: 45%;}
+.btn-default{border: 1px solid green; margin-left: 20px;}
+.center-modal-content{text-align: center; margin: 50px; font-size: 18px;}
+.modal-heading{margin-left: 40%;}
+.modal-header{background-color: green; color: white;}
