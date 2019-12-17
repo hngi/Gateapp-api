@@ -1,6 +1,8 @@
-<div  class="innerContent">
+document.write(
+    
+`<div  class="innerContent">
           
-          <!--NAVBAR-->
+          
           <nav id="header"
             class="navbar navbar-toggleable-md navbar-inverse navbar-expand-lg d-flex justify-content-md-around align-items-start mb-1"
           >
@@ -8,8 +10,9 @@
               class="navbar-brand peace-header"
               style="margin-top: -10px;"
               href="/"
-              >Peace Estate</a
-            ><button
+              >Peace Estate
+              </a>
+              <button
               class="navbar-toggler"
               type="button"
               data-toggle="collapse"
@@ -48,4 +51,4 @@
                 </ul>
             </div>
             </nav>
-        </div>
+        </div>`)
