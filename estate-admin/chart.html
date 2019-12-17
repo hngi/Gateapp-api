@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<head>
+	<title>Chart</title>
+</head>
+<body>
+  <canvas id="myChart"></canvas>
+  <script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+        datasets: [{
+            label: 'Monthly Bills Recieved',
+            data: [150000, 210000, 185000, 145000, 155000, 205000, 165000, 140000, 175000, 150500],
+            backgroundColor: [
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347'
+            ],
+            borderColor: [
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347',
+                '#49A347'
+            ],
+            borderWidth: 0.1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
+<!-- <div id="columnchart_values" style="width: 900px; height: 500px;"></div> -->
+</body>
+</html>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load("current", {packages:['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ["Month", "Monthly Bills Recieved", { role: "style" } ],
+        ["Jan", 150000, "color: #49A347"],
+        ["Feb", 210000, "color: #49A347"],
+        ["Mar", 180000, "color: #49A347"],
+        ["Apr", 140000, "color: #49A347"],
+        ["May", 160000, "color: #49A347"],
+        ["Jun", 205000, "color: #49A347"],
+        ["Jul", 180000, "color: #49A347"],
+        ["Aug", 145000, "color: #49A347"],
+        ["Sep", 180000, "color: #49A347"],
+        ["Oct", 155000, "color: #49A347"]
+        ]);
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
+
+      var options = {
+        title: "Monthly Bills Recieved",
+        width: 600,
+        height: 400,
+        bar: {groupWidth: "25%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+      chart.draw(view, options);
+  }
+
+  
+  </script>
