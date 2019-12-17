@@ -10,7 +10,7 @@ document.write(`
         <a href="" data-toggle="collapse" aria-expanded="false"><img src="../images/mdi-account-group.svg" alt="Admins" style="margin-right: 20px; margin-bottom: 6px;" />Residents</a>
     </li>
     <li>
-        <a onclick="location.href='estate_guards_dash.html'" data-toggle="collapse" aria-expanded="false"><img src="../images/whh-visitor.svg" alt="Guards" style="margin-right: 20px; margin-bottom: 6px;" />Guards</a>
+        <a onclick="location.href='estate_guards_dash.html'" data-toggle="collapse" aria-expanded="false"><img src="../images/OfficerAsset 1.svg" alt="Guards" style="margin-right: 20px; margin-bottom: 6px;" />Guards</a>
     </li>
     <li>
         <a onclick="location.href='estate_visitors_dash.html'" data-toggle="collapse" aria-expanded="false"><img src="../images/whh-visitor.svg" alt="Visitors" style="margin-right: 20px; margin-bottom: 6px;" />Visitors</a>
