@@ -32,7 +32,7 @@ const fetchData = async () => {
                             <th scope= "row">${count}
                             </th>
                             <td class="shift-name">
-                                <img class="img-fluid rounded-circle" src="${image}"><p>${name}</p>
+                                <img  width="10%" class="img-fluid rounded-circle float-left pr-1" src="https://res.cloudinary.com/getfiledata/image/upload/w_200,c_fill,ar_1:1,g_auto,r_max/${image}"><p>${name}</p>
                             </td>
                             <td>
                                 <p>Morning</p>

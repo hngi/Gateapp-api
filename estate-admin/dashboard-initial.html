@@ -1,245 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link
-      href="https://fonts.googleapis.com/css?family=Nunito&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
+    <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     <link rel="stylesheet" href="../styles/global.css" />
     <link rel="stylesheet" href="../styles/estate-dashboard-sidebar.css" />
     <link rel="stylesheet" href="../styles/dashboard.css" />
     <title data-title>Dashboard</title>
     <script src="../js/general/onSession.js"></script>
-  </head>
-  <body>
+</head>
+
+<body>
     <div class="wrapper">
-      <!-- Sidebar --><!-- Sidebar -->
-      <nav id="sidebar" class="">
-        <div class="col-12 dash-logo">
-          <img class="ml-3 mt-3" src="../images/gateguard-white.png" alt="" />
-        </div>
-        <ul class="list-unstyled components">
-          <p onclick="location.href='dashboard.html'">
-            <img
-              src="../images/mdi-view-dashboard.svg"
-              alt="Dashboard"
-              style="margin-right: 20px; margin-bottom: 6px;"
-            />Dashboard
-          </p>
-          <li class="">
-            <a href="" data-toggle="collapse" aria-expanded="false"
-              ><img
-                src="../images/mdi-account-group.svg"
-                alt="Admins"
-                style="margin-right: 20px; margin-bottom: 6px;"
-              />Residents</a
-            >
-          </li>
-          <li>
-            <a href="" data-toggle="collapse" aria-expanded="false"
-              ><img
-                src="../images/whh-visitor.svg"
-                alt="Guards"
-                style="margin-right: 20px; margin-bottom: 6px;"
-              />Guards</a
-            >
-          </li>
-          <li>
-            <a href="" data-toggle="collapse" aria-expanded="false"
-              ><img
-                src="../images/whh-visitor.svg"
-                alt="Visitors"
-                style="margin-right: 20px; margin-bottom: 6px;"
-              />Visitors</a
-            >
-          </li>
-          <li>
-            <a href="" data-toggle="collapse" aria-expanded="false"
-              ><img
-                src="../images/entypo-tools.svg"
-                alt="Admins"
-                style="margin-right: 20px; margin-bottom: 6px;"
-              />Service Providers</a
-            >
-          </li>
-          <li>
-            <a href="" data-toggle="collapse" aria-expanded="false"
-              ><img
-                src="../images/ic-twotone-payment.svg"
-                alt="Admins"
-                style="margin-right: 20px; margin-bottom: 6px;"
-              />Payments</a
-            >
-          </li>
-          <li>
-            <a href="" data-toggle="collapse" aria-expanded="false"
-              ><img
-                src="../images/mdi-message-reply.svg"
-                alt="Messages"
-                style="margin-right: 20px; margin-bottom: 6px;"
-              />Messages</a
-            >
-          </li>
-          <li>
-            <a href="" data-toggle="collapse" aria-expanded="false"
-              ><img
-                src="../images/Icon.svg"
-                alt="Settings"
-                style="margin-right: 20px; margin-bottom: 6px;"
-              />Settings</a
-            >
-          </li>
-        </ul>
-      </nav>
-      <!-- Page Content -->
-      <div id="content">
-        <button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1">
-          <i class="fas fa fa-align-left"></i></button
-        ><!--INNER CONTENT CONTAINER-->
-        <div class="innerContent">
-          
-          <!--NAVBAR-->
-          <nav
-            class="navbar navbar-toggleable-md navbar-inverse navbar-expand-lg d-flex justify-content-md-around align-items-start mb-1"
-          >
-            <a
-              class="navbar-brand peace-header"
-              style="margin-top: -10px;"
-              href="/"
-              >Peace Estate</a
-            ><button
-              class="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <form method="get" class="form-inline mr-4 ml-4">
-              <div class="form-group header-form d-flex align-items-center">
-                <img
-                  src="../images/search.jpeg"
-                  width="16px"
-                  height="16px"
-                  alt="Search"
-                  style="opacity: 0.5;"
-                /><input
-                  type="text"
-                  placeholder="Search residents..."
-                  class="form-control header-input bg-white"
-                />
-              </div>
-            </form>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav d-flex justify-content-between icons">
-                <li class="nav-item">
-                  <img src="../images/message.svg" alt="Message" />
-                </li>
-                <li class="nav-item">
-                  <img src="../images/Bell.svg" alt="Bell" srcset="" />
-                </li>
-                <li class="nav-item">
-                  <img src="../images/Person.svg" alt="You" srcset="" />
-                </li>
-                <li class="nav-item d-flex flex-row">
-                  <div class="d-flex flex-column" style="width: inherit;">
-                    <p style="font-size: 16px;">Frederick Damascus</p>
-                    <p style="font-size: 10px; margin-top: -1.5em;">ADMIN</p>
-                  </div>
-                </li>
-                <li class="nav-item">
-                  <img
-                    src="../images/chevron-down.svg"
-                    width="14px"
-                    height="20px"
-                    alt="Down"
-                  />
-                </li>
-              </ul>
+
+        <!-- Sidebar -->
+        <nav id="sidebar" class="">
+
+        </nav>
+        <!-- Page Content -->
+        <div id="content">
+            <button type="button" id="sidebarCollapse" class="btn sidebar-btn p-1">
+          <i class="fas fa fa-align-left"></i></button>
+            <!--INNER CONTENT CONTAINER-->
+            <div id="header"></div>
+
+            <!--DIV WITH PANEL WITH BREADCRUMB-->
+            <div class="d-flex justify-content-between align-items-center" style="border: none; padding: 0 1.5em 0 5em; background: #e0ede6;height: 35px; margin-top: -1.5em; margin-bottom: 3em; width: 100%;">
+                <p style="color: #49A347;font-size: 18px; margin-top: 14px;">
+                    Dashboard
+                </p>
+                <ul class="list-group d-flex flex-row justify-content-md-between" style="list-style: none;">
+                    <li style="color: #49A347;font-size: 14px;">Home</li>
+                    <li style="padding: 0 10px 0 10px;">></li>
+                    <li style="color: #ABAFB3;font-size: 14px;">Dashboard</li>
+                </ul>
             </div>
-          </nav>
-        </div>
-        <!--DIV WITH PANEL WITH BREADCRUMB-->
-        <div
-          class="d-flex justify-content-between align-items-center"
-          style="border: none; padding: 0 1.5em 0 5em; background: #e0ede6;height: 35px; margin-top: -1.5em; margin-bottom: 3em; width: 100%;"
-        >
-          <p style="color: #49A347;font-size: 18px; margin-top: 14px;">
-            Dashboard
-          </p>
-          <ul
-            class="list-group d-flex flex-row justify-content-md-between"
-            style="list-style: none;"
-          >
-            <li style="color: #49A347;font-size: 14px;">Home</li>
-            <li style="padding: 0 10px 0 10px;">></li>
-            <li style="color: #ABAFB3;font-size: 14px;">Dashboard</li>
-          </ul>
-        </div>
 
-        <div class="d-flex flex-row justify-content-md-around">
+            <div class="d-flex flex-row justify-content-md-around">
 
-          <!--CONTENT CONTAINER-->
-          <div class="container">
-            <div class="row">
+                <!--CONTENT CONTAINER-->
+                <div class="container">
+                    <div class="row">
 
-              <!--FIRST COLUMN-->
-              <div class="col">
-                <div class="d-flex justify-content-between card-column">
-                  <!--FIRST CARD COLUMN-->
-                  <div class="d-flex flex-column">
-                    <div
-                      class="card shadow p-3 mb-5 bg-white rounded"
-                      style="border: none;"
-                    >
-                      <div class="card-body" style="padding: 5px;">
-                        <h5 class="card-title">Total Residents</h5>
-                        <div
-                          class="d-flex justify-content-between align-items-start"
-                        >
-                          <p style="font-size: 28px;">16</p>
-                          <div
-                            style="border-radius: 50%; padding: 13px; background-color: #edf6ed;"
-                          >
-                            <img
-                              src="../images/VectorPeople.svg"
-                              alt="People"
-                            />
-                          </div>
-                        </div>
-                        <div
-                          class="d-flex justify-content-start align-items-end"
-                          style="margin-bottom: -10px;"
-                        >
-                          <p class="mr-2">
-                            &#8599; +<span style="font-size: #50ddb8;"
-                              >50%</span
+                        <!--FIRST COLUMN-->
+                        <div class="col">
+                            <div class="d-flex justify-content-between card-column">
+                                <!--FIRST CARD COLUMN-->
+                                <div class="d-flex flex-column">
+                                    <div class="card shadow p-3 mb-5 bg-white rounded" style="border: none;">
+                                        <div class="card-body" style="padding: 5px;">
+                                            <h5 class="card-title">Total Residents</h5>
+                                            <div class="d-flex justify-content-between align-items-start">
+                                                <p style="font-size: 28px;">16</p>
+                                                <div style="border-radius: 50%; padding: 13px; background-color: #edf6ed;">
+                                                    <img src="../images/VectorPeople.svg" alt="People" />
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-start align-items-end" style="margin-bottom: -10px;">
+                                                <p class="mr-2">
+                                                    &#8599; +<span style="font-size: #50ddb8;">50%</span
                             >
                           </p>
                           <p style="font-size: 10px; color: #ABAFB3;">
@@ -485,6 +311,12 @@
         });
       });
       </script>
+      <script>
+      $(function(){
+      $("#sidebar").load("./layout/sidebar.html"); 
+      $("#header").load("./layout/header.html"); 
+      });
+      </script> 
       <script>
       $(document).ready(function() {
         $(".toast").toast("show");
