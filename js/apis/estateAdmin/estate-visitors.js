@@ -1,0 +1,60 @@
+let estate_guard = JSON.parse(sessionStorage.getItem('estateId'));
+let estate_id = estate_guard.home.estate_id;
+
+const visitorsTable = document.getElementById("visitors");
+
+const url = `http://52.40.191.249/api/v1/visitors/${estate_id}`;
+
+//Fetch data
+const fetchData = async () => {
+    // spinner.style.display = "block";
+    try {
+      let response = await fetch(url, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: token
+        }
+      });
+      let data = await response.json();
+      const { visitors } = data;
+      let count = 0;
+      return visitors.map(visitor => {
+        const {
+          name,
+          phone_no,
+          image,
+          visit_count
+        } = visitor;
+        count++;
+
+        visitorsTable.innerHTML += `<tr class="input">
+                            <th scope= "row">${count}
+                            </th>
+                            <td class="shift-name">
+                                <img class="img-fluid rounded-circle" src="${image}"><p>${name}</p>
+                            </td>
+                            <td>
+                                <p>Morning</p>
+                            </td>
+                            <td class="shift-phone">
+                                <p>${phone_no}</p>
+                            </td>
+                            <td>
+                                <p>${visit_count}</p>
+                            </td>
+                            <td>
+                                <input type="submit" name="view" value="view" class="green_button view">
+                            </td>
+                        </tr>`;
+      });
+    } catch (err) {
+      Swal.fire({
+        title: "Unexpected Error",
+        html: `<p style="color:tomato; font-size:17px;">This may be due to internet connection not available, please turn on internet connection or referesh to try again, Thank you!</p>`,
+        confirmButtonText: "Close"
+      });
+    }
+  };
+  //call fetch
+  fetchData();

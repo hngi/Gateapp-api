@@ -9,7 +9,7 @@ Import Note: The base_url.js hold every every third party base url origin and ap
 
 class Routes {
   get api_origin() {
-    return "https://gateappapi.herokuapp.com/";
+    return "https://api.gateguard.co/";
   }
   //Authentication Paths
   get signin() {
