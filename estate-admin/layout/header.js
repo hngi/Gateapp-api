@@ -50,9 +50,24 @@ document.write(
               <p style="color: #858997; font-size: 14px">12 min ago</p>
             </div>
           </div>
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
+          <div class="d-flex flex-row mb-3 align-items-center">
+            <div style="background-color: #e6f4ff; border-radius: 50%; padding: 15px 15px;"  class="mr-3" >    
+              <img src="../images/Group 3.png" width="24px" height="24px" alt="People" />
+            </div>
+            <div class="d-flex flex-column justfity-content">
+              <p style="color: #141821; font-size: 16px; margin-bottom: -2px">New message from John</p>
+              <p style="color: #858997; font-size: 14px">12 min ago</p>
+            </div>
+          </div>
+          <div class="d-flex flex-row mb-3 align-items-center">
+            <div style="background-color: #e6f4ff; border-radius: 50%; padding: 15px 15px;"  class="mr-3" >    
+              <img src="../images/Group 3.png" width="24px" height="24px" alt="People" />
+            </div>
+            <div class="d-flex flex-column justfity-content">
+              <p style="color: #141821; font-size: 16px; margin-bottom: -2px">New message from John</p>
+              <p style="color: #858997; font-size: 14px">12 min ago</p>
+            </div>
+          </div>
           </div>
         </li>
         <li class="nav-item dropdown bell">
@@ -94,13 +109,30 @@ document.write(
             <p style="font-size: 10px; margin-top: -1.5em;">ADMIN</p>
           </div>
         </li>
-        <li class="nav-item">
+        <li class="nav-item dropdown arrow">
+          <div style="cursor: pointer;" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img
             src="../images/chevron-down.svg"
             width="14px"
             height="20px"
             alt="Down"
+            style="margin-left: -4px;"
           />
+          </div>
+          <div class="dropdown-menu ml-2 shadow-lg p-3 mb-5 bg-white rounded w3-animate-left" aria-labelledby="dropdownMenuButton" style="width: 13.93rem;">
+            <div class="d-flex flex-row mb-3 align-items-center">
+              <div style="background-color: #edf6ed; border-radius: 50%; padding: 5px 7px;" class="mr-2">
+                <img src="../images/Settings.png" width="16px" height="16px" class="mb-1" alt="People" />
+              </div>
+              <p style="color: #686868; font-size: 14px" class="mt-2">Profile settings</p>
+            </div>
+            <div class="d-flex flex-row mb-3 align-items-center" >
+              <div style="background-color: #edf6ed; border-radius: 50%; padding: 5px 7px;" class="mr-2">
+                <img src="../images/Logout2.png" width="15px" height="15px" class="mb-1" alt="People" />
+              </div>
+              <p style="color: #686868; font-size: 14px" class="mt-2">Logout</p>
+            </div>
+          </div>
         </li>
       </ul>
     </div>
