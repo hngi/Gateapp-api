@@ -39,8 +39,37 @@ document.write(
         <li class="nav-item">
           <img src="../images/message.svg" alt="Message" />
         </li>
-        <li class="nav-item">
-          <img src="../images/Bell.svg" alt="Bell" srcset="" />
+        <li class="nav-item dropdown bell">
+          <div class id="dropdownMenuButton" style="cursor: pointer;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="../images/Bell.svg" alt="Bell" style="margin-left: -4px;" />
+            </div>
+            <div class="dropdown-menu ml-2 shadow-lg p-3 mb-5 bg-white rounded w3-animate-left" style="width: 27.56rem;" aria-labelledby="dropdownMenuButton">
+              <div class="d-flex flex-row justify-content-between align-items-center mb-3">
+                <p style="color: #858997; font-size: 16px">3 Notifications</p>
+                <p style="color: #858997; font-size: 16px">Clear all</p>
+              </div>
+              <div class="d-flex flex-row mb-3">
+                  <img src="../images/VectorTools.svg" width="60px" height="60px" class="pl-3 pr-3 mr-3" alt="People" style="background-color: #e6f4ff; border-radius: 50%" />
+                <div class="d-flex flex-column justfity-content">
+                  <p style="color: #141821; font-size: 16px; margin-bottom: -2px">New service provider application received</p>
+                  <p style="color: #858997; font-size: 14px">12 min ago</p>
+                </div>
+              </div>
+              <div class="d-flex flex-row mb-3">
+                  <img src="../images/flat-color-icons_money-transfer.svg" width="60px" height="60px" class="pl-3 pr-3 mr-3" alt="People" style="background-color: #e6f4ff; border-radius: 50%" />
+                <div class="d-flex flex-column justfity-content">
+                  <p style="color: #141821; font-size: 16px; margin-bottom: -2px">Bill payment</p>
+                  <p style="color: #858997; font-size: 14px">39 min ago</p>
+                </div>
+              </div>
+              <div class="d-flex flex-row">
+                  <img src="../images/VectorStamp.svg" width="60px" height="60px" class="pl-3 pr-3 mr-3" alt="People" style="background-color: #e6f4ff; border-radius: 50%" />
+                <div class="d-flex flex-column justfity-content">
+                  <p style="color: #141821; font-size: 16px; margin-bottom: -2px">Visitor checked in</p>
+                  <p style="color: #858997; font-size: 14px">2 hours ago</p>
+                </div>
+              </div>
+            </div>
         </li>
         <li class="nav-item d-flex flex-row align-items-start justify-content-between">
           <img src="../images/Person.svg" alt="You" srcset=""  style="margin-right: 10px;" />
