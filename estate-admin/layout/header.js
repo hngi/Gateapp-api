@@ -36,12 +36,28 @@ document.write(
     </form>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav d-flex justify-content-between icons">
-        <li class="nav-item">
-          <img src="../images/message.svg" alt="Message" />
+        <li class="nav-item dropdown message">
+          <div class id="dropdownMenuButton" style="cursor: pointer;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="../images/message.svg" alt="Message" style="margin-left: -8px;" />
+          </div>
+          <div class="dropdown-menu ml-2 shadow-lg p-3 mb-5 bg-white rounded w3-animate-left" style="width: 27.56rem;" aria-labelledby="dropdownMenuButton">
+          <div class="d-flex flex-row mb-3 align-items-center">
+            <div style="background-color: #e6f4ff; border-radius: 50%; padding: 15px 15px;"  class="mr-3" >    
+              <img src="../images/Group 3.png" width="24px" height="24px" alt="People" />
+            </div>
+            <div class="d-flex flex-column justfity-content">
+              <p style="color: #141821; font-size: 16px; margin-bottom: -2px">New message from John</p>
+              <p style="color: #858997; font-size: 14px">12 min ago</p>
+            </div>
+          </div>
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
         </li>
         <li class="nav-item dropdown bell">
-          <div class id="dropdownMenuButton" style="cursor: pointer;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img src="../images/Bell.svg" alt="Bell" style="margin-left: -4px;" />
+            <div class id="dropdownMenuButton" style="cursor: pointer;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img src="../images/Bell.svg" alt="Bell" style="margin-left: -4px;" />
             </div>
             <div class="dropdown-menu ml-2 shadow-lg p-3 mb-5 bg-white rounded w3-animate-left" style="width: 27.56rem;" aria-labelledby="dropdownMenuButton">
               <div class="d-flex flex-row justify-content-between align-items-center mb-3">
@@ -51,7 +67,7 @@ document.write(
               <div class="d-flex flex-row mb-3">
                   <img src="../images/VectorTools.svg" width="60px" height="60px" class="pl-3 pr-3 mr-3" alt="People" style="background-color: #e6f4ff; border-radius: 50%" />
                 <div class="d-flex flex-column justfity-content">
-                  <p style="color: #141821; font-size: 16px; margin-bottom: -2px">New service provider application received</p>
+                  <p style="color: #141821; font-size: 16px; margin-bottom: -2px">New service provider received</p>
                   <p style="color: #858997; font-size: 14px">12 min ago</p>
                 </div>
               </div>
@@ -62,7 +78,7 @@ document.write(
                   <p style="color: #858997; font-size: 14px">39 min ago</p>
                 </div>
               </div>
-              <div class="d-flex flex-row">
+              <div class="d-flex flex-row mb-3">
                   <img src="../images/VectorStamp.svg" width="60px" height="60px" class="pl-3 pr-3 mr-3" alt="People" style="background-color: #e6f4ff; border-radius: 50%" />
                 <div class="d-flex flex-column justfity-content">
                   <p style="color: #141821; font-size: 16px; margin-bottom: -2px">Visitor checked in</p>
