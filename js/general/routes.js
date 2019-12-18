@@ -201,4 +201,8 @@ class Routes {
   banVisitor(id){
     return `api/v1/visitor/${id}/ban`;
   }
+  // Estate Admin Routes 
+  get estateGuards(){
+    return `api/v1/estate/`
+  }
 }
