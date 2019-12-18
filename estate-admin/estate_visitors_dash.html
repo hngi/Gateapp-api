@@ -24,7 +24,7 @@
         <!-- Sidebar  -->
         <!-- Sidebar  -->
         <nav id="sidebar" class="">
-
+            <script src="./layout/sidebar.js"></script>
         </nav>
 
         <!-- Page Content  -->
@@ -33,7 +33,10 @@
                 <i class="fas fa fa-align-left"></i>
             </button>
             <!-- top nav starts here -->
-            <div id="header"></div>
+            <div id="header">
+                <script src="./layout/header.js"></script>
+
+            </div>
 
             <!--DIV WITH PANEL WITH BREADCRUMB-->
             <div class="d-flex justify-content-between align-items-center" style="border: none; padding: 0 1.5em 0 5em; background: #e0ede6;height: 35px; margin-top: -1.5em; margin-bottom: 3em; width: 100%;">
@@ -94,14 +97,7 @@
         });
     });
 </script>
-<!---Include in all pages for Header and Side bar-->
-<script>
-    $(function() {
-        $("#sidebar").load("./layout/sidebar.html");
-        $("#header").load("./layout/header.html");
-    });
-</script>
-<!--************************************************-->
+
 <script>
     $(document).ready(function() {
         $('.toast').toast('show');

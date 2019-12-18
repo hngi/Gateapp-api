@@ -1,3 +1,4 @@
+document.write(`
 <div class="col-12 dash-logo">
     <img class="ml-3 mt-3" src="../images/GateGuardLogo.svg" alt="" />
 </div>
@@ -26,4 +27,4 @@
     <li>
         <a href="" data-toggle="collapse" aria-expanded="false"><img src="../images/Icon.svg" alt="Settings" style="margin-right: 20px; margin-bottom: 6px;" />Settings</a>
     </li>
-</ul>
+</ul>`)
