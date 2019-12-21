@@ -68,6 +68,9 @@ class RegisterController extends Controller
                     'device_id' => $request->input('device_id'),
                     'verifycode' => $verifycode
                 ]);
+
+                $this->initUserSettings($user);
+                
                 $msg['status'] = 201;
                 $msg['app-hint'] = 'This is a new user!';
                 
@@ -129,5 +132,19 @@ class RegisterController extends Controller
                 'device_id'    => ':attribute please give the uniqid device token',
             ];
         $this->validate($request, $rules, $messages);
+    }
+
+    /**
+    *  Initialise user settings
+    **/
+    private function initUserSettings(User $user)
+    {
+        $data = [
+            'app_notification' => true,
+            'push_notification' => true,
+            'location_tracking' => true,
+        ];
+
+        $user->settings()->create($data);
     }
 }
