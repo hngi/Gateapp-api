@@ -175,8 +175,21 @@ ul ul a {
   border-radius: 8px;
 }
 
+.header-form2 {
+  /* border: 1px solid #000; */
+  background: #F1F5F8;
+  border-radius: 8px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 8px;
+}
+
 .header-input {
   background: #FAFBFD;
+}
+
+.header-input2 {
+  background: #F1F5F8;
 }
 
 .form-control {
@@ -189,6 +202,19 @@ ul ul a {
   border: none;
   outline: none;
   box-shadow: none;
+}
+
+.form-control2 {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.form-control2:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+  background: #F1F5F8;
 }
 
 .breadcrumb li::before {
@@ -244,9 +270,15 @@ ul ul a {
 }
 
 .arrow {
-    margin-bottom: 23px;
+  margin-bottom: 23px;
 }
 
+
+tr.highlight {
+  border-top: 10px solid;
+  border-bottom: 10px solid;
+  border-color: transparent;
+}
 
 /* ---------------------------------------------------
     MEDIAQUERIES
