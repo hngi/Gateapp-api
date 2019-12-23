@@ -55,6 +55,7 @@
                     <table class="table top_section">
                         <tr>
                             <th scope="col">
+                                <h3><span class="estate_name"></span> Visitors</h3>
                             </th>
                         </tr>
                     </table>
@@ -62,7 +63,7 @@
             </section>
 
             <section>
-                <table class="table" id="visitors">
+                <table class="table">
                     <tr>
                         <th scope="row">
                             <span class="fa fa-sort"> #</span>
@@ -81,6 +82,25 @@
                         </th>
                     </tr>
                 </table>
+                <table class="table" id="visitors">
+                    <!-- data goes here -->
+                </table>
+                <nav aria-label="Table navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                        <button class="page-link" tabindex="-1" id="firstBtn">First page</button>
+                        </li>
+                        <li class="page-item">
+                        <button class="page-link" tabindex="-1" id="prevBtn">Previous</button>
+                        </li>
+                        <li class="page-item">
+                        <button class="page-link" id="nextBtn">Next</button>
+                        </li>
+                        <li class="page-item">
+                        <button class="page-link" id="lastBtn">Last page</button>
+                        </li>
+                    </ul>
+                </nav>
             </section>
         </div>
 
@@ -89,6 +109,10 @@
 <!--Import third party cdn-->
 <script src="../js/general/third_party_cdn.js"></script>
 <script src="../js/general/placeholder.js"></script>
+<!--Import the base url for the project-->
+<script src="../js/general/routes.js"></script>
+<script src="../js/apis/estateAdmin/insertVisitorsData.js"></script>
+<script src="../js/apis/estateAdmin/pagination.js"></script>
 <script src="../js/apis/estateAdmin/estate-visitors.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {

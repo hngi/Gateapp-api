@@ -67,7 +67,7 @@
             </section>
 
             <section>
-                <table class="table" id="gatemenTable">
+                <table class="table">
                     <tr>
                         <th scope="row">
                             <span class="fa fa-sort"> #</span>
@@ -87,6 +87,25 @@
                     </tr>
 
                 </table>
+                <table class="table" id="gatemenTable">
+                    <!-- date goes here -->
+                </table>
+                <nav aria-label="Table navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                        <button class="page-link" tabindex="-1" id="firstBtn">First page</button>
+                        </li>
+                        <li class="page-item">
+                        <button class="page-link" tabindex="-1" id="prevBtn">Previous</button>
+                        </li>
+                        <li class="page-item">
+                        <button class="page-link" id="nextBtn">Next</button>
+                        </li>
+                        <li class="page-item">
+                        <button class="page-link" id="lastBtn">Last page</button>
+                        </li>
+                    </ul>
+                </nav>
             </section>
 
         </div>
@@ -100,6 +119,8 @@
 <script src="../js/general/placeholder.js"></script>
 <!--Import the base url for the project-->
 <script src="../js/general/routes.js"></script>
+<script src="../js/apis/estateAdmin/insertGuardsData.js"></script>
+<script src="../js/apis/estateAdmin/pagination.js"></script>
 <script src="../js/apis/estateAdmin/estate-guards.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
