@@ -49,7 +49,7 @@ const loginApi = (event, loginForm) => {
                     location.replace('super-admin/dashboard.html');
                 }else {
                     location.replace('estate-admin/dashboard-initial.html');
-                    sessionStorage.setItem('estateId', JSON.stringify(data));
+                    sessionStorage.setItem('estateGuard', JSON.stringify(data));
                 }
 
             }
