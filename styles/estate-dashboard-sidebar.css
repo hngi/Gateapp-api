@@ -207,6 +207,47 @@ ul ul a {
   width: 15.5rem;
 }
 
+.dropdown-menu:before {
+  position: absolute;
+  top: -7px;
+  left: 9px;
+  display: inline-block;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #fff;
+  border-left: 7px solid transparent;
+  border-bottom-color: none;
+  content: '';
+}
+
+.dropdown-menu:after {
+  position: absolute;
+  top: -6px;
+  left: 10px;
+  display: inline-block;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #ffffff;
+  border-left: 6px solid transparent;
+  content: '';
+}
+
+.dropdown-menu {
+  border: 0;
+  margin-right: 9px !important;
+}
+
+.bell {
+  margin-bottom: 23px;
+}
+
+.message {
+  margin-bottom: 23px;
+}
+
+.arrow {
+    margin-bottom: 23px;
+}
+
+
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
@@ -280,4 +321,17 @@ ul ul a {
   #sidebarCollapse {
     display: none;
   }
+}
+
+@media (min-width: 768px) and (max-width: 870px) {
+
+  .header-form {
+    margin-left: -22%;
+    margin-bottom: 20px;
+
+    position: fixed;
+    top: 8%;
+    width: unset;
+  }
+
 }
