@@ -165,6 +165,8 @@ ul ul a {
 .peace-header {
   font-size: 26px;
   color: #49A347;
+  display: flex;
+  justify-content: space-between;
 }
 
 .header-form {
@@ -246,6 +248,29 @@ ul ul a {
 }
 
 .dropdown-menu:after {
+  position: absolute;
+  top: -6px;
+  left: 10px;
+  display: inline-block;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #ffffff;
+  border-left: 6px solid transparent;
+  content: '';
+}
+
+.dropdown-menu-arrow:before {
+  position: absolute;
+  top: -7px;
+  left: 9px;
+  display: inline-block;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #fff;
+  border-left: 7px solid transparent;
+  border-bottom-color: none;
+  content: '';
+}
+
+.dropdown-menu-arrow:after {
   position: absolute;
   top: -6px;
   left: 10px;
@@ -338,6 +363,10 @@ tr.highlight {
     width: unset;
   }
 
+  .sec-col-panels {
+    width: inherit !important;
+  }
+
 }
 
 @media (min-width: 576px) and (max-width: 769px) {
@@ -352,6 +381,10 @@ tr.highlight {
 
   #sidebarCollapse {
     display: none;
+  }
+
+  .sec-card-col {
+    margin-left: 2.3em;
   }
 }
 
