@@ -19,22 +19,26 @@ document.write(
     >
       <span class="navbar-toggler-icon"></span>
     </button>
+    <div style="width: 100%;">
     <form method="get" class="form-inline mr-4 ml-4">
-      <div class="form-group header-form d-flex align-items-center">
+    <div class="form-group header-form d-flex flex-row align-items-center" style="width: 100%; background: #FAFBFD;">
         <img
           src="../images/search.jpeg"
           width="16px"
           height="16px"
           alt="Search"
           style="opacity: 0.5;"
-        /><input
+        />
+        <input
           type="text"
-          placeholder="Search residents..."
+          placeholder="Search residents or guards..."
+          style="width: 90%; border: none; background: #FAFBFD !important;"
           class="form-control header-input bg-white"
         />
       </div>
     </form>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    </div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" style="width: 100%; display: flex; justify-content: space-between">
       <ul class="navbar-nav d-flex justify-content-between icons">
         <li class="nav-item dropdown message">
           <div class id="dropdownMenuButton" style="cursor: pointer;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -109,7 +113,7 @@ document.write(
             <p style="font-size: 10px; margin-top: -1.5em;">ADMIN</p>
           </div>
         </li>
-        <li class="nav-item dropdown arrow">
+        <li class="nav-item dropdown arrow" style="margin-left: .7em;">
           <div style="cursor: pointer;" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img
             src="../images/chevron-down.svg"
@@ -124,7 +128,7 @@ document.write(
               <div style="background-color: #edf6ed; border-radius: 50%; padding: 5px 7px;" class="mr-2">
                 <img src="../images/Settings.png" width="16px" height="16px" class="mb-1" alt="People" />
               </div>
-              <p style="color: #686868; font-size: 14px" class="mt-2">Profile settings</p>
+              <p style="color: #686868; font-size: 14px" class="mt-2">Profile <br /> settings</p>
             </div>
             <div class="d-flex flex-row mb-3 align-items-center" >
               <div style="background-color: #edf6ed; border-radius: 50%; padding: 5px 7px;" class="mr-2">
