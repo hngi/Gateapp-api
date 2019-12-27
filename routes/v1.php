@@ -3,6 +3,7 @@
 
 //Authentication Routes ******************************************************
 
+use App\Http\Controllers\EstateBills\Residents\ProofOfPaymentController;
 use App\Http\Controllers\VisitorController;
 
 Route::post('register/resident', 'Auth\RegisterController@resident'); //has a role of 1
@@ -215,14 +216,16 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         Route::middleware('estateAdmin')->namespace('EstateBills\Admin')->group( function () {
             Route::post('estate/{estate_id}', AddBills::class);
         });
+        Route::get('estateAdmin/{estate_id}','EstateBills\Residents\GetAllBills' )->middleware('estateAdmin');
 
         // for resident-user satisfied privileges
         Route::middleware('checkResident')->namespace('EstateBills\Residents')->group( function () {
-            Route::post('estate/{estate_id}', GetAllBills::class);
+            Route::get('estate/{estate_id}', GetAllBills::class);
             Route::post('subscribe/{estate_bills}', 'Subscribe');
-            Route::post('subscribed', 'Subscribe@subscribed');
+            Route::get('subscribed', 'Subscribe@subscribed');
             Route::post('pending', 'PendingBills');
             Route::post('paid', 'PaidBills');
+            Route::post('proof/{resident_bill_id}', 'ProofOfPaymentController@submit');
         });
     });
 
