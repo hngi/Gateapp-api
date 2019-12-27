@@ -52,7 +52,7 @@ class AddBills extends Controller
         $validated = $request->only('item', 'icon_link', 'base_amount');
 
         // Reference and fill the estate id
-        $validated['estates_id'] = (int) $estate_id;
+        $validated['estate_id'] = (int) $estate_id;
 
         // Save new entry to record
         try 
