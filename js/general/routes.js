@@ -185,7 +185,7 @@ class Routes {
   }
   //All visitors
   get allVisitors() {
-    return `api/v1/visitors`;
+    return `api/v1/visitors/`;
   }
   //scheduled visits
   scheduledVisits(id) {

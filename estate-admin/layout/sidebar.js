@@ -21,10 +21,10 @@ document.write(`
     <li>
         <a onclick="location.href='payments_overview.html'" data-toggle="collapse" aria-expanded="false"><img src="../images/ic-twotone-payment.svg" alt="Payments" style="margin-right: 20px; margin-bottom: 6px;" />Payments</a>
     </li>
-    <li>
+    <!--<li>
         <a href="" data-toggle="collapse" aria-expanded="false"><img src="../images/mdi-message-reply.svg" alt="Messages" style="margin-right: 20px; margin-bottom: 6px;" />Messages</a>
     </li>
     <li>
         <a href="" data-toggle="collapse" aria-expanded="false"><img src="../images/Icon.svg" alt="Settings" style="margin-right: 20px; margin-bottom: 6px;" />Settings</a>
-    </li>
-</ul>`)
+    </li>-->
+</ul>`);
