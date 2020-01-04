@@ -3,9 +3,9 @@ document.write(
 <div class="innerContent">
   <nav
     id="header"
-    class="navbar navbar-toggleable-md navbar-inverse navbar-expand-lg d-flex justify-content-md-around align-items-start mb-1"
+    class="navbar navbar-default navbar-dark navbar-expand-lg d-flex justify-content-md-around align-items-start mb-4"
   >
-    <a class="navbar-brand peace-header" style="margin-top: -10px;" href="/"
+    <a class="navbar-brand peace-header" style="margin-top: -10px;" href="./dashboard-initial.html"
       >Peace Estate
     </a>
     <button
@@ -16,33 +16,30 @@ document.write(
       aria-controls="navbarSupportedContent"
       aria-expanded="false"
       aria-label="Toggle navigation"
+      style="background: #49A347;"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div style="width: 100%;">
     <form method="get" class="form-inline mr-4 ml-4">
-    <div class="form-group header-form d-flex flex-row align-items-center" style="width: 100%; background: #FAFBFD;">
+      <div class="form-group header-form d-flex align-items-center">
         <img
           src="../images/search.jpeg"
           width="16px"
           height="16px"
           alt="Search"
           style="opacity: 0.5;"
-        />
-        <input
+        /><input
           type="text"
-          placeholder="Search residents or guards..."
-          style="width: 90%; border: none; background: #FAFBFD !important;"
+          placeholder="Search residents..."
           class="form-control header-input bg-white"
         />
       </div>
     </form>
-    </div>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent" style="width: 100%; display: flex; justify-content: space-between">
-      <ul class="navbar-nav d-flex justify-content-between icons">
-        <li class="nav-item dropdown message">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav d-flex justify-content-between icons" style="margin-top: 1.7em;">
+        <li class="nav-item dropdown message ml-2 mr-1">
           <div class id="dropdownMenuButton" style="cursor: pointer;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img src="../images/message.svg" alt="Message" style="margin-left: -8px;" />
+            <img src="../images/message.svg" alt="Message" id="message" style="margin-left: -8px;" />
           </div>
           <div class="dropdown-menu ml-2 shadow-lg p-3 mb-5 bg-white rounded w3-animate-left" style="width: 27.56rem;" aria-labelledby="dropdownMenuButton">
           <div class="d-flex flex-row mb-3 align-items-center">
@@ -76,7 +73,7 @@ document.write(
         </li>
         <li class="nav-item dropdown bell">
             <div class id="dropdownMenuButton" style="cursor: pointer;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img src="../images/Bell.svg" alt="Bell" style="margin-left: -4px;" />
+              <img src="../images/Bell.svg" alt="Bell" id="bell" style="margin-left: -4px;" />
             </div>
             <div class="dropdown-menu ml-2 shadow-lg p-3 mb-5 bg-white rounded w3-animate-left" style="width: 27.56rem;" aria-labelledby="dropdownMenuButton">
               <div class="d-flex flex-row justify-content-between align-items-center mb-3">
@@ -106,14 +103,14 @@ document.write(
               </div>
             </div>
         </li>
-        <li class="nav-item d-flex flex-row align-items-start justify-content-between">
+        <li class="nav-item d-flex flex-row align-items-start justify-content-between" id="frederick">
           <img src="../images/Person.svg" alt="You" srcset=""  style="margin-right: 10px;" />
           <div class="d-flex flex-column" style="width: inherit;">
             <p style="font-size: 16px;">Frederick Damascus</p>
             <p style="font-size: 10px; margin-top: -1.5em;">ADMIN</p>
           </div>
         </li>
-        <li class="nav-item dropdown arrow" style="margin-left: .7em;">
+        <li class="nav-item dropdown arrow ml-3">
           <div style="cursor: pointer;" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img
             src="../images/chevron-down.svg"
@@ -121,14 +118,15 @@ document.write(
             height="20px"
             alt="Down"
             style="margin-left: -4px;"
+            id="arrow"
           />
           </div>
-          <div class="dropdown-menu ml-2 shadow-lg p-3 mb-5 bg-white rounded w3-animate-left" aria-labelledby="dropdownMenuButton" style="width: 13.93rem;">
+          <div class="dropdown-menu ml-2 shadow-lg p-3 mb-5 bg-white rounded w3-animate-left" aria-labelledby="dropdownMenuButton" >
             <div class="d-flex flex-row mb-3 align-items-center">
               <div style="background-color: #edf6ed; border-radius: 50%; padding: 5px 7px;" class="mr-2">
                 <img src="../images/Settings.png" width="16px" height="16px" class="mb-1" alt="People" />
               </div>
-              <p style="color: #686868; font-size: 14px" class="mt-2">Profile <br /> settings</p>
+              <p style="color: #686868; font-size: 14px" class="mt-2">Profile settings</p>
             </div>
             <div class="d-flex flex-row mb-3 align-items-center" >
               <div style="background-color: #edf6ed; border-radius: 50%; padding: 5px 7px;" class="mr-2">
