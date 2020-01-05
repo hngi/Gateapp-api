@@ -181,7 +181,7 @@ class Routes {
   }
   //All residents
   get allResidents() {
-    return `api/v1/user/all`;
+    return `api/v1/user/all/`;
   }
   //All visitors
   get allVisitors() {

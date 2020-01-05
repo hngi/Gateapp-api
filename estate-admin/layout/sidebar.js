@@ -7,7 +7,7 @@ document.write(`
         <img src="../images/mdi-view-dashboard.svg" alt="Dashboard" style="margin-right: 20px; margin-bottom: 6px;" />Dashboard
     </p>
     <li class="">
-        <a href="" data-toggle="collapse" aria-expanded="false"><img src="../images/mdi-account-group.svg" alt="Admins" style="margin-right: 20px; margin-bottom: 6px;" />Residents</a>
+        <a onclick="location.href='dashboard-residents.html'" data-toggle="collapse" aria-expanded="false"><img src="../images/mdi-account-group.svg" alt="Admins" style="margin-right: 20px; margin-bottom: 6px;" />Residents</a>
     </li>
     <li>
         <a onclick="location.href='estate_guards_dash.html'" data-toggle="collapse" aria-expanded="false"><img src="../images/OfficerAsset 1.svg" alt="Guards" style="margin-right: 20px; margin-bottom: 6px;" />Guards</a>
