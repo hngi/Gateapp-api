@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\ResidentBill;
+use App\EstateBills;
 
 class RaveCardPayController extends Controller
 {
@@ -18,22 +22,30 @@ class RaveCardPayController extends Controller
             'amount'  =>  ['required', 'string'],
             'expiryyear'  =>  ['required', 'string', 'max:2'],
             'expirymonth' => ['required', 'string', 'max:2'],
-            'email'  =>  ['required', 'email'],
-        ]);
-
-        $data = $this->payviacard($request, $session);
+			'email'  =>  ['required', 'email'],
+			'bill_id' => ['required']
+		]);
+		$data = $this->payviacard($request, $session);
 		return $data;
-
-    }
-
+	}
 
     //Initiate the payment begin process 
 	public function initaiteCardPay(Request $request) {
 
-	    $response = $this->triggerProcess($request);
-	    return response()->json(['report' => $response], $response['status']);
+		//Check if the user is paying the rigth amount
+		$check_amt = $this->checkBillAmount($request);
+		if($check_amt == 'error'){
+			return response()->json(['message' => 'Incorrect Amount for bill payment'], 400);
+		}
+		
+		if($check_amt == 'paid'){
+			return response()->json(['message' => 'Payment already made for this bill'], 422);
+		}
+		$response = $this->triggerProcess($request);
+		//Call the bill information
+		$fetchBill = $this->getBillInfo($request);
+	    return response()->json(['report' => $response, 'bill_info' => $fetchBill], $response['status']);
 	}
-
 
 
 	//Insert the card pin to and re-initiate the pay again
@@ -41,17 +53,35 @@ class RaveCardPayController extends Controller
 
 		$this->validate($request, [
             'suggested_auth' =>  ['required', 'string'],
-            "pin" =>  ['required', 'string'],
-        ]);
-	    $response = $this->triggerProcess($request, $session = 'pin_check');
-	    return response()->json(['report' => $response], $response['status']);
+            "pin" =>  ['required'],
+		]);
+		//Check if the user is paying the rigth amount
+		$check_amt = $this->checkBillAmount($request);
+		if($check_amt == 'error'){
+			return response()->json(['message' => 'Incorrect Amount for bill payment'], 400);
+		}
+		$response = $this->triggerProcess($request, $session = 'pin_check');
+		//Call the bill information
+		$fetchBill = $this->getBillInfo($request);
+	    return response()->json(['report' => $response,'bill_info' => $fetchBill], $response['status']);
+	}
+
+	public function getBillInfo($request) {
+		//Get the bill infomation form the bill table
+		$bill_id     = $request->input('bill_id');
+	
+		$bill_result = EstateBills::where('id', (int)$bill_id)  
+					   ->with('estates')
+					   ->first();
+		return $bill_result;
 	}
 
 	public function otpConfirmation(Request $request) {
 
 		$this->validate($request, [
+			'bill_id' => ['required'],
             'transaction_reference' =>  ['required', 'string'],
-            "otp" =>  ['required', 'string'],
+			"otp" =>  ['required', 'string']
         ]);
 
 	     $postdata = array(
@@ -61,13 +91,62 @@ class RaveCardPayController extends Controller
 		 );
 	     $url = env('RAVE_CARD_VERIFY_URL');
 
-	 	$response = $this->curlConnection($postdata, $url);
+		$billStore = $this->storeBill($request);
 
-	 	return response()->json(['report' => $response], $response['status']);
+		 $response  = $this->curlConnection($postdata, $url);
+		 
+		$fetchBill = $this->getBillInfo($request);
+	 	return response()->json(['report' => $response, 'bill_info' => $fetchBill], $response['status']);
 
 	}
+	public function checkBillAmount($request) {
+		//Validate the Bill Amount
+		$bill_id = $request->input('bill_id');
+		$amount  = number_format($request->input('amount'), 2);
+		$user_id     = Auth::user()->id;
 
+		$bill_result = EstateBills::where('id', (int)$bill_id)->first();
+	
+		if($amount != number_format($bill_result->base_amount, 2)) {
+			return 'error';
+		}
+		//Check if this user has already paid for a bill to prevent any futher payment
+		$resident_bill = ResidentBill::where('users_id', $user_id)
+							->where('estate_bills_id', (int)$bill_id)
+							->where('status', 1)
+							->exists();
+		if($resident_bill) {
+			return 'paid';
+		}
 
+	}
+    public function storeBill($request) {
+		//Store the bill status as successfully paid
+		$user_id     = Auth::user()->id;
+		$bill_id     = $request->input('bill_id');
+
+		try{
+			$resident_bill = ResidentBill::where('users_id', $user_id)
+							->where('estate_bills_id', (int)$bill_id)
+							->first();
+
+			if($resident_bill) {
+				$resident_bill->status = 1;
+				$resident_bill->save();
+				return 'success saved';
+			}else {
+				return [
+					'error' => 'Sorry you are not permitted to pay for this bill'
+				];
+			}
+			
+		} catch(\Exception $e) {
+			return [
+				'error' => 'An error occured while saving bill',
+				'hint' => $e->getMessage()
+			];
+		}
+	}
 
     // this is the getKey function that generates an encryption Key for you by passing your Secret Key as a parameter.
 	public function getKey($seckey) {
@@ -133,7 +212,8 @@ class RaveCardPayController extends Controller
 	     'client' => $post_enc,
 	     'alg' => '3DES-24');
 	    $url =  env('RAVE_CARD_INITIATOR_URL');
-	 	$result = $this->curlConnection($postdata, $url);
+		 $result = $this->curlConnection($postdata, $url);
+		
 	 	return $result;
 	}
 
@@ -160,7 +240,8 @@ class RaveCardPayController extends Controller
 
 	        $result = json_decode($request, true);
 	        $res['res'] = $result;
-	        $res['status'] = 200;
+			$res['status'] = 200;
+			
 	        return $res;
 	    }else{
 	        if(curl_error($ch))
