@@ -34,14 +34,18 @@ class VisitorArrivalNotification extends Notification implements ShouldQueue
         $this->visitor = $visitor;
         $this->gateman = $gateman;
         $this->checkingOut = $checkingOut;
-
-        if($checkingOut) {
-            $this->title = 'Visitor Checked Out';
-            $this->body =  "{$this->visitor->name} has left. They are being checked out by {$this->gateman->name}";
-        } else {
-            $this->title = 'Visitor Arrival';
-            $this->body = "{$this->visitor->name} has arrived to see you They are being checked in by {$this->gateman->name}";
+        if($checkingOut)
+        {
+        $this->title = 'Visitor Checked Out';
+        $this->body = $this->visitor->name .  "has left,They are being checked out by {$this->gateman->name}";
+        } else{
+             $this->title = 'Visitor Arrival';
+        $this->body = $this->visitor->name .  "has arrived to see you \n They are being checked in by {$this->gateman->name}";
         }
+
+       
+        
+        
     }
 
 
