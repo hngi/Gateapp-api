@@ -60,6 +60,7 @@ class RaveCardPayController extends Controller
 	public function otpConfirmation(Request $request) {
 
 		$this->validate($request, [
+			'bill_id' => ['required'],
             'transaction_reference' =>  ['required', 'string'],
 			"otp" =>  ['required', 'string']
         ]);
@@ -71,12 +72,12 @@ class RaveCardPayController extends Controller
 		 );
 		 $url = env('RAVE_CARD_VERIFY_URL');
 
-		$billStore = $this->storeBill($request);
+		 $billStore = $this->storeBill($request);
 
 		 $response  = $this->curlConnection($postdata, $url);
 		 
 		$fetchBill = $this->getBillInfo($request);
-	 	return response()->json(['report' => $response, 'bill_info' => $fetchBill], $response['status']);
+		return response()->json(['report' => $response, 'bill_info' => $fetchBill], $response['status']);
 
 	}
 	public function checkBillAmount($request) {
@@ -117,7 +118,7 @@ class RaveCardPayController extends Controller
 		return $bill_result;
 	}
 
-	
+
     public function storeBill($request) {
 		//Store the bill status as successfully paid
 		$user_id     = Auth::user()->id;
