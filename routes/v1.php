@@ -213,8 +213,10 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         // for estate admin satisfied privileges
         Route::middleware('estateAdmin')->namespace('EstateBills\Admin')->group( function () {
             Route::post('estate/{estate_id}', AddBills::class);
+            Route::get('paymentproofs', 'ProofOfPaymentController@showAll');
         });
         Route::get('estateAdmin/{estate_id}','EstateBills\Residents\GetAllBills' )->middleware('estateAdmin');
+       
 
         // for resident-user satisfied privileges
         Route::middleware('checkResident')->namespace('EstateBills\Residents')->group( function () {
