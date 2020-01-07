@@ -3,6 +3,12 @@ let residentsData = [];
 let visitorsData = [];
 let guardsData = [];
 let totalVisits = 0;
+let numR = [];
+let numG = [];
+
+let residentsSummary = document.getElementById('residents');
+
+let guardsSummary = document.getElementById('guards');
 
 let estate_guard = JSON.parse(sessionStorage.getItem("estateGuard"));
 console.log(estate_guard);
@@ -11,7 +17,7 @@ let estate_id = estate_guard.home.estate_id;
 const residentsUrl = `${routes.api_origin}${routes.estateGuards}${estate_id}/residents`;
 const visitorsUrl = `${routes.api_origin}${routes.allVisitors}${estate_id}`;
 const guardsUrl = `${routes.api_origin}${routes.estateGuards}${estate_id}/gateman`;
-const servicesUrl = 'https://api.gateguard.co/api/v1/statistics/estateService/';
+const servicesUrl = `${routes.api_origin}${routes.estateServiceProviders}`;
 
 
 const estateUrl = `${routes.api_origin}${routes.estateGuards}${estate_id}`;
@@ -27,7 +33,7 @@ const fetchEstate = async () => {
       }
     });
     let data = await response.json();
-    console.log(data)
+    // console.log(data)
     const { estate } = data;
     let estateName = estate.estate_name;
     // console.log(estateName)
@@ -55,9 +61,11 @@ const fetchResidentsData = async () => {
     });
     let data = await response.json();
     const { residents } = data;
-    console.log(residents)
     document.getElementById('totalResidents').innerHTML = residents.length;
     let count = 0;
+    for (let i=0; i<3; i++){
+      numR.push(Math.floor(Math.random() * residents.length));
+    }
 
     residents.map(resident => {
       const { name, phone, image, access } = resident[0];
@@ -72,6 +80,44 @@ const fetchResidentsData = async () => {
       });
       
     });
+    
+    //Residents summary
+    
+    residentsData.forEach(resident=>{
+      numR.forEach(num=>{
+        if (resident.count ===num){
+    residentsSummary.innerHTML += `
+    <div
+    class="d-flex flex-row justify-content-between align-items-center pl-4 pr-4 mb-3"
+  >
+    <div class="d-flex flex-row align-items-center">
+      <img
+        width="60px"
+        height="60px"
+        src="${resident.image}"
+        alt="You"
+        style="margin-right: 10px; border-radius: 50%;"
+      />
+      <div
+        class="d-flex flex-column"
+        style="width: inherit;"
+      >
+        <p style="font-size: 16px; color: #141821;">${resident.name}</p>
+        <p style="font-size: 14px; margin-top: -1.5em; color: #858997;">
+          BLOCK D, Flat 3
+        </p>
+      </div>
+    </div>
+    <p style="color: #858997; font-size: 14px;">
+    ${resident.phone}
+    </p>
+    <a href="#"><p style="color: #49A347; font-size: 14px;"> View</p></a>
+  </div>
+    `}
+  });
+});
+
+
 console.log(residentsData, 'residents');
 } catch (err) {
   Swal.fire({
@@ -120,7 +166,7 @@ const fetchVisitorsData = async () => {
       totalVisits += element.visit_count;
     });
     document.getElementById('totalVisits').innerHTML = totalVisits;
-    console.log(visitorsData, 'visitors')
+    // console.log(visitorsData, 'visitors')
   } catch (err) {
     Swal.fire({
       title: "Unexpected Error",
@@ -145,9 +191,12 @@ const fetchGuardsData = async () => {
     });
     let data = await response.json();
     const { gatemen } = data;
-    console.log(gatemen)
     document.getElementById('totalGuards').innerHTML = gatemen.length;
     let count = 0;
+    for (let i=1; i<=3; i++){
+      numG.push(Math.floor(Math.random() * gatemen.length));
+    }
+    
 
     gatemen.map(gatemen => {
       const { name, phone, image } = gatemen;
@@ -160,7 +209,42 @@ const fetchGuardsData = async () => {
         image
       });
     });
-console.log(guardsData, 'guards')
+
+    guardsData.forEach(guard=>{
+      numG.forEach(num=>{
+        if (guard.count ===num){
+      guardsSummary.innerHTML += `
+    <div
+    class="d-flex flex-row justify-content-between align-items-center pl-4 pr-4 mb-3"
+  >
+    <div class="d-flex flex-row align-items-center">
+      <img
+        width="60px"
+        height="60px"
+        src="${guard.image}"
+        alt="You"
+        style="margin-right: 10px; border-radius: 50%;"
+      />
+      <div
+        class="d-flex flex-column"
+        style="width: inherit;"
+      >
+        <p style="font-size: 16px; color: #141821;">${guard.name}</p>
+        <p style="font-size: 14px; margin-top: -1.5em; color: #858997;">
+          Morning Shift
+        </p>
+      </div>
+    </div>
+    <p style="color: #858997; font-size: 14px;">
+      ${guard.phone}
+    </p>
+    <a href="#"><p style="color: #49A347; font-size: 14px;"> View</p></a>
+  </div>
+    `}
+      });
+    });
+    
+// console.log(guardsData, 'guards')
   } catch (err) {
     Swal.fire({
       title: "Unexpected Error",
@@ -185,21 +269,10 @@ const fetchServicesData = async () => {
       }
     });
     let data = await response.json();
-    console.log(data)
-    // document.getElementById('totalservices').innerHTML = gatemen.length;
-
-    // gatemen.map(gatemen => {
-    //   const { name, phone, image } = gatemen;
-    //   count++;
-
-      // servicesData.push({
-      //   count,
-      //   name,
-      //   phone,
-      //   image
-      // });
-    // });
-// console.log(servicesData, 'services')
+    
+    const { message, sp_count, estate_id } = data;
+    document.getElementById('totalServices').innerHTML = sp_count;
+      
   } catch (err) {
     Swal.fire({
       title: "Unexpected Error",
