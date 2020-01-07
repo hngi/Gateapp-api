@@ -15,6 +15,17 @@ use App\Estate;
 
 class ServiceProviderController extends Controller
 {
+    protected $rules = [
+        'name' => ['required', 'string', 'min:3,'],
+        'phone' => 'required',
+        'description' => ['required', 'min:20', 'max:255'],
+        'estate_id' => ['required', 'exists:estates,id'],
+        'category_id' => ['required', 'exists:sp_category,id'],
+        'address' => ['required', 'string'],
+        'contact_person' => ['required', 'string', 'min:4', 'max:100']
+    ];
+
+
     public function showAll()
     {
         $res = array();
@@ -200,28 +211,17 @@ class ServiceProviderController extends Controller
 
     public function create(Request $request, ImageController $image)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|min:3',
-            'phone' => 'required',
-            'description' => 'required',
-            'estate_id' => 'required|int',
-            'category_id' => 'required|int'
-        ]);
+        $inputs = $request->validate($this->rules);
 
-        if ($validator->fails()) {
-            return ['message' => 'Please fill all Fields'];
-        }
+
         //start temporay transaction
         DB::beginTransaction();
         try {
 
-            $service = new Service_Provider;
-            $service->name = $request->input("name");
-            $service->phone = $request->input("phone");
-            $service->description = $request->input("description");
-            $service->estate_id = $request->input("estate_id");
-            $service->category_id = $request->input("category_id");
+            $service = new Service_Provider($inputs);
 
+            // Since and admin is adding the service, make it activated
+            $service->status = 1;
             //Upload image
             //Upload image
             if ($request->hasFile('image')) {
@@ -234,6 +234,7 @@ class ServiceProviderController extends Controller
                 $data = null;
                 $service->image = 'gateguard-logo.png';
             };
+
             $service->save();
 
             //if operation was successful save commit save to database
@@ -259,23 +260,12 @@ class ServiceProviderController extends Controller
 
     public function update(Request $request, $id, ImageController $image)
     {
-        $this->validate($request, [
-            'name' => 'required|string|min:3',
-            'phone' => 'required',
-            'description' => 'required',
-            'estate_id' => 'required|int',
-            'category_id' => 'required|int'
-        ]);
+        $inputs  = $request->validate($this->rules);
 
         //start temporay transaction
         DB::beginTransaction();
         try {
-            $service = Service_Provider::find($id);
-            $service->name = $request->input("name");
-            $service->phone = $request->input("phone");
-            $service->description = $request->input("description");
-            $service->estate_id = $request->input("estate_id");
-            $service->category_id = $request->input("category_id");
+            $service = Service_Provider::fill($inputs);
 
             //Upload image
             if ($request->hasFile('image')) {
@@ -426,7 +416,7 @@ class ServiceProviderController extends Controller
      try {
           $requests = [];
           $services = Service_Provider::with('estate')->with('category')->get();
-          
+
           foreach($services as $service)
           {
            $status = $service->status;
@@ -435,11 +425,11 @@ class ServiceProviderController extends Controller
             array_push($requests, $services);
            }
           }
-         
+
           $res["status_code"] = 200;
           $res["message"] = "Success!";
           $res["requests"] = $requests;
-         
+
           return response()->json($res, $res["status_code"]);
          }
           catch (\Exception $e)
@@ -447,11 +437,11 @@ class ServiceProviderController extends Controller
           $res["status_code"] = 501;
           $res["message"] = "Failed!";
           $res["error"] = $e->getMessage();
-              
+
           return response()->json($res, $res["status_code"]);
          }
     }
-    
+
     public function restore($id)
     {
      $service = Service_Provider::onlyTrashed()->find($id)->restore();
@@ -485,28 +475,14 @@ class ServiceProviderController extends Controller
     }
     public function create_request(Request $request, ImageController $image)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|min:3',
-            'phone' => 'required',
-            'description' => 'required',
-            'estate_id' => 'required|int',
-            'category_id' => 'required|int'
-        ]);
+        $inputs = $request->validate($this->rules);
 
-        if ($validator->fails()) {
-            return ['message' => 'Please fill all Fields'];
-        }
         //start temporay transaction
         DB::beginTransaction();
         try {
 
-            $service = new Service_Provider;
-            $service->name = $request->input("name");
-            $service->phone = $request->input("phone");
-            $service->description = $request->input("description");
-            $service->estate_id = $request->input("estate_id");
-            $service->category_id = $request->input("category_id");
-            $service->status = 0;
+            $service = new Service_Provider($inputs);
+
 
             //Upload image
             //Upload image
@@ -520,6 +496,7 @@ class ServiceProviderController extends Controller
                 $data = null;
                 $service->image = 'noimage.jpg';
             };
+
             $service->save();
 
             //if operation was successful save commit save to database
@@ -545,7 +522,7 @@ class ServiceProviderController extends Controller
     public function approve($id)
     {
         $application = Service_Provider::find($id);
-       
+
         if($application){
             $application->status = 1;
             $application->save();
@@ -553,10 +530,10 @@ class ServiceProviderController extends Controller
         }else{
             return response()->json(['status' => false, 'message' => 'No records found'], 404);
         }
-      
 
 
-       
+
+
     }
     public function reject($id)
     {
@@ -565,11 +542,11 @@ class ServiceProviderController extends Controller
             return response()->json(['status' => false, 'message' => 'No records found'], 404);
 
         }else{
-            
+
 
             $application->delete($id);
             return response()->json(['status' => true, 'message' => 'Service provider rejected'], 200);
         }
-       
+
     }
 }
