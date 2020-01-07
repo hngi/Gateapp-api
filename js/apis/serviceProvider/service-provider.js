@@ -2,30 +2,33 @@
 const routes = new Routes();
 const url = `${routes.api_origin}${routes.allServiceProvider}`;
 
-// Get Dom Elements 
+//Get Dom Elements 
 const table = document.querySelector('#sp-tab');
-const spinner = document.querySelector('[data-serviceProvider-view]');
 const suspend = document.querySelector('#suspend');
 const remove = document.querySelector("#remove");
 const singlemodal = document.querySelector('#singleProviderModal');
+let spinner = document.querySelector('[data-preloader]');
 
-// Begin the fun stuff
+spinner.style.display = "block";
+// Replace ./data.json with your JSON feed
 fetch(url, {
         method: 'GET',
         mode: 'cors',
         headers: {
             'Content-Type': 'application/json',
-            'Accept': 'aplication/json',
             'Authorization': token
         }})
   .then(response => {
     return response.json()
   })
   .then(data => {
-    // Lets do somethings with our json data
+    // Work with JSON data here
     console.log(data);
+    // Disable spinner
+    spinner.style.display = "none";
+    
    data.data.forEach(sp => {
-            // This section was borrowed from junicode fetch all estate admin js file but i fixed some bugs junicode did not fix
+    
             // Create Entries placeholders on table 
             let row = table.insertRow(),
                 spName = row.insertCell(),
@@ -33,7 +36,7 @@ fetch(url, {
                 spPhone = row.insertCell(),
                 spDetails = row.insertCell(),
                 moreDetails = row.insertCell();
-                spinner.innerHTML = "";
+                
            
             //Insert Response into table
             spName.innerHTML = `${sp.name}`;
@@ -51,8 +54,12 @@ fetch(url, {
                 
                 remove.setAttribute('data-id', `${sp.id}`);
                 suspend.setAttribute('data-id', `${sp.id}`);
-        
-       })  
+                
+          })
+          
+            
+            
+    
     })
   })
   .catch(err => {
