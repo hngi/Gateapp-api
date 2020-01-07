@@ -331,7 +331,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/service-provider/{id}', 'ServiceProviderController@show');
 
     //Get All Service Provider
-    Route::get('/service-provider', 'ServiceProviderController@showAll');
+    Route::get('/service-provider', 'ServiceProviderController@showAll')->middleware('jwt.verify');
 
     Route::get('/service-provider/category/{category_id}', 'ServiceProviderController@byCategory');
 
