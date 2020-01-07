@@ -143,20 +143,27 @@
                     </div>
                     <table class="table table-borderless estates-table" id="sp-tab">
                         <thead>
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Location</th>
-                                <th scope="col">Phone</th>
-                                <th scope="col">Service</th>
-                            </tr>
-                        </thead>
+							<tr style="border-top: 1px solid black; border-bottom: 1px solid black; font-weight: bold;;">
+								<td>Name</td>
+								<td>Location</td>
+								<td>Phone</td>
+								<td>Service</td>
+								<td></td>
+							</tr>
+						</thead>
+						<tbody>
+						<div data-preloader="" class="text-center" style="position: absolute;left: 50%;margin-top: 30vh; display: block;">
+							<div class="spinner-border" role="status" style="color: #49a347;">
+							</div>
+						</div>
 
+						</tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Modals -->
+   <!-- Modals -->
     <div class="modal fade" id="singleProviderModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog col-12 px-1 mx-0" role="document">
             <div class="modal-content col-11 col-md-4 px-0 mx-auto">
@@ -184,7 +191,7 @@
 <!--Import the api to suspend service provider-->
 <script src="../js/apis/serviceProvider/suspend-service-provider.js"></script>
 <!--Import the api to delete service provider-->
-<script src="../js/apis/serviceProvider/delete-service-provider.js"></script>
+<script src="../js/apis/serviceProvider/remove-service-provider.js"></script>
 <script src="../js/general/global.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
