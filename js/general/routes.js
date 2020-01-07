@@ -205,4 +205,7 @@ class Routes {
   get estateGuards(){
     return `api/v1/estate/`
   }
+  get estateServiceProviders(){
+    return `api/v1/statistics/estateService/`
+  }
 }
