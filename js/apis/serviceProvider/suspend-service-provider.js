@@ -1,6 +1,6 @@
 const suspendButton   = document.querySelector('#suspend');
 
-const suspend = (event, suspendButton) => {
+const suspendEvent = (event, suspendButton) => {
 
     event.preventDefault();
     suspendButton.innerHTML = '<span class="spinner-border text-light spinner-border-sm" style="width: 1.3em; height: 1.3em;" role="status" aria-hidden="true"></span> Processing...';
@@ -9,7 +9,7 @@ const suspend = (event, suspendButton) => {
     console.log(Id)
     console.log(url)
     fetch(url, {
-        method: "POST",
+        method: "DELETE",
         headers: {
             "Accept": "application/json",
             "Content-Type": "application/json",
@@ -62,4 +62,4 @@ const suspend = (event, suspendButton) => {
      }
 }
 
-suspendButton.addEventListener('click', (event) => suspend(event, suspendButton));
+suspendButton.addEventListener('click', (event) => suspendEvent(event, suspendButton));
