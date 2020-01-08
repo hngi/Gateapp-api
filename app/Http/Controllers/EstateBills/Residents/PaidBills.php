@@ -12,7 +12,7 @@ class PaidBills
     {
         $user = auth()->user();
 
-        $bills = ResidentBill::where('users_id', $user->id)->where('status', true)->with('billInfo')->get();
+        $bills = ResidentBill::where('users_id', $user->id)->where('status', 1)->with('billInfo')->get();
 
         return response([
             'count' => $bills->count(),
