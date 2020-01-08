@@ -84,9 +84,11 @@ class ProofOfPaymentController extends Controller
             }else{
                 $ProofOfPayment->update(['status' => 1]);
                 ResidentBill::where('id', $resident_bill_id )->update(['status' => 1]);
+                $resident_bill =  ResidentBill::where('id', $resident_bill_id )->get();
                 return response()->json([
                     'status' => true,
                     'message' => 'Payment Verified Successfully',
+                    'bill_info'=>  $resident_bill,
                     
 
                 ], 200);
@@ -100,7 +102,7 @@ class ProofOfPaymentController extends Controller
     public function queryPayment($proof_id, Request $request){
 
         $ProofOfPayment = ProofOfPayment::where('status', 0)->find($proof_id);
-       
+        $resident_bill_id = ProofOfPayment::where('id', $proof_id)->pluck('resident_bills_id'); 
         try{
            
             if(!$ProofOfPayment){
@@ -117,11 +119,12 @@ class ProofOfPaymentController extends Controller
                 $message = $request->input('message');
 
 
-
+                $resident_bill =  ResidentBill::where('id', $resident_bill_id )->get();
                 return response()->json([
                     'status' => true,
                     'message' => 'Resident has been notified of issue with the payment',
                     'admin_message' => $message,
+                    'bill_info' =>  $resident_bill,
                 ], 200);
             }
         }catch (\Exception $e) {
