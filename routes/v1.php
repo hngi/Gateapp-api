@@ -214,6 +214,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         Route::middleware('estateAdmin')->namespace('EstateBills\Admin')->group( function () {
             Route::post('estate/{estate_id}', AddBills::class);
             Route::get('paymentproof', 'ProofOfPaymentController@showAll');
+            Route::get('paymentproof/{proof_id}', 'ProofOfPaymentController@viewProof');
+            Route::patch('paymentproof/approve/{proof_id}', 'ProofOfPaymentController@verifyPayment');
+            Route::patch('paymentproof/query/{proof_id}', 'ProofOfPaymentController@queryPayment');
         });
         Route::get('estateAdmin/{estate_id}','EstateBills\Residents\GetAllBills' )->middleware('estateAdmin');
        
