@@ -63,7 +63,7 @@ class AdminLoginController extends Controller
         $msg['user_type'] = $user->user_type;
         if($user->role == 3) {
             $home = Home::where('user_id', $user->id)->first();
-            $estate_id =  $home = Home::where('user_id', $user->id)->pluck('estate_id');
+            $estate_id = Home::where('user_id', $user->id)->pluck('estate_id');
             $estate = Estate::where('id', $estate_id)->first();
             $msg['home'] = $home;
             $msg['estate'] = $estate;
