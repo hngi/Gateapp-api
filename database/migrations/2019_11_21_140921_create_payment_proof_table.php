@@ -15,17 +15,15 @@ class CreatePaymentProofTable extends Migration
     {
         Schema::create('payment_proof', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('users_id');
             $table->unsignedBigInteger('resident_bills_id');
-            $table->unsignedBigInteger('estate_id');
             $table->string('name');
-            $table->string('teller_no')->nullable();;
-            $table->string('image');
+            $table->string('teller_no');
+            $table->string('proof_img_link');
             $table->bigInteger('status');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('estate_id')->references('estate_id')->on('homes')->onDelete('cascade');
+            $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('resident_bills_id')->references('id')->on('resident_bills')->onDelete('cascade');
         });
     }
