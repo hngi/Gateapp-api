@@ -226,8 +226,8 @@ Route::group(['middleware' => ['jwt.verify']], function () {
             Route::get('estate/{estate_id}', GetAllBills::class);
             Route::post('subscribe/{estate_bills}', 'Subscribe');
             Route::get('subscribed', 'Subscribe@subscribed');
-            Route::post('pending', 'PendingBills');
-            Route::post('paid', 'PaidBills');
+            Route::get('pending', 'PendingBills');
+            Route::get('paid', 'PaidBills');
             Route::post('proof/{resident_bill_id}', 'ProofOfPaymentController@submit');
         });
     });
