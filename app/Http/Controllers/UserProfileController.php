@@ -121,14 +121,9 @@ class UserProfileController extends Controller
         return response()->json($users);
     }
 
-    public function update(Request $request, ImageController $image, $id=null)
+    public function update(Request $request, ImageController $image)
     {  // update user information
-        if ($id != null) {
-            $user = User::find($id);
-        }else {
-            $user = Auth::user();
-        }
-
+        $user = Auth::user();
         $this->validate($request, [
             'name' => 'required|string',
             'phone' => 'required|unique:users,phone,' . $user->id,
@@ -155,7 +150,7 @@ class UserProfileController extends Controller
                  //Send sms otp to user
                  $phone     = $user->phone;
                  $message   = 'Use this 4 digit otp token to verify your new phone number '. $user->verifycode;
-                 $smsOtpController = new SmsOtpController;
+                 $smsOtpController = new SmsOtpController; 
                  $smsOtpController->africasTalking($phone, $message);
                  $res['new_number'] = true;
                 $res['important'] = 'An otp token has ben sent to you phone because you changed your phone number!';
@@ -193,16 +188,9 @@ class UserProfileController extends Controller
         }
     }
 
-
-
-    public function destroy($id=null)
+    public function destroy()
     {
-        if ($id != null) {
-            $user = User::find($id);
-        }else {
-            $user = Auth::user();
-        }
-
+        $user = Auth::user();
         if ($user) {         // removes user account
             $user->delete();
             $res['message'] = 'User deleted successfully';
@@ -212,8 +200,6 @@ class UserProfileController extends Controller
             return response()->json($res, 501);
         }
     }
-
-
 
     public function upload($request, $image)
     {
@@ -299,11 +285,11 @@ class UserProfileController extends Controller
         }
     }
      //revoke selected admin access
-    public function revokeAdmin($id)
+    public function revokeAdmin($id) 
     {
         $user = User::where('id', $id)->where('access', 1)->first();
             if(!$user){
-            $res['status'] = 404;
+            $res['status'] = 404;    
             $res['message'] = 'User not found or users access is already revoked';
             //return response()->json($res, 401);
             }else
@@ -311,22 +297,22 @@ class UserProfileController extends Controller
             User::where('id', $id)->update(['access' => 0]);
             $res['status'] = 200;
             $res['user'] = $user;
-            $res['message'] = "Successfully block admin from access";
+            $res['message'] = "Successfully block admin from access";  
         }else {
             $res['status'] = 402;
             $res['message'] = 'user you are trying to block is not an Admin or an error occured, please try again!';
             //return response()->json($res, 402);
         }
-
+        
         return response()->json($res, $res['status']);
     }
 
     //unblock selected admin access
-    public function unrevokeAdmin($id)
+    public function unrevokeAdmin($id) 
     {
             $user = User::where('id', $id)->where('access', 0)->first();
             if(!$user){
-            $res['status'] = 404;
+            $res['status'] = 404;   
             $res['message'] = 'User not found or User has full access!';
            // return response()->json($res, $res['status']);
             }else
@@ -335,29 +321,29 @@ class UserProfileController extends Controller
 
             $res['status'] = 200;
             $res['admin'] = $user;
-            $res['message'] = "Successfully unblock admin";
+            $res['message'] = "Successfully unblock admin";  
         }else {
-            $res['status'] = 402;
+            $res['status'] = 402;   
             $res['message'] = 'user you are trying to unblock is not an Admin or an error occured, please try again!';
            // return response()->json($res, $res['status']);
         }
-
+        
         return response()->json($res, $res['status']);
-    }
+    }  
 
     public function resetAdmin($id)
     {
        // $res = array();
       //  $this->validateRequest($request);
-
+    
         DB::beginTransaction();
-
-       //try {
+        
+       //try {    
             $EstateAdmin = User::where('id', $id)->where('role', '3')->with(['home' => function ($query) {
                 $query->with('estate');
             }])->first();
-
-
+          
+            
 
             if ($EstateAdmin) {
                 $estateName = $EstateAdmin->home->estate->estate_name;
@@ -365,13 +351,13 @@ class UserProfileController extends Controller
                 $password   = Str::random(10);
                 $EstateAdmin->password = Hash::make($password);
                 $EstateAdmin->save();
-
+                
                DB::commit();
                 Mail::to($adminEmail)->send(new EstateAdminPasswordRecovery($EstateAdmin, $password, $estateName ));
                 $res['status'] = 200;
                 $res['message'] = "Password reset successful! A mail with the admin's new password has been sent to thier email";
                 $res['data'] = $EstateAdmin;
-
+                
             } else {
                 $res['status'] = 404;
                 $res['message'] = "Admin not found";
@@ -380,9 +366,9 @@ class UserProfileController extends Controller
             DB::rollBack();
 
             $res['status'] = 501;
-            $res['message'] = "An error occured trying to reset admin password";
+            $res['message'] = "An error occured trying to reset admin password";            
         }*/
-
+        
         return response()->json($res, $res['status']);
     }
     public function validateRequest(Request $request){

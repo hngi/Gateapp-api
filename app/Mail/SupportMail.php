@@ -13,13 +13,12 @@ class SupportMail extends Mailable
     public $email;
     public $subject;
     public $data;
-
     /**
      * Create a new message instance.
      *
-     * @param array $data
+     * @return void
      */
-    public function __construct(array $data)
+    public function __construct($data)
     {
         $this->subject = $data['subject'];
         $this->email = $data['email'];
@@ -33,10 +32,6 @@ class SupportMail extends Mailable
      */
     public function build()
     {
-        return
-            $this->from($this->email)
-                ->subject('New Support Email from '. config('app.name'))
-                ->view('email.support')
-                ->with('data', $this->data);
+        return $this->from($this->email)->subject('New Support Email')->view('email.support')->with('data', $this->data);
     }
 }
