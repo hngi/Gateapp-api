@@ -131,6 +131,7 @@ class RaveCardPayController extends Controller
 
 			if($resident_bill) {
 				$resident_bill->status = 1;
+				$resident_bill->payment_mode = 'Card Payment';
 				$resident_bill->save();
 				return 'success saved';
 			}else {
