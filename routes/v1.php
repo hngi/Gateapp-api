@@ -73,7 +73,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::patch('/estate/{id}', 'EstateController@update')->middleware('superAdmin');
 
     //Admin only Create a service provider
-    Route::post('/service-provider', 'ServiceProviderController@create')->middleware('superAdmin');
+    Route::post('/service-provider', 'ServiceProviderController@create')->middleware('superAndEstateAdmin');
 
     // Service provider suspension route
     Route::delete('/service-provider/suspend/{id}', 'ServiceProviderController@softDelete')->middleware('superAdmin');
@@ -94,7 +94,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::delete('/service-provider/delete/{id}', 'ServiceProviderController@destroy')->middleware('superAdmin');
 
     //Admin only Update a service provider
-    Route::post('/service-provider/{id}', 'ServiceProviderController@update')->middleware('superAdmin');
+    Route::post('/service-provider/{id}', 'ServiceProviderController@update')->middleware('superAndEstateAdmin');
 
     // Create a new Service Provider category
     Route::post('/sp-category', 'SPCategoryController@newCategory')->middleware('superAdmin');
@@ -365,7 +365,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/payment/{id}', 'PaymentController@oneUniquePayment')->middleware('checkResident');
 
     //Service Directory by estate
-    Route::get('/serviceProvider/estate/', 'ServiceProviderController@groupByEstate')->middleware('checkResident');
+    Route::get('/serviceProvider/estate/', 'ServiceProviderController@groupByEstate');;
 
     //(Users Visitors)
     // Show signed in user visitor

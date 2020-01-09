@@ -1,16 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use AfricasTalking\SDK\Service;
 use App\Category;
 use App\Home;
+use App\User;
 use Illuminate\Http\Request;
 use App\Service_Provider;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ImageController;
-use App\Estate;
 
 
 class ServiceProviderController extends Controller
@@ -56,39 +57,33 @@ class ServiceProviderController extends Controller
         $res = array();
         $uniqueEstate = array();
 
-        if (Auth::check()) {
+
            $user = Auth::user();
-           $role = $user->role;
+           $user_type = $user->user_type;
 
-           if ($role === "1" || $role === "2") {
-                $query = DB::table('service_providers')
-                                ->join('estates', 'service_providers.estate_id', '=', 'estates.id')
-                                ->join('sp_category', 'service_providers.category_id', '=', 'sp_category.id')
-                                ->select('service_providers.id as id', 'service_providers.name as name', 'service_providers.phone as phone', 'service_providers.description as description', 'estates.estate_name as estate', 'sp_category.title as categroy');
+           if ($user_type == 'gateman') {
+               abort(403, 'Forbidden');
+           }
 
-                $service = $query->get();
-                foreach($service as $key => $serv) {
-                    $uniqueEstate[$serv->estate][] = $serv;
-                }
 
-                if (!$service->isEmpty()) {
-                    $res["status"] = 200;
-                    $res["message"] = "All service providers grouped by estate";
-                    $res["count"] = $service->count();
-                    $res["data"] = $uniqueEstate;
+            $query = Service_Provider::allServices($user);
 
-                } else {
-                    $res["status"] = 200;
-                    $res["message"] = "No service providers registered";
-                }
-            } else {
-                $res['status'] = 401;
-                $res['message'] = "You must login as a resident or admin.";
+            $service = $query->get();
+            foreach($service as $key => $serv) {
+                $uniqueEstate[$serv->estate][] = $serv;
             }
-        } else {
-            $res['status'] = 401;
-            $res['message'] = "You are not logged in.";
-        }
+
+            if (!$service->isEmpty()) {
+                $res["status"] = 200;
+                $res["message"] = "All service providers grouped by estate";
+                $res["count"] = $service->count();
+                $res["data"] = $uniqueEstate;
+
+            } else {
+                $res["status"] = 200;
+                $res["message"] = "No service providers registered";
+            }
+
         return response()->json($res, $res['status']);
     }
 
@@ -127,37 +122,32 @@ class ServiceProviderController extends Controller
     public function show($id)
     {
         $res = array();
+        $user = auth()->user();
 
-        if (Auth::check()) {
-           $user = Auth::user();
-           $role = $user->role;
-
-           if ($role === "1" || $role === "2" ) {
-                $query = DB::table('service_providers')
-                ->join('estates', 'service_providers.estate_id', '=', 'estates.id')
-                ->join('sp_category', 'service_providers.category_id', '=', 'sp_category.id')
-                ->where('service_providers.id', '=', $id)
-                ->select('service_providers.id as id', 'service_providers.name as name', 'service_providers.phone as phone', 'service_providers.description as description', 'estates.estate_name as estate', 'sp_category.title as categroy');
-
-                $service = $query->get();
-
-                if (!is_null($service)) {
-                    $res["status"] = 200;
-                    $res["message"] = "Service provider found.";
-                    $res["data"] = $service;
-                } else {
-                    $res["status"] = 200;
-                    $res["message"] = "No service provider found.";
-                }
-
-            } else {
-                $res['status'] = 401;
-                $res['message'] = "You must login as a resident or admin.";
-            }
-        } else {
-            $res['status'] = 401;
-            $res['message'] = "You are not logged in.";
+        // guards are not expected
+        if ($user->user_type == 'gateman') {
+            return response([
+                'message' => 'Forbidden',
+            ], 403);
         }
+
+        $role = $user->role;
+
+        $query = Service_Provider::singleServiceProvider($user, $id);
+
+        $service = $query->first();
+
+        if (!is_null($service)) {
+            $res["status"] = 200;
+            $res["message"] = "Service provider found.";
+            $res["data"] = $service;
+        } else {
+            $res["status"] = 404;
+            $res["message"] = "Service Provider ({$id}) does not  exists";
+        }
+
+
+
         return response()->json($res, $res['status']);
     }
 
@@ -166,41 +156,47 @@ class ServiceProviderController extends Controller
     {
         $res = array();
 
-        if (Auth::check()) {
-            $user = Auth::user();
-            $role = $user->role;
+        $user  = auth()->user();
 
-            if ($role === "1" || $role === "2") {
-                try {
-                    $services = Service_Provider::where('category_id', $category_id)->get();
-
-                    if (!$services->isEmpty()) {
-                        $res['status'] = 200;
-                        $res['message'] = "Retrieved service providers";
-                        $res['data'] = $services;
-
-                    } else {
-                        $res['status'] = 404;
-                        $res['message'] = "No service providers in this category";
-                    }
-                } catch (Exception $e) {
-                    $res['status'] = 501;
-                    $res['message'] = "An error occurred trying to retrieve service providers $e";
-                }
-            } else {
-                $res['status'] = 401;
-                $res['message'] = "You must login as a resident or admin.";
-            }
-        } else {
-            $res['status'] = 401;
-            $res['message'] = "You are not logged in";
+        if ($user->user_type == 'gateman') {
+            abort(403, 'Forbidden');
         }
-        return response()->json($res, $res['status']);
+
+        $services = Service_Provider::allServices($user);
+
+        $services = $services->where('category_id', $category_id)->get();
+
+        if ($services->isEmpty()) {
+            $res['status'] = 404;
+            $res['message'] = "No service providers in this category";
+        } else {
+            $res['status'] = 200;
+            $res['message'] = "Retrieved service providers";
+            $res['data'] = $services;
+        }
+
+        return response($res, $res['status']);
+
     }
 
     public function create(Request $request, ImageController $image)
     {
         $inputs = $request->validate($this->rules);
+
+        $user = auth()->user();
+        $user_type = $user->user_type;
+   
+        // check if  the user (if estate admin) is an admin of the estate
+        // selected
+
+        if (
+            $user_type != 'super_admin'
+            && (! $this->belongsToEstate($inputs['estate_id'], $user->id))
+         ) {
+            return response([
+                'message' => " You are unable to add service providers to the selected estate at this time.",
+            ], 403);
+        }
 
 
         //start temporay transaction
@@ -209,8 +205,8 @@ class ServiceProviderController extends Controller
 
             $service = new Service_Provider($inputs);
 
-            // Since and admin is adding the service, make it activated
-            $service->status = 1;
+            // if a superadmin admin is adding the service, make it activated
+            $service->status = $user_type == 'super_admin';
             //Upload image
             //Upload image
             if ($request->hasFile('image')) {
@@ -249,13 +245,32 @@ class ServiceProviderController extends Controller
 
     public function update(Request $request, $id, ImageController $image)
     {
-        $inputs  = $request->validate($this->rules);
+
+        $service = Service_Provider::findOrFail($id);
+
+        $user = auth()->user();
+
+
+        // if user is an estate admin, check if the SP is in their estate
+        // if no, they should not be able to edit the SP
+        $can_edit = $this->estateAdminCanEditSP($user, $service);
+
+        if (!$can_edit) {
+            return response(['message' => 'Forbidden'], 403);
+        }
+
+        $rules = $this->rules;
+        // Estate ID should not be editable, so we ignore it
+        unset($rules['estate_id']);
+
+        $inputs  = $request->validate($rules);
+        $service->fill($inputs);
+        
+        
 
         //start temporay transaction
         DB::beginTransaction();
         try {
-            $service = Service_Provider::fill($inputs);
-
             //Upload image
             if ($request->hasFile('image')) {
                 $data = $this->upload($request, $image, $service);
@@ -265,7 +280,7 @@ class ServiceProviderController extends Controller
                 $service->image = $data['image'];
             }
 
-            $service->save();
+            $service->update();
 
             //if operation was successful save commit save to database
             DB::commit();
@@ -284,6 +299,21 @@ class ServiceProviderController extends Controller
             return response()->json($res, 501);
 
         }
+    }
+
+    private function estateAdminCanEditSp(User $user, Service_Provider $service)
+    {
+        if ($user->user_type == 'super_admin') {
+            return true;
+        }
+
+        return $this->belongsToEstate($service->estate_id, $user->id);
+
+    }
+
+    private function belongsToEstate(int $estate_id, int $user_id) 
+    {
+        return  Home::query()->where('user_id', $user_id)->where('estate_id', $estate_id)->exists();
     }
 
 

@@ -54,6 +54,7 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'superAdmin' => \App\Http\Middleware\VerifySuperAdminMiddleware::class,
         'estateAdmin' => \App\Http\Middleware\VerifyEstateAdminMiddleware::class,
+        'superAndEstateAdmin' => \App\Http\Middleware\CheckForEstateAdminAndSuperAdmin::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
