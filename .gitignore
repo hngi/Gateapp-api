@@ -12,3 +12,6 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 Gateapp-api.iml
+temp_auto_push.bat
+temp_interactive_push.bat
+.gitignore
