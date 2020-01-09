@@ -83,7 +83,7 @@ class ProofOfPaymentController extends Controller
 
             }else{
                 $ProofOfPayment->update(['status' => 1]);
-                ResidentBill::where('id', $resident_bill_id )->update(['status' => 1]);
+                ResidentBill::where('id', $resident_bill_id )->update(['status' => 1, 'payment_mode' => 'Bank Transfer']);
                 $resident_bill =  ResidentBill::where('id', $resident_bill_id )->get();
                 return response()->json([
                     'status' => true,

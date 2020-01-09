@@ -301,6 +301,26 @@ class ResidentController extends Controller
           return response()->json($res, $res["status_code"]);
          }
     }
+
+    public function searchResidentOrGateman($name){
+        $estate_id = $this->user->home->estate_id;
+        $foundUser = User::where('name', 'LIKE', "%{$name}%")->where('role' ,'!=' ,'3')
+        ->with(['home' => function ($query) use ($estate_id){
+            $query->where('estate_id', $estate_id);
+        }])->get();
+        if(!$foundUser){
+            $res["status"] = false;
+            $res["status_code"] = 404;
+            $res["message"] = "User not found";
+
+        }else{
+            $res["status"] = true;
+            $res["status_code"] = 200;
+            $res["users"] =  $foundUser;
+
+        }
+        return response()->json($res, $res["status_code"]);
+    }
    
 
 }

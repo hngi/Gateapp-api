@@ -6,6 +6,7 @@
 use App\Http\Controllers\EstateBills\Residents\ProofOfPaymentController;
 use App\Http\Controllers\VisitorController;
 
+
 Route::post('register/resident', 'Auth\RegisterController@resident'); //has a role of 1
 
 Route::post('register/gateman', 'Auth\RegisterController@gateman'); //has a role 2
@@ -207,6 +208,8 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //Show residents in the specific estate of logged in Estate Admin
     Route::get('/estate/{id}/residents', 'ResidentController@estateResidents')->middleware('estateAdmin');
+// Search for either resident or gateman
+    Route::get('search/ResidentOrGateman/{name}', 'ResidentController@searchResidentOrGateman')->middleware('estateAdmin');
 
     // Estate bill related model's routes
     Route::group(['prefix' => 'bills'], function () {
@@ -217,6 +220,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
             Route::get('paymentproof/{proof_id}', 'ProofOfPaymentController@viewProof');
             Route::patch('paymentproof/approve/{proof_id}', 'ProofOfPaymentController@verifyPayment');
             Route::patch('paymentproof/query/{proof_id}', 'ProofOfPaymentController@queryPayment');
+            Route::get('recentPayment', 'GetPaymentController@recentPayments');
+            Route::get('totalMonthlyPayment', 'GetPaymentController@monthlyPaymentSum');
+            Route::get('pendingPayment', 'GetPaymentController@pendingPayment');
         });
         Route::get('estateAdmin/{estate_id}','EstateBills\Residents\GetAllBills' )->middleware('estateAdmin');
        
