@@ -208,6 +208,8 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //Show residents in the specific estate of logged in Estate Admin
     Route::get('/estate/{id}/residents', 'ResidentController@estateResidents')->middleware('estateAdmin');
+// Search for either resident or gateman
+    Route::get('search/ResidentOrGateman/{name}', 'ResidentController@searchResidentOrGateman')->middleware('estateAdmin');
 
     // Estate bill related model's routes
     Route::group(['prefix' => 'bills'], function () {

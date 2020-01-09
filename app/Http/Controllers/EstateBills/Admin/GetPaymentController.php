@@ -35,7 +35,8 @@ class GetPaymentController extends Controller
       
    // $residents = ResidentBill::with('scopeBillInfo')->get();
 
-    $payments = ResidentBill::where('status', 1)->orderBy('updated_at', 'desc')->take(5)->with(['scopeBillInfo' => function ($query) use ($estate_id) {
+    $payments = ResidentBill::where('status', 1)->orderBy('updated_at', 'desc')->take(5)
+    ->with(['scopeBillInfo' => function ($query) use ($estate_id) {
         $query->where('estate_id',  $estate_id);
 
     }])->get();
