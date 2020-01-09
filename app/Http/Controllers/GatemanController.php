@@ -441,6 +441,9 @@ class GatemanController extends Controller
                 return response()->json([
                     'count' => $gatemen->count(),
                     'status' => true,
+                    'image_link' => 'https://res.cloudinary.com/getfiledata/image/upload/',
+                    'image_round_format'  => 'w_200,c_fill,ar_1:1,g_auto,r_max/',
+                    'image_square_format' => 'w_200,ar_1:1,c_fill,g_auto/',
                     'gatemen' => $gatemen,
                 ], 200);
             }
@@ -460,6 +463,9 @@ class GatemanController extends Controller
                 if($gateman) {
                     return response()->json([
                         'status' => true,
+                        'image_link' => 'https://res.cloudinary.com/getfiledata/image/upload/',
+                        'image_round_format'  => 'w_200,c_fill,ar_1:1,g_auto,r_max/',
+                        'image_square_format' => 'w_200,ar_1:1,c_fill,g_auto/',
                         'gateman' => $gateman
                     ], 200);
                 }

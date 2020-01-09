@@ -276,25 +276,18 @@ class ResidentController extends Controller
     public function estateResidents($id)
     {
      try {
-          $residents = [];
-          $homes = Home::all();
-          foreach($homes as $home)
-          {
-           $eid = $home->estate_id;
-           if($eid == $id)
-           {
-            $new = array();
-            $user = User::find($home->user_id);
-            if($user->user_type == "resident")
-            {
-             array_push($new, $user);
-             array_push($residents, $new);
-            }
-           }
-          }
-         
+          $user_ids = Home::where('estate_id', $id)->pluck('user_id');
+
+          $residents = User::whereIn('id', $user_ids)
+                            ->where('user_type', 'resident')
+                            ->with('home')
+                            ->get();
+                           
           $res["status_code"] = 200;
           $res["message"] = "Success!";
+          $res['image_link'] = 'https://res.cloudinary.com/getfiledata/image/upload/';
+          $res['image_round_format']  = 'w_200,c_fill,ar_1:1,g_auto,r_max/';
+          $res['image_square_format'] = 'w_200,ar_1:1,c_fill,g_auto/';
           $res["residents"] = $residents;
          
           return response()->json($res, $res["status_code"]);
