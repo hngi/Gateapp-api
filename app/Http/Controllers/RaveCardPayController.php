@@ -13,18 +13,6 @@ class RaveCardPayController extends Controller
 {
 	//Triggers the payment and returns a result
     public function triggerProcess($request, $session = null) {
-
-		$this->validate($request, [
-            'cardno' =>  ['required', 'string'],
-            'currency'  =>  ['required', 'string'],
-            'country' => ['string', 'max:2'],
-            'cvv'  =>  ['required', 'string', 'min:3', 'max:3'],
-            'amount'  =>  ['required', 'string'],
-            'expiryyear'  =>  ['required', 'string', 'max:2'],
-            'expirymonth' => ['required', 'string', 'max:2'],
-			'email'  =>  ['required', 'email'],
-			'bill_id' => ['required']
-		]);
 		$data = $this->payviacard($request, $session);
 		return $data;
 	}
@@ -32,10 +20,12 @@ class RaveCardPayController extends Controller
     //Initiate the payment begin process 
 	public function initaiteCardPay(Request $request) {
 
+		//Laravel Validation
+		$this->validatePaymentData($request);
 		//Check if the user is paying the rigth amount
 		$check_amt = $this->checkBillAmount($request);
 		if($check_amt == 'error'){
-			return response()->json(['message' => 'Incorrect Amount for bill payment'], 400);
+			return response()->json(['message' => 'Incorrect Amount for bill payment or bill does not exist'], 400);
 		}
 		
 		if($check_amt == 'paid'){
@@ -52,28 +42,19 @@ class RaveCardPayController extends Controller
     public function insertCardPin(Request $request) {
 
 		$this->validate($request, [
+			'bill_id' => ['required'],
             'suggested_auth' =>  ['required', 'string'],
             "pin" =>  ['required'],
 		]);
 		//Check if the user is paying the rigth amount
 		$check_amt = $this->checkBillAmount($request);
 		if($check_amt == 'error'){
-			return response()->json(['message' => 'Incorrect Amount for bill payment'], 400);
+			return response()->json(['message' => 'Incorrect Amount for bill payment or bill does not exist'], 400);
 		}
 		$response = $this->triggerProcess($request, $session = 'pin_check');
 		//Call the bill information
 		$fetchBill = $this->getBillInfo($request);
 	    return response()->json(['report' => $response,'bill_info' => $fetchBill], $response['status']);
-	}
-
-	public function getBillInfo($request) {
-		//Get the bill infomation form the bill table
-		$bill_id     = $request->input('bill_id');
-	
-		$bill_result = EstateBills::where('id', (int)$bill_id)  
-					   ->with('estates')
-					   ->first();
-		return $bill_result;
 	}
 
 	public function otpConfirmation(Request $request) {
@@ -89,14 +70,14 @@ class RaveCardPayController extends Controller
 	     'transaction_reference' => $request->input('transaction_reference'),
 	     'otp' => $request->input('otp')
 		 );
-	     $url = env('RAVE_CARD_VERIFY_URL');
+		 $url = env('RAVE_CARD_VERIFY_URL');
 
-		$billStore = $this->storeBill($request);
+		 $billStore = $this->storeBill($request);
 
 		 $response  = $this->curlConnection($postdata, $url);
 		 
 		$fetchBill = $this->getBillInfo($request);
-	 	return response()->json(['report' => $response, 'bill_info' => $fetchBill], $response['status']);
+		return response()->json(['report' => $response, 'bill_info' => $fetchBill], $response['status']);
 
 	}
 	public function checkBillAmount($request) {
@@ -105,21 +86,39 @@ class RaveCardPayController extends Controller
 		$amount  = number_format($request->input('amount'), 2);
 		$user_id     = Auth::user()->id;
 
-		$bill_result = EstateBills::where('id', (int)$bill_id)->first();
+		$bill_result_check = EstateBills::where('id', (int)$bill_id)->exists();
+
+		if($bill_result_check) {
+			$bill_result = EstateBills::where('id', (int)$bill_id)->first();
 	
-		if($amount != number_format($bill_result->base_amount, 2)) {
+			if($amount != number_format($bill_result->base_amount, 2)) {
+				return 'error';
+			}
+			//Check if this user has already paid for a bill to prevent any futher payment
+			$resident_bill = ResidentBill::where('users_id', $user_id)
+								->where('estate_bills_id', (int)$bill_id)
+								->where('status', 1)
+								->exists();
+			if($resident_bill) {
+				return 'paid';
+			}
+		}else {
 			return 'error';
-		}
-		//Check if this user has already paid for a bill to prevent any futher payment
-		$resident_bill = ResidentBill::where('users_id', $user_id)
-							->where('estate_bills_id', (int)$bill_id)
-							->where('status', 1)
-							->exists();
-		if($resident_bill) {
-			return 'paid';
 		}
 
 	}
+
+	public function getBillInfo($request) {
+		//Get the bill infomation form the bill table
+		$bill_id     = $request->input('bill_id');
+	
+		$bill_result = EstateBills::where('id', (int)$bill_id)  
+					   ->with('estates')
+					   ->first();
+		return $bill_result;
+	}
+
+
     public function storeBill($request) {
 		//Store the bill status as successfully paid
 		$user_id     = Auth::user()->id;
@@ -132,6 +131,7 @@ class RaveCardPayController extends Controller
 
 			if($resident_bill) {
 				$resident_bill->status = 1;
+				$resident_bill->payment_mode = 'Card Payment';
 				$resident_bill->save();
 				return 'success saved';
 			}else {
@@ -253,6 +253,21 @@ class RaveCardPayController extends Controller
 	    }
 	    
 	    curl_close($ch);
+	}
+
+
+	private function validatePaymentData($request) {
+		return $this->validate($request, [
+					'cardno' =>  ['required', 'string'],
+					'currency'  =>  ['required', 'string'],
+					'country' => ['string', 'max:2'],
+					'cvv'  =>  ['required', 'string', 'min:3', 'max:3'],
+					'amount'  =>  ['required', 'string'],
+					'expiryyear'  =>  ['required', 'string', 'max:2'],
+					'expirymonth' => ['required', 'string', 'max:2'],
+					'email'  =>  ['required', 'email'],
+					'bill_id' => ['required']
+				]);
 	}
 
 }

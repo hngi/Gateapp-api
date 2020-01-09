@@ -13,6 +13,7 @@ use Tymon\JWTAuth\JWTAuth;
 use Carbon\Carbon;
 use App\User;
 use App\Home;
+use App\Estate;
 
 
 class AdminLoginController extends Controller
@@ -62,7 +63,10 @@ class AdminLoginController extends Controller
         $msg['user_type'] = $user->user_type;
         if($user->role == 3) {
             $home = Home::where('user_id', $user->id)->first();
+            $estate_id = Home::where('user_id', $user->id)->pluck('estate_id');
+            $estate = Estate::where('id', $estate_id)->first();
             $msg['home'] = $home;
+            $msg['estate'] = $estate;
         }
         $msg['image_link'] = $image_link;
         $msg['image_small_view_format'] = $image_format;

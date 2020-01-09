@@ -13,7 +13,7 @@
         <tr>
             <td colspan="3">
                 <p align="center" style="margin:50px 50px">
-                    <font size="6" color="#204056">New Support Message</font>
+                    <font size="6" color="#204056">New Support Request</font>
                 </p>
             </td>
         </tr>
@@ -25,14 +25,14 @@
                     <div style="margin:50px 50px">
                         <font color="#204056">
                             <h1 style="line-height:200%;font-weight:300">
-                                Hello,
+                                Hello Support,
                             </h1>
-                            <h3 style="line-height:200%;font-weight:300">
-                                There is a new message from
+                            <h3 style="line-height:200%;font-weight:300">You have a new message from
                                 {{ $data['email'] }}
                             </h3>
                             <p style="line-height:200%;font-weight:300">Login into your account to check <a
-                                    href="{{ config('app.fe_url') }}/login.html">Login</a></p>
+                                    href="#">Login</a></p>
+
                         </font>
                     </div>
                 </div>
@@ -50,8 +50,8 @@
             <td width="100px"></td>
             <td align="center">
                 <font color="#BCBEC0">
-                    <p> &nbsp;&nbsp; © {{ date('Y') }}
-                        <span class="il">{{ config('app.name') }}</span>
+                    <p> &nbsp;&nbsp; © 2019
+                        <span class="il">GateApp</span>
                     </p>
                 </font>
             </td>
