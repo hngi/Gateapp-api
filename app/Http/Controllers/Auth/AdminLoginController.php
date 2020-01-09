@@ -12,6 +12,9 @@ use Illuminate\Http\Request;
 use Tymon\JWTAuth\JWTAuth;
 use Carbon\Carbon;
 use App\User;
+use App\Home;
+use App\Estate;
+
 
 class AdminLoginController extends Controller
 {
@@ -43,20 +46,28 @@ class AdminLoginController extends Controller
                 return response()->json(['message' => 'Invalid Credential'], 404);
             }
         } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-            return response()->json(['token_expired'], 500);
+            return response()->json(['token_expired'], 401);
         } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-            return response()->json(['token_invalid'], 500);
+            return response()->json(['token_invalid'], 401);
         } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
-            return response()->json(['token_absent' => $e->getMessage()], 500);
+            return response()->json(['token_absent' => $e->getMessage()], 401);
         }
         $image_link = 'https://res.cloudinary.com/getfiledata/image/upload/';
         $image_format = 'w_200,c_thumb,ar_4:4,g_face/';
         
         $user = Auth::guard('api')->user();
+
         $msg['success'] = true;
         $msg['message'] = 'Admin Login Successful!';
         $msg['user'] = $user;
         $msg['user_type'] = $user->user_type;
+        if($user->role == 3) {
+            $home = Home::where('user_id', $user->id)->first();
+            $estate_id = Home::where('user_id', $user->id)->pluck('estate_id');
+            $estate = Estate::where('id', $estate_id)->first();
+            $msg['home'] = $home;
+            $msg['estate'] = $estate;
+        }
         $msg['image_link'] = $image_link;
         $msg['image_small_view_format'] = $image_format;
         $msg['token'] = 'Bearer '. $token;

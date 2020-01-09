@@ -3,6 +3,7 @@
 
 //Authentication Routes ******************************************************
 
+use App\Http\Controllers\EstateBills\Residents\ProofOfPaymentController;
 use App\Http\Controllers\VisitorController;
 
 Route::post('register/resident', 'Auth\RegisterController@resident'); //has a role of 1
@@ -117,14 +118,14 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Estate Admin only fetch visit history
     Route::get('/history/{id}','VisitorController@fetchEstateVisitHistory')->middleware('estateAdmin');
-
+    
     // super Admin only fetch visit history of one visitor
     Route::get('/history/visitor/{id}','VisitorController@fetchVisitorHistory')->middleware('superAdmin');
 
 
     // super admin Admin only fetch all visitors
     Route::get('/visitors','VisitorController@fetchSuperAdminVisitors')->middleware('superAdmin');
-
+  
     // Estate Admin only fetch estate visitors
     Route::get('/visitors/{id}','VisitorController@fetchEstateVisitors')->middleware('estateAdmin');
 
@@ -200,13 +201,36 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //Estate Admin rejects Service Providers request
     Route::post('/service-provider/reject/{id}', 'ServiceProviderController@reject')->middleware('estateAdmin');
-
+    
     //Show residents in the system
     Route::get('residents/all', 'ResidentController@residents')->middleware('superAdmin');
 
     //Show residents in the specific estate of logged in Estate Admin
     Route::get('/estate/{id}/residents', 'ResidentController@estateResidents')->middleware('estateAdmin');
 
+    // Estate bill related model's routes
+    Route::group(['prefix' => 'bills'], function () {
+        // for estate admin satisfied privileges
+        Route::middleware('estateAdmin')->namespace('EstateBills\Admin')->group( function () {
+            Route::post('estate/{estate_id}', AddBills::class);
+            Route::get('paymentproof', 'ProofOfPaymentController@showAll');
+            Route::get('paymentproof/{proof_id}', 'ProofOfPaymentController@viewProof');
+            Route::patch('paymentproof/approve/{proof_id}', 'ProofOfPaymentController@verifyPayment');
+            Route::patch('paymentproof/query/{proof_id}', 'ProofOfPaymentController@queryPayment');
+        });
+        Route::get('estateAdmin/{estate_id}','EstateBills\Residents\GetAllBills' )->middleware('estateAdmin');
+       
+
+        // for resident-user satisfied privileges
+        Route::middleware('checkResident')->namespace('EstateBills\Residents')->group( function () {
+            Route::get('estate/{estate_id}', GetAllBills::class);
+            Route::post('subscribe/{estate_bills}', 'Subscribe');
+            Route::get('subscribed', 'Subscribe@subscribed');
+            Route::get('pending', 'PendingBills');
+            Route::get('paid', 'PaidBills');
+            Route::post('proof/{resident_bill_id}', 'ProofOfPaymentController@submit');
+        });
+    });
 
 });
 
@@ -232,7 +256,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/user/{id}', 'UserProfileController@show');
 
     //Edit user ac count
-    Route::post('/user/edit/{id?}', 'UserProfileController@update');
+    Route::post('/user/edit', 'UserProfileController@update');
 
     // Edit user settings
     Route::post('/user/settings', 'UserProfileController@manageSettings');
@@ -241,7 +265,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('/user/edit-fcm', 'UserProfileController@updateFcmToken');
 
     //Delete user account
-    Route::delete('/user/delete/{id?}', 'UserProfileController@destroy');
+    Route::delete('/user/delete', 'UserProfileController@destroy');
 
 
     // // Ban a visitor
@@ -312,7 +336,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/service-provider/{id}', 'ServiceProviderController@show');
 
     //Get All Service Provider
-    Route::get('/service-provider', 'ServiceProviderController@showAll');
+    Route::get('/service-provider', 'ServiceProviderController@showAll')->middleware('jwt.verify');
 
     Route::get('/service-provider/category/{category_id}', 'ServiceProviderController@byCategory');
 
@@ -347,9 +371,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Show signed in user visitor history
     Route::get('visitorHistory', 'VisitorController@residentHistory')->middleware('checkResident');
 
-    //Delete Signed in user visitor histories
+    //Delete Signed in user visitor histories 
     Route::delete("visit_histories/delete/{id}", "VisitorController@deleteVisitHistories")->middleware('checkResident');
-
+    
     //Get all scheduled visits by a user
     Route::get('visitor/allScheduled', 'VisitorController@getScheduled')->middleware('checkResident');
     Route::delete('visitor/deleteScheduled/{id}', 'VisitorController@deleteScheduled')->middleware('checkResident');
@@ -440,8 +464,16 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Update Notification
     Route::patch('/notifications/{id}', 'NotifyController@markread');
     Route::patch('/notifications/read/{ids}', 'NotifyController@markSelectedAsRead');
-
+    
 });
+
+//Rave Payment Route
+Route::group(['middleware' => ['jwt.verify']], function () {
+    Route::post('begin_card_pay', 'RaveCardPayController@initaiteCardPay');
+    Route::post('insert_card_pin', 'RaveCardPayController@insertCardPin');
+    Route::post('otp_confirmation', 'RaveCardPayController@otpConfirmation');
+});
+
 Route::patch('/notifications/read/{ids}', 'NotifyController@markSelectedAsRead');
 //view faq
 Route::get('faq', 'FaqController@index');
@@ -458,6 +490,7 @@ Route::get('generate-code', 'TestController@qrCode');
 Route::post('test_image', 'TestController@upload');
 Route::post('african_talking', 'SmsOtpController@africasTalkingTest');
 Route::post('otp', 'SmsOtpController@otp');
+
 
 //test notification
 Route::get('/test-notification', function () {
